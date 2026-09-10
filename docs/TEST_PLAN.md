@@ -1,5 +1,16 @@
 # AgentRace 测试计划
 
+## Gate1 Shadow 验证（当前）
+
+- `tests/test_shadow.py`：双资源攻击与后续移动/另一炮冲突；接受扣staged、拒绝不扣、下观测gold对账；初始75建炮预留；gap不关联意图；镜像布局/临时占位/静态资源阻挡；cost=2墙工批量采集且不被铜矿抢占；动态路程触发回防；冷却保持映射；Shadow重复请求/异常隔离/实际响应一致；禁止v2启动模式；TASK频道不被ECONOMY覆盖；失效炮位释放job；八墙不足先降级；格子索引伤害与旧公式等价；跨昼夜与R131/R261观测边界响应对照。
+- `tests/test_http.py` 的密集真实进程测试使用 `--strategy-mode shadow`，仍保留原5秒限制、1302机器人、并发重复、可配置武器名/石耗、进程退出/端口释放；检查只有3条已提交Shadow报告且无Shadow异常。另一HTTP测试仍覆盖默认legacy。
+- 专项：`$env:PYTHONPATH='tests'; .venv\Scripts\python.exe -B -m unittest test_shadow test_http -q`，18项PASS（12.461秒）。
+- 首次本轮全量154项中密集HTTP超时失败；没有放宽门槛。定位为Shadow重复攻击估算全机器人扫描，改仅Shadow的格子索引后补等价测试并重验。最终全量结果见STATUS本轮验证。
+- 独立只读审查发现的频道覆盖、过早RETURN和失效驻守均有针对性回归；未以反复全量代替审查。
+- 以上证明程序逻辑、HTTP及Shadow隔离；观测回放未模拟战斗。历史round2只有摘要，不能声称完整日志重放或V2已达到benchmark。
+- 实机Gate：R71记录3rocket、L2/L1/L1、>=8wall、3角色及控制员就绪；R131/R261核对基地HP、角色存活、武器存活和控制员可用性，不以固定墙数判断通过。墙HP/数量为诊断；未执行新实机比赛，所有生存收益仍未验证。
+- 本批结束后停止，用户确认前不切换实际V2决策；不实现额外Day2/Day10、MPC、GoldClaim或完整MatchAnalyzer。
+
 round2最新：一次Windows `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，141项PASS（15.956秒），不重复WSL。新增test_round2六项覆盖多回合升级交付、满血墙资金门禁、并行墙工、全局操炮匹配、首日八石八墙闭环、堵墙释放。原前向炮位断言因已确认布局缺陷改为后向；名称/合法性/首夜攻击保留。专项及独立复查完成，差异空白检查通过。历史结果如下；真实1300回合生存仍未知。
 
 Versus最新：8项新增test_versus通过，覆盖镜像前向建设、固定运券与出售互斥、死亡解除、治疗暂停、基地抢修取消武器采购、资金预留、L3优先、取石时限。一次完整135项中133通过，2项旧首回合建设场景失败；调整工人站位及开局8回合三炮检查后，test_http/test_live_regressions共8项PASS（12.219秒）。源代码未再变化，未重复全量/WSL，原完整命令不标PASS。其余历史结果如下。朝向/墙/升级收益和1300回合生存仍待实机。

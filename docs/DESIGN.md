@@ -1,5 +1,36 @@
 # AgentRace 技术设计
 
+## Gate1 Shadow（当前；优先于下文历史策略记录）
+
+实现范围只到可运行的 Shadow，实际响应仍由原 plan_turn 生成。不提供 V2 authority 选项。
+
+最小数据结构及所有权：
+
+| 类型/字段 | 生命周期、写入者、读取者与重置 |
+| --- | --- |
+| ObservationDelta: round_no:int, phase:Phase或None, continuous:bool, gold:int, task_active:bool, feedback:dict | 每观测产生一次；仅GameMemory.observe写，StrategicPlanner读；不再解析一套raw feedback。feedback关联的actions只能是legacy实际响应。 |
+| StrategicState: plan:Day1Plan, last_round:int或None, metrics:dict | 半场内由Shadow候选reconcile写；下一观测复制读取；换身份/回合回退随GameMemory重置。失败不提交。 |
+| Day1Plan: mode:str, jobs:dict[str,RoleJob], controllers:dict[str,ControllerAssignment], budget:BudgetReserve, wall_target:int, reasons:list[str] | mode仅DAY_NORMAL/RECOVERY/PRE_NIGHT/NIGHT；jobs与controllers跨回合；budget/reasons每观测重建；只支持首日白天政策。 |
+| RoleJob: owner:str, job_type:str, target:object, phase:str, priority:int, created_round:int, deadline:int, progress:int, completion_condition:str, abort_condition:str | StrategicPlanner写，执行器读；观测完成、死亡、deadline、失效关联时释放。progress保留扩展位，不按发出意图增加。紧急治疗暂停job；经济helper无权抢建造job。 |
+| ControllerAssignment: weapon:str, controller:str, safe_slot:tuple[int,int] | reconcile写，夜战和回防读；死亡/建筑位置改变/slot成为静态障碍允许重配，冷却和临时占位不释放。safe仅是命名，不声称无伤。 |
+| BudgetReserve: observed_gold:int, staged_gold:int, reserved_gold:dict[str,int], committed_gold:int, committed_items:Counter[(actor,item)] | 每候选回合重置为真实goldNum；仅仲裁接受后扣staged并记commit；拒绝不扣。commit是候选回合意图，不是平台成功证明。 |
+| JobAuthorization: resources:frozenset[str], actions:frozenset[str], bucket:str；ActionProposal: actor:str, command:dict, resources:frozenset[str] | 每proposal构造、ActionArbiter读；attack资源必须精确包含weapon和controller。试算ActionValidator小账本，预算与资源全部满足才原子发布。 |
+| CanonicalLayout: footprint:frozenset, front:tuple, weapon_slots/wall_slots:tuple, static_blockers/transient_occupancy:frozenset | 每观测由World规范化几何生成；规划读取；临时单位占位不会永久删除canonical slot。 |
+
+调用顺序：GameSession.handle缓存检查 → candidate.observe返回delta → 保存独立Shadow memory → legacy plan_turn及双重协议/动作校验 → StrategicPlanner.reconcile → 续接/失效jobs、资金预留、炮手映射 → 动态deadline及墙目标降级 → job生成proposal → arbiter → divergence → 原有candidate实际响应提交 → 隔离输出shadow日志。Shadow既不调用observe第二次，也不将intended任务命令当作下一轮已执行命令。
+
+预算优先锁缺炮数×25（受观测余额限制），余款再锁首个WeaponUpgradeVoucher1的实际商店价；任务收益只有出现于后续goldNum才进入预留。Medicine/WallUpgrade/TreasureItem不能动用正常升级预留；本slice不生成这些可选采购。持有Medicine的急救use允许暂停job且占用角色，不能同回合操炮。未建立GoldClaim或预计收益账本。
+
+布局以基地2×2 footprint的倍坐标中心变换canonical slots，按实际基地朝地图中心决定镜像；fallback按canonical距离排序。构建前检查静态炮位出口和当前动作合法性。World.occupied保留旧语义；新增static/transient集合来自同一次World解析。所有墙采集/建造成本读取rules.wall_stone_cost。
+
+PRE_NIGHT：当日最后白天回合D=current+70-round_in_day；估算剩余job动作C和从完成点至slot最短路L，满足current+C <= D-5-L+1才继续。全墙目标不满足时先逐步降低执行wall_target；无法继续墙子目标时释放给可打断经济，不因benchmark失败直接提前离岗。未知路径保守处理；估算中的自身旧位置必须清除，不能把它当未来障碍。活动任务先锋继续交由TaskPlanner消费反馈，并标记controller不可用。
+
+基础metrics只记录观测gold/HP/资产数/等级、当前持久映射的邻接人数、actual fire命令数和连续关联的失败结果数。R71 benchmark字段固定检查3rocket、L2/L1/L1、8墙、3角色、3映射邻接；执行目标降级不修改benchmark。R131/R261仅审查stationHP、角色/武器存活和controller可用性，墙数/HP是诊断，不能据此判定gate通过。没有robot减少=击杀、ready未fire=漏射的推导。
+
+Shadow日志列出jobs、intended/actual白名单动作字段、差异actor列表以及prompt/executeCmd存在性/是否不同；不记录任务正文/答案/命令原文。临时失败记录异常类型。1302机器人HTTP测试发现重复火箭全扫描超时，ShadowDefensePlanner使用格子索引实现同一伤害估值，legacy DefensePlanner不变；专项验证重叠机器人、地图边缘和剩余HP等价。
+
+尚未证明：V2闭环benchmark、真实夜战生存、动态堵路脱困、最优炮手补位、后续天恢复策略。获得用户确认前停在Shadow；确认后仍应先解决实机切换相关缺口，不能直接声称比赛就绪。
+
 ## 目标与依据
 
 以 `AI Spec/未来战争_v1.0_比赛全貌_开发整合版.md` 为工作真值，已阅读规则、协议和工程建议。不读取 Official/。目标是完整的经济、建设、防守、任务与宝藏 Agent，而非空响应或仅采矿基线。
