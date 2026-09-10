@@ -29,6 +29,41 @@ def zone(data, kind, x, y):
 
 
 class ActionTests(unittest.TestCase):
+    def test_default_weapon_build_names_use_role_types(self):
+        data = state(role(1, 'worker', 9, 11), role(2, 'station', 10, 10, level=1))
+        for name in ('gatling', 'railgun', 'rocket'):
+            self.assertTrue(validator(data).add('1', target('build', 9, 10, name=name)), name)
+
+    def test_official_wall_cost_one_stone_default(self):
+        data = state(role(1, 'worker', 8, 11), role(2, 'station', 10, 10, level=1))
+        self.assertFalse(validator(data).add('1', target('build', 8, 10, name='wall')))
+        data['teamOur']['roles'][0]['backpack'] = ['stone']
+        self.assertTrue(validator(data).add('1', target('build', 8, 10, name='wall')))
+
+    def test_weapon_target_counts_all_levels_and_full_level_upgrade_rejection(self):
+        for kind, counts in (('gatling', (1, 2, 3)), ('railgun', (1, 1, 1)), ('rocket', (1, 2, 3))):
+            for level, required in enumerate(counts, 1):
+                data = state(role(1, 'worker', 9, 10), role(2, kind, 10, 10, level=level))
+                for count in (0, 1, 2, 3, 4):
+                    command = dict(action='attack', controllerId='1', targetPos=[dict(x=11, y=10)] * count)
+                    self.assertEqual(validator(data, main.Phase(1, 71)).add('2', command), count == required,
+                                     (kind, level, count))
+        for kind, prefix in (('station', 'Station'), ('wall', 'Wall'), ('rocket', 'Weapon')):
+            data = state(role(1, 'worker', 9, 10), role(2, kind, 10, 10, level=3))
+            data['teamOur']['roles'][0]['backpack'] = [prefix+'UpgradeVoucher1', prefix+'UpgradeVoucher2']
+            for level in (1, 2):
+                self.assertFalse(validator(data).add('1', target('use', 10, 10, name=prefix+'UpgradeVoucher'+str(level))))
+
+    def test_wall_limit_and_replacement_count(self):
+        data = state(role(1, 'worker', 8, 11), role(2, 'station', 10, 10, level=3))
+        data['teamOur']['roles'][0]['backpack'] = ['stone'] * 2
+        # Explicit 20-wall count; the last cell is outside the local ring to
+        # exercise the independent global maximum, not only occupied cells.
+        cells = [(x, 0) for x in range(19)] + [(8, 10)]
+        data['teamOur']['roles'] += [role(100+i, 'wall', x, y, level=1) for i, (x, y) in enumerate(cells)]
+        self.assertFalse(validator(data, rules=main.Rules(2)).add('1', target('build', 8, 12, name='wall')))
+        self.assertTrue(validator(data, rules=main.Rules(2)).add('1', target('build', 8, 10, name='wall')))
+
     def test_health_numeric_boundaries_do_not_raise(self):
         for value, allowed in ((10**400, True), (float('inf'), False),
                                (float('nan'), False), (True, False), (0, False)):
@@ -116,7 +151,7 @@ class ActionTests(unittest.TestCase):
                      role(3, 'station', 10, 10, level=1))
         rules = main.Rules(2, (('gatling', 'gatling'),))
         data['teamOur']['roles'][0]['backpack'] = ['stone', 'stone']
-        self.assertFalse(validator(data).add('1', target('build', 9, 10, name='gatling')))
+        self.assertFalse(validator(data, rules=main.Rules(2, ())).add('1', target('build', 9, 10, name='gatling')))
         v = validator(data, rules=rules)
         self.assertFalse(v.add('1', target('build', 8, 11, name='gatling')))
         self.assertTrue(v.add('1', target('build', 8, 11, name='wall')))

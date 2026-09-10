@@ -9,6 +9,77 @@ def robot(actor, x, y, health=40, side='challenger'):
 
 
 class DefenseTests(unittest.TestCase):
+    def test_other_side_robot_still_intercepts_ballistic_weapons(self):
+        for kind, expected in (('gatling', {'50': 5}), ('railgun', {'50': 5, '51': 5})):
+            data = state(role(1, 'worker', 9, 10), role(2, kind, 10, 10, level=1),
+                         robot=[robot(50, 10, 11, 5, 'defender'), robot(51, 10, 12, 40)])
+            defense = main.DefensePlanner(validator(data, main.Phase(1, 71)))
+            self.assertEqual(defense.damage(defense.weapons[0], (10, 12)), expected)
+            defense.fire()
+            if kind == 'gatling':
+                self.assertEqual(defense.v.commands, {})
+            else:
+                self.assertEqual(defense.v.commands['2']['targetPos'], [dict(x=10, y=12)])
+                self.assertEqual(defense.remaining['51'], 35)
+
+    def test_dizzy_reserves_targets_and_ignores_already_dizzy(self):
+        data = state(role(1, 'worker', 1, 1), role(2, 'worker', 2, 1),
+                     robot=[robot(50, 30, 30), robot(51, 31, 30)])
+        for character in data['teamOur']['roles']:
+            character['backpack'] = ['DizzyWeapon']
+        v = validator(data, main.Phase(1, 71))
+        main.DefensePlanner(v).support()
+        self.assertEqual(len(v.commands), 1)
+        self.assertEqual(v.commands['1']['name'], 'DizzyWeapon')
+        for entry in data['robot']:
+            entry['abnormalState'] = 'dizzy'
+        v = validator(data, main.Phase(1, 71))
+        main.DefensePlanner(v).support()
+        self.assertEqual(v.commands, {})
+
+    def test_default_summon_uses_inventory_with_daily_quota_and_night_priority(self):
+        data = state(role(1, 'worker', 1, 1))
+        data['teamOur']['roles'][0]['backpack'] = ['SmallRobotSummonOrder'] * 20
+        session = main.GameSession()
+        for round_no in range(11):
+            data['roundNo'] = round_no
+            result = session.handle(data)
+            self.assertEqual(bool(result['roleCommandMap']), round_no < 10)
+            self.assertEqual(result, session.handle(data))
+        data['roundNo'] = 70
+        self.assertEqual(session.handle(data)['roleCommandMap'], {})
+        data['roundNo'] = 130
+        self.assertEqual(session.handle(data)['roleCommandMap']['1']['name'], 'SmallRobotSummonOrder')
+        data['roundNo'] = 132
+        self.assertEqual(session.handle(data)['roleCommandMap'], {})
+
+    def test_low_level_wall_purchase_then_observed_repair(self):
+        data = state(role(1, 'worker', 9, 10), role(2, 'wall', 10, 10, level=1),
+                     role(3, 'gatling', 11, 10, level=1), role(4, 'rocket', 11, 11, level=1),
+                     weaponShopList=[dict(name='WallFixer', price=10)])
+        zone(data, 'weaponShop', 8, 10)
+        session = main.GameSession()
+        self.assertEqual(session.handle(data)['roleCommandMap']['1'],
+                         dict(action='buy', name='WallFixer', num=1))
+        data['roundNo'] = 1
+        data['teamOur']['roles'][0]['backpack'] = ['WallFixer']
+        self.assertEqual(session.handle(data)['roleCommandMap']['1'],
+                         dict(action='use', name='WallFixer', targetPos=[dict(x=10, y=10)]))
+        data['roundNo'] = 2
+        data['teamOur']['roles'][0]['backpack'] = []
+        data['teamOur']['roles'][1]['health'] = 1000
+        self.assertNotEqual(session.handle(data)['roleCommandMap'].get('1', {}).get('name'), 'WallFixer')
+
+    def test_emergency_procurement_does_not_duplicate_worker_errands(self):
+        data = state(role(1, 'worker', 3, 3), role(2, 'worker', 3, 4),
+                     role(3, 'station', 10, 10, level=1),
+                     weaponShopList=[dict(name='StationUpgradeVoucher1', price=100)])
+        data['teamOur']['goldNum'] = 250
+        zone(data, 'weaponShop', 4, 3)
+        response = main.GameSession().handle(data)
+        self.assertEqual(len(response['roleCommandMap']), 1)
+        self.assertEqual(response['roleCommandMap']['1']['name'], 'StationUpgradeVoucher1')
+
     def test_fixer_repairs_each_wall_level_but_not_full_health(self):
         for level, maximum in ((1, 1000), (2, 1500), (3, 2000)):
             for health in (maximum - 1, maximum):
@@ -53,7 +124,8 @@ class DefenseTests(unittest.TestCase):
 
     def test_build_requires_confirmed_name_and_never_overwrites(self):
         data = state(role(1, 'worker', 9, 11), role(2, 'station', 10, 10, level=1))
-        self.assertEqual(main.GameSession().handle(data)['roleCommandMap'], {})
+        self.assertEqual(main.GameSession(rules=main.Rules(1, ())).handle(data)['roleCommandMap'], {})
+        self.assertEqual(main.GameSession().handle(data)['roleCommandMap']['1']['name'], 'gatling')
         rules = main.Rules(None, (('confirmed-gun', 'gatling'),))
         result = main.GameSession(rules=rules).handle(data)['roleCommandMap']['1']
         self.assertEqual(result['action'], 'build')

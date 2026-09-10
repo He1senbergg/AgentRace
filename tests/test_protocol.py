@@ -12,6 +12,21 @@ class ProtocolTests(unittest.TestCase):
         a['roleCommandMap']['1'] = {}
         self.assertEqual(main.empty_response(), {'roleCommandMap': {}, 'prompt': '', 'executeCmd': ''})
 
+    def test_duplicate_nonfinite_and_invalid_utf8_requests_are_atomic(self):
+        session = main.GameSession()
+        with patch.object(main, 'SESSION', session):
+            for body in (b'{"roundNo":0,"roundNo":1,"teamOur":{"teamId":7,"type":"challenger"}}',
+                         b'{"roundNo":0,"teamOur":{"teamId":7,"type":"challenger"},"x":NaN}',
+                         b'{"text":"\xff"}', b'{"text":"\\ud800"}'):
+                with self.assertLogs(main.LOG, level='ERROR'):
+                    response = self.client.post('/', data=body, content_type='application/json')
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json, main.empty_response())
+                self.assertIsNone(session.memory)
+            valid = {'roundNo': 0, 'teamOur': {'teamId': 7, 'type': 'challenger'}}
+            self.assertEqual(self.client.post('/', json=valid).status_code, 200)
+            self.assertEqual(session.memory.last_round, 0)
+
     def test_bad_requests_recover(self):
         for body in ('', '{', 'null', '[]', 'true', '"文本"'):
             with self.subTest(body=body), self.assertLogs(main.LOG, level='ERROR'):
