@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from src import main
+from src import main3 as main
 
 
 class ProtocolTests(unittest.TestCase):

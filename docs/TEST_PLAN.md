@@ -11,7 +11,7 @@ Windows项目.venv和WSL .venv/linux-test均为CPython3.11.10，已安装require
 wsl --exec .venv/linux-test/bin/python -B -m unittest discover -s tests -v
 .venv\Scripts\python.exe -m pip check
 wsl --exec .venv/linux-test/bin/python -m pip check
-.venv\Scripts\python.exe -m py_compile src/main.py
+.venv\Scripts\python.exe -m py_compile src/main3.py
 git diff --check
 ```
 
@@ -57,6 +57,10 @@ git diff --check
 
 只在代码有新变更、失败或明确未解疑点时重跑对应测试；不以反复运行同一套绿灯代替平台证据。
 
-交付核验：仅复制run.sh与src/main.py到临时目录，Windows与WSL CPython3.11.10真实HTTP均返回预期采矿动作，进程退出和临时目录清理成功。未改应用代码，92项全套结果仍适用；启动/人工接管说明见RUNBOOK.md。正式平台配置与联调仍缺。
+历史交付核验：仅复制run.sh与src/main.py到临时目录，Windows与WSL CPython3.11.10真实HTTP均返回预期采矿动作，进程退出和临时目录清理成功。未改应用代码，92项全套结果仍适用；启动/人工接管说明见RUNBOOK.md。正式平台配置与联调仍缺。
 
 职责更新：正式判题/联调由用户负责，Agent不再以获取平台入口作为本地工作前置条件。上述正式验证项目保持未执行状态。
+
+## 本次入口验证（2026-09-10）
+
+直接执行 `src/main3.py <port>`：真实 HTTP、中文输入、重复请求、畸形请求恢复和进程清理；通过 run.sh 启动：可选配置、密集观测、并发重复请求和退出后端口释放。无效端口与配置必须非零退出。测试统一导入 src.main3。当前 Linux CPython 3.10.12：`.venv/bin/python -B -m unittest discover -s tests -q`，92 项 PASS（10.751 秒），含两项真实 HTTP 测试。首次沙箱运行因禁止 socket 导致两项失败，获准本地网络测试后全套通过；CRLF 感知的 git diff --check 通过；此前 Windows/WSL 数据为历史结果。

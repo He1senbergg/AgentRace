@@ -1,7 +1,7 @@
 """State legality from AI Spec, using explicit independent fixtures."""
 import unittest
 from copy import deepcopy
-from src import main
+from src import main3 as main
 
 
 def role(actor, kind, x, y, **fields):

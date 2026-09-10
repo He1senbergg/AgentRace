@@ -265,6 +265,6 @@ git commit
 
 P0–P5已接入callback；Windows与WSL CPython3.11.10全套92项测试通过，含真实HTTP和WSL run.sh。本地开发交付与独立审查已完成，正式平台联调由用户负责，尚未宣称比赛就绪。围墙默认成本已从官方内嵌原图确认是1石头；武器建造名按用户确认默认采用roleType；回合起点仍需确认。恢复入口为docs/STATUS.md，覆盖审计见docs/COVERAGE.md。
 
-Windows启动：`.venv\Scripts\python.exe src\main.py 8080`；全测试：`.venv\Scripts\python.exe -m unittest discover -s tests -v`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器；已在WSL执行POSIX启动脚本。项目依赖见 `requirements-dev.txt`。
+Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -m unittest discover -s tests -v`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器；已在WSL执行POSIX启动脚本。项目依赖见 `requirements-dev.txt`。
 
 准确的Windows/WSL启动、参数和人工接管检查见[docs/RUNBOOK.md](docs/RUNBOOK.md)。当前WSL须显式选择`.venv/linux-test/bin/python`，不能假定系统python3已安装依赖。

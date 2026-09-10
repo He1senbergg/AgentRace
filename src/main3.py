@@ -1389,7 +1389,8 @@ def main():
         LOG.warning("[main] 未配置已确认的武器建造名称，自动建造武器已停用")
     if args.round_origin is None:
         LOG.warning("[main] 回合起点未配置，仅首次观察到回合0时自动识别昼夜")
-    app.run(host="0.0.0.0", port=args.port, debug=False, use_reloader=False)
+    # Match Official/SDK_Python3_main3.py: positional port, Flask default host.
+    app.run(port=args.port)
 
 
 if __name__ == "__main__":

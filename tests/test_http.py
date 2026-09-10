@@ -21,7 +21,7 @@ class LiveHTTPTests(unittest.TestCase):
             port = probe.getsockname()[1]
         args = ['--round-origin', '0', '--wall-stone-cost', '2',
                 '--weapon-build-name', 'rocket=test-rocket']
-        command = ([sys.executable, str(ROOT / 'src/main.py'), str(port), *args] if os.name == 'nt'
+        command = ([sys.executable, str(ROOT / 'src/main3.py'), str(port), *args] if os.name == 'nt'
                    else ['bash', str(ROOT / 'run.sh'), str(port), *args])
         env = dict(os.environ, AGENTRACE_PYTHON=sys.executable)
 
@@ -94,8 +94,7 @@ class LiveHTTPTests(unittest.TestCase):
             probe.bind(('127.0.0.1', 0))
             port = probe.getsockname()[1]
         env = dict(os.environ, AGENTRACE_PYTHON=sys.executable)
-        command = ([sys.executable, str(ROOT / 'src/main.py'), str(port)] if os.name == 'nt'
-                   else ['bash', str(ROOT / 'run.sh'), str(port)])
+        command = [sys.executable, str(ROOT / 'src/main3.py'), str(port)]
         process = subprocess.Popen(command, cwd=tempfile.gettempdir(), env=env,
                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
@@ -139,13 +138,13 @@ class LiveHTTPTests(unittest.TestCase):
                      ['--weapon-build-name', 'rocket=x', '--weapon-build-name', 'gatling=x'],
                      ['--weapon-build-name', 'rocket=x', '--weapon-build-name', 'rocket=y']):
             with self.subTest(args=args):
-                result = subprocess.run([sys.executable, str(ROOT / 'src/main.py'), '8080', *args],
+                result = subprocess.run([sys.executable, str(ROOT / 'src/main3.py'), '8080', *args],
                                         capture_output=True, timeout=5)
                 self.assertEqual(result.returncode, 2)
                 self.assertIn(b'error:', result.stderr)
 
     def test_invalid_port(self):
         for port in ('0', '65536', 'bad'):
-            result = subprocess.run([sys.executable, str(ROOT / 'src/main.py'), port],
+            result = subprocess.run([sys.executable, str(ROOT / 'src/main3.py'), port],
                                     capture_output=True, timeout=5)
             self.assertNotEqual(result.returncode, 0)

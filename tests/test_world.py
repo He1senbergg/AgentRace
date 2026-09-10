@@ -1,5 +1,5 @@
 import unittest
-from src.main import World, Phase, MoveReservations, station_cells, building_ring, neighbors
+from src.main3 import World, Phase, MoveReservations, station_cells, building_ring, neighbors
 
 
 def role(actor, kind, x, y):

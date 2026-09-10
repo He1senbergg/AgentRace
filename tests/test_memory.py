@@ -3,7 +3,7 @@ from copy import deepcopy
 import unittest
 from unittest.mock import patch
 
-from src import main
+from src import main3 as main
 
 
 def request_at(round_no, **fields):

@@ -8,4 +8,4 @@ elif [[ -x .venv/bin/python ]]; then
 else
     interpreter=python3
 fi
-exec "$interpreter" src/main.py "$@"
+exec "$interpreter" src/main3.py "$@"

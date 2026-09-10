@@ -2,7 +2,7 @@ import json
 import unittest
 from copy import deepcopy
 
-from src import main
+from src import main3 as main
 from test_actions import role, state, zone
 
 

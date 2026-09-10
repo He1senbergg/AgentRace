@@ -1,6 +1,6 @@
 # 需求覆盖审计（2026-09-10，本地交付审计）
 
-真值：`AI Spec/未来战争_v1.0_比赛全貌_开发整合版.md`。本表从规格逐项核对代码与测试，不把测试通过当作官方兼容证明。实现均位于`src/main.py`；测试位置均位于`tests/`。已完成独立只读审查；本地交付完成，正式比赛行为仍按表中残余风险交由用户验证。
+真值：`AI Spec/未来战争_v1.0_比赛全貌_开发整合版.md`。本表从规格逐项核对代码与测试，不把测试通过当作官方兼容证明。实现均位于`src/main3.py`；测试位置均位于`tests/`。已完成独立只读审查；本地交付完成，正式比赛行为仍按表中残余风险交由用户验证。
 
 “本地”指对应测试实际通过；“部分”表示尚有规则歧义、实战效果或本地缺口。评分/机器人移动等由平台结算，客户端不能自行产生这些状态。
 
@@ -49,14 +49,14 @@
 | C41 §36–38 | SOP/SKILL经验复用，成功不能臆测 | task_experience、TaskPlanner.prompt | test_tasks.test_history_and_half_reset_only_preserves_labelled_experience；部分：无明确成功/通过率字段，当前仅未验证经验，省略skill保留与命令结果配对回归通过（A05） |
 | C42 §37–38 | 错误答案若仍活跃可继续，超时/部分分数由平台结算 | TaskPlanner反馈与submitAnswer | test_tasks.test_wrong_answer_while_active_uses_feedback、test_expired_old_task_error_does_not_expire_new_description；部分：正式重试/评分结果待联调 |
 | C43 §39–41 | 生存优先、任务与击杀积分、1300结束 | plan_turn紧急维护、任务、开火；不自行结束平台 | test_defense紧急维护、test_integration长局；部分：未验证胜率或官方计分 |
-| C44 §42–45 | 参数端口HTTP、0.0.0.0、Python3.11.10+Flask | main、run.sh | test_http启停/合法CLI/非法端口；本地Windows/WSL及最小文件复制启动通过；正式打包由用户验证 |
+| C44 §42–45 | 参数端口HTTP、Flask SDK default host、Python3.11.10+Flask | main、run.sh | test_http启停/合法CLI/非法端口；本地Windows/WSL及最小文件复制启动通过；正式打包由用户验证 |
 | C45 §46–55 | 顶层字段容错、news/errors/结果源回收 | World、GameMemory.observe | test_integration.test_malformed_optional_fields_do_not_collapse_planning、test_memory；本地 |
 | C46 §56–60 | 三字段Response、12动作、目标数组、不重复key | ensure_valid_response、validate_command_shape、ActionValidator | test_protocol、test_actions全12动作、test_integration长局；本地 |
 | C47 §61–63、77 | 畸形JSON/None/异常返回合法空响应并可恢复 | process_request异常边界 | test_protocol.test_bad_requests_recover、test_internal_exception_and_invalid_response、test_http；本地 |
 | C48 §62、78 | 已连接5秒响应、不等待远程工具 | 有界地图规划、异步pending | test_http.test_dense_http_concurrent_duplicates_and_valid_configuration（1302机器人）；本地；正式硬件与未规定最大输入仍未验证 |
 | C49 §64–66 | 事务、去重、失败回滚、反馈关联 | GameSession锁/副本/缓存、GameMemory.feedback | test_memory九项及test_integration长局；本地；协议无半场/请求ID，任意乱序无法证明 |
 | C50 §67–71、83 | 经济/维修/防守/任务/宝藏共享调度 | plan_turn、ActionValidator共享预留 | test_defense采购/站位、test_news采购窗口、test_integration长局；部分：策略质量不是最优性证明 |
-| C51 §79–80、85 | 单文件功能分区、标准库依赖、日志不泄漏 | src/main.py分区、LOG | py_compile、pip check、test_protocol日志SECRET不输出；本地 |
+| C51 §79–80、85 | 单文件功能分区、标准库依赖、日志不泄漏 | src/main3.py分区、LOG | py_compile、pip check、test_protocol日志SECRET不输出；本地 |
 | C52 §84 | 提交自测清单全部项 | 对应C01–C51 | 局部通过，A项及平台未决项仍在；不可勾选整体完成 |
 
 ## 审计项结论

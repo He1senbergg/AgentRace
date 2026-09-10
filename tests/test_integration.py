@@ -5,7 +5,7 @@ import json
 import time
 import unittest
 
-from src import main
+from src import main3 as main
 from test_actions import role, state, zone
 from test_defense import robot
 
