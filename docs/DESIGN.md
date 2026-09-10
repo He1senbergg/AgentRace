@@ -4,6 +4,10 @@
 
 实现范围只到可运行的 Shadow，实际响应仍由原 plan_turn 生成。不提供 V2 authority 选项。
 
+平台固定启动方式下，DEFAULT_STRATEGY_MODE="shadow"同时作为GameSession及argparse默认；保留显式legacy，端口仍使用原位置参数。新增日志只暴露现有目标、job/deadline、控制员映射、预算、差异及回防/任务估算。估算在原计算点保存在本轮planner临时字典，不新增策略状态、不为日志重新寻路。wall_target_changed比较本轮前后值，reason来自已有降级原因；未知数据用null/空结构。
+
+perf_counter分别测量legacy规划、Shadow复制和规划、handle入口至Shadow日志输出前的总处理时间。总计包含锁等待/原诊断，不含本条Shadow日志I/O或HTTP发送；这是诊断口径，不是判题端耗时。total>3000ms或shadow>1500ms仅输出[shadow_performance] WARNING。日志异常隔离；传给Shadow的是实际响应副本，不能写回roleCommandMap/prompt/executeCmd。
+
 最小数据结构及所有权：
 
 | 类型/字段 | 生命周期、写入者、读取者与重置 |

@@ -64,7 +64,8 @@ class TurnDiagnosticTests(unittest.TestCase):
         with self.assertLogs(main.LOG, level='INFO') as logs:
             result = session.handle(data)
             self.assertEqual(session.handle(data), result)
-        self.assertEqual(len(logs.output), 1)
+        self.assertEqual(sum('[turn] ' in line for line in logs.output), 1)
+        self.assertEqual(sum('[shadow_turn] ' in line for line in logs.output), 1)
         record = json.loads(logs.output[0].split('[turn] ', 1)[1])
         self.assertEqual(record['activity'], [{'id': '1', 'status': 'control_weapon', 'weapon': '2'}])
         self.assertEqual(record['weapons'][0]['cooldown'], 0)

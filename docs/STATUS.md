@@ -1,7 +1,13 @@
 # AgentRace 当前检查点
 
 ## 当前阶段
-2026-09-10：Gate1 V2 已进入数据结构至 Shadow 阶段，尚未切换实际决策权。默认 legacy；`--strategy-mode shadow` 额外生成并记录 V2 jobs/actions 与 legacy actual divergence，但返回同一 legacy 响应。此阶段验证后必须暂停，等待用户明确确认才可进入实际决策切换。以下 round2 实机成果为历史背景，1300回合目标尚未证明。
+2026-09-10：当前上传版本默认 Shadow（DEFAULT_STRATEGY_MODE），无需平台添加参数；显式 --strategy-mode legacy 可本地回退。Shadow只记录V2意图，roleCommandMap/prompt/executeCmd全部仍由legacy返回。已补最小instrumentation，不改变策略或端口参数；本patch完成后停止，不切换V2实际决策权。以下round2实机成果为历史背景，1300回合目标尚未证明。
+
+## 默认 Shadow instrumentation patch
+- 日志增加strategy_mode、defense_target、详细jobs/deadline、controllers/assignment_status、budget、timing_ms、结构化divergence（保留weapon actor/controllerId）、wall_target_changed、pre_night估算和task估算；没有值时为null/空结构。
+- perf_counter计时：legacy规划、Shadow复制/规划、handle入口至日志输出前的总处理时间（包括锁等待和原诊断）。总计不包含本条Shadow日志自身I/O及HTTP发送；重复缓存不重复输出。total>3000ms或shadow>1500ms只告警，不改变实际动作。
+- Shadow只拿实际响应的副本；Shadow/report/日志异常不能替换实际响应。未改攻击评分、TaskPlanner或后续天政策。
+- 验证：新增5项instrumentation与原14项Shadow专项合计19项PASS；最终Windows全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，160项PASS（19.999秒），包含默认Shadow真实HTTP和显式legacy回退。首次全量仅旧日志数量断言失败，改为两类日志各一条后重验通过；未放宽性能门槛。diff --check通过。已停止于本patch，不进入V2 authority。
 
 ## 本轮 Shadow 检查点
 - src/main3.py 新增 ObservationDelta、RoleJob、ControllerAssignment、BudgetReserve、JobAuthorization/ActionProposal/ActionArbiter、CanonicalLayout、Day1Plan、StrategicState、StrategicPlanner。仍单文件部署，无新增依赖。
@@ -13,7 +19,7 @@
 - 14项新增专项已通过；独立只读审查反馈的任务频道覆盖、过早回防、失效驻守已修正。最终复核无阻塞Shadow交付问题。
 - 本轮未修改用户的 docs/STRATEGY_V2.md；未自动创建Git commit。
 
-## 本轮验证
+## 上一批 Shadow 验证（历史）
 - Windows `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：155项PASS（16.311秒），含Shadow真实HTTP密集输入/并发、默认legacy HTTP、2600观测集成及14项Shadow专项；无跳过。
 - 首次全量发现Shadow重复火箭全扫描导致密集HTTP超时，改Shadow专用格子索引并增加等价回归；未放宽5秒限制。修复后18项Shadow+HTTP专项及最终全量通过。没有重复WSL测试。
 - `git -c core.whitespace=cr-at-eol diff --check`通过。该批可作为人工Git提交检查点，尚未自动提交。

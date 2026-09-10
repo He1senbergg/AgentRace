@@ -132,7 +132,7 @@ class ShadowTests(unittest.TestCase):
 
     def test_shadow_response_identity_repeat_and_error_isolation(self):
         data = opening()
-        legacy = main.GameSession()
+        legacy = main.GameSession(strategy_mode='legacy')
         session = main.GameSession(strategy_mode='shadow')
         with self.assertLogs(main.LOG, level='INFO') as logs:
             actual = session.handle(data)
@@ -207,7 +207,7 @@ class ShadowTests(unittest.TestCase):
 
     def test_observation_replay_response_identity_across_boundaries(self):
         data = opening()
-        legacy, session = main.GameSession(), main.GameSession(strategy_mode='shadow')
+        legacy, session = main.GameSession(strategy_mode='legacy'), main.GameSession(strategy_mode='shadow')
         with patch.object(main.LOG, 'info') as log:
             for r in (0, 1, 2, 59, 69, 70, 71, 129, 130, 259, 260):
                 data['roundNo'] = r

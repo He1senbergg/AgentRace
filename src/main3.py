@@ -12,10 +12,15 @@ import re
 import shlex
 import sys
 import threading
+import time
 
 from flask import Flask, g, jsonify, request
 
 LOG = logging.getLogger(__name__)
+DEFAULT_STRATEGY_MODE = "shadow"
+# Diagnostics only, not competition rules or decision cutoffs.
+SHADOW_WARN_MS = 1500
+TOTAL_WARN_MS = 3000
 app = Flask(__name__)
 app.json.ensure_ascii = False
 
@@ -1829,6 +1834,7 @@ class StrategicPlanner:
         self.layout = CanonicalLayout.from_world(world)
         self.v = ActionValidator(world, memory, rules)
         self.defense = ShadowDefensePlanner(self.v)
+        self.return_diagnostics = {}
 
     def route(self, actor, cells, adjacent=True):
         start = self.world.characters[actor]["cell"]
@@ -1997,6 +2003,14 @@ class StrategicPlanner:
                     job.job_type, job.target, job.phase = "ECONOMY", None, "START"
                     trip = (1, len(route) - 1)
             remaining, back = trip if trip else (0, 0)
+            self.return_diagnostics[actor] = {
+                "job_type": job.job_type if job else None,
+                "return_deadline": end - 5 - back + 1 if phase and trip else None,
+                "estimated_finish": d.round_no + remaining - 1 if trip else None,
+                "direct_return_cost": len(route) - 1 if route else None,
+                "after_job_return_cost": back if trip else None,
+                "remaining_job_cost": remaining if trip else None,
+            }
             due = (not phase or not phase.is_day or route is None
                    or trip is None or d.round_no + remaining > end - 5 - back + 1)
             if due:
@@ -2137,6 +2151,7 @@ class StrategicPlanner:
                 response["executeCmd"] = scratch_response["executeCmd"]
 
     def run(self, actual):
+        old_wall_target = self.plan.wall_target
         self.reconcile()
         intended = empty_response()
         for job in sorted(self.plan.jobs.values(), key=lambda j: (-j.priority, j.owner)):
@@ -2163,18 +2178,57 @@ class StrategicPlanner:
             and self.state.metrics["walls"] >= 8 and len(self.world.characters) == 3 and ready == 3)
         def safe(commands):
             return {a: {k: v for k, v in c.items() if k in {"action", "controllerId", "targetPos", "num"}
-                        or k == "name" and v in USABLE | MINERALS | WEAPONS | {"wall"}}
+                        or k == "name" and v in USABLE | MINERALS | WEAPONS | {"wall"}
+                        | {wire for wire, _ in self.rules.weapon_build_names}}
                     for a, c in commands.items()}
         actual_commands = actual["roleCommandMap"]
         report = {"round": self.delta.round_no, "mode": self.plan.mode,
                   "scope": "day1_shadow" if self.delta.phase and self.delta.phase.day == 1 else "metrics_only_daytime",
-                  "jobs": {a: [j.job_type, j.phase, j.target] for a, j in self.plan.jobs.items()},
+                  "strategy_mode": "shadow",
+                  "defense_target": {"weapon_target": 3, "weapon_level_target": [2, 1, 1],
+                                     "wall_target": self.plan.wall_target, "controllers_target": 3},
+                  "jobs": {a: {"owner": j.owner, "job_type": j.job_type, "phase": j.phase,
+                               "target": j.target, "deadline": j.deadline}
+                           for a, j in self.plan.jobs.items()},
+                  "controllers": [{"weapon_id": a.weapon, "controller_id": a.controller,
+                                   "safe_slot": a.safe_slot,
+                                   "assignment_status": (
+                                       "task_unavailable" if self.delta.task_active and
+                                       self.world.characters[a.controller].get("roleType") == "pioneer" else
+                                       "at_slot" if self.world.characters[a.controller]["cell"] == a.safe_slot else
+                                       "adjacent" if distance(self.world.characters[a.controller]["cell"],
+                                                              self.world.roles[a.weapon]["cell"]) <= 1 else "return_required")}
+                                  for a in self.plan.controllers.values()],
+                  "budget": {"observed_gold": self.plan.budget.observed_gold,
+                             "staged_gold": self.plan.budget.staged_gold,
+                             "reserved_gold": dict(self.plan.budget.reserved_gold),
+                             "free_gold": self.plan.budget.free_gold},
                   "intended": safe(self.v.commands), "actual": safe(actual_commands),
                   "divergence": sorted(a for a in set(self.v.commands) | set(actual_commands)
                                        if self.v.commands.get(a) != actual_commands.get(a)),
                   "channels": {k: {"intended": bool(intended[k]), "actual": bool(actual[k]),
                                     "different": intended[k] != actual[k]} for k in ("prompt", "executeCmd")},
                   "reasons": sorted(set(self.plan.reasons)), "metrics": self.state.metrics}
+        report["divergence"] = {"intended": report["intended"], "actual": report["actual"],
+                                "divergent_actor_ids": report["divergence"]}
+        report["wall_target_changed"] = {
+            "old": old_wall_target, "new": self.plan.wall_target,
+            "reason": [r for r in report["reasons"] if r in {
+                "wall_target_degraded_for_deadline", "eight_walls_deadline_impossible"}]
+            if old_wall_target != self.plan.wall_target else [],
+        }
+        report["pre_night"] = {
+            "active": self.plan.mode == "PRE_NIGHT",
+            "return_deadlines": {a: row["return_deadline"] for a, row in self.return_diagnostics.items()},
+            "estimated_return_costs": self.return_diagnostics,
+        }
+        pioneers = [a for a, c in self.world.characters.items() if c.get("roleType") == "pioneer"]
+        pioneer = pioneers[0] if len(pioneers) == 1 else None
+        task_estimate = self.return_diagnostics.get(pioneer, {})
+        report["task"] = {"pioneer_job": report["jobs"].get(pioneer),
+                          "estimated_finish": task_estimate.get("estimated_finish")
+                          if task_estimate.get("job_type") == "TASK" else None,
+                          "return_deadline": task_estimate.get("return_deadline")}
         return self.state, report
 
 
@@ -2263,7 +2317,7 @@ class GameMemory:
 
 class GameSession:
     """Atomic in-process planning; transport delivery is not an execution ack."""
-    def __init__(self, planner=None, origin=None, rules=None, strategy_mode="legacy"):
+    def __init__(self, planner=None, origin=None, rules=None, strategy_mode=DEFAULT_STRATEGY_MODE):
         if origin is not None and (type(origin) is not int or origin not in (0, 1)):
             raise ValueError("invalid round origin")
         self.origin = origin
@@ -2284,7 +2338,10 @@ class GameSession:
             self._trace_turn(data, world, memory, response, reason)
         except Exception as exc:
             # Diagnostic failure must not replace a committed gameplay response.
-            LOG.error("[trace_turn] 诊断失败: %s", type(exc).__name__)
+            try:
+                LOG.error("[trace_turn] 诊断失败: %s", type(exc).__name__)
+            except Exception:
+                pass
 
     def _trace_turn(self, data, world=None, memory=None, response=None, reason=None):
         """Bounded metadata only; called under the session lock for valid turns."""
@@ -2400,6 +2457,7 @@ class GameSession:
             LOG.info("[trace_map] round=%s\n%s", number(data.get("roundNo")), render_map(world))
 
     def handle(self, data):
+        processing_started = time.perf_counter()
         if not isinstance(data, dict):
             return empty_response()
         round_no = data.get("roundNo")
@@ -2433,8 +2491,17 @@ class GameSession:
                 raise ValueError("round contradicts configured origin")
             world = World(data)
             delta = candidate.observe(world, round_no)
-            shadow_memory = deepcopy(candidate) if self.strategy_mode == "shadow" else None
+            shadow_memory, shadow_report, shadow_ms = None, None, 0.0
+            if self.strategy_mode == "shadow":
+                shadow_started = time.perf_counter()
+                try:
+                    shadow_memory = deepcopy(candidate)
+                except Exception as exc:
+                    shadow_report = {"round": round_no, "error": type(exc).__name__}
+                shadow_ms = (time.perf_counter() - shadow_started) * 1000
+            legacy_started = time.perf_counter()
             response = ensure_valid_response(self.planner(world, candidate))
+            legacy_ms = (time.perf_counter() - legacy_started) * 1000
             active_task = isinstance(data.get("phaseTask"), str) and bool(data["phaseTask"])
             if response["executeCmd"] and not active_task:
                 raise ValueError("sandbox command outside task")
@@ -2451,21 +2518,35 @@ class GameSession:
             json.dumps(response, ensure_ascii=False, allow_nan=False).encode("utf-8")
             cached_response = deepcopy(response)
             outgoing = deepcopy(response)
-            shadow_report = None
             if shadow_memory is not None:
+                shadow_started = time.perf_counter()
                 try:
-                    strategic, shadow_report = StrategicPlanner(world, shadow_memory, delta, self.rules).run(outgoing)
+                    strategic, shadow_report = StrategicPlanner(world, shadow_memory, delta, self.rules).run(deepcopy(outgoing))
                     json.dumps(shadow_report, ensure_ascii=False, allow_nan=False)
                     candidate.strategic = strategic
                 except Exception as exc:
                     # Keep the previous strategic checkpoint, never partial shadow state.
                     shadow_report = {"round": round_no, "error": type(exc).__name__}
+                shadow_ms += (time.perf_counter() - shadow_started) * 1000
             candidate.previous_actions = deepcopy(response["roleCommandMap"])
             self.memory, self.fingerprint, self.response = candidate, fingerprint, cached_response
             self.trace_turn(data, world, candidate, outgoing)
             if shadow_report is not None:
                 try:
+                    shadow_report["strategy_mode"] = self.strategy_mode
+                    for key in ("defense_target", "jobs", "controllers", "budget", "divergence",
+                                "wall_target_changed", "pre_night", "task"):
+                        shadow_report.setdefault(key, None)
+                    shadow_report["timing_ms"] = {
+                        "legacy": max(0.0, legacy_ms), "shadow": max(0.0, shadow_ms),
+                        "total": max(0.0, (time.perf_counter() - processing_started) * 1000),
+                    }
                     LOG.info("[shadow_turn] %s", json.dumps(shadow_report, ensure_ascii=False, allow_nan=False))
+                    timing = shadow_report["timing_ms"]
+                    if timing["total"] > TOTAL_WARN_MS or timing["shadow"] > SHADOW_WARN_MS:
+                        LOG.warning("[shadow_performance] %s", json.dumps({
+                            "round": round_no, "timing_ms": timing,
+                            "diagnostic_threshold_ms": {"total": TOTAL_WARN_MS, "shadow": SHADOW_WARN_MS}}))
                 except Exception:
                     pass  # Logging cannot invalidate an already committed response.
             return outgoing
@@ -2519,7 +2600,7 @@ def process_request():
 def main():
     parser = argparse.ArgumentParser(description="AgentRace HTTP player")
     parser.add_argument("port", type=int)
-    parser.add_argument("--strategy-mode", choices=("legacy", "shadow"), default="legacy",
+    parser.add_argument("--strategy-mode", choices=("legacy", "shadow"), default=DEFAULT_STRATEGY_MODE,
                         help="shadow logs V2 intent; both modes return legacy actions")
     parser.add_argument("--round-origin", type=int, choices=(0, 1), default=None,
                         help="override round origin; otherwise infer from opening observation 0 or 1")

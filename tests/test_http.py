@@ -20,7 +20,7 @@ class LiveHTTPTests(unittest.TestCase):
             probe.bind(('127.0.0.1', 0))
             port = probe.getsockname()[1]
         args = ['--round-origin', '0', '--wall-stone-cost', '2',
-                '--weapon-build-name', 'rocket=test-rocket', '--strategy-mode', 'shadow']
+                '--weapon-build-name', 'rocket=test-rocket']  # Fixed platform startup defaults to shadow.
         command = ([sys.executable, str(ROOT / 'src/main3.py'), str(port), *args] if os.name == 'nt'
                    else ['bash', str(ROOT / 'run.sh'), str(port), *args])
         env = dict(os.environ, AGENTRACE_PYTHON=sys.executable)
@@ -83,6 +83,7 @@ class LiveHTTPTests(unittest.TestCase):
                            for line in output.splitlines() if '[shadow_turn] ' in line]
                 self.assertEqual(len(shadows), 3)
                 self.assertTrue(all('error' not in row for row in shadows))
+                self.assertTrue(all(row['strategy_mode'] == 'shadow' for row in shadows))
                 # Exactly one expected malformed request; no silent valid-request fallback.
                 self.assertLessEqual(output.count('[process_request]'), 1, output)
             self.assertIsNotNone(process.returncode)
@@ -101,7 +102,7 @@ class LiveHTTPTests(unittest.TestCase):
             probe.bind(('127.0.0.1', 0))
             port = probe.getsockname()[1]
         env = dict(os.environ, AGENTRACE_PYTHON=sys.executable)
-        command = [sys.executable, str(ROOT / 'src/main3.py'), str(port)]
+        command = [sys.executable, str(ROOT / 'src/main3.py'), str(port), '--strategy-mode', 'legacy']
         process = subprocess.Popen(command, cwd=tempfile.gettempdir(), env=env,
                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
