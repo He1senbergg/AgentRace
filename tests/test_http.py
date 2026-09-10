@@ -54,7 +54,7 @@ class LiveHTTPTests(unittest.TestCase):
                             self.fail('startup exceeded five seconds')
                         time.sleep(.02)
                 build_data = {'roundNo': 0, 'teamOur': {'teamId': 7, 'type': 'challenger', 'goldNum': 75,
-                              'roles': [dict(id=1, roleType='worker', pos=dict(x=12, y=11), health=220, backpack=[]),
+                              'roles': [dict(id=1, roleType='worker', pos=dict(x=9, y=8), health=220, backpack=[]),
                                         dict(id=4, roleType='station', pos=dict(x=10, y=10), health=4500, level=3)]}}
                 self.assertEqual(post(build_data)['roleCommandMap']['1']['name'], 'test-rocket')
                 dense = dense_state()

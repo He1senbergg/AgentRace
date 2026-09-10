@@ -4,6 +4,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 import argparse
 import hashlib
+from itertools import product
 import json
 import logging
 import math
@@ -598,11 +599,15 @@ class EconomyPlanner:
         phase = self.v.memory.phase
         if phase and phase.is_day:
             for role in sorted(self.world.characters.values(), key=lambda r: r["id"]):
+                if self.v.memory.wall_builder and role['id'] == self.v.memory.wall_builder['actor']:
+                    continue
                 if role["roleType"] == "worker":
                     self.cash_in(role)
 
     def workers(self):
         for actor, role in sorted(self.world.characters.items()):
+            if self.v.memory.wall_builder and actor == self.v.memory.wall_builder['actor']:
+                continue
             if actor in self.v.busy or role["roleType"] != "worker":
                 continue
             bag = inventory(role)
@@ -762,6 +767,8 @@ class DefensePlanner:
             if back is None or len(route) + back + 3 > 71 - phase.round_in_day:
                 continue
             reserve = max(max(0, 3 - len(self.weapons)) * 25, self.base_reserve())
+            if self.weapons and not any(level_of(w) >= 2 for w in self.weapons) and character['health'] > 110:
+                reserve = max(reserve, self.v.prices.get('WeaponUpgradeVoucher1', 0))
             if self.v.gold - reserve < self.v.prices["Medicine"] * (2 - bag["Medicine"]):
                 continue
             self.economy.purchase(character["id"], "Medicine", 2)
@@ -784,6 +791,8 @@ class DefensePlanner:
             urgent = kind == "station" and building["health"] < maximum // 2
             if emergency_only and not urgent:
                 continue
+            if kind == 'wall' and building['health'] >= maximum:
+                continue  # Do not spend scarce firepower money upgrading untouched walls.
             if kind == "wall" and building["health"] < maximum:
                 for character in sorted(self.characters(), key=lambda r: distance(r["cell"], building["cell"])):
                     bag = inventory(character)
@@ -849,12 +858,15 @@ class DefensePlanner:
             kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
             candidates = [(names[kind], cell) for cell in sorted(building_ring(station, 1))]
         elif nonnegative_int(self.v.rules.wall_stone_cost) and self.v.rules.wall_stone_cost > 0:
-            # Leave a cardinal entrance on each side, including its diagonal approach.
+            # Build a front screen; leave the back half open for economic routes.
             sx, sy = station
             cells = {p for p in building_ring(station, 2)
-                     if p[0] not in (sx, sx + 1) and p[1] not in (sy, sy - 1)}
+                     if (p[0]-sx-.5)*(20-sx-.5)+(p[1]-sy+.5)*(16-sy) > 0}
             candidates = [("wall", cell) for cell in sorted(cells)]
             workers = [r for r in workers if (inventory(r) or Counter())["stone"] >= self.v.rules.wall_stone_cost]
+            workers = [r for r in workers if not self.v.memory.wall_builder
+                       or r['id'] != self.v.memory.wall_builder['actor']
+                       or self.v.memory.wall_builder['building']]
         choices = []
         for name, cell in candidates:
             if cell in self.world.occupied or cell in self.v.targets:
@@ -866,7 +878,8 @@ class DefensePlanner:
                     # old coordinate/worker-id tie break built both bases alike.
                     cx, cy = station[0] + .5, station[1] - .5
                     frontage = -((cell[0] - cx) * (20 - cx) + (cell[1] - cy) * (15.5 - cy))
-                    choices.append((frontage if name != "wall" else 0, len(route), worker["id"], name, cell))
+                    choices.append((frontage if name == 'wall' else -frontage,
+                                    len(route), worker["id"], name, cell))
         for _, _, actor, name, cell in sorted(choices):
             if self.v.add(actor, {"action": "build", "name": name,
                                   "targetPos": [{"x": cell[0], "y": cell[1]}]}):
@@ -878,28 +891,57 @@ class DefensePlanner:
     def fortify(self):
         """Bounded nearby stone errands for the existing wall construction plan."""
         phase = self.v.memory.phase
-        if (not phase or not phase.is_day or phase.day < 2 or self.v.weapon_count < 3
-                or self.v.wall_count >= min(8, phase.day * 2) or self.base_reserve()
+        if (not phase or not phase.is_day or self.v.weapon_count < 3
+                or self.v.wall_count >= 8 or self.base_reserve()
                 or not nonnegative_int(self.v.rules.wall_stone_cost) or self.v.rules.wall_stone_cost <= 0):
+            self.v.memory.wall_builder = None
             return False
+        job = self.v.memory.wall_builder
+        if job:
+            owner = self.world.characters.get(job['actor'])
+            bag = inventory(owner) if owner else None
+            if bag is None:
+                self.v.memory.wall_builder = None
+                job = None
+            elif job['building']:
+                # Called only after construct could not act. Do not strand a
+                # stocked builder when all remaining front sites are blocked.
+                self.v.memory.wall_builder = None
+                if bag['stone'] >= self.v.rules.wall_stone_cost:
+                    return False
+                job = None
+            elif bag['stone'] >= job['goal']:
+                job['building'] = True
+                return False
         errands = []
         for character in self.characters():
             if character['roleType'] != 'worker':
                 continue
+            if job and character['id'] != job['actor']:
+                continue
             bag = inventory(character)
-            if bag is None or bag['stone'] >= self.v.rules.wall_stone_cost:
+            if bag is None:
+                continue
+            if not job and bag['stone'] >= self.v.rules.wall_stone_cost:
                 continue
             for cell in self.world.zones['stone']:
                 route = self.world.path(character['cell'], self.world.adjacent_goals({cell}, character['cell']), self.v.targets)
                 back = self.economy.return_steps(route[-1]) if route else None
-                needed = self.v.rules.wall_stone_cost - bag['stone']
-                if route and back is not None and len(route) - 1 + needed + back + 3 <= min(18, 71 - phase.round_in_day):
-                    errands.append((len(route), character['id'], cell, route))
-        for _, actor, cell, route in sorted(errands):
+                goal = job['goal'] if job else min(8 - self.v.wall_count, 8) * self.v.rules.wall_stone_cost
+                needed = max(0, goal - bag['stone'])
+                capacity = character.get('backPackCapability', 100)
+                if (nonnegative_int(capacity) and sum(bag.values()) + needed <= capacity
+                        and route and back is not None
+                        and len(route) - 1 + needed + back + 3 <= min(26, 71 - phase.round_in_day)):
+                    errands.append((len(route), character['id'], cell, route, goal))
+        for _, actor, cell, route, goal in sorted(errands):
             target = cell if len(route) == 1 else route[1]
             if self.v.add(actor, {'action': 'collect' if len(route) == 1 else 'move',
                                  'targetPos': [dict(x=target[0], y=target[1])]}):
+                self.v.memory.wall_builder = {'actor': actor, 'goal': goal, 'building': False}
                 return True
+        if job:
+            self.v.memory.wall_builder = None  # Unreachable/refreshed mine or deadline: release the worker.
         return False
 
     def damage(self, weapon, target):
@@ -1015,37 +1057,46 @@ class DefensePlanner:
         phase = self.v.memory.phase
         if phase is None:
             return
-        for weapon in sorted(self.weapons, key=lambda r: r["id"]):
-            if weapon["id"] in self.v.busy:
+        choices = []
+        for weapon in sorted(self.weapons, key=lambda r: (r.get('cooldown', 0) != 0, r['id']))[:3]:
+            if weapon['id'] in self.v.busy:
                 continue
-            routes = []
-            for character in self.characters():
-                goals = {p for p in self.world.adjacent_goals({weapon["cell"]}, character["cell"])
+            options = [None]
+            for character in sorted(self.characters(), key=lambda c: distance(c['cell'], weapon['cell']))[:6]:
+                goals = {p for p in self.world.adjacent_goals({weapon['cell']}, character['cell'])
                          if in_bounds(p) and p not in self.v.targets}
-                # During cooldown choose a safer adjacent firing position, never a
-                # distant retreat that abandons the gun. Equal risk holds position.
-                if not phase.is_day and goals:
-                    if self.v.near(character, {weapon["cell"]}):
-                        goals = {p for p in goals if distance(p, character["cell"]) <= 1}
-                    risks = {p: self.exposure(p) for p in goals}
-                    safest = min(risks.values())
-                    goals = {p for p in goals if risks[p] == safest}
-                if goals and self.stations:
-                    bx, by = self.stations[0]["cell"]
-                    # Behind the gun relative to map center, equally on both sides.
-                    rear = {p: (p[0] - weapon["cell"][0]) * (20 - bx - .5)
-                            + (p[1] - weapon["cell"][1]) * (16 - by) for p in goals}
-                    if character["cell"] not in goals:
-                        goals = {p for p in goals if rear[p] == min(rear.values())}
-                route = self.world.path(character["cell"], goals, self.v.targets)
-                if route and (not phase.is_day or len(route) + 3 >= 71 - phase.round_in_day):
-                    routes.append((len(route), character["id"], route))
-            if routes:
-                _, actor, route = min(routes)
-                if len(route) == 1:
-                    self.v.busy.add(actor)  # Hold station, emitting no artificial wait action.
-                else:
-                    self.v.add(actor, {"action": "move", "targetPos": [dict(x=route[1][0], y=route[1][1])]})
+                if not phase.is_day and self.v.near(character, {weapon['cell']}):
+                    goals = {p for p in goals if distance(p, character['cell']) <= 1}
+                if not goals:
+                    continue
+                risk = {p: self.exposure(p) for p in goals}
+                goals = {p for p in goals if risk[p] == min(risk.values())}
+                route = self.world.path(character['cell'], goals, self.v.targets)
+                if not route or phase.is_day and len(route) + 3 < 71 - phase.round_in_day:
+                    continue
+                # Prefer available guns over waiting guns, with a stable shortest
+                # complete assignment rather than reserving actors by weapon ID.
+                value = (20 if weapon.get('cooldown', 0) == 0 else 5) / len(route)
+                options.append((character['id'], route, value, risk[route[-1]]))
+            choices.append(options)
+        best = None
+        best_key = None
+        for assignment in product(*choices):
+            selected = [x for x in assignment if x is not None]
+            actors = [x[0] for x in selected]
+            destinations = [x[1][1] if len(x[1]) > 1 else x[1][0] for x in selected]
+            if len(set(actors)) != len(actors) or len(set(destinations)) != len(destinations):
+                continue
+            key = (sum(x[2] for x in selected), len(selected),
+                   -sum(x[3] for x in selected), -sum(len(x[1]) for x in selected))
+            if best_key is None or key > best_key:
+                best_key, best = key, selected
+        for actor, route, _, _ in best or []:
+            if len(route) == 1:
+                self.v.busy.add(actor)
+            else:
+                self.v.add(actor, {'action': 'move',
+                                  'targetPos': [dict(x=route[1][0], y=route[1][1])]})
 
 
     def support(self):
@@ -1566,13 +1617,15 @@ def plan_turn(world, memory, rules=None):
     defense.fire()
     defense.support()
     EconomyPlanner(validator).liquidate()
+    if not maintained:
+        maintained = defense.maintain()  # Budgeted upgrades precede optional shopping and early return.
     defense.position_controllers()
+    if not maintained or validator.weapon_count >= 3:
+        if not defense.construct():
+            defense.fortify()
     TreasurePlanner(validator).run()
     defense.provision()
     TaskPlanner(validator).run(response)
-    if not maintained and not defense.maintain():
-        if not defense.construct():
-            defense.fortify()
     defense.summon()
     EconomyPlanner(validator).workers()
     response["roleCommandMap"] = validator.commands
@@ -1598,6 +1651,7 @@ class GameMemory:
     accepted_task: object = None
     worker_mines: dict = field(default_factory=dict)
     upgrade_trip: object = None
+    wall_builder: object = None
     task_experience: list = field(default_factory=list)
     resource_events: list = field(default_factory=list)
     news_pending: object = None

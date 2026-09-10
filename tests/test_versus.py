@@ -12,7 +12,7 @@ class VersusTests(unittest.TestCase):
         v = validator(data, main.Phase(2, 1))
         self.assertTrue(main.DefensePlanner(v).fortify())
         self.assertEqual(v.commands['1']['action'], 'collect')
-        for phase in [main.Phase(1, 1), main.Phase(2, 70), main.Phase(2, 71)]:
+        for phase in [main.Phase(2, 70), main.Phase(2, 71)]:
             self.assertFalse(main.DefensePlanner(validator(data, phase)).fortify())
 
     def test_critical_courier_heals_without_losing_delivery(self):
@@ -35,7 +35,7 @@ class VersusTests(unittest.TestCase):
         self.assertFalse(main.DefensePlanner(v).resume_upgrade())
         self.assertIsNone(v.memory.upgrade_trip)
 
-    def test_both_bases_build_toward_center(self):
+    def test_both_bases_build_behind_base(self):
         for x, y in [(9, 22), (30, 10)]:
             data = state(role(1, 'worker', x-1, y-1), role(2, 'station', x, y, level=1))
             for _ in range(10):
@@ -46,7 +46,7 @@ class VersusTests(unittest.TestCase):
                     data['teamOur']['roles'][0]['pos'] = c['targetPos'][0]
                 else:
                     p = c['targetPos'][0]
-                    self.assertGreater((p['x']-x-.5)*(20-x-.5)+(p['y']-y+.5)*(16-y), 0)
+                    self.assertLess((p['x']-x-.5)*(20-x-.5)+(p['y']-y+.5)*(16-y), 0)
                     self.assertIn((p['x'], p['y']), main.building_ring((x, y), 1))
                     break
             else:
