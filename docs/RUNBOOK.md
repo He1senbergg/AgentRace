@@ -44,4 +44,21 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 
 本地检查不能替代这些步骤；尚未在正式平台执行，不可标记比赛就绪。
 
-本次已按官方 SDK 对齐：可直接执行 `.venv/bin/python src/main3.py 8080`，或 `bash run.sh 8080`。默认监听 127.0.0.1，与官方 `app.run(port=...)` 一致；判题器需从同一网络命名空间访问。
+当前启动：`.venv/bin/python src/main3.py 6666`；监听 0.0.0.0。重提交后查看前3次 [trace_request]/[trace_response] 日志及判题器原始异常。手动探测会占用日志次数并可能改变对局内存，正式运行前应重启进程。
+
+## 角色不动：采集回合诊断
+
+替换部署中的src/main3.py并重启，沿用原启动方式，无需开启debug或新增参数。Linux手动启动并保留控制台日志：
+
+```bash
+mkdir -p log
+.venv/bin/python -u src/main3.py 6666 > log/diagnostic-run.log 2>&1
+```
+
+平台自动启动时直接下载平台控制台日志。确认出现[trace_turn]；保存启动部分、首10条及后续失败记录。round是观测回合，roles中的pos是当前位置，actions是本次输出摘要，feedback是上一回合结果，error_codes是平台错误码（4为指令错误）；feedback_associated表示能否与前一观测关联。phase=null表示昼夜尚未知。actions_total=0表示未输出角色动作；存在move但后续false或坐标不变需结合连续观测排查。日志各类条目最多12个，不是完整请求/响应转储。请勿用手动请求探测正在比赛的进程。
+
+## 最新版本：1基开局与地图
+
+无需增加参数，首个有效观测roundNo=1时自动设origin=1（首观测0仍为0基）；中途接入请显式--round-origin。覆盖此前“只能观察0自动识别”的说明。更新文件并重启后确认首条[trace_turn]的phase非空、actions含build，之后weapons增长；第71回合检查回防和attack。摘要现为前10次、每10次及昼夜边界；[trace_map]在首观测、每50次和昼夜边界打印。将完整控制台日志保存到log/Self，保留地图的多行坐标，不仅截取HTTP 200行。诊断日志中的任务error_codes=[1]表示任务超时，不能当成网络超时。
+
+最新日志：每个已提交非缓存回合均输出[turn]动作和角色状态；control_weapon表示正在操作指定武器，active_task表示任务占用，no_command仅表示未给该角色动作。武器cooldown/level/range及adjacent帮助定位不开火原因。详细[trace_turn]和[trace_map]仍按原周期采样；HTTP 200本身不证明动作成功。

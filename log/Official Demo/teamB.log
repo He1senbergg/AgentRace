@@ -1,0 +1,807 @@
+Log directory: /home/docker/CoreGeek/gamelogs/6666
+Query LLM enabled: 1
+Feature demo items: 1
+2026-09-10 08:38:40,605 | INFO  | root | Challenge log: /home/docker/CoreGeek/gamelogs/6666/challenge.log
+2035 Robot Defense agent listening on 0.0.0.0:6666
+2026-09-10 08:38:41.2869
+process start...
+loop times: 2
+2026-09-10 08:38:41.28807
+/usr/local/bin/python3.11
+2026-09-10 08:38:44,426 | INFO  | root | Challenge log: /home/docker/CoreGeek/gamelogs/6666/challenge.log
+2026-09-10 08:38:44,427 | INFO  | night_fortress.round | ╔══ R0001  D01 DAY   r001 │ 💰   75 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:44,452 | INFO  | night_fortress.strategies.task_solving | TaskSolver loaded via file import
+2026-09-10 08:38:44,453 | INFO  | long_context.extraction_skill | ExtractionSkillLibrary loaded: 0 skills, 0 errors
+2026-09-10 08:38:44,453 | INFO  | long_context.long_context_solver | on_rumor_received: day=1, state=idle, rumor_len=130
+2026-09-10 08:38:44,453 | INFO  | long_context.long_context_solver | Extraction prompt built (2348 chars)
+2026-09-10 08:38:44,815 | INFO  | night_fortress.round | ║  id=20010  BUILD        →(29,8) [railgun]
+2026-09-10 08:38:44,815 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,7)
+2026-09-10 08:38:44,815 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:44,816 | INFO  | night_fortress.detail | R0001 D01 DAY   r001 | 💰   75 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(32,8) HP200/200 | DAY MOVE→(31,7) [task(d8 p76)] | 🎒[—] | W20010@(30,8) HP220/220 | DAY BUILD(railgun)→(29,8) [build(railgun@(29,8) d0 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:44,816 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:48,284 | INFO  | night_fortress.round | ╔══ R0002  D01 DAY   r002 │ 💰   50 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:48,285 | INFO  | long_context.clue_extractor | Noise reported: day=1 reason=原文中“西部有一石门”仅表示方向存在地标，未提供相对于参考点的距离或步数，不符合location提取规则；“门需三钥”及图形描述未匹配任何具体消耗品外观特征，不
+2026-09-10 08:38:48,285 | INFO  | long_context.long_context_solver | Extraction: 0 clues + 1 buffered (buffer: 1 active, 0 review)
+2026-09-10 08:38:48,285 | INFO  | long_context.clue_store | ClueStore saved to /home/docker/CoreGeek/long_context_data/long_context_clues.json (0 clues)
+2026-09-10 08:38:48,286 | INFO  | long_context.extraction_skill | ExtractionSkillLibrary saved: 0 skills, 0 errors → /home/docker/CoreGeek/long_context_data/extraction_skills.json
+2026-09-10 08:38:48,286 | INFO  | long_context.long_context_solver | Clue log written to /home/docker/CoreGeek/long_context_data/clue_logs/clue_log.md
+2026-09-10 08:38:48,658 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(30,6)
+2026-09-10 08:38:48,659 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:38:48,659 | INFO  | night_fortress.detail | R0002 D01 DAY   r002 | 💰   50 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(31,7) HP200/200 | DAY MOVE→(30,6) [task(d8 p76)] | 🎒[—] | W20010@(30,8) HP220/220 | IDLE(day_no_goal(total1)) | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total1)) | 🎒[—]
+2026-09-10 08:38:48,659 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:48,708 | INFO  | night_fortress.round | ╔══ R0003  D01 DAY   r003 │ 💰   50 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:48,767 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,9)
+2026-09-10 08:38:48,767 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(29,7)
+2026-09-10 08:38:48,767 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:48,767 | INFO  | night_fortress.detail | R0003 D01 DAY   r003 | 💰   50 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(30,6) HP200/200 | DAY MOVE→(29,7) [task(d7 p76)] | 🎒[—] | W20010@(30,8) HP220/220 | DAY MOVE→(29,9) [build(gatling@(29,11) d2 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:48,767 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:48,801 | INFO  | night_fortress.round | ╔══ R0004  D01 DAY   r004 │ 💰   50 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:48,846 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(28,10)
+2026-09-10 08:38:48,846 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(28,8)
+2026-09-10 08:38:48,846 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:48,846 | INFO  | night_fortress.detail | R0004 D01 DAY   r004 | 💰   50 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(29,7) HP200/200 | DAY MOVE→(28,8) [task(d6 p76)] | 🎒[—] | W20010@(29,9) HP220/220 | DAY MOVE→(28,10) [build(gatling@(29,11) d1 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:48,847 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:48,883 | INFO  | night_fortress.round | ╔══ R0005  D01 DAY   r005 │ 💰   50 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:48,942 | INFO  | night_fortress.round | ║  id=20010  BUILD        →(29,11) [gatling]
+2026-09-10 08:38:48,943 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,9)
+2026-09-10 08:38:48,943 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:48,943 | INFO  | night_fortress.detail | R0005 D01 DAY   r005 | 💰   50 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(28,8) HP200/200 | DAY MOVE→(27,9) [task(d5 p76)] | 🎒[—] | W20010@(28,10) HP220/220 | DAY BUILD(gatling)→(29,11) [build(gatling@(29,11) d0 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:48,943 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:48,984 | INFO  | night_fortress.round | ╔══ R0006  D01 DAY   r006 │ 💰   25 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:49,426 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(26,10)
+2026-09-10 08:38:49,427 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:38:49,427 | INFO  | night_fortress.detail | R0006 D01 DAY   r006 | 💰   25 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(27,9) HP200/200 | DAY MOVE→(26,10) [task(d4 p76)] | 🎒[—] | W20010@(28,10) HP220/220 | IDLE(day_no_goal(total1)) | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total1)) | 🎒[—]
+2026-09-10 08:38:49,427 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:49,456 | INFO  | night_fortress.round | ╔══ R0007  D01 DAY   r007 │ 💰   25 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:49,510 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,10)
+2026-09-10 08:38:49,510 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(25,11)
+2026-09-10 08:38:49,510 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:49,510 | INFO  | night_fortress.detail | R0007 D01 DAY   r007 | 💰   25 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(26,10) HP200/200 | DAY MOVE→(25,11) [task(d3 p76)] | 🎒[—] | W20010@(28,10) HP220/220 | DAY MOVE→(29,10) [build(rocket@(31,11) d2 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:49,510 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:49,539 | INFO  | night_fortress.round | ╔══ R0008  D01 DAY   r008 │ 💰   25 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:49,599 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(30,11)
+2026-09-10 08:38:49,599 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(24,12)
+2026-09-10 08:38:49,599 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:49,599 | INFO  | night_fortress.detail | R0008 D01 DAY   r008 | 💰   25 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,11) HP200/200 | DAY MOVE→(24,12) [task(d2 p76)] | 🎒[—] | W20010@(29,10) HP220/220 | DAY MOVE→(30,11) [build(rocket@(31,11) d1 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:49,600 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:49,629 | INFO  | night_fortress.round | ╔══ R0009  D01 DAY   r009 │ 💰   25 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:49,696 | INFO  | night_fortress.round | ║  id=20010  BUILD        →(31,11) [rocket]
+2026-09-10 08:38:49,697 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(23,13)
+2026-09-10 08:38:49,697 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:49,697 | INFO  | night_fortress.detail | R0009 D01 DAY   r009 | 💰   25 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(24,12) HP200/200 | DAY MOVE→(23,13) [task(d1 p76)] | 🎒[—] | W20010@(30,11) HP220/220 | DAY BUILD(rocket)→(31,11) [build(rocket@(31,11) d0 p2000)] | 🎒[—] | W20012@(31,8) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[—]
+2026-09-10 08:38:49,697 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:49,730 | INFO  | night_fortress.round | ╔══ R0010  D01 DAY   r010 │ 💰    0 🏆    0 🏠1500/1500 │ —
+2026-09-10 08:38:50,074 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:51,637 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,10)
+2026-09-10 08:38:51,637 | INFO  | night_fortress.round | ║  id=20011  ACCEPTTASK  
+2026-09-10 08:38:51,637 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(32,9)
+2026-09-10 08:38:51,637 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:38:51,637 | INFO  | night_fortress.detail | R0010 D01 DAY   r010 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | DAY ACCEPTTASK [task(at_officer, task=no_task p76)] | 🎒[—] | W20010@(30,11) HP220/220 | DAY MOVE→(29,10) [mine(copper@(27,3) d7 🎒0/100 p90)] | 🎒[—] | W20012@(31,8) HP220/220 | DAY MOVE→(32,9) [mine(stone@(23,30) d21 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:51,638 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:52,252 | INFO  | night_fortress.accept | [ACCEPT][SCORE] accept@R10 phase='请阅读task_1_beijing.md，获取任务信息' reward=80 gold=80 timeout=15 score@R10=0
+2026-09-10 08:38:52,252 | INFO  | night_fortress.round | ╔══ R0011  D01 DAY   r011 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:52,260 | INFO  | engine.solver | plan_probe: type=unknown first_cmd='find /tmp -maxdepth 4 -name task_1_beijing.md -print -exec cat {} \\; 2>&1 | head -200'
+2026-09-10 08:38:52,261 | INFO  | night_fortress.strategies.task_solving | SE probe: first executeCmd='find /tmp -maxdepth 4 -name task_1_beijing.md -print -exec cat {} \\; 2>&1 | head -200'
+2026-09-10 08:38:52,303 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:52,641 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(28,9)
+2026-09-10 08:38:52,641 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(32,10)
+2026-09-10 08:38:52,641 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:52,642 | INFO  | night_fortress.detail | R0011 D01 DAY   r011 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(29,10) HP220/220 | DAY MOVE→(28,9) [mine(copper@(27,3) d6 🎒0/100 p90)] | 🎒[—] | W20012@(32,9) HP220/220 | DAY MOVE→(32,10) [mine(stone@(23,30) d20 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:52,642 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:52,691 | INFO  | night_fortress.round | ╔══ R0012  D01 DAY   r012 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:52,691 | INFO  | engine.solver | next_probe_command: step=1 → 'cat /tmp/selfEvolutionTask/1-fixed-step/1-unknown-api/task_1_beijing.md 2>/dev/null | head -200'
+2026-09-10 08:38:52,724 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:53,109 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(27,8)
+2026-09-10 08:38:53,109 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(32,11)
+2026-09-10 08:38:53,110 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:53,110 | INFO  | night_fortress.detail | R0012 D01 DAY   r012 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(28,9) HP220/220 | DAY MOVE→(27,8) [mine(copper@(27,3) d5 🎒0/100 p90)] | 🎒[—] | W20012@(32,10) HP220/220 | DAY MOVE→(32,11) [mine(stone@(23,30) d19 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:53,110 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:53,148 | INFO  | night_fortress.round | ╔══ R0013  D01 DAY   r013 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:53,148 | INFO  | engine.solver | next_probe_command: step=2 → 'find /tmp -maxdepth 5 -name API_DOCS.md -exec cat {} \\; 2>/dev/null | head -200'
+2026-09-10 08:38:53,193 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:53,578 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(26,7)
+2026-09-10 08:38:53,579 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(31,12)
+2026-09-10 08:38:53,579 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:53,579 | INFO  | night_fortress.detail | R0013 D01 DAY   r013 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(27,8) HP220/220 | DAY MOVE→(26,7) [mine(copper@(27,3) d4 🎒0/100 p90)] | 🎒[—] | W20012@(32,11) HP220/220 | DAY MOVE→(31,12) [mine(stone@(23,30) d18 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:53,579 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:53,619 | INFO  | night_fortress.round | ╔══ R0014  D01 DAY   r014 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:53,620 | INFO  | engine.probe | probe: no further command for type=unknown step=3
+2026-09-10 08:38:53,620 | INFO  | engine.solver | next_probe_command: probe finished at step=3
+2026-09-10 08:38:53,620 | INFO  | engine.solver | build_prompt_with_probe: prompt built (5685 chars, probe=3)
+2026-09-10 08:38:53,620 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (5685 chars), type=unknown
+2026-09-10 08:38:53,660 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:54,033 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(25,6)
+2026-09-10 08:38:54,033 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(30,13)
+2026-09-10 08:38:54,033 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:54,033 | INFO  | night_fortress.detail | R0014 D01 DAY   r014 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(26,7) HP220/220 | DAY MOVE→(25,6) [mine(copper@(27,3) d3 🎒0/100 p90)] | 🎒[—] | W20012@(31,12) HP220/220 | DAY MOVE→(30,13) [mine(stone@(23,30) d17 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:54,034 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:55,821 | INFO  | night_fortress.round | ╔══ R0015  D01 DAY   r015 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:55,822 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='curl -s -H "X-API-Key: heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/search?city=北京"' sop=0 chars skill_used=None
+2026-09-10 08:38:55,822 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='curl -s -H "X-API-Key: heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/search?city=北京"'
+2026-09-10 08:38:55,868 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:56,192 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(25,5)
+2026-09-10 08:38:56,192 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(29,14)
+2026-09-10 08:38:56,192 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:56,192 | INFO  | night_fortress.detail | R0015 D01 DAY   r015 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(25,6) HP220/220 | DAY MOVE→(25,5) [mine(copper@(27,3) d2 🎒0/100 p90)] | 🎒[—] | W20012@(30,13) HP220/220 | DAY MOVE→(29,14) [mine(stone@(23,30) d16 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:56,192 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:56,238 | INFO  | night_fortress.round | ╔══ R0016  D01 DAY   r016 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:56,239 | INFO  | engine.solver | build_prompt_with_probe: prompt built (5969 chars, probe=4)
+2026-09-10 08:38:56,239 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (5969 chars), type=unknown
+2026-09-10 08:38:56,292 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:56,606 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(26,4)
+2026-09-10 08:38:56,607 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(28,15)
+2026-09-10 08:38:56,607 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:56,607 | INFO  | night_fortress.detail | R0016 D01 DAY   r016 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(25,5) HP220/220 | DAY MOVE→(26,4) [mine(copper@(27,3) d1 🎒0/100 p90)] | 🎒[—] | W20012@(29,14) HP220/220 | DAY MOVE→(28,15) [mine(stone@(23,30) d15 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:56,607 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:58,324 | INFO  | night_fortress.round | ╔══ R0017  D01 DAY   r017 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:58,324 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/search?city=北京"' sop=0 chars skill_used=None
+2026-09-10 08:38:58,324 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/sear'
+2026-09-10 08:38:58,385 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:58,662 | INFO  | night_fortress.round | ║  id=20010  COLLECT      →(27,3)
+2026-09-10 08:38:58,662 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(27,16)
+2026-09-10 08:38:58,662 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:58,662 | INFO  | night_fortress.detail | R0017 D01 DAY   r017 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(26,4) HP220/220 | DAY COLLECT→(27,3) [mine(copper@(27,3) d0 🎒0/100 p90)] | 🎒[—] | W20012@(28,15) HP220/220 | DAY MOVE→(27,16) [mine(stone@(23,30) d14 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:58,663 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:38:58,708 | INFO  | night_fortress.round | ╔══ R0018  D01 DAY   r018 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:38:58,709 | INFO  | engine.solver | build_prompt_with_probe: prompt built (6195 chars, probe=5)
+2026-09-10 08:38:58,709 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (6195 chars), type=unknown
+2026-09-10 08:38:58,783 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:38:59,028 | INFO  | night_fortress.round | ║  id=20010  COLLECT      →(27,3)
+2026-09-10 08:38:59,028 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(28,17)
+2026-09-10 08:38:59,028 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:38:59,028 | INFO  | night_fortress.detail | R0018 D01 DAY   r018 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(26,4) HP220/220 | DAY COLLECT→(27,3) [mine(copper@(27,3) d0 🎒1/100 p90)] | 🎒[copper] | W20012@(27,16) HP220/220 | DAY MOVE→(28,17) [mine(stone@(23,30) d13 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:38:59,028 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:03,231 | INFO  | night_fortress.round | ╔══ R0019  D01 DAY   r019 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:03,232 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/search?location=北京"' sop=0 chars skill_used=None
+2026-09-10 08:39:03,232 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/sear'
+2026-09-10 08:39:03,311 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:03,573 | INFO  | night_fortress.round | ║  id=20010  COLLECT      →(27,3)
+2026-09-10 08:39:03,573 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(27,18)
+2026-09-10 08:39:03,573 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:03,574 | INFO  | night_fortress.detail | R0019 D01 DAY   r019 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(26,4) HP220/220 | DAY COLLECT→(27,3) [mine(copper@(27,3) d0 🎒2/100 p90)] | 🎒[copper×2] | W20012@(28,17) HP220/220 | DAY MOVE→(27,18) [mine(stone@(23,30) d12 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:03,574 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:03,618 | INFO  | night_fortress.round | ╔══ R0020  D01 DAY   r020 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:03,619 | INFO  | engine.solver | build_prompt_with_probe: prompt built (7312 chars, probe=6)
+2026-09-10 08:39:03,619 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (7312 chars), type=unknown
+2026-09-10 08:39:03,715 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:04,194 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(25,3)
+2026-09-10 08:39:04,194 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(26,19)
+2026-09-10 08:39:04,194 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:04,194 | INFO  | night_fortress.detail | R0020 D01 DAY   r020 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(26,4) HP220/220 | DAY MOVE→(25,3) [mine(stone@(2,4) d23 🎒3/100 p90)] | 🎒[copper×3] | W20012@(27,18) HP220/220 | DAY MOVE→(26,19) [mine(stone@(23,30) d11 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:04,195 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:07,394 | INFO  | night_fortress.round | ╔══ R0021  D01 DAY   r021 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:07,395 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/search?location=北京&offset=10&limit=5"' sop=0 chars skill_used=None
+2026-09-10 08:39:07,395 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='curl -s -H "Authorization: Bearer heritage-api-key-2024" "http://localhost:8899/api/v1/heritage/sear'
+2026-09-10 08:39:07,506 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:08,053 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(24,2)
+2026-09-10 08:39:08,053 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(26,20)
+2026-09-10 08:39:08,054 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:08,054 | INFO  | night_fortress.detail | R0021 D01 DAY   r021 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(25,3) HP220/220 | DAY MOVE→(24,2) [mine(stone@(2,4) d22 🎒3/100 p90)] | 🎒[copper×3] | W20012@(26,19) HP220/220 | DAY MOVE→(26,20) [mine(stone@(23,30) d10 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:08,054 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:08,100 | INFO  | night_fortress.round | ╔══ R0022  D01 DAY   r022 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:08,101 | INFO  | engine.solver | build_prompt_with_probe: prompt built (8002 chars, probe=7)
+2026-09-10 08:39:08,101 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (8002 chars), type=unknown
+2026-09-10 08:39:08,240 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:08,691 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(23,1)
+2026-09-10 08:39:08,691 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(25,21)
+2026-09-10 08:39:08,691 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:08,691 | INFO  | night_fortress.detail | R0022 D01 DAY   r022 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(24,2) HP220/220 | DAY MOVE→(23,1) [mine(stone@(2,4) d21 🎒3/100 p90)] | 🎒[copper×3] | W20012@(26,20) HP220/220 | DAY MOVE→(25,21) [mine(stone@(23,30) d9 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:08,691 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:15,749 | INFO  | night_fortress.round | ╔══ R0023  D01 DAY   r023 │ 💰    0 🏆    0 🏠1500/1500 │ 请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:15,750 | INFO  | engine.solver | process_llm_response_full() → ready=True answer=137 chars next_cmd=None sop=0 chars skill_used=None
+2026-09-10 08:39:15,750 | INFO  | night_fortress.strategies.task_solving | SE answer ready → submitAnswer (137 chars)
+2026-09-10 08:39:15,890 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=0 item=WeaponUpgradeVoucher1 need=100 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:16,368 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(22,0)
+2026-09-10 08:39:16,369 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(24,22)
+2026-09-10 08:39:16,369 | INFO  | night_fortress.round | ║  id=20011  SUBMITANSWER [answer]
+2026-09-10 08:39:16,369 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:39:16,369 | INFO  | night_fortress.detail | R0023 D01 DAY   r023 | 💰    0 🏆    0 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | SE[answer] 自进化 task=请阅读task_1_beijing.md，获取任务信息 | 🎒[—] | W20010@(23,1) HP220/220 | DAY MOVE→(22,0) [mine(stone@(2,4) d20 🎒3/100 p90)] | 🎒[copper×3] | W20012@(25,21) HP220/220 | DAY MOVE→(24,22) [mine(stone@(23,30) d8 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:16,369 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:16,390 | INFO  | night_fortress.accept | [ACCEPT][SCORE] finish@R23 accept@R10 used=13 → scoreDelta=+86 goldDelta=+80 | reward=80 goldReward=80 timeout=15 expectedFull=86（部分完成/超时结算时实测 < expected）
+2026-09-10 08:39:16,390 | INFO  | night_fortress.round | ╔══ R0024  D01 DAY   r024 │ 💰   80 🏆   86 🏠1500/1500 │ —
+2026-09-10 08:39:16,390 | INFO  | night_fortress.strategies.task_solving | SE task cooldown until round 54 (+30)
+2026-09-10 08:39:16,391 | INFO  | engine.solver | handle_success() task=请阅读task_1_beijing.md，获取任务信息
+2026-09-10 08:39:16,391 | INFO  | engine.solver | _find_matching_skill: 无匹配（llm_used=None, task_id='task_1_beijing'），返回 None
+2026-09-10 08:39:16,391 | INFO  | engine.solver | Auto-created Skill: name=task_1_beijing (char=27 chars, sop=0 chars, template=500 chars)
+2026-09-10 08:39:16,391 | INFO  | night_fortress.strategies.task_solving | SE task SUCCESS: 请阅读task_1_beijing.md，获取任务信息 (sop_captured=False)
+2026-09-10 08:39:16,392 | INFO  | night_fortress.strategies.task_solving | SE SOP summary prompt built (6190 chars)
+2026-09-10 08:39:16,520 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:16,872 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(21,0)
+2026-09-10 08:39:16,872 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(24,14)
+2026-09-10 08:39:16,872 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(23,23)
+2026-09-10 08:39:16,872 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:39:16,872 | INFO  | night_fortress.detail | R0024 D01 DAY   r024 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(23,13) HP200/200 | DAY MOVE→(24,14) [task(d3 p76)] | 🎒[—] | W20010@(22,0) HP220/220 | DAY MOVE→(21,0) [mine(stone@(2,4) d19 🎒3/100 p90)] | 🎒[copper×3] | W20012@(24,22) HP220/220 | DAY MOVE→(23,23) [mine(stone@(23,30) d7 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:16,872 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:38,443 | INFO  | night_fortress.round | ╔══ R0025  D01 DAY   r025 │ 💰   80 🏆   86 🏠1500/1500 │ —
+2026-09-10 08:39:38,444 | INFO  | engine.solver | _find_matching_skill: 任务标识 'task_1_beijing' 命中 'task_1_beijing'
+2026-09-10 08:39:38,444 | INFO  | engine.solver | Skill 'task_1_beijing' SOP backfilled via LLM summary (4236 chars)
+2026-09-10 08:39:38,609 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:39,040 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(20,0)
+2026-09-10 08:39:39,040 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(22,24)
+2026-09-10 08:39:39,041 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:39,041 | INFO  | night_fortress.detail | R0025 D01 DAY   r025 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(24,14) HP200/200 | SE[idle] | 🎒[—] | W20010@(21,0) HP220/220 | DAY MOVE→(20,0) [mine(stone@(2,4) d18 🎒3/100 p90)] | 🎒[copper×3] | W20012@(23,23) HP220/220 | DAY MOVE→(22,24) [mine(stone@(23,30) d6 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:39,041 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:39,056 | INFO  | night_fortress.round | ╔══ R0026  D01 DAY   r026 │ 💰   80 🏆   86 🏠1500/1500 │ —
+2026-09-10 08:39:39,184 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:39,482 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(19,0)
+2026-09-10 08:39:39,482 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(24,15)
+2026-09-10 08:39:39,482 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(21,25)
+2026-09-10 08:39:39,482 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:39:39,482 | INFO  | night_fortress.detail | R0026 D01 DAY   r026 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(24,14) HP200/200 | DAY MOVE→(24,15) [task(d2 p76)] | 🎒[—] | W20010@(20,0) HP220/220 | DAY MOVE→(19,0) [mine(stone@(2,4) d17 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,24) HP220/220 | DAY MOVE→(21,25) [mine(stone@(23,30) d5 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:39,482 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:39,498 | INFO  | night_fortress.round | ╔══ R0027  D01 DAY   r027 │ 💰   80 🏆   86 🏠1500/1500 │ —
+2026-09-10 08:39:39,631 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:39,907 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(18,0)
+2026-09-10 08:39:39,907 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(25,16)
+2026-09-10 08:39:39,907 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(20,26)
+2026-09-10 08:39:39,907 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:39:39,908 | INFO  | night_fortress.detail | R0027 D01 DAY   r027 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(24,15) HP200/200 | DAY MOVE→(25,16) [task(d1 p76)] | 🎒[—] | W20010@(19,0) HP220/220 | DAY MOVE→(18,0) [mine(stone@(2,4) d16 🎒3/100 p90)] | 🎒[copper×3] | W20012@(21,25) HP220/220 | DAY MOVE→(20,26) [mine(stone@(23,30) d4 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:39,908 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:39,924 | INFO  | night_fortress.round | ╔══ R0028  D01 DAY   r028 │ 💰   80 🏆   86 🏠1500/1500 │ —
+2026-09-10 08:39:40,069 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:40,331 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(17,0)
+2026-09-10 08:39:40,331 | INFO  | night_fortress.round | ║  id=20011  ACCEPTTASK  
+2026-09-10 08:39:40,331 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(20,27)
+2026-09-10 08:39:40,331 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:39:40,331 | INFO  | night_fortress.detail | R0028 D01 DAY   r028 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | DAY ACCEPTTASK [task(at_officer, task=no_task p76)] | 🎒[—] | W20010@(18,0) HP220/220 | DAY MOVE→(17,0) [mine(stone@(2,4) d15 🎒3/100 p90)] | 🎒[copper×3] | W20012@(20,26) HP220/220 | DAY MOVE→(20,27) [mine(stone@(23,30) d3 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:40,331 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:40,934 | INFO  | night_fortress.accept | [ACCEPT][SCORE] accept@R28 phase='请阅读task_1_alpha.md，获取任务信息' reward=80 gold=80 timeout=15 score@R28=86
+2026-09-10 08:39:40,934 | INFO  | night_fortress.round | ╔══ R0029  D01 DAY   r029 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:40,934 | INFO  | engine.solver | plan_probe: type=unknown first_cmd='find /tmp -maxdepth 4 -name task_1_alpha.md -print -exec cat {} \\; 2>&1 | head -200'
+2026-09-10 08:39:40,935 | INFO  | night_fortress.strategies.task_solving | SE probe: first executeCmd='find /tmp -maxdepth 4 -name task_1_alpha.md -print -exec cat {} \\; 2>&1 | head -200'
+2026-09-10 08:39:41,146 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:41,464 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(16,0)
+2026-09-10 08:39:41,464 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(21,28)
+2026-09-10 08:39:41,464 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:41,464 | INFO  | night_fortress.detail | R0029 D01 DAY   r029 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(17,0) HP220/220 | DAY MOVE→(16,0) [mine(stone@(2,4) d14 🎒3/100 p90)] | 🎒[copper×3] | W20012@(20,27) HP220/220 | DAY MOVE→(21,28) [mine(stone@(23,30) d2 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:41,464 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:41,504 | INFO  | night_fortress.round | ╔══ R0030  D01 DAY   r030 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:41,504 | INFO  | engine.solver | next_probe_command: step=1 → 'cat /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/task_1_alpha.md 2>/dev/null | head -200'
+2026-09-10 08:39:41,711 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:41,963 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(15,0)
+2026-09-10 08:39:41,964 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(22,29)
+2026-09-10 08:39:41,964 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:41,964 | INFO  | night_fortress.detail | R0030 D01 DAY   r030 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(16,0) HP220/220 | DAY MOVE→(15,0) [mine(stone@(2,4) d13 🎒3/100 p90)] | 🎒[copper×3] | W20012@(21,28) HP220/220 | DAY MOVE→(22,29) [mine(stone@(23,30) d1 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:41,964 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:42,000 | INFO  | night_fortress.round | ╔══ R0031  D01 DAY   r031 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:42,001 | INFO  | engine.solver | next_probe_command: step=2 → 'find /tmp -maxdepth 5 -name spec.md -exec cat {} \\; 2>/dev/null | head -200'
+2026-09-10 08:39:42,312 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:42,610 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(14,0)
+2026-09-10 08:39:42,610 | INFO  | night_fortress.round | ║  id=20012  COLLECT      →(23,30)
+2026-09-10 08:39:42,610 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:42,610 | INFO  | night_fortress.detail | R0031 D01 DAY   r031 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(15,0) HP220/220 | DAY MOVE→(14,0) [mine(stone@(2,4) d12 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY COLLECT→(23,30) [mine(stone@(23,30) d0 🎒0/100 p90)] | 🎒[—]
+2026-09-10 08:39:42,610 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:42,649 | INFO  | night_fortress.round | ╔══ R0032  D01 DAY   r032 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:42,649 | INFO  | engine.probe | probe: no further command for type=unknown step=3
+2026-09-10 08:39:42,650 | INFO  | engine.solver | next_probe_command: probe finished at step=3
+2026-09-10 08:39:42,650 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:39:42,650 | INFO  | engine.solver | build_prompt_with_probe: prompt built (9450 chars, probe=3)
+2026-09-10 08:39:42,650 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (9450 chars), type=unknown
+2026-09-10 08:39:42,907 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:43,128 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(13,0)
+2026-09-10 08:39:43,128 | INFO  | night_fortress.round | ║  id=20012  COLLECT      →(23,30)
+2026-09-10 08:39:43,129 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:43,129 | INFO  | night_fortress.detail | R0032 D01 DAY   r032 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(14,0) HP220/220 | DAY MOVE→(13,0) [mine(stone@(2,4) d11 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY COLLECT→(23,30) [mine(stone@(23,30) d0 🎒1/100 p90)] | 🎒[stone]
+2026-09-10 08:39:43,129 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:45,708 | INFO  | night_fortress.round | ╔══ R0033  D01 DAY   r033 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:45,708 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && ./check' sop=0 chars skill_used='none'
+2026-09-10 08:39:45,709 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && ./check'
+2026-09-10 08:39:46,047 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:46,325 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(12,0)
+2026-09-10 08:39:46,325 | INFO  | night_fortress.round | ║  id=20012  COLLECT      →(23,30)
+2026-09-10 08:39:46,325 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:46,325 | INFO  | night_fortress.detail | R0033 D01 DAY   r033 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(13,0) HP220/220 | DAY MOVE→(12,0) [mine(stone@(2,4) d10 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY COLLECT→(23,30) [mine(stone@(23,30) d0 🎒2/100 p90)] | 🎒[stone×2]
+2026-09-10 08:39:46,325 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:46,363 | INFO  | night_fortress.round | ╔══ R0034  D01 DAY   r034 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:46,363 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:39:46,364 | INFO  | engine.solver | build_prompt_with_probe: prompt built (9640 chars, probe=4)
+2026-09-10 08:39:46,364 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (9640 chars), type=unknown
+2026-09-10 08:39:46,764 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:47,070 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(11,0)
+2026-09-10 08:39:47,071 | INFO  | night_fortress.round | ║  id=20012  COLLECT      →(23,30)
+2026-09-10 08:39:47,071 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:47,071 | INFO  | night_fortress.detail | R0034 D01 DAY   r034 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(12,0) HP220/220 | DAY MOVE→(11,0) [mine(stone@(2,4) d9 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY COLLECT→(23,30) [mine(stone@(23,30) d0 🎒3/100 p90)] | 🎒[stone×3]
+2026-09-10 08:39:47,071 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:49,489 | INFO  | night_fortress.round | ╔══ R0035  D01 DAY   r035 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:49,490 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd="cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && dos2unix check 2>/dev/null || sed -i 's/\\r$//' check && chmod +x check && ./check" sop=0 chars skill_used='none'
+2026-09-10 08:39:49,490 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && dos2unix check 2>/dev/null || sed '
+2026-09-10 08:39:49,846 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:50,062 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(10,0)
+2026-09-10 08:39:50,062 | INFO  | night_fortress.round | ║  id=20012  COLLECT      →(23,30)
+2026-09-10 08:39:50,062 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:50,062 | INFO  | night_fortress.detail | R0035 D01 DAY   r035 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(11,0) HP220/220 | DAY MOVE→(10,0) [mine(stone@(2,4) d8 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY COLLECT→(23,30) [mine(stone@(23,30) d0 🎒4/100 p90)] | 🎒[stone×4]
+2026-09-10 08:39:50,062 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:50,267 | INFO  | night_fortress.round | ╔══ R0036  D01 DAY   r036 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:50,268 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:39:50,268 | INFO  | engine.solver | build_prompt_with_probe: prompt built (10064 chars, probe=5)
+2026-09-10 08:39:50,268 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (10064 chars), type=unknown
+2026-09-10 08:39:50,716 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:51,566 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(9,0)
+2026-09-10 08:39:51,567 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(21,28)
+2026-09-10 08:39:51,567 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:51,567 | INFO  | night_fortress.detail | R0036 D01 DAY   r036 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(10,0) HP220/220 | DAY MOVE→(9,0) [mine(stone@(2,4) d7 🎒3/100 p90)] | 🎒[copper×3] | W20012@(22,29) HP220/220 | DAY MOVE→(21,28) [build(wall@(28,7) d21 p72)] | 🎒[stone×5]
+2026-09-10 08:39:51,567 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:54,887 | INFO  | night_fortress.round | ╔══ R0037  D01 DAY   r037 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:54,888 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd="cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && \\\nmkdir -p logs/alpha && \\\nchmod 755 logs/alpha && \\\nsed -i 's/^port 9999$/port 8080/' config/alpha.conf && \\\nsed -i 's/^name wrong-app$/name alpha-app/' config/alpha.conf && \\\n./check" sop=0 chars skill_used='none'
+2026-09-10 08:39:54,888 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && \\\nmkdir -p logs/alpha && \\\nchmod 7'
+2026-09-10 08:39:55,199 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:55,830 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(8,0)
+2026-09-10 08:39:55,830 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(20,27)
+2026-09-10 08:39:55,830 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:55,830 | INFO  | night_fortress.detail | R0037 D01 DAY   r037 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(9,0) HP220/220 | DAY MOVE→(8,0) [mine(stone@(2,4) d6 🎒3/100 p90)] | 🎒[copper×3] | W20012@(21,28) HP220/220 | DAY MOVE→(20,27) [build(wall@(28,7) d20 p72)] | 🎒[stone×5]
+2026-09-10 08:39:55,830 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:55,935 | INFO  | night_fortress.round | ╔══ R0038  D01 DAY   r038 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:55,936 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:39:55,936 | INFO  | engine.solver | build_prompt_with_probe: prompt built (10522 chars, probe=6)
+2026-09-10 08:39:55,936 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (10522 chars), type=unknown
+2026-09-10 08:39:56,235 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:39:56,757 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(7,0)
+2026-09-10 08:39:56,757 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(19,26)
+2026-09-10 08:39:56,757 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:39:56,757 | INFO  | night_fortress.detail | R0038 D01 DAY   r038 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(8,0) HP220/220 | DAY MOVE→(7,0) [mine(stone@(2,4) d5 🎒3/100 p90)] | 🎒[copper×3] | W20012@(20,27) HP220/220 | DAY MOVE→(19,26) [build(wall@(28,7) d19 p72)] | 🎒[stone×5]
+2026-09-10 08:39:56,758 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:39:59,343 | INFO  | night_fortress.round | ╔══ R0039  D01 DAY   r039 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:39:59,344 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && cat -n config/alpha.conf' sop=0 chars skill_used='none'
+2026-09-10 08:39:59,344 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && cat -n config/alpha.conf'
+2026-09-10 08:39:59,617 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:40:00,047 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(6,0)
+2026-09-10 08:40:00,048 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(18,25)
+2026-09-10 08:40:00,048 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:00,048 | INFO  | night_fortress.detail | R0039 D01 DAY   r039 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(7,0) HP220/220 | DAY MOVE→(6,0) [mine(stone@(2,4) d4 🎒3/100 p90)] | 🎒[copper×3] | W20012@(19,26) HP220/220 | DAY MOVE→(18,25) [build(wall@(28,7) d18 p72)] | 🎒[stone×5]
+2026-09-10 08:40:00,048 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:00,080 | INFO  | night_fortress.round | ╔══ R0040  D01 DAY   r040 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:40:00,080 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:40:00,080 | INFO  | engine.solver | build_prompt_with_probe: prompt built (10806 chars, probe=7)
+2026-09-10 08:40:00,080 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (10806 chars), type=unknown
+2026-09-10 08:40:00,359 | INFO  | night_fortress.planning.weapon_shop | DEMO_SAVE day=1 gold=80 item=WeaponUpgradeVoucher1 need=20 reason=weapon=railgun:20030 lv=1
+2026-09-10 08:40:00,716 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(5,1)
+2026-09-10 08:40:00,717 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(17,24)
+2026-09-10 08:40:00,717 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:00,717 | INFO  | night_fortress.detail | R0040 D01 DAY   r040 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(6,0) HP220/220 | DAY MOVE→(5,1) [mine(stone@(2,4) d3 🎒3/100 p90)] | 🎒[copper×3] | W20012@(18,25) HP220/220 | DAY MOVE→(17,24) [build(wall@(28,7) d17 p72)] | 🎒[stone×5]
+2026-09-10 08:40:00,717 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:03,828 | INFO  | night_fortress.round | ╔══ R0041  D01 DAY   r041 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:40:03,829 | INFO  | engine.solver | process_llm_response_full() → ready=False answer=0 chars next_cmd="cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && \\\ncat -n config/alpha.conf | xxd | head -40 && \\\nsed -i 's/9999/8080/' config/alpha.conf && \\\nsed -i 's/wrong-app/alpha-app/' config/alpha.conf && \\\ncat -n config/alpha.conf && \\\n./check" sop=0 chars skill_used='none'
+2026-09-10 08:40:03,829 | INFO  | night_fortress.strategies.task_solving | SE llmResp not ready → next_command='cd /tmp/selfEvolutionTask/1-fixed-step/2-engineering-fix/ws_1/ && \\\ncat -n config/alpha.conf | xxd |'
+2026-09-10 08:40:04,395 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(6,0)
+2026-09-10 08:40:04,395 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(16,23)
+2026-09-10 08:40:04,395 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:04,395 | INFO  | night_fortress.detail | R0041 D01 DAY   r041 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[cmd] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(5,1) HP220/220 | DAY MOVE→(6,0) [defend(T20040 d27 p1000)] | 🎒[copper×3] | W20012@(17,24) HP220/220 | DAY MOVE→(16,23) [build(wall@(28,7) d16 p72)] | 🎒[stone×5]
+2026-09-10 08:40:04,396 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:04,551 | INFO  | night_fortress.round | ╔══ R0042  D01 DAY   r042 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:40:04,551 | INFO  | engine.solver | _query_skills: 全量候选 1 项按质量排序，取前 1 注入（交由 LLM 判断）
+2026-09-10 08:40:04,551 | INFO  | engine.solver | build_prompt_with_probe: prompt built (11977 chars, probe=8)
+2026-09-10 08:40:04,551 | INFO  | night_fortress.strategies.task_solving | SE prompt built from probe (11977 chars), type=unknown
+2026-09-10 08:40:05,217 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(7,0)
+2026-09-10 08:40:05,217 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(15,22)
+2026-09-10 08:40:05,217 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:05,217 | INFO  | night_fortress.detail | R0042 D01 DAY   r042 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[prompt] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(6,0) HP220/220 | DAY MOVE→(7,0) [defend(T20040 d26 p1000)] | 🎒[copper×3] | W20012@(16,23) HP220/220 | DAY MOVE→(15,22) [build(wall@(28,7) d15 p72)] | 🎒[stone×5]
+2026-09-10 08:40:05,218 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:08,013 | INFO  | night_fortress.round | ╔══ R0043  D01 DAY   r043 │ 💰   80 🏆   86 🏠1500/1500 │ 请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:40:08,013 | INFO  | engine.solver | process_llm_response_full() → ready=True answer=25 chars next_cmd=None sop=0 chars skill_used='none'
+2026-09-10 08:40:08,013 | INFO  | night_fortress.strategies.task_solving | SE answer ready → submitAnswer (25 chars)
+2026-09-10 08:40:08,543 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(8,0)
+2026-09-10 08:40:08,543 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(14,21)
+2026-09-10 08:40:08,543 | INFO  | night_fortress.round | ║  id=20011  SUBMITANSWER [answer]
+2026-09-10 08:40:08,543 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:40:08,543 | INFO  | night_fortress.detail | R0043 D01 DAY   r043 | 💰   80 🏆   86 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[answer] 自进化 task=请阅读task_1_alpha.md，获取任务信息 | 🎒[—] | W20010@(7,0) HP220/220 | DAY MOVE→(8,0) [defend(T20040 d25 p1000)] | 🎒[copper×3] | W20012@(15,22) HP220/220 | DAY MOVE→(14,21) [build(wall@(28,7) d14 p72)] | 🎒[stone×5]
+2026-09-10 08:40:08,544 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:08,596 | INFO  | night_fortress.accept | [ACCEPT][SCORE] finish@R43 accept@R28 used=15 → scoreDelta=+85 goldDelta=+80 | reward=80 goldReward=80 timeout=15 expectedFull=85（部分完成/超时结算时实测 < expected）
+2026-09-10 08:40:08,596 | INFO  | night_fortress.round | ╔══ R0044  D01 DAY   r044 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:08,596 | INFO  | night_fortress.strategies.task_solving | SE task cooldown until round 55 (+11)
+2026-09-10 08:40:08,597 | INFO  | engine.solver | handle_success() task=请阅读task_1_alpha.md，获取任务信息
+2026-09-10 08:40:08,597 | INFO  | engine.solver | _find_matching_skill: 无匹配（llm_used='none', task_id='task_1_alpha'），返回 None
+2026-09-10 08:40:08,597 | INFO  | engine.solver | Auto-created Skill: name=task_1_alpha (char=51 chars, sop=0 chars, template=500 chars)
+2026-09-10 08:40:08,597 | INFO  | night_fortress.strategies.task_solving | SE task SUCCESS: 请阅读task_1_alpha.md，获取任务信息 (sop_captured=False)
+2026-09-10 08:40:08,598 | INFO  | night_fortress.strategies.task_solving | SE SOP summary prompt built (5102 chars)
+2026-09-10 08:40:09,161 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(9,0)
+2026-09-10 08:40:09,162 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(15,20)
+2026-09-10 08:40:09,162 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:09,162 | INFO  | night_fortress.detail | R0044 D01 DAY   r044 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(8,0) HP220/220 | DAY MOVE→(9,0) [defend(T20040 d24 p1000)] | 🎒[copper×3] | W20012@(14,21) HP220/220 | DAY MOVE→(15,20) [build(wall@(28,7) d13 p72)] | 🎒[stone×5]
+2026-09-10 08:40:09,162 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:24,405 | INFO  | night_fortress.round | ╔══ R0045  D01 DAY   r045 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:24,406 | INFO  | engine.solver | _find_matching_skill: 任务标识 'task_1_alpha' 命中 'task_1_alpha'
+2026-09-10 08:40:24,406 | INFO  | engine.solver | Skill 'task_1_alpha' SOP backfilled via LLM summary (2122 chars)
+2026-09-10 08:40:25,066 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(10,0)
+2026-09-10 08:40:25,066 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(16,19)
+2026-09-10 08:40:25,066 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:25,066 | INFO  | night_fortress.detail | R0045 D01 DAY   r045 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | SE[idle] | 🎒[—] | W20010@(9,0) HP220/220 | DAY MOVE→(10,0) [defend(T20040 d23 p1000)] | 🎒[copper×3] | W20012@(15,20) HP220/220 | DAY MOVE→(16,19) [build(wall@(28,7) d12 p72)] | 🎒[stone×5]
+2026-09-10 08:40:25,067 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:25,081 | INFO  | night_fortress.round | ╔══ R0046  D01 DAY   r046 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:25,638 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(11,0)
+2026-09-10 08:40:25,638 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(17,18)
+2026-09-10 08:40:25,638 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:25,639 | INFO  | night_fortress.detail | R0046 D01 DAY   r046 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(10,0) HP220/220 | DAY MOVE→(11,0) [defend(T20040 d22 p1000)] | 🎒[copper×3] | W20012@(16,19) HP220/220 | DAY MOVE→(17,18) [build(wall@(28,7) d11 p72)] | 🎒[stone×5]
+2026-09-10 08:40:25,639 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:25,652 | INFO  | night_fortress.round | ╔══ R0047  D01 DAY   r047 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:26,162 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(12,0)
+2026-09-10 08:40:26,162 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(18,17)
+2026-09-10 08:40:26,162 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:26,162 | INFO  | night_fortress.detail | R0047 D01 DAY   r047 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(11,0) HP220/220 | DAY MOVE→(12,0) [defend(T20040 d21 p1000)] | 🎒[copper×3] | W20012@(17,18) HP220/220 | DAY MOVE→(18,17) [build(wall@(28,7) d10 p72)] | 🎒[stone×5]
+2026-09-10 08:40:26,163 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:26,177 | INFO  | night_fortress.round | ╔══ R0048  D01 DAY   r048 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:26,554 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(13,0)
+2026-09-10 08:40:26,554 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(19,16)
+2026-09-10 08:40:26,554 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:26,554 | INFO  | night_fortress.detail | R0048 D01 DAY   r048 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(12,0) HP220/220 | DAY MOVE→(13,0) [defend(T20040 d20 p1000)] | 🎒[copper×3] | W20012@(18,17) HP220/220 | DAY MOVE→(19,16) [build(wall@(28,7) d9 p72)] | 🎒[stone×5]
+2026-09-10 08:40:26,554 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:26,566 | INFO  | night_fortress.round | ╔══ R0049  D01 DAY   r049 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:26,899 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(14,0)
+2026-09-10 08:40:26,900 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(20,15)
+2026-09-10 08:40:26,900 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:26,900 | INFO  | night_fortress.detail | R0049 D01 DAY   r049 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(13,0) HP220/220 | DAY MOVE→(14,0) [defend(T20040 d19 p1000)] | 🎒[copper×3] | W20012@(19,16) HP220/220 | DAY MOVE→(20,15) [build(wall@(28,7) d8 p72)] | 🎒[stone×5]
+2026-09-10 08:40:26,900 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:26,913 | INFO  | night_fortress.round | ╔══ R0050  D01 DAY   r050 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:27,310 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(15,0)
+2026-09-10 08:40:27,310 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(21,14)
+2026-09-10 08:40:27,310 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:27,310 | INFO  | night_fortress.detail | R0050 D01 DAY   r050 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(14,0) HP220/220 | DAY MOVE→(15,0) [defend(T20040 d18 p1000)] | 🎒[copper×3] | W20012@(20,15) HP220/220 | DAY MOVE→(21,14) [build(wall@(28,7) d7 p72)] | 🎒[stone×5]
+2026-09-10 08:40:27,310 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:27,323 | INFO  | night_fortress.round | ╔══ R0051  D01 DAY   r051 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:27,598 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(16,0)
+2026-09-10 08:40:27,599 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(22,13)
+2026-09-10 08:40:27,599 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:27,599 | INFO  | night_fortress.detail | R0051 D01 DAY   r051 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(15,0) HP220/220 | DAY MOVE→(16,0) [defend(T20040 d17 p1000)] | 🎒[copper×3] | W20012@(21,14) HP220/220 | DAY MOVE→(22,13) [build(wall@(28,7) d6 p72)] | 🎒[stone×5]
+2026-09-10 08:40:27,599 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:27,612 | INFO  | night_fortress.round | ╔══ R0052  D01 DAY   r052 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:27,831 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(17,0)
+2026-09-10 08:40:27,831 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(23,12)
+2026-09-10 08:40:27,832 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:27,832 | INFO  | night_fortress.detail | R0052 D01 DAY   r052 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(16,0) HP220/220 | DAY MOVE→(17,0) [defend(T20040 d16 p1000)] | 🎒[copper×3] | W20012@(22,13) HP220/220 | DAY MOVE→(23,12) [build(wall@(28,7) d5 p72)] | 🎒[stone×5]
+2026-09-10 08:40:27,832 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:27,844 | INFO  | night_fortress.round | ╔══ R0053  D01 DAY   r053 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,041 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(18,0)
+2026-09-10 08:40:28,041 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(24,11)
+2026-09-10 08:40:28,041 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,041 | INFO  | night_fortress.detail | R0053 D01 DAY   r053 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(17,0) HP220/220 | DAY MOVE→(18,0) [defend(T20040 d15 p1000)] | 🎒[copper×3] | W20012@(23,12) HP220/220 | DAY MOVE→(24,11) [build(wall@(28,7) d4 p72)] | 🎒[stone×5]
+2026-09-10 08:40:28,041 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,055 | INFO  | night_fortress.round | ╔══ R0054  D01 DAY   r054 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,264 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(19,0)
+2026-09-10 08:40:28,265 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(25,10)
+2026-09-10 08:40:28,265 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,265 | INFO  | night_fortress.detail | R0054 D01 DAY   r054 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(18,0) HP220/220 | DAY MOVE→(19,0) [defend(T20040 d14 p1000)] | 🎒[copper×3] | W20012@(24,11) HP220/220 | DAY MOVE→(25,10) [build(wall@(28,7) d3 p72)] | 🎒[stone×5]
+2026-09-10 08:40:28,265 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,276 | INFO  | night_fortress.round | ╔══ R0055  D01 DAY   r055 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,445 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(20,1)
+2026-09-10 08:40:28,445 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(26,9)
+2026-09-10 08:40:28,445 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,445 | INFO  | night_fortress.detail | R0055 D01 DAY   r055 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(19,0) HP220/220 | DAY MOVE→(20,1) [defend(T20040 d13 p1000)] | 🎒[copper×3] | W20012@(25,10) HP220/220 | DAY MOVE→(26,9) [build(wall@(28,7) d2 p72)] | 🎒[stone×5]
+2026-09-10 08:40:28,445 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,457 | INFO  | night_fortress.round | ╔══ R0056  D01 DAY   r056 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,572 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(21,2)
+2026-09-10 08:40:28,572 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(27,8)
+2026-09-10 08:40:28,572 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,572 | INFO  | night_fortress.detail | R0056 D01 DAY   r056 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(20,1) HP220/220 | DAY MOVE→(21,2) [defend(T20040 d12 p1000)] | 🎒[copper×3] | W20012@(26,9) HP220/220 | DAY MOVE→(27,8) [build(wall@(28,7) d1 p72)] | 🎒[stone×5]
+2026-09-10 08:40:28,572 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,586 | INFO  | night_fortress.round | ╔══ R0057  D01 DAY   r057 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,689 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(22,3)
+2026-09-10 08:40:28,690 | INFO  | night_fortress.round | ║  id=20012  BUILD        →(28,7) [wall]
+2026-09-10 08:40:28,690 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,690 | INFO  | night_fortress.detail | R0057 D01 DAY   r057 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(21,2) HP220/220 | DAY MOVE→(22,3) [defend(T20040 d9 p1000)] | 🎒[copper×3] | W20012@(27,8) HP220/220 | DAY BUILD(wall)→(28,7) [build(wall@(28,7) d0 p72)] | 🎒[stone×5]
+2026-09-10 08:40:28,690 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,704 | INFO  | night_fortress.round | ╔══ R0058  D01 DAY   r058 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,791 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(23,4)
+2026-09-10 08:40:28,791 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:28,791 | INFO  | night_fortress.detail | R0058 D01 DAY   r058 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total1)) | 🎒[—] | W20010@(22,3) HP220/220 | DAY MOVE→(23,4) [defend(T20040 d8 p1000)] | 🎒[copper×3] | W20012@(27,8) HP220/220 | IDLE(day_no_goal(total1)) | 🎒[stone×4]
+2026-09-10 08:40:28,791 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,802 | INFO  | night_fortress.round | ╔══ R0059  D01 DAY   r059 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:28,893 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(24,5)
+2026-09-10 08:40:28,894 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(26,9)
+2026-09-10 08:40:28,894 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:28,894 | INFO  | night_fortress.detail | R0059 D01 DAY   r059 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(23,4) HP220/220 | DAY MOVE→(24,5) [defend(T20040 d7 p1000)] | 🎒[copper×3] | W20012@(27,8) HP220/220 | DAY MOVE→(26,9) [build(wall@(28,12) d3 p72)] | 🎒[stone×4]
+2026-09-10 08:40:28,894 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:28,905 | INFO  | night_fortress.round | ╔══ R0060  D01 DAY   r060 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,018 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(25,6)
+2026-09-10 08:40:29,019 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(26,10)
+2026-09-10 08:40:29,019 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,019 | INFO  | night_fortress.detail | R0060 D01 DAY   r060 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(24,5) HP220/220 | DAY MOVE→(25,6) [defend(T20040 d6 p1000)] | 🎒[copper×3] | W20012@(26,9) HP220/220 | DAY MOVE→(26,10) [build(wall@(28,12) d2 p72)] | 🎒[stone×4]
+2026-09-10 08:40:29,019 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,034 | INFO  | night_fortress.round | ╔══ R0061  D01 DAY   r061 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,140 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(26,7)
+2026-09-10 08:40:29,140 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(27,11)
+2026-09-10 08:40:29,140 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,140 | INFO  | night_fortress.detail | R0061 D01 DAY   r061 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(25,6) HP220/220 | DAY MOVE→(26,7) [defend(T20040 d5 p1000)] | 🎒[copper×3] | W20012@(26,10) HP220/220 | DAY MOVE→(27,11) [build(wall@(28,12) d1 p72)] | 🎒[stone×4]
+2026-09-10 08:40:29,141 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,152 | INFO  | night_fortress.round | ╔══ R0062  D01 DAY   r062 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,228 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(27,8)
+2026-09-10 08:40:29,229 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(26,15)
+2026-09-10 08:40:29,229 | INFO  | night_fortress.round | ║  id=20012  BUILD        →(28,12) [wall]
+2026-09-10 08:40:29,229 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:40:29,229 | INFO  | night_fortress.detail | R0062 D01 DAY   r062 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(25,16) HP200/200 | DAY MOVE→(26,15) [defend(T20040 d5 p1000)] | 🎒[—] | W20010@(26,7) HP220/220 | DAY MOVE→(27,8) [defend(T20040 d4 p1000)] | 🎒[copper×3] | W20012@(27,11) HP220/220 | DAY BUILD(wall)→(28,12) [build(wall@(28,12) d0 p72)] | 🎒[stone×4]
+2026-09-10 08:40:29,229 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,242 | INFO  | night_fortress.round | ╔══ R0063  D01 DAY   r063 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,316 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(28,9)
+2026-09-10 08:40:29,316 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,14)
+2026-09-10 08:40:29,316 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,317 | INFO  | night_fortress.detail | R0063 D01 DAY   r063 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(26,15) HP200/200 | DAY MOVE→(27,14) [defend(T20040 d4 p1000)] | 🎒[—] | W20010@(27,8) HP220/220 | DAY MOVE→(28,9) [defend(T20040 d3 p1000)] | 🎒[copper×3] | W20012@(27,11) HP220/220 | IDLE(day_no_goal(total2)) | 🎒[stone×3]
+2026-09-10 08:40:29,317 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,333 | INFO  | night_fortress.round | ╔══ R0064  D01 DAY   r064 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,388 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,10)
+2026-09-10 08:40:29,388 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(28,13)
+2026-09-10 08:40:29,388 | INFO  | night_fortress.round | ║  id=20012  BUILD        →(28,10) [wall]
+2026-09-10 08:40:29,388 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:40:29,388 | INFO  | night_fortress.detail | R0064 D01 DAY   r064 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(27,14) HP200/200 | DAY MOVE→(28,13) [defend(T20040 d3 p1000)] | 🎒[—] | W20010@(28,9) HP220/220 | DAY MOVE→(29,10) [defend(T20040 d2 p1000)] | 🎒[copper×3] | W20012@(27,11) HP220/220 | DAY BUILD(wall)→(28,10) [build(wall@(28,10) d0 p72)] | 🎒[stone×3]
+2026-09-10 08:40:29,388 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,401 | INFO  | night_fortress.round | ╔══ R0065  D01 DAY   r065 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,454 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(30,11)
+2026-09-10 08:40:29,454 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(27,10)
+2026-09-10 08:40:29,454 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,454 | INFO  | night_fortress.detail | R0065 D01 DAY   r065 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(28,13) HP200/200 | IDLE(day_no_goal(total2)) | 🎒[—] | W20010@(29,10) HP220/220 | DAY MOVE→(30,11) [defend(T20040 d1 p1000)] | 🎒[copper×3] | W20012@(27,11) HP220/220 | DAY MOVE→(27,10) [defend(T20030 d2 p1000)] | 🎒[stone×2]
+2026-09-10 08:40:29,455 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,467 | INFO  | night_fortress.round | ╔══ R0066  D01 DAY   r066 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,484 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,10)
+2026-09-10 08:40:29,485 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(29,12)
+2026-09-10 08:40:29,485 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(28,11)
+2026-09-10 08:40:29,485 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:40:29,485 | INFO  | night_fortress.detail | R0066 D01 DAY   r066 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(28,13) HP200/200 | DAY MOVE→(29,12) [defend(T20040 d4 p1000)] | 🎒[—] | W20010@(30,11) HP220/220 | DAY MOVE→(29,10) [defend(T20030 d2 p1000)] | 🎒[copper×3] | W20012@(27,10) HP220/220 | DAY MOVE→(28,11) [defend(T20020 d1 p1000)] | 🎒[stone×2]
+2026-09-10 08:40:29,485 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,497 | INFO  | night_fortress.round | ╔══ R0067  D01 DAY   r067 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,518 | INFO  | night_fortress.round | ║  id=20010  MOVE         →(29,9)
+2026-09-10 08:40:29,518 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(30,11)
+2026-09-10 08:40:29,519 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,519 | INFO  | night_fortress.detail | R0067 D01 DAY   r067 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(29,12) HP200/200 | DAY MOVE→(30,11) [defend(T20040 d1 p1000)] | 🎒[—] | W20010@(29,10) HP220/220 | DAY MOVE→(29,9) [defend(T20030 d1 p1000)] | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[stone×2]
+2026-09-10 08:40:29,519 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,533 | INFO  | night_fortress.round | ╔══ R0068  D01 DAY   r068 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,550 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,550 | INFO  | night_fortress.detail | R0068 D01 DAY   r068 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(30,11) HP200/200 | IDLE(day_no_goal(total3)) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[stone×2]
+2026-09-10 08:40:29,550 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,561 | INFO  | night_fortress.round | ╔══ R0069  D01 DAY   r069 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,578 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,579 | INFO  | night_fortress.detail | R0069 D01 DAY   r069 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(30,11) HP200/200 | IDLE(day_no_goal(total3)) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[stone×2]
+2026-09-10 08:40:29,579 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,589 | INFO  | night_fortress.round | ╔══ R0070  D01 DAY   r070 │ 💰  160 🏆  171 🏠1500/1500 │ —
+2026-09-10 08:40:29,606 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,607 | INFO  | night_fortress.detail | R0070 D01 DAY   r070 | 💰  160 🏆  171 🏠1500/1500 🤖ours:0/others:0 | P20011@(30,11) HP200/200 | IDLE(day_no_goal(total3)) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(day_no_goal(total3)) | 🎒[stone×2]
+2026-09-10 08:40:29,607 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,631 | INFO  | night_fortress.round | ╔══ R0071  D01 NIGHT r071 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,654 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,12)
+2026-09-10 08:40:29,655 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:29,655 | INFO  | night_fortress.detail | R0071 D01 NIGHT r071 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(30,11) HP200/200 | NIGHT MOVE→(31,12) [→T20040 d2 🤖ours:35/others:35] | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,655 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,693 | INFO  | night_fortress.round | ╔══ R0072  D01 NIGHT r072 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,718 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(32,11)
+2026-09-10 08:40:29,718 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:29,718 | INFO  | night_fortress.detail | R0072 D01 NIGHT r072 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(31,12) HP200/200 | NIGHT MOVE→(32,11) [→T20040 d1 🤖ours:35/others:35] | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,719 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,742 | INFO  | night_fortress.round | ╔══ R0073  D01 NIGHT r073 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,765 | WARNING | night_fortress.strategies.nighttime | role 20010 has issued no night command for 3 rounds (round 73) — exposed to range-3 robot sniping
+2026-09-10 08:40:29,768 | WARNING | night_fortress.strategies.nighttime | role 20012 has issued no night command for 3 rounds (round 73) — exposed to range-3 robot sniping
+2026-09-10 08:40:29,769 | INFO  | night_fortress.round | ║  id=20040  ATTACK       →(23,21)
+2026-09-10 08:40:29,769 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:29,769 | INFO  | night_fortress.detail | R0073 D01 NIGHT r073 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,769 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,792 | INFO  | night_fortress.round | ╔══ R0074  D01 NIGHT r074 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,803 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,804 | INFO  | night_fortress.detail | R0074 D01 NIGHT r074 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,804 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,818 | INFO  | night_fortress.round | ╔══ R0075  D01 NIGHT r075 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,828 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,829 | INFO  | night_fortress.detail | R0075 D01 NIGHT r075 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,829 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,850 | INFO  | night_fortress.round | ╔══ R0076  D01 NIGHT r076 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,859 | WARNING | night_fortress.strategies.nighttime | role 20011 has issued no night command for 3 rounds (round 76) — exposed to range-3 robot sniping
+2026-09-10 08:40:29,861 | INFO  | night_fortress.round | ╚══ No commands
+2026-09-10 08:40:29,861 | INFO  | night_fortress.detail | R0076 D01 NIGHT r076 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,861 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,879 | INFO  | night_fortress.round | ╔══ R0077  D01 NIGHT r077 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,905 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,4)
+2026-09-10 08:40:29,905 | INFO  | night_fortress.round | ║  id=20040  ATTACK       →(22,5)
+2026-09-10 08:40:29,905 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:29,905 | INFO  | night_fortress.detail | R0077 D01 NIGHT r077 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,905 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,921 | INFO  | night_fortress.round | ╔══ R0078  D01 NIGHT r078 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:29,962 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:29,962 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:29,963 | INFO  | night_fortress.detail | R0078 D01 NIGHT r078 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:29,963 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:29,978 | INFO  | night_fortress.round | ╔══ R0079  D01 NIGHT r079 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:30,021 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:30,021 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(29,10)
+2026-09-10 08:40:30,021 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,021 | INFO  | night_fortress.detail | R0079 D01 NIGHT r079 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP220/220 | NIGHT MOVE→(29,10) [→T20020 d0 🤖ours:35/others:35] | 🎒[stone×2]
+2026-09-10 08:40:30,022 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,069 | INFO  | night_fortress.round | ╔══ R0080  D01 NIGHT r080 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:30,113 | WARNING | night_fortress.strategies.nighttime | role 20011 has issued no night command for 3 rounds (round 80) — exposed to range-3 robot sniping
+2026-09-10 08:40:30,114 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:30,114 | INFO  | night_fortress.round | ║  id=20012  MOVE         →(28,11)
+2026-09-10 08:40:30,114 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,114 | INFO  | night_fortress.detail | R0080 D01 NIGHT r080 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP220/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(29,10) HP210/220 | NIGHT MOVE→(28,11) [→T20020 d1 🤖ours:35/others:35] | 🎒[stone×2]
+2026-09-10 08:40:30,115 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,144 | INFO  | night_fortress.round | ╔══ R0081  D01 NIGHT r081 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:30,218 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:30,219 | INFO  | night_fortress.round | ║  id=20040  ATTACK       →(26,8)
+2026-09-10 08:40:30,219 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,219 | INFO  | night_fortress.round | ╚══ 3 command(s)
+2026-09-10 08:40:30,219 | INFO  | night_fortress.detail | R0081 D01 NIGHT r081 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP210/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP210/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:30,219 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,250 | INFO  | night_fortress.round | ╔══ R0082  D01 NIGHT r082 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:30,303 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:30,304 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,304 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,304 | INFO  | night_fortress.detail | R0082 D01 NIGHT r082 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP180/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP175/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:30,304 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,335 | INFO  | night_fortress.round | ╔══ R0083  D01 NIGHT r083 │ 💰  160 🏆  171 🏠1500/1500 🤖total:70 │ —
+2026-09-10 08:40:30,381 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,14)
+2026-09-10 08:40:30,381 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,381 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,381 | INFO  | night_fortress.detail | R0083 D01 NIGHT r083 | 💰  160 🏆  171 🏠1500/1500 🤖ours:35/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots35) | 🎒[—] | W20010@(29,9) HP110/220 | IDLE(night_robots35) | 🎒[copper×3] | W20012@(28,11) HP150/220 | IDLE(night_robots35) | 🎒[stone×2]
+2026-09-10 08:40:30,381 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,407 | INFO  | night_fortress.round | ╔══ R0084  D01 NIGHT r084 │ 💰  160 🏆  173 🏠1500/1500 🤖total:69 │ —
+2026-09-10 08:40:30,448 | WARNING | night_fortress.strategies.nighttime | role 20011 has issued no night command for 3 rounds (round 84) — exposed to range-3 robot sniping
+2026-09-10 08:40:30,450 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(23,8)
+2026-09-10 08:40:30,450 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,450 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,450 | INFO  | night_fortress.detail | R0084 D01 NIGHT r084 | 💰  160 🏆  173 🏠1500/1500 🤖ours:34/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots34) | 🎒[—] | W20010@(29,9) HP40/220 | IDLE(night_robots34) | 🎒[copper×3] | W20012@(28,11) HP135/220 | IDLE(night_robots34) | 🎒[stone×2]
+2026-09-10 08:40:30,450 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,477 | INFO  | night_fortress.round | ╔══ R0085  D01 NIGHT r085 │ 💰  160 🏆  173 🏠1500/1500 🤖total:69 │ —
+2026-09-10 08:40:30,510 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,12)
+2026-09-10 08:40:30,510 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,511 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,511 | INFO  | night_fortress.detail | R0085 D01 NIGHT r085 | 💰  160 🏆  173 🏠1500/1500 🤖ours:34/others:35 | P20011@(32,11) HP200/200 | NIGHT MOVE→(31,12) [→T20030 d3 🤖ours:34/others:35] | 🎒[—] | W20012@(28,11) HP110/220 | IDLE(night_robots34) | 🎒[stone×2]
+2026-09-10 08:40:30,511 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,541 | INFO  | night_fortress.round | ╔══ R0086  D01 NIGHT r086 │ 💰  160 🏆  173 🏠1470/1500 🤖total:69 │ —
+2026-09-10 08:40:30,574 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(32,11)
+2026-09-10 08:40:30,574 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(28,9)
+2026-09-10 08:40:30,574 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,575 | INFO  | night_fortress.detail | R0086 D01 NIGHT r086 | 💰  160 🏆  173 🏠1470/1500 🤖ours:34/others:35 | P20011@(31,12) HP200/200 | NIGHT MOVE→(32,11) [→T20040 d1 🤖ours:34/others:35] | 🎒[—] | W20012@(28,11) HP90/220 | IDLE(night_robots34) | 🎒[stone×2]
+2026-09-10 08:40:30,575 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,608 | INFO  | night_fortress.round | ╔══ R0087  D01 NIGHT r087 │ 💰  160 🏆  175 🏠1410/1500 🤖total:68 │ —
+2026-09-10 08:40:30,652 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,12)
+2026-09-10 08:40:30,652 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,652 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,652 | INFO  | night_fortress.detail | R0087 D01 NIGHT r087 | 💰  160 🏆  175 🏠1410/1500 🤖ours:33/others:35 | P20011@(32,11) HP200/200 | NIGHT MOVE→(31,12) [→T20030 d4 🤖ours:33/others:35] | 🎒[—] | W20012@(28,11) HP75/220 | IDLE(night_robots33) | 🎒[stone×2]
+2026-09-10 08:40:30,652 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,684 | INFO  | night_fortress.round | ╔══ R0088  D01 NIGHT r088 │ 💰  160 🏆  175 🏠1370/1500 🤖total:68 │ —
+2026-09-10 08:40:30,724 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(32,11)
+2026-09-10 08:40:30,724 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(27,8)
+2026-09-10 08:40:30,724 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,724 | INFO  | night_fortress.detail | R0088 D01 NIGHT r088 | 💰  160 🏆  175 🏠1370/1500 🤖ours:33/others:35 | P20011@(31,12) HP200/200 | NIGHT MOVE→(32,11) [→T20040 d1 🤖ours:33/others:35] | 🎒[—] | W20012@(28,11) HP60/220 | IDLE(night_robots33) | 🎒[stone×2]
+2026-09-10 08:40:30,725 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,752 | INFO  | night_fortress.round | ╔══ R0089  D01 NIGHT r089 │ 💰  160 🏆  175 🏠1315/1500 🤖total:68 │ —
+2026-09-10 08:40:30,799 | INFO  | night_fortress.round | ║  id=20040  ATTACK       →(28,8)
+2026-09-10 08:40:30,799 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(28,9)
+2026-09-10 08:40:30,799 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,800 | INFO  | night_fortress.detail | R0089 D01 NIGHT r089 | 💰  160 🏆  175 🏠1315/1500 🤖ours:33/others:35 | P20011@(32,11) HP200/200 | IDLE(night_robots33) | 🎒[—] | W20012@(28,11) HP45/220 | IDLE(night_robots33) | 🎒[stone×2]
+2026-09-10 08:40:30,800 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,829 | INFO  | night_fortress.round | ╔══ R0090  D01 NIGHT r090 │ 💰  160 🏆  179 🏠1260/1500 🤖total:65 │ —
+2026-09-10 08:40:30,868 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(32,10)
+2026-09-10 08:40:30,869 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:30,869 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:30,869 | INFO  | night_fortress.detail | R0090 D01 NIGHT r090 | 💰  160 🏆  179 🏠1260/1500 🤖ours:30/others:35 | P20011@(32,11) HP200/200 | NIGHT MOVE→(32,10) [→T20030 d4 🤖ours:30/others:35] | 🎒[—] | W20012@(28,11) HP25/220 | IDLE(night_robots30) | 🎒[stone×2]
+2026-09-10 08:40:30,869 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:30,896 | INFO  | night_fortress.round | ╔══ R0091  D01 NIGHT r091 │ 💰  160 🏆  181 🏠1215/1500 🤖total:64 │ —
+2026-09-10 08:40:31,000 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(33,11)
+2026-09-10 08:40:31,001 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(28,8)
+2026-09-10 08:40:31,001 | INFO  | night_fortress.round | ╚══ 2 command(s)
+2026-09-10 08:40:31,001 | INFO  | night_fortress.detail | R0091 D01 NIGHT r091 | 💰  160 🏆  181 🏠1215/1500 🤖ours:29/others:35 | P20011@(32,10) HP200/200 | NIGHT MOVE→(33,11) [→T20030 d4 🤖ours:29/others:35] | 🎒[—] | W20012@(28,11) HP5/220 | IDLE(night_robots29) | 🎒[stone×2]
+2026-09-10 08:40:31,001 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,033 | INFO  | night_fortress.round | ╔══ R0092  D01 NIGHT r092 │ 💰  160 🏆  181 🏠1175/1500 🤖total:64 │ —
+2026-09-10 08:40:31,054 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(32,11)
+2026-09-10 08:40:31,054 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,054 | INFO  | night_fortress.detail | R0092 D01 NIGHT r092 | 💰  160 🏆  181 🏠1175/1500 🤖ours:29/others:35 | P20011@(33,11) HP200/200 | NIGHT MOVE→(32,11) [→T20020 d5 🤖ours:29/others:35] | 🎒[—]
+2026-09-10 08:40:31,054 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,075 | INFO  | night_fortress.round | ╔══ R0093  D01 NIGHT r093 │ 💰  160 🏆  181 🏠1130/1500 🤖total:64 │ —
+2026-09-10 08:40:31,122 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,12)
+2026-09-10 08:40:31,122 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,123 | INFO  | night_fortress.detail | R0093 D01 NIGHT r093 | 💰  160 🏆  181 🏠1130/1500 🤖ours:29/others:35 | P20011@(32,11) HP200/200 | NIGHT MOVE→(31,12) [→T20020 d3 🤖ours:29/others:35] | 🎒[—]
+2026-09-10 08:40:31,123 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,148 | INFO  | night_fortress.round | ╔══ R0094  D01 NIGHT r094 │ 💰  160 🏆  181 🏠1085/1500 🤖total:64 │ —
+2026-09-10 08:40:31,148 | WARNING | night_fortress.strategies.coordinator | Enemy station destroyed (round 94): first-fall side loses — keep playing for score and avoid command exceptions
+2026-09-10 08:40:31,166 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(30,12)
+2026-09-10 08:40:31,166 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,166 | INFO  | night_fortress.detail | R0094 D01 NIGHT r094 | 💰  160 🏆  181 🏠1085/1500 🤖ours:29/others:35 | P20011@(31,12) HP200/200 | NIGHT MOVE→(30,12) [→T20020 d2 🤖ours:29/others:35] | 🎒[—]
+2026-09-10 08:40:31,166 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,191 | INFO  | night_fortress.round | ╔══ R0095  D01 NIGHT r095 │ 💰  160 🏆  181 🏠1030/1500 🤖total:64 │ —
+2026-09-10 08:40:31,208 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(29,12)
+2026-09-10 08:40:31,208 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,208 | INFO  | night_fortress.detail | R0095 D01 NIGHT r095 | 💰  160 🏆  181 🏠1030/1500 🤖ours:29/others:35 | P20011@(30,12) HP200/200 | NIGHT MOVE→(29,12) [→T20020 d1 🤖ours:29/others:35] | 🎒[—]
+2026-09-10 08:40:31,208 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,234 | INFO  | night_fortress.round | ╔══ R0096  D01 NIGHT r096 │ 💰  160 🏆  181 🏠975/1500 🤖total:64 │ —
+2026-09-10 08:40:31,251 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:31,252 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,252 | INFO  | night_fortress.detail | R0096 D01 NIGHT r096 | 💰  160 🏆  181 🏠975/1500 🤖ours:29/others:35 | P20011@(29,12) HP200/200 | IDLE(night_robots29) | 🎒[—]
+2026-09-10 08:40:31,252 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,273 | INFO  | night_fortress.round | ╔══ R0097  D01 NIGHT r097 │ 💰  160 🏆  181 🏠920/1500 🤖total:64 │ —
+2026-09-10 08:40:31,294 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:31,294 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,294 | INFO  | night_fortress.detail | R0097 D01 NIGHT r097 | 💰  160 🏆  181 🏠920/1500 🤖ours:29/others:35 | P20011@(29,12) HP200/200 | IDLE(night_robots29) | 🎒[—]
+2026-09-10 08:40:31,294 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,398 | INFO  | night_fortress.round | ╔══ R0098  D01 NIGHT r098 │ 💰  160 🏆  181 🏠865/1500 🤖total:64 │ —
+2026-09-10 08:40:31,422 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:31,422 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,422 | INFO  | night_fortress.detail | R0098 D01 NIGHT r098 | 💰  160 🏆  181 🏠865/1500 🤖ours:29/others:35 | P20011@(29,12) HP200/200 | IDLE(night_robots29) | 🎒[—]
+2026-09-10 08:40:31,422 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,473 | INFO  | night_fortress.round | ╔══ R0099  D01 NIGHT r099 │ 💰  160 🏆  181 🏠810/1500 🤖total:64 │ —
+2026-09-10 08:40:31,490 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:31,490 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,491 | INFO  | night_fortress.detail | R0099 D01 NIGHT r099 | 💰  160 🏆  181 🏠810/1500 🤖ours:29/others:35 | P20011@(29,12) HP200/200 | IDLE(night_robots29) | 🎒[—]
+2026-09-10 08:40:31,491 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,533 | INFO  | night_fortress.round | ╔══ R0100  D01 NIGHT r100 │ 💰  160 🏆  182 🏠755/1500 🤖total:63 │ —
+2026-09-10 08:40:31,594 | INFO  | night_fortress.round | ║  id=20020  ATTACK       →(29,9)
+2026-09-10 08:40:31,594 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,594 | INFO  | night_fortress.detail | R0100 D01 NIGHT r100 | 💰  160 🏆  182 🏠755/1500 🤖ours:28/others:35 | P20011@(29,12) HP200/200 | IDLE(night_robots28) | 🎒[—]
+2026-09-10 08:40:31,595 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,649 | INFO  | night_fortress.round | ╔══ R0101  D01 NIGHT r101 │ 💰  160 🏆  183 🏠710/1500 🤖total:62 │ —
+2026-09-10 08:40:31,672 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(28,11)
+2026-09-10 08:40:31,672 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,672 | INFO  | night_fortress.detail | R0101 D01 NIGHT r101 | 💰  160 🏆  183 🏠710/1500 🤖ours:27/others:35 | P20011@(29,12) HP195/200 | NIGHT MOVE→(28,11) [→T20030 d3 🤖ours:27/others:35] | 🎒[—]
+2026-09-10 08:40:31,672 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,736 | INFO  | night_fortress.round | ╔══ R0102  D01 NIGHT r102 │ 💰  160 🏆  183 🏠675/1500 🤖total:62 │ —
+2026-09-10 08:40:31,755 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,10)
+2026-09-10 08:40:31,755 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,755 | INFO  | night_fortress.detail | R0102 D01 NIGHT r102 | 💰  160 🏆  183 🏠675/1500 🤖ours:27/others:35 | P20011@(28,11) HP195/200 | NIGHT MOVE→(27,10) [→T20030 d3 🤖ours:27/others:35] | 🎒[—]
+2026-09-10 08:40:31,756 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,822 | INFO  | night_fortress.round | ╔══ R0103  D01 NIGHT r103 │ 💰  160 🏆  183 🏠630/1500 🤖total:62 │ —
+2026-09-10 08:40:31,839 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(26,9)
+2026-09-10 08:40:31,839 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,839 | INFO  | night_fortress.detail | R0103 D01 NIGHT r103 | 💰  160 🏆  183 🏠630/1500 🤖ours:27/others:35 | P20011@(27,10) HP195/200 | NIGHT MOVE→(26,9) [→T20030 d2 🤖ours:27/others:35] | 🎒[—]
+2026-09-10 08:40:31,839 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,903 | INFO  | night_fortress.round | ╔══ R0104  D01 NIGHT r104 │ 💰  160 🏆  183 🏠585/1500 🤖total:62 │ —
+2026-09-10 08:40:31,920 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,8)
+2026-09-10 08:40:31,921 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,921 | INFO  | night_fortress.detail | R0104 D01 NIGHT r104 | 💰  160 🏆  183 🏠585/1500 🤖ours:27/others:35 | P20011@(26,9) HP195/200 | NIGHT MOVE→(27,8) [→T20030 d2 🤖ours:27/others:35] | 🎒[—]
+2026-09-10 08:40:31,921 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:31,980 | INFO  | night_fortress.round | ╔══ R0105  D01 NIGHT r105 │ 💰  160 🏆  183 🏠540/1500 🤖total:62 │ —
+2026-09-10 08:40:31,997 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(28,8)
+2026-09-10 08:40:31,998 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:31,998 | INFO  | night_fortress.detail | R0105 D01 NIGHT r105 | 💰  160 🏆  183 🏠540/1500 🤖ours:27/others:35 | P20011@(27,8) HP195/200 | NIGHT MOVE→(28,8) [→T20030 d1 🤖ours:27/others:35] | 🎒[—]
+2026-09-10 08:40:31,998 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,062 | INFO  | night_fortress.round | ╔══ R0106  D01 NIGHT r106 │ 💰  160 🏆  183 🏠495/1500 🤖total:62 │ —
+2026-09-10 08:40:32,084 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(29,2)
+2026-09-10 08:40:32,084 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,084 | INFO  | night_fortress.detail | R0106 D01 NIGHT r106 | 💰  160 🏆  183 🏠495/1500 🤖ours:27/others:35 | P20011@(28,8) HP195/200 | IDLE(night_robots27) | 🎒[—]
+2026-09-10 08:40:32,084 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,152 | INFO  | night_fortress.round | ╔══ R0107  D01 NIGHT r107 │ 💰  160 🏆  183 🏠450/1500 🤖total:62 │ —
+2026-09-10 08:40:32,171 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(29,2)
+2026-09-10 08:40:32,171 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,171 | INFO  | night_fortress.detail | R0107 D01 NIGHT r107 | 💰  160 🏆  183 🏠450/1500 🤖ours:27/others:35 | P20011@(28,8) HP195/200 | IDLE(night_robots27) | 🎒[—]
+2026-09-10 08:40:32,171 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,237 | INFO  | night_fortress.round | ╔══ R0108  D01 NIGHT r108 │ 💰  160 🏆  183 🏠405/1500 🤖total:62 │ —
+2026-09-10 08:40:32,255 | INFO  | night_fortress.round | ║  id=20030  ATTACK       →(29,2)
+2026-09-10 08:40:32,255 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,255 | INFO  | night_fortress.detail | R0108 D01 NIGHT r108 | 💰  160 🏆  183 🏠405/1500 🤖ours:27/others:35 | P20011@(28,8) HP185/200 | IDLE(night_robots27) | 🎒[—]
+2026-09-10 08:40:32,256 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,320 | INFO  | night_fortress.round | ╔══ R0109  D01 NIGHT r109 │ 💰  160 🏆  184 🏠360/1500 🤖total:61 │ —
+2026-09-10 08:40:32,339 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,8)
+2026-09-10 08:40:32,339 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,339 | INFO  | night_fortress.detail | R0109 D01 NIGHT r109 | 💰  160 🏆  184 🏠360/1500 🤖ours:26/others:35 | P20011@(28,8) HP180/200 | NIGHT MOVE→(27,8) [→T20040 d4 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,340 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,422 | INFO  | night_fortress.round | ╔══ R0110  D01 NIGHT r110 │ 💰  160 🏆  184 🏠320/1500 🤖total:61 │ —
+2026-09-10 08:40:32,450 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,7)
+2026-09-10 08:40:32,450 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,451 | INFO  | night_fortress.detail | R0110 D01 NIGHT r110 | 💰  160 🏆  184 🏠320/1500 🤖ours:26/others:35 | P20011@(27,8) HP165/200 | NIGHT MOVE→(27,7) [→T20040 d5 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,451 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,527 | INFO  | night_fortress.round | ╔══ R0111  D01 NIGHT r111 │ 💰  160 🏆  184 🏠280/1500 🤖total:61 │ —
+2026-09-10 08:40:32,601 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,6)
+2026-09-10 08:40:32,601 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,601 | INFO  | night_fortress.detail | R0111 D01 NIGHT r111 | 💰  160 🏆  184 🏠280/1500 🤖ours:26/others:35 | P20011@(27,7) HP155/200 | NIGHT MOVE→(27,6) [→T20040 d5 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,602 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,687 | INFO  | night_fortress.round | ╔══ R0112  D01 NIGHT r112 │ 💰  160 🏆  184 🏠240/1500 🤖total:61 │ —
+2026-09-10 08:40:32,707 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(27,5)
+2026-09-10 08:40:32,707 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,707 | INFO  | night_fortress.detail | R0112 D01 NIGHT r112 | 💰  160 🏆  184 🏠240/1500 🤖ours:26/others:35 | P20011@(27,6) HP145/200 | NIGHT MOVE→(27,5) [→T20040 d5 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,707 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,766 | INFO  | night_fortress.round | ╔══ R0113  D01 NIGHT r113 │ 💰  160 🏆  184 🏠200/1500 🤖total:61 │ —
+2026-09-10 08:40:32,815 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(28,4)
+2026-09-10 08:40:32,815 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,815 | INFO  | night_fortress.detail | R0113 D01 NIGHT r113 | 💰  160 🏆  184 🏠200/1500 🤖ours:26/others:35 | P20011@(27,5) HP140/200 | NIGHT MOVE→(28,4) [→T20040 d5 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,815 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:32,899 | INFO  | night_fortress.round | ╔══ R0114  D01 NIGHT r114 │ 💰  160 🏆  184 🏠160/1500 🤖total:61 │ —
+2026-09-10 08:40:32,957 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(29,4)
+2026-09-10 08:40:32,958 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:32,958 | INFO  | night_fortress.detail | R0114 D01 NIGHT r114 | 💰  160 🏆  184 🏠160/1500 🤖ours:26/others:35 | P20011@(28,4) HP140/200 | NIGHT MOVE→(29,4) [→T20040 d6 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:32,958 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:33,018 | INFO  | night_fortress.round | ╔══ R0115  D01 NIGHT r115 │ 💰  160 🏆  184 🏠120/1500 🤖total:61 │ —
+2026-09-10 08:40:33,065 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(30,4)
+2026-09-10 08:40:33,065 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:33,065 | INFO  | night_fortress.detail | R0115 D01 NIGHT r115 | 💰  160 🏆  184 🏠120/1500 🤖ours:26/others:35 | P20011@(29,4) HP140/200 | NIGHT MOVE→(30,4) [→T20040 d6 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:33,065 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:33,125 | INFO  | night_fortress.round | ╔══ R0116  D01 NIGHT r116 │ 💰  160 🏆  184 🏠80/1500 🤖total:61 │ —
+2026-09-10 08:40:33,178 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,5)
+2026-09-10 08:40:33,178 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:33,179 | INFO  | night_fortress.detail | R0116 D01 NIGHT r116 | 💰  160 🏆  184 🏠80/1500 🤖ours:26/others:35 | P20011@(30,4) HP140/200 | NIGHT MOVE→(31,5) [→T20040 d6 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:33,179 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -
+2026-09-10 08:40:33,237 | INFO  | night_fortress.round | ╔══ R0117  D01 NIGHT r117 │ 💰  160 🏆  184 🏠40/1500 🤖total:61 │ —
+2026-09-10 08:40:33,284 | INFO  | night_fortress.round | ║  id=20011  MOVE         →(31,6)
+2026-09-10 08:40:33,284 | INFO  | night_fortress.round | ╚══ 1 command(s)
+2026-09-10 08:40:33,284 | INFO  | night_fortress.detail | R0117 D01 NIGHT r117 | 💰  160 🏆  184 🏠40/1500 🤖ours:26/others:35 | P20011@(31,5) HP140/200 | NIGHT MOVE→(31,6) [→T20040 d5 🤖ours:26/others:35] | 🎒[—]
+2026-09-10 08:40:33,284 | INFO  | night_fortress.http | "POST / HTTP/1.1" 200 -

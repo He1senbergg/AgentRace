@@ -64,3 +64,24 @@ git diff --check
 ## 本次入口验证（2026-09-10）
 
 直接执行 `src/main3.py <port>`：真实 HTTP、中文输入、重复请求、畸形请求恢复和进程清理；通过 run.sh 启动：可选配置、密集观测、并发重复请求和退出后端口释放。无效端口与配置必须非零退出。测试统一导入 src.main3。当前 Linux CPython 3.10.12：`.venv/bin/python -B -m unittest discover -s tests -q`，92 项 PASS（10.751 秒），含两项真实 HTTP 测试。首次沙箱运行因禁止 socket 导致两项失败，获准本地网络测试后全套通过；CRLF 感知的 git diff --check 通过；此前 Windows/WSL 数据为历史结果。
+
+本次验证：Linux CPython 3.10.12，`AGENTRACE_TEST_HOST=172.23.57.83 .venv/bin/python -B -m unittest discover -s tests -q`，93项 PASS（8.354秒）；实际通过非回环网卡执行密集HTTP、并发重复请求，直接入口仍覆盖回环访问。新增404/405/200诊断、3次日志上限及载荷不泄漏验证。正式判题未重测；当前修改可作为人工提交检查点。
+
+## 回合诊断验证（2026-09-10）
+
+tests/test_diagnostics.py新增3项：动作/坐标/未知昼夜及失败反馈对应，非法观测与限量采样、缓存去重，诊断异常不影响动作或缓存；同时检查敏感原文不出现在日志。完整命令`.venv/bin/python -B -m unittest discover -s tests -q`：96项PASS，8.086秒，包含真实HTTP、并发、密集观测和2600回合回放。首次受限运行两项HTTP因socket权限失败；允许本地网络后全套通过。正式平台新增日志尚待用户重跑采集。
+
+## Self实测回归（最新）
+
+新增test_live_regressions.py四项，覆盖1基开局建造至首夜攻击、0基兼容/中途不推断、新任务不能抢占夜间炮手且活动任务隔离、41×32地图坐标/基地占地/外部文本不泄漏。诊断采样与未知起点测试同步更新。`.venv/bin/python -B -m unittest discover -s tests -q`：100项PASS，9.032秒；真实HTTP两项执行成功，无跳过。最终git -c core.whitespace=cr-at-eol diff --check通过。平台复测仍待执行，合成开局只结算move/build，不假装模拟完整战斗。
+
+续接复核：同一完整命令100项PASS（9.266秒），包含实际HTTP与并发测试；首次沙箱socket受限的两项错误由允许本地网络重跑排除。当前检查点已合并旧结论，未改变策略代码。
+
+## Self/2.log逐回合诊断验证
+
+新增专项覆盖非详细采样回合仍输出动作，炮手与武器ID关联，冷却时未下令状态，重复请求不重复日志。4项诊断测试PASS；完整101项PASS（9.729秒），命令`.venv/bin/python -B -m unittest discover -s tests -q`，允许本地网络，密集HTTP响应约束未放宽。策略收益未验证；下一步测试任务截止加返程跨夜、动态矿刷新与出售路线、日间升级采购可完成性。
+
+
+## Self/3.log 分析后的待补验证
+
+本次仅执行日志JSON统计/连续性/动作与反馈核对，未重跑测试套件。新增待验证场景：矿点刷新后仍能在回防前出售不足20矿；短任务期限中多次LLM命令探索后及时提交；任务冷却空档的先锋准备动作；领取时限加回防路程门槛；炮手死亡后比较机枪/电磁炮/火箭的重新分配。沙盒执行结果缺摘要，19条executeCmd不能视为成功执行。详见SELF_LOG_ANALYSIS.md的Self/3.log章节。

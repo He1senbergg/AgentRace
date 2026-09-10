@@ -4,6 +4,21 @@ from src import main3 as main
 
 
 class ProtocolTests(unittest.TestCase):
+    def test_initial_http_diagnostics_cover_routing_without_payloads(self):
+        with patch.object(main, 'HTTP_DIAGNOSTIC_COUNT', 0):
+            with self.assertLogs(main.LOG, level='INFO') as logs:
+                client = main.app.test_client()
+                self.assertEqual(client.get('/').status_code, 405)
+                self.assertEqual(client.post('/missing').status_code, 404)
+                self.assertEqual(client.post('/', json={'secret': 'SECRET'}).status_code, 200)
+                self.assertEqual(client.post('/', json={}).status_code, 200)
+            output = '\n'.join(logs.output)
+            self.assertEqual(output.count('[trace_request]'), 3)
+            self.assertEqual(output.count('[trace_response]'), 3)
+            for status in (404, 405, 200):
+                self.assertIn('状态=' + str(status), output)
+            self.assertNotIn('SECRET', output)
+
     def setUp(self):
         self.client = main.app.test_client()
 

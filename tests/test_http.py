@@ -27,7 +27,8 @@ class LiveHTTPTests(unittest.TestCase):
 
         def post(data):
             body = json.dumps(data, ensure_ascii=False).encode('utf-8')
-            conn = http.client.HTTPConnection('127.0.0.1', port, timeout=5)
+            conn = http.client.HTTPConnection(os.environ.get('AGENTRACE_TEST_HOST', '127.0.0.1'),
+                                              port, timeout=5)
             started = time.monotonic()
             try:
                 conn.request('POST', '/', body, {'Content-Type': 'application/json'})
@@ -76,6 +77,8 @@ class LiveHTTPTests(unittest.TestCase):
                 log.seek(0)
                 output = log.read().decode('utf-8', errors='replace')
                 self.assertNotIn('Traceback', output)
+                self.assertEqual(output.count('[trace_request]'), 3, output)
+                self.assertEqual(output.count('[trace_response]'), 3, output)
                 # Exactly one expected malformed request; no silent valid-request fallback.
                 self.assertLessEqual(output.count('[process_request]'), 1, output)
             self.assertIsNotNone(process.returncode)

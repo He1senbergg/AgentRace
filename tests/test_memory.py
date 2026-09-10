@@ -113,7 +113,7 @@ class MemoryTests(unittest.TestCase):
             self.assertEqual(session.handle(data), main.empty_response())
             self.assertIsNone(session.memory)
         session.handle(request_at(1))
-        self.assertIsNone(session.memory.phase)
+        self.assertEqual(session.memory.phase, main.Phase(1, 1))
         confirmed = main.GameSession(origin=1)
         with self.assertRaises(ValueError):
             confirmed.handle(request_at(0))
