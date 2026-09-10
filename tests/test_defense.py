@@ -125,7 +125,7 @@ class DefenseTests(unittest.TestCase):
     def test_build_requires_confirmed_name_and_never_overwrites(self):
         data = state(role(1, 'worker', 9, 11), role(2, 'station', 10, 10, level=1))
         self.assertEqual(main.GameSession(rules=main.Rules(1, ())).handle(data)['roleCommandMap'], {})
-        self.assertEqual(main.GameSession().handle(data)['roleCommandMap']['1']['name'], 'gatling')
+        self.assertEqual(main.GameSession().handle(data)['roleCommandMap']['1']['name'], 'rocket')
         rules = main.Rules(None, (('confirmed-gun', 'gatling'),))
         result = main.GameSession(rules=rules).handle(data)['roleCommandMap']['1']
         self.assertEqual(result['action'], 'build')

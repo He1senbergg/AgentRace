@@ -1,6 +1,16 @@
 # AgentRace 测试计划
 
-当前状态：本地交付完成，完整92项通过且独立只读审查完成；正式平台验证由用户负责，未宣称比赛就绪。需求逐条映射见COVERAGE.md，审查发现见REVIEW.md。
+当前状态：Self4 修复后 Windows/WSL 完整 120 项通过，独立只读复核完成；正式平台验证由用户负责，未宣称比赛就绪。下文旧测试数量属于历史记录，以本节最新结果为准。
+
+## Self4 最新验证
+
+- Windows：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，120 项 PASS（15.344 秒）。
+- WSL：`wsl --exec .venv/linux-test/bin/python -B -m unittest discover -s tests -q`，120 项 PASS（22.154 秒）。包含实际 HTTP、并发、密集输入及 2600 回合回放。
+- py_compile 和 git diff --check 通过。
+- 新增 test_self4.py 七项：嵌套任务文档发现/保留/去重、发现超时后恢复、远商人四矿继续采集、完整三火箭建设、健康基地不抢升级、集群合成伤害、605 目录及控制字符输出字节边界。
+- 策略回归改为允许第五条命令且重复请求幂等；保留截止门禁。出售回归按距离批量调整输入，仍验证实际移动和出售。
+- 70 回合经济对照：旧版收入 67/移动 110，新版收入 115/移动 94，并完成一次火箭升级。运行 `tools/replay_day.py log/Self/4.log`，可用 `--source` 指定旧版本。无刷新/任务/战斗，不证明实战收益。见 SELF4_ANALYSIS.md。
+- 实机待核对：任务发现及答题成功、首夜升级、回防及时性、三火箭实际防守。武器名称已有用户确认且 Self4 建造反馈合法，首观测 roundNo=1 已有日志证据；不再视为完全未知。
 
 ## 环境与命令
 

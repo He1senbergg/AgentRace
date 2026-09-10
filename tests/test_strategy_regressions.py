@@ -8,7 +8,7 @@ from test_tasks import task_state
 
 
 class StrategyRegressionTests(unittest.TestCase):
-    def test_four_commands_then_answer_and_duplicate_is_idempotent(self):
+    def test_fifth_command_allowed_and_duplicate_is_idempotent(self):
         session = main.GameSession(origin=0)
         session.handle(task_state(0, 'Question'))
         for turn in range(1, 9):
@@ -21,13 +21,15 @@ class StrategyRegressionTests(unittest.TestCase):
             self.assertEqual(response, session.handle(data))
             self.assertEqual(bool(response['executeCmd']), bool(turn % 2))
         self.assertEqual(session.memory.task['command_count'], 4)
-        self.assertIn('FINAL ANSWER REQUIRED', response['prompt'])
+        self.assertNotIn('FINAL ANSWER REQUIRED', response['prompt'])
         data = task_state(9, 'Question')
         data['llmResp'] = '{"command":"one more"}'
         response = session.handle(data)
-        self.assertFalse(response['executeCmd'])
-        self.assertIn('Command was not executed', response['prompt'])
+        self.assertEqual(response['executeCmd'], 'one more')
         data = task_state(10, 'Question')
+        data['lastCmdResult'] = '[exitCode:0]\nnew evidence'
+        session.handle(data)
+        data = task_state(11, 'Question')
         data['llmResp'] = '{"answer":"42"}'
         self.assertEqual(session.handle(data)['roleCommandMap']['11']['taskAnswer'], '42')
 
@@ -116,7 +118,7 @@ class StrategyRegressionTests(unittest.TestCase):
     def test_disappearing_mine_does_not_interrupt_cash_delivery(self):
         data = state(role(1, 'worker', 9, 10), vendorShopList=[dict(name='iron', price=3)])
         data['teamOur']['goldNum'] = 0
-        data['teamOur']['roles'][0]['backpack'] = ['iron'] * 4
+        data['teamOur']['roles'][0]['backpack'] = ['iron'] * 6
         zone(data, 'iron', 10, 10)
         zone(data, 'vendor', 5, 10)
         session = main.GameSession(origin=1)
