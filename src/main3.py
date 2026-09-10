@@ -686,6 +686,45 @@ class DefensePlanner:
             command["targetPos"] = [{"x": cell[0], "y": cell[1]}]
         return self.v.add(actor, command)
 
+    def base_reserve(self):
+        for base in self.stations:
+            level = level_of(base)
+            if level is not None and level < 3 and base["health"] < 750 * level:
+                return self.v.prices.get(f"StationUpgradeVoucher{level}", 0)
+        return 0
+
+    def resume_upgrade(self):
+        trip = self.v.memory.upgrade_trip
+        if not trip:
+            return False
+        actor, name, cell = trip
+        if actor in self.v.busy:
+            return True  # A lifesaving action may pause, but not erase, delivery.
+        character = next((c for c in self.characters() if c["id"] == actor), None)
+        building = self.v.building_at(cell)
+        required = UPGRADES.get(name)
+        if (character is None or building is None or required is None
+                or building.get("roleType") not in required[0] or level_of(building) != required[1]):
+            self.v.memory.upgrade_trip = None
+            return False
+        if (inventory(character) or Counter())[name]:
+            if self.use_at(actor, name, cell):
+                self.v.memory.upgrade_trip = None
+                return True
+            return self.economy.travel(actor, {cell})
+        if self.base_reserve() and not name.startswith("Station"):
+            self.v.memory.upgrade_trip = None
+            return False
+        phase = self.v.memory.phase
+        route = self.world.path(character["cell"], self.world.adjacent_goals(
+            self.world.zones["weaponShop"], character["cell"]), self.v.targets)
+        back = self.world.path(route[-1], self.world.adjacent_goals({cell}, route[-1]), self.v.targets) if route else None
+        if (not phase or not phase.is_day or not back or len(route) + len(back) + 2 > 71 - phase.round_in_day
+                or self.v.prices.get(name, self.v.gold + 1) > self.v.gold):
+            self.v.memory.upgrade_trip = None
+            return False
+        return self.economy.purchase(actor, name)
+
     def exposure(self, cell):
         """Conservative nearby threat, not a claim about robot target selection."""
         power = {"smallRobot": 5, "middleRobot": 10, "largeRobot": 20, "bossRobot": 40}
@@ -722,19 +761,23 @@ class DefensePlanner:
             back = self.economy.return_steps(route[-1])
             if back is None or len(route) + back + 3 > 71 - phase.round_in_day:
                 continue
-            reserve = max(0, 3 - len(self.weapons)) * 25
+            reserve = max(max(0, 3 - len(self.weapons)) * 25, self.base_reserve())
             if self.v.gold - reserve < self.v.prices["Medicine"] * (2 - bag["Medicine"]):
                 continue
             self.economy.purchase(character["id"], "Medicine", 2)
 
     def maintain(self, emergency_only=False):
+        if self.v.memory.upgrade_trip:
+            return True  # One observed-state delivery at a time; do not switch workers.
         buildings = sorted((r for r in self.world.roles.values()
                             if isinstance(r.get("roleType"), str)
                             and r["roleType"] in WEAPONS | {"station", "wall"}
                             and level_of(r) is not None and positive_health(r.get("health"))),
                            key=lambda r: (0 if r["roleType"] == "station" and r["health"] < 750 * level_of(r) else
                                           1 if r["roleType"] == "rocket" else 2 if r["roleType"] in WEAPONS else 3,
-                                          level_of(r), r["health"], r["id"]))
+                                          0 if r["roleType"] == "rocket" and level_of(r) == 2
+                                          and self.v.gold >= self.v.prices.get("WeaponUpgradeVoucher2", self.v.gold + 1)
+                                          else level_of(r), r["health"], r["id"]))
         for building in buildings:
             kind, level = building["roleType"], level_of(building)
             maximum = (1500 * level if kind == "station" else 500 + 500 * level)
@@ -773,6 +816,8 @@ class DefensePlanner:
                 for character in self.characters():
                     if character["roleType"] != "worker" or name not in self.v.prices or self.v.prices[name] > self.v.gold:
                         continue
+                    if not urgent and self.v.prices[name] > self.v.gold - self.base_reserve():
+                        continue
                     shop_route = self.world.path(character["cell"], self.world.adjacent_goals(
                         self.world.zones["weaponShop"], character["cell"]), self.v.targets)
                     if not shop_route:
@@ -784,6 +829,8 @@ class DefensePlanner:
                     errands.append((len(shop_route) + len(return_route), character["id"]))
                 for _, actor in sorted(errands):
                     if self.economy.purchase(actor, name):
+                        if name in UPGRADES:
+                            self.v.memory.upgrade_trip = (actor, name, building["cell"])
                         return True
         return False
 
@@ -815,12 +862,43 @@ class DefensePlanner:
             for worker in workers:
                 route = self.world.path(worker["cell"], self.world.adjacent_goals({cell}, worker["cell"]), self.v.targets)
                 if route:
-                    choices.append((len(route), worker["id"], name, cell))
-        for _, actor, name, cell in sorted(choices):
+                    # Face the shared map center on either starting side. The
+                    # old coordinate/worker-id tie break built both bases alike.
+                    cx, cy = station[0] + .5, station[1] - .5
+                    frontage = -((cell[0] - cx) * (20 - cx) + (cell[1] - cy) * (15.5 - cy))
+                    choices.append((frontage if name != "wall" else 0, len(route), worker["id"], name, cell))
+        for _, _, actor, name, cell in sorted(choices):
             if self.v.add(actor, {"action": "build", "name": name,
                                   "targetPos": [{"x": cell[0], "y": cell[1]}]}):
                 return True
             if self.economy.travel(actor, {cell}):
+                return True
+        return False
+
+    def fortify(self):
+        """Bounded nearby stone errands for the existing wall construction plan."""
+        phase = self.v.memory.phase
+        if (not phase or not phase.is_day or phase.day < 2 or self.v.weapon_count < 3
+                or self.v.wall_count >= min(8, phase.day * 2) or self.base_reserve()
+                or not nonnegative_int(self.v.rules.wall_stone_cost) or self.v.rules.wall_stone_cost <= 0):
+            return False
+        errands = []
+        for character in self.characters():
+            if character['roleType'] != 'worker':
+                continue
+            bag = inventory(character)
+            if bag is None or bag['stone'] >= self.v.rules.wall_stone_cost:
+                continue
+            for cell in self.world.zones['stone']:
+                route = self.world.path(character['cell'], self.world.adjacent_goals({cell}, character['cell']), self.v.targets)
+                back = self.economy.return_steps(route[-1]) if route else None
+                needed = self.v.rules.wall_stone_cost - bag['stone']
+                if route and back is not None and len(route) - 1 + needed + back + 3 <= min(18, 71 - phase.round_in_day):
+                    errands.append((len(route), character['id'], cell, route))
+        for _, actor, cell, route in sorted(errands):
+            target = cell if len(route) == 1 else route[1]
+            if self.v.add(actor, {'action': 'collect' if len(route) == 1 else 'move',
+                                 'targetPos': [dict(x=target[0], y=target[1])]}):
                 return True
         return False
 
@@ -952,6 +1030,13 @@ class DefensePlanner:
                     risks = {p: self.exposure(p) for p in goals}
                     safest = min(risks.values())
                     goals = {p for p in goals if risks[p] == safest}
+                if goals and self.stations:
+                    bx, by = self.stations[0]["cell"]
+                    # Behind the gun relative to map center, equally on both sides.
+                    rear = {p: (p[0] - weapon["cell"][0]) * (20 - bx - .5)
+                            + (p[1] - weapon["cell"][1]) * (16 - by) for p in goals}
+                    if character["cell"] not in goals:
+                        goals = {p for p in goals if rear[p] == min(rear.values())}
                 route = self.world.path(character["cell"], goals, self.v.targets)
                 if route and (not phase.is_day or len(route) + 3 >= 71 - phase.round_in_day):
                     routes.append((len(route), character["id"], route))
@@ -1474,9 +1559,10 @@ def plan_turn(world, memory, rules=None):
     validator = ActionValidator(world, memory, rules)
     response = empty_response()
     defense = DefensePlanner(validator)
+    defense.protect()
+    defense.resume_upgrade()
     maintained = defense.maintain(emergency_only=True)
     NewsPlanner(validator).run(response)
-    defense.protect()
     defense.fire()
     defense.support()
     EconomyPlanner(validator).liquidate()
@@ -1485,7 +1571,8 @@ def plan_turn(world, memory, rules=None):
     defense.provision()
     TaskPlanner(validator).run(response)
     if not maintained and not defense.maintain():
-        defense.construct()
+        if not defense.construct():
+            defense.fortify()
     defense.summon()
     EconomyPlanner(validator).workers()
     response["roleCommandMap"] = validator.commands
@@ -1510,6 +1597,7 @@ class GameMemory:
     task: object = None
     accepted_task: object = None
     worker_mines: dict = field(default_factory=dict)
+    upgrade_trip: object = None
     task_experience: list = field(default_factory=list)
     resource_events: list = field(default_factory=list)
     news_pending: object = None

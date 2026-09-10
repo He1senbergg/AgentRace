@@ -123,7 +123,7 @@ class DefenseTests(unittest.TestCase):
         self.assertLess(time.monotonic()-start, 4.0)
 
     def test_build_requires_confirmed_name_and_never_overwrites(self):
-        data = state(role(1, 'worker', 9, 11), role(2, 'station', 10, 10, level=1))
+        data = state(role(1, 'worker', 12, 11), role(2, 'station', 10, 10, level=1))
         self.assertEqual(main.GameSession(rules=main.Rules(1, ())).handle(data)['roleCommandMap'], {})
         self.assertEqual(main.GameSession().handle(data)['roleCommandMap']['1']['name'], 'rocket')
         rules = main.Rules(None, (('confirmed-gun', 'gatling'),))
@@ -137,6 +137,7 @@ class DefenseTests(unittest.TestCase):
 
     def test_wall_plan_preserves_cardinal_gaps(self):
         data = state(role(1, 'worker', 8, 12), role(2, 'station', 10, 10, level=3))
+        data['teamOur']['goldNum'] = 0  # Exercise wall placement, not weapon construction.
         data['teamOur']['roles'][0]['backpack'] = ['stone'] * 20
         v = validator(data, rules=main.Rules(2))
         self.assertTrue(main.DefensePlanner(v).construct())

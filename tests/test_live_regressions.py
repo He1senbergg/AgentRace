@@ -18,8 +18,8 @@ class LiveRegressionTests(unittest.TestCase):
                 data['robot'] = [robot(30000, 29, 7, health=400)]
             result = session.handle(data)
             self.assertEqual(session.memory.phase.is_day, turn <= 70)
-            if turn == 1:
-                self.assertIn('build', [c['action'] for c in result['roleCommandMap'].values()])
+            if turn == 8:
+                self.assertEqual(built, 3)  # Allow short relocation to the facing side.
             if turn == 71:
                 self.assertIn('attack', [c['action'] for c in result['roleCommandMap'].values()])
             by_id = {str(r['id']): r for r in data['teamOur']['roles']}
