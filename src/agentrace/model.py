@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import math
 
 
-DEFAULT_STRATEGY_MODE = "shadow"
+DEFAULT_STRATEGY_MODE = "defense"
 
 
 SHADOW_WARN_MS = 1500
