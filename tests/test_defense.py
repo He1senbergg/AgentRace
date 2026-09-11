@@ -40,7 +40,7 @@ class DefenseTests(unittest.TestCase):
     def test_default_summon_uses_inventory_with_daily_quota_and_night_priority(self):
         data = state(role(1, 'worker', 1, 1))
         data['teamOur']['roles'][0]['backpack'] = ['SmallRobotSummonOrder'] * 20
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         for round_no in range(11):
             data['roundNo'] = round_no
             result = session.handle(data)
@@ -58,7 +58,7 @@ class DefenseTests(unittest.TestCase):
                      role(3, 'gatling', 11, 10, level=1), role(4, 'rocket', 11, 11, level=1),
                      weaponShopList=[dict(name='WallFixer', price=10)])
         zone(data, 'weaponShop', 8, 10)
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         self.assertEqual(session.handle(data)['roleCommandMap']['1'],
                          dict(action='buy', name='WallFixer', num=1))
         data['roundNo'] = 1
@@ -76,7 +76,7 @@ class DefenseTests(unittest.TestCase):
                      weaponShopList=[dict(name='StationUpgradeVoucher1', price=100)])
         data['teamOur']['goldNum'] = 250
         zone(data, 'weaponShop', 4, 3)
-        response = main.GameSession().handle(data)
+        response = main.GameSession(strategy_mode='legacy').handle(data)
         self.assertEqual(len(response['roleCommandMap']), 1)
         self.assertEqual(response['roleCommandMap']['1']['name'], 'StationUpgradeVoucher1')
 
@@ -115,7 +115,7 @@ class DefenseTests(unittest.TestCase):
                      role(3, 'rocket', 10, 10, level=3), role(4, 'rocket', 11, 10, level=3),
                      robot=[robot(100+i, 15+i%25, i//25, 800) for i in range(200)])
         data['roundNo'] = 70
-        session = main.GameSession(origin=0)
+        session = main.GameSession(origin=0, strategy_mode='legacy')
         start = time.monotonic()
         response = session.handle(data)
         self.assertEqual(len(response['roleCommandMap']), 2)
@@ -124,15 +124,15 @@ class DefenseTests(unittest.TestCase):
 
     def test_build_requires_confirmed_name_and_never_overwrites(self):
         data = state(role(1, 'worker', 9, 8), role(2, 'station', 10, 10, level=1))
-        self.assertEqual(main.GameSession(rules=main.Rules(1, ())).handle(data)['roleCommandMap'], {})
-        self.assertEqual(main.GameSession().handle(data)['roleCommandMap']['1']['name'], 'rocket')
+        self.assertEqual(main.GameSession(rules=main.Rules(1, ()), strategy_mode='legacy').handle(data)['roleCommandMap'], {})
+        self.assertEqual(main.GameSession(strategy_mode='legacy').handle(data)['roleCommandMap']['1']['name'], 'rocket')
         rules = main.Rules(None, (('confirmed-gun', 'gatling'),))
-        result = main.GameSession(rules=rules).handle(data)['roleCommandMap']['1']
+        result = main.GameSession(rules=rules, strategy_mode='legacy').handle(data)['roleCommandMap']['1']
         self.assertEqual(result['action'], 'build')
         self.assertEqual(result['name'], 'confirmed-gun')
         cell = result['targetPos'][0]
         data['teamOur']['roles'].append(role(3, 'gatling', cell['x'], cell['y'], level=3))
-        result = main.GameSession(rules=rules).handle(data)['roleCommandMap'].get('1', {})
+        result = main.GameSession(rules=rules, strategy_mode='legacy').handle(data)['roleCommandMap'].get('1', {})
         self.assertNotEqual(result.get('targetPos'), [cell])
 
     def test_wall_plan_preserves_cardinal_gaps(self):

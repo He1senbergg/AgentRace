@@ -69,13 +69,13 @@ class Round3Tests(unittest.TestCase):
         p.world.occupied.update(main.neighbors((8, 21)))
         self.assertEqual(p.completion_trip(job, (8, 21)), before)
 
-    def test_benchmark_never_follows_execution_downgrade(self):
+    def test_next_wall_block_does_not_lower_either_target(self):
         data = defense_day(1)
         def estimate(planner, job, slot):
             return (100, 1) if job.job_type == 'BUILD_WALL' and planner.plan.execution_wall_target > 4 else (1, 1)
         with patch.object(strategy.StrategicPlanner, 'completion_trip', estimate):
             p, _, report = shadow(data)
-        self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target, p.plan.unmet_wall_target), (8, 4, 4))
+        self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target, p.plan.unmet_wall_target), (8, 8, 0))
         self.assertIn('DEADLINE_INFEASIBLE', report['reasons'])
 
     def test_new_day_discards_night_jobs_and_retains_wall_history(self):
@@ -100,13 +100,13 @@ class Round3Tests(unittest.TestCase):
         data['teamOur']['roles'].append(dict(role(20, 'wall', 12, 22, level=1), health=500))
         p, _, report = shadow(data, main.GameMemory((7, 'challenger'), 1))
         self.assertEqual(p.plan.benchmark_wall_target, 9)
-        self.assertEqual(p.plan.wall_hp_target, 8000)
+        self.assertEqual(p.plan.wall_hp_target, 12000)
         self.assertTrue(any(j.job_type == 'WALL_SERVICE' for j in p.plan.jobs.values()))
         self.assertTrue(any(c.get('name') == 'WallUpgradeVoucher1' for c in p.v.commands.values()))
         self.assertGreater(p.plan.budget.committed_gold, 0)
         data['roundNo'] = 261
         p, _, report = shadow(data, main.GameMemory((7, 'challenger'), 1))
-        self.assertEqual((p.plan.benchmark_wall_target, p.plan.wall_hp_target, p.plan.weapon_level_target), (10, 10000, (2, 2, 1)))
+        self.assertEqual((p.plan.benchmark_wall_target, p.plan.wall_hp_target, p.plan.weapon_level_target), (10, 15000, (2, 2, 1)))
         self.assertFalse(any(c.get('name') == 'WeaponUpgradeVoucher2' for c in p.v.commands.values()))
         self.assertFalse(report['metrics']['day1_benchmark_met'])
 

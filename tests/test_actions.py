@@ -224,7 +224,7 @@ class EconomyTests(unittest.TestCase):
     def test_default_callback_collect_then_sell_from_observation(self):
         data = state(role(1, 'worker', 1, 1), vendorShopList=[dict(name='iron', price=3)])
         zone(data, 'iron', 2, 2)
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         self.assertEqual(session.handle(data)['roleCommandMap']['1']['action'], 'collect')
         # Actual next state, not an assumed collect success, drives selling.
         data['roundNo'] = 1
@@ -235,7 +235,7 @@ class EconomyTests(unittest.TestCase):
     def test_dynamic_mine_and_two_workers_no_move_collision(self):
         data = state(role(1, 'worker', 1, 1), role(2, 'worker', 2, 1), vendorShopList=[dict(name='iron', price=3)])
         zone(data, 'iron', 5, 5)
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         commands = session.handle(data)['roleCommandMap']
         positions = [c['targetPos'][0] for c in commands.values()]
         self.assertEqual(len({(p['x'], p['y']) for p in positions}), len(positions))
@@ -253,7 +253,7 @@ class EconomyTests(unittest.TestCase):
 
     def test_final_gate_rolls_back_illegal_planner_output(self):
         data = state(role(1, 'worker', 1, 1))
-        session = main.GameSession(lambda w, m: dict(roleCommandMap={'1': target('move', 40, 31)}, prompt='', executeCmd=''))
+        session = main.GameSession(lambda w, m: dict(roleCommandMap={'1': target('move', 40, 31)}, prompt='', executeCmd=''), strategy_mode='legacy')
         with self.assertRaises(ValueError):
             session.handle(data)
         self.assertIsNone(session.memory)
@@ -267,7 +267,7 @@ class EconomyTests(unittest.TestCase):
             v = main.ActionValidator(world, memory)
             v.add('1', dict(action='use', name='SmallRobotSummonOrder'))
             return dict(roleCommandMap=v.commands, prompt='', executeCmd='')
-        session = main.GameSession(plan)
+        session = main.GameSession(plan, strategy_mode='legacy')
         for round_no in range(11):
             data['roundNo'] = round_no
             response = session.handle(data)

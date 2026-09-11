@@ -13,7 +13,7 @@ class Self5Tests(unittest.TestCase):
         data['teamOur']['roles'].extend(role(i, 'rocket', 10+i, 10, level=1) for i in (2, 3, 4))
         data['weaponShopList'] = [dict(name='Medicine', price=10)]
         zone(data, 'weaponShop', 3, 5)
-        result = main.GameSession(origin=0).handle(data)['roleCommandMap']
+        result = main.GameSession(origin=0, strategy_mode='legacy').handle(data)['roleCommandMap']
         self.assertEqual(result['11'], dict(action='buy', name='Medicine', num=2))
 
     def test_cross_day_old_mine_does_not_override_much_better_mine(self):
@@ -34,7 +34,7 @@ class Self5Tests(unittest.TestCase):
         data = state(worker, role(2, 'rocket', 10, 10, level=2),
                      robot=[robot(50, 9, 12)])
         data['roundNo'] = 71
-        result = main.GameSession(origin=1).handle(data)['roleCommandMap']
+        result = main.GameSession(origin=1, strategy_mode='legacy').handle(data)['roleCommandMap']
         self.assertEqual(result['1'], {'action': 'use', 'name': 'Medicine'})
         self.assertNotIn('2', result)
 
@@ -75,7 +75,7 @@ class Self5Tests(unittest.TestCase):
         self.assertFalse(v.commands)
 
     def test_last_exploration_round_has_result_answer_and_feedback_room(self):
-        session = main.GameSession(origin=0)
+        session = main.GameSession(origin=0, strategy_mode='legacy')
         data = task_state()
         data['teamOur']['playerTasks'][0]['timeoutRounds'] = 6
         session.handle(data)

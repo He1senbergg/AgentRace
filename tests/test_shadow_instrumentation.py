@@ -14,7 +14,7 @@ from test_shadow import opening
 
 class InstrumentationTests(unittest.TestCase):
     def test_default_and_explicit_cli_mode_preserve_positional_port(self):
-        for args, expected in (([], 'shadow'), (['--strategy-mode', 'legacy'], 'legacy')):
+        for args, expected in (([], 'defense'), (['--strategy-mode', 'legacy'], 'legacy')):
             with patch.object(main, 'SESSION'), patch.object(main.sys, 'argv', ['main3.py', '9123', *args]), \
                     patch.object(main.app, 'run') as run, patch.object(main, 'LOG'), \
                     patch.object(main.sys, 'stdout'), patch.object(main.sys, 'stderr'), \
@@ -22,14 +22,14 @@ class InstrumentationTests(unittest.TestCase):
                 main.main()
                 self.assertEqual(main.SESSION.strategy_mode, expected)
                 self.assertEqual(run.call_args.kwargs['port'], 9123)
-        self.assertEqual(main.DEFAULT_STRATEGY_MODE, 'shadow')
-        self.assertEqual(main.GameSession().strategy_mode, 'shadow')
+        self.assertEqual(main.DEFAULT_STRATEGY_MODE, 'defense')
+        self.assertEqual(main.GameSession().strategy_mode, 'defense')
 
     def test_fields_timing_and_actual_response_match_explicit_legacy(self):
         data = opening()
         expected = main.GameSession(strategy_mode='legacy').handle(deepcopy(data))
         with self.assertLogs(main.LOG, level='INFO') as logs:
-            response = main.GameSession().handle(data)
+            response = main.GameSession(strategy_mode='shadow').handle(data)
         self.assertEqual(response, expected)
         report = next(json.loads(line.split('[shadow_turn] ', 1)[1]) for line in logs.output if '[shadow_turn] ' in line)
         self.assertEqual(report['strategy_mode'], 'shadow')
@@ -56,7 +56,7 @@ class InstrumentationTests(unittest.TestCase):
         with patch.object(strategy.StrategicPlanner, 'run', broken), \
                 patch.object(session_module.LOG, 'info', side_effect=RuntimeError('log failed')), \
                 patch.object(session_module.LOG, 'error', side_effect=RuntimeError('error logger failed')):
-            session = main.GameSession()
+            session = main.GameSession(strategy_mode='shadow')
             self.assertEqual(session.handle(data), expected)
             self.assertEqual(session.handle(data), expected)
             self.assertEqual(session.memory.previous_actions, expected['roleCommandMap'])
@@ -66,12 +66,12 @@ class InstrumentationTests(unittest.TestCase):
         expected = main.GameSession(strategy_mode='legacy').handle(deepcopy(data))
         with patch.object(session_module.time, 'perf_counter', side_effect=count(0, 1)), \
                 patch.object(session_module.LOG, 'warning') as warning:
-            self.assertEqual(main.GameSession().handle(data), expected)
+            self.assertEqual(main.GameSession(strategy_mode='shadow').handle(data), expected)
         self.assertEqual(warning.call_count, 1)
         self.assertEqual(warning.call_args.args[0], '[shadow_performance] %s')
         with patch.object(session_module.time, 'perf_counter', side_effect=count(0, 1)), \
                 patch.object(session_module.LOG, 'warning', side_effect=RuntimeError('warning failed')):
-            self.assertEqual(main.GameSession().handle(data), expected)
+            self.assertEqual(main.GameSession(strategy_mode='shadow').handle(data), expected)
 
     def test_weapon_and_controller_divergence_and_return_diagnostics(self):
         data = state(role(1, 'worker', 9, 10), role(4, 'pioneer', 10, 9),

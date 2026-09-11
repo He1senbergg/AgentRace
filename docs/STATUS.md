@@ -1,9 +1,15 @@
 # AgentRace 当前检查点
 
 ## 当前阶段
-2026-09-11：V2.2 的 behavior-preserving 模块拆分已完成并通过测试/独立审查，已停止，未改策略。人工已确认允许额外 Python 源文件，保持既有 main3.py 启动方式即可；此前额外文件未确认项已解除。默认仍 DEFAULT_STRATEGY_MODE=shadow，端口/HTTP/callback 保持原样。无 bundle 或新增依赖；1300 回合存活尚未证明。
+2026-09-11：V2.3 Parallel Production + Capital Deployment已完成本地实现、验证与独立审查，现暂停等待用户审阅。已完整解析game17的623条Shadow记录/82条trace。R18现金80，R28升级工提前RETURN，R37现金144时无升级owner，R70现金194仍三炮L1；不是全程缺钱。详见ROUND5_ANALYSIS.md。
 
-## 模块拆分检查点（当前）
+- 日间购买状态、强制变现、双worker独立施工slot、下一墙可行性、先锋LOGISTICS和实验增长floor已实现。legacy/base_reserve、夜战、TaskPlanner、共享validator/observe/session/入口未改。默认HEAD原本已defense，本轮保留，旧文档shadow属历史状态；人工确认多Python文件部署仍有效。
+- 16项V2.3专项通过；冻结legacy/shared/night AST及legacy/shadow实际Response对照通过。仅诊断阶段还验证了完整387请求状态/响应与V2.2一致。
+- 首轮全量208项有22失败/10错误；未称通过。临时目录还原未修改HEAD复现22失败/8错误，主要是旧测试隐式默认模式与HEAD defense不符。修正测试显式模式、保留legacy断言；V2.3政策断言变更逐项列TEST_PLAN。独立审查3项边界问题已修复并补测试。
+- 最终全量210项PASS（24.719秒），无跳过；入口/replay4项PASS（7.761秒），V2.3专项16项PASS（1.706秒）；冻结legacy/shadow对照262请求PASS，git diff --check通过。独立审查的执行边界及诊断关联问题均已修复并回归。
+- 下一步：用户审阅，已停止；不自动实机、不自动提交。1300回合存活、增长参数效果未证明。未增加依赖/运行模块/提交bundle。
+
+## 模块拆分检查点（历史 V2.2）
 - 基线是本轮开始时完整 V2.2，冻结于 tests/fixtures/v22_baseline.py，SHA-256：105a44200a24a0e5db8c2062e6206f129e3055568b0a6e5f4a10e101b5a76934。该文件只供测试，不部署。
 - src/main3.py 为186行薄入口，保留 app/SESSION/callback/CLI/HTTP hooks 与原项目名称显式导出；业务位于 src/agentrace/{model,memory,actions,economy,defense,task_news,strategy,session}.py。package __init__.py 无副作用。GameSession 仅整体迁入 session。
 - 58个原有函数/类 AST 完全一致，原有常量表达式受回归锁定；所有业务方法体、plan_turn调用次序、任务pending、候选事务和动作扣账未变。普通测试 patch 定义模块，不建立代理。
@@ -13,7 +19,7 @@
 - 最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：194项PASS（47.111秒），无跳过；git diff --check通过，run.sh无修改。已停止，未自动提交、未进入实机策略实验。运行部署必须同时带上完整 src/agentrace/，不能继续只复制 main3.py。
 - 运行文件行数：main3 186；model359、memory167、actions365、economy141、defense523、task_news469、strategy811、session289；package标记__init__ 1行。当前可作为人工提交检查点。
 
-## V2.2 当前检查点
+## V2.2 历史检查点
 - 修改前完整读取 round4 game11/game12、ROUND3_ANALYSIS 和 main3.py。两局相反开局均在 Night3 崩溃：game11 投资单门 L3，game12 买 5 次 WallFixer、墙容量停留 8000，R330 有 75/220 HP worker。详见 [ROUND4_ANALYSIS.md](ROUND4_ANALYSIS.md)。
 - 墙服务优先可交付的 L1/L2 升级，以同时恢复当前 HP 和增长最大 HP；L3/资金或时间不足时尝试 fixer。预算按当回合接受动作扣款，不预支任务收益；无法采购的服务允许同 owner 筹资，保留原工作目标。
 - 武器 breadth-first，Night3 2/2/1；legacy maintain 的 L2 特殊排序也已删除，因此默认 Shadow 的真实 legacy 行为包含这项修复和墙券采购修复。不是旧版本逐字不变；同版本 shadow/legacy 响应一致。

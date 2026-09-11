@@ -31,7 +31,7 @@ class EntrypointTests(unittest.TestCase):
             self.skipTest('POSIX bash with compatible Python not installed')
         requests = [dict(body=json.dumps(request_at(r)), content_type='application/json') for r in (1, 2, 2, 70, 71)]
         requests += [dict(body='{', content_type='application/json'), dict(body='{}', content_type='text/plain')]
-        expected = run_impl('baseline', json.dumps([dict(mode='shadow', http=True, requests=requests)]))[0]
+        expected = run_impl('modular', json.dumps([dict(mode='defense', http=True, requests=requests)]))[0]
         with tempfile.TemporaryDirectory() as directory:
             deployed = Path(directory)
             shutil.copytree(ROOT/'src', deployed/'src', ignore=shutil.ignore_patterns('__pycache__'))
@@ -81,7 +81,7 @@ class EntrypointTests(unittest.TestCase):
         self.check_http(bash=True)
 
     def test_package_import(self):
-        result = subprocess.run([sys.executable,'-B','-c','from src import main3; assert main3.SESSION.strategy_mode == "shadow"; assert main3.app'],
+        result = subprocess.run([sys.executable,'-B','-c','from src import main3; assert main3.SESSION.strategy_mode == "defense"; assert main3.app'],
                                 cwd=ROOT,capture_output=True,text=True,timeout=10)
         self.assertEqual(result.returncode,0,result.stderr)
 
@@ -90,7 +90,7 @@ class EntrypointTests(unittest.TestCase):
         values=[]
         for source in (ROOT/'tests/fixtures/v22_baseline.py', ROOT/'src/main3.py'):
             result = subprocess.run([sys.executable,'-B',str(ROOT/'tools/replay_day.py'),
-                                     os.path.relpath(log,ROOT.parent),'--source',os.path.relpath(source,ROOT.parent)],
+                                     os.path.relpath(log,ROOT.parent),'--source',os.path.relpath(source,ROOT.parent),'--strategy-mode','legacy'],
                                     cwd=ROOT.parent,capture_output=True,text=True,encoding='utf-8',timeout=60)
             self.assertEqual(result.returncode,0,result.stderr[-3000:])
             values.append(json.loads(result.stdout))

@@ -33,7 +33,7 @@ class Round2Tests(unittest.TestCase):
         data['teamOur']['roles'][-1]['health'] = 1500
         data['teamOur']['goldNum'] = 0
         zone(data, 'stone', 34, 7)
-        session = main.GameSession(origin=1)
+        session = main.GameSession(origin=1, strategy_mode='legacy')
         built = 0
         collected = 0
         for turn in range(8, 71):
@@ -70,7 +70,7 @@ class Round2Tests(unittest.TestCase):
 
     def test_late_day_cash_really_becomes_upgrade_before_night(self):
         data = self.opening()
-        session = main.GameSession(origin=1)
+        session = main.GameSession(origin=1, strategy_mode='legacy')
         events = []
         for turn in range(56, 71):
             data['roundNo'] = turn

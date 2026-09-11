@@ -15,6 +15,29 @@ SHADOW_WARN_MS = 1500
 TOTAL_WARN_MS = 3000
 
 
+@dataclass(frozen=True)
+class ProductionPolicy:
+    """V2.3 experiments, separate from legacy DefensePolicy and game rules."""
+    day_floors: tuple = (8000, 12000, 15000)
+    wall_loss_weight: float = 0.5
+    missing_wall_weight: int = 1000
+    station_loss_weight: float = 2.0
+    missing_controller_weight: int = 1000
+    growth_quantum: int = 500
+
+    def capacity_target(self, day, night):
+        floor = self.day_floors[min(max(day, 1), len(self.day_floors)) - 1]
+        if day <= 3 or not night:
+            return floor
+        # Missing IDs are risk proxies, not a claim that a kill was observed.
+        pressure = (night.get('wall_hp_loss', 0) * self.wall_loss_weight
+                    + len(night.get('missing_wall_ids', ())) * self.missing_wall_weight
+                    + night.get('station_hp_loss', 0) * self.station_loss_weight
+                    + len(night.get('missing_controller_ids', ())) * self.missing_controller_weight)
+        growth = math.ceil(pressure / self.growth_quantum) * self.growth_quantum
+        return max(floor, (night.get('previous_capacity') or 0) + growth)
+
+
 def valid_position(pos):
     return (isinstance(pos, dict) and set(pos) == {"x", "y"}
             and type(pos["x"]) is int and type(pos["y"]) is int

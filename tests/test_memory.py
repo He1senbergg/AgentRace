@@ -18,7 +18,7 @@ class MemoryTests(unittest.TestCase):
             calls.append(memory.last_round)
             return {"roleCommandMap": {}, "prompt": "中文", "executeCmd": ""}
 
-        session = main.GameSession(plan)
+        session = main.GameSession(plan, strategy_mode='legacy')
         with patch.object(main, "SESSION", session):
             first = main.callback(request_at(0))
             first["prompt"] = "corrupted"
@@ -28,14 +28,14 @@ class MemoryTests(unittest.TestCase):
 
     def test_parallel_duplicates_run_planner_once(self):
         calls = []
-        session = main.GameSession(lambda w, m: (calls.append(m.last_round), main.empty_response())[1])
+        session = main.GameSession(lambda w, m: (calls.append(m.last_round), main.empty_response())[1], strategy_mode='legacy')
         with ThreadPoolExecutor(max_workers=8) as pool:
             responses = list(pool.map(session.handle, [request_at(0)] * 32))
         self.assertEqual(calls, [0])
         self.assertEqual(responses, [main.empty_response()] * 32)
 
     def test_transaction_rolls_back_planner_and_validation_failures(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         session.handle(request_at(0, worldNews={"folkLegends": "第一条"}))
         before = deepcopy(session.memory)
 
@@ -54,7 +54,7 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(len(session.memory.news), 1)
 
     def test_conflicting_same_round_does_not_commit_and_http_recovers(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         with patch.object(main, "SESSION", session):
             client = main.app.test_client()
             client.post("/", json=request_at(0))
@@ -67,7 +67,7 @@ class MemoryTests(unittest.TestCase):
             self.assertEqual(session.memory.last_round, 1)
 
     def test_history_is_not_current_obstacle_and_news_deduplicates(self):
-        session = main.GameSession(origin=1)
+        session = main.GameSession(origin=1, strategy_mode='legacy')
         observed = []
         session.planner = lambda w, m: (observed.append(set(w.occupied)), main.empty_response())[1]
         news = {"officialNews": "铁价变化", "folkLegends": "相同线索"}
@@ -83,7 +83,7 @@ class MemoryTests(unittest.TestCase):
     def test_feedback_does_not_infer_success_or_associate_across_gap(self):
         response = {"roleCommandMap": {"10010": {"action": "move", "targetPos": [{"x": 1, "y": 1}]}},
                     "prompt": "", "executeCmd": ""}
-        session = main.GameSession(lambda w, m: deepcopy(response))
+        session = main.GameSession(lambda w, m: deepcopy(response), strategy_mode='legacy')
         observed = {"teamId": 7, "type": "challenger", "roles": [
             {"id": 10010, "roleType": "worker", "pos": {"x": 0, "y": 0}, "health": 220}]}
         session.handle(request_at(0, teamOur=observed))
@@ -99,14 +99,14 @@ class MemoryTests(unittest.TestCase):
     def test_identity_change_and_round_regression_reset_history(self):
         for next_request in (request_at(0), request_at(9, teamOur={"teamId": 8, "type": "challenger"}),
                              request_at(9, teamOur={"teamId": 7, "type": "defender"})):
-            session = main.GameSession()
+            session = main.GameSession(strategy_mode='legacy')
             session.handle(request_at(5, worldNews={"folkLegends": "old"}))
             session.handle(next_request)
             self.assertEqual(session.memory.news, [])
             self.assertFalse(session.memory.feedback["associated"])
 
     def test_missing_invalid_input_and_origin(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         for data in (None, [], {}, request_at(True), request_at(-1), request_at(1301),
                      request_at(1, teamOur={"teamId": False, "type": "challenger"}),
                      request_at(1, teamOur={"teamId": 1, "type": []})):
@@ -114,20 +114,20 @@ class MemoryTests(unittest.TestCase):
             self.assertIsNone(session.memory)
         session.handle(request_at(1))
         self.assertEqual(session.memory.phase, main.Phase(1, 1))
-        confirmed = main.GameSession(origin=1)
+        confirmed = main.GameSession(origin=1, strategy_mode='legacy')
         with self.assertRaises(ValueError):
             confirmed.handle(request_at(0))
         self.assertIsNone(confirmed.memory)
         confirmed.handle(request_at(1300))
         self.assertEqual(confirmed.memory.phase.day, 10)
-        inferred = main.GameSession()
+        inferred = main.GameSession(strategy_mode='legacy')
         inferred.handle(request_at(0))
         with self.assertRaises(ValueError):
             inferred.handle(request_at(1300))
         self.assertEqual(inferred.memory.last_round, 0)
 
     def test_unserializable_response_does_not_commit(self):
-        session = main.GameSession(lambda w, m: {"roleCommandMap": {}, "prompt": "\ud800", "executeCmd": ""})
+        session = main.GameSession(lambda w, m: {"roleCommandMap": {}, "prompt": "\ud800", "executeCmd": ""}, strategy_mode='legacy')
         with self.assertRaises(UnicodeEncodeError):
             session.handle(request_at(0))
         self.assertIsNone(session.memory)

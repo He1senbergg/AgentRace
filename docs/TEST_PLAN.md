@@ -1,5 +1,93 @@
 # AgentRace 测试计划
 
+## V2.3 当前验证及测试规格变更
+
+当前默认mode以进入本轮前HEAD的defense为准。本轮不改默认、不以默认切换掩盖回归。先完成只读诊断且387固定请求Response/状态一致，再改日间策略。新增test_round5.py覆盖真实game17时间线、下一墙/不坍缩、双工slot持久性、RETURN重分配、80+4铜变现/观察100再买/到包再用/观测等级DONE、资金与deadline拆分、先锋任务/权限、增长floor/压力、夜末断档、低血先锋、满包绕行、强制出售ROI、未验证use、死亡换owner、其他炮升级满足目标后旧goal停止采购、夜末最终损伤与完整性。独立审查补充的VERIFY/DONE动作关联一致性有断言覆盖。
+
+全量首次208项：22fail/10error（50.372秒），不是PASS。为了鉴别预存问题，在临时目录用git show恢复HEAD运行105个相关旧测试，复现22fail/8error（9.905秒）。因此没有批量改assert：legacy测试明确strategy_mode=legacy，日志隔离测试明确shadow；本轮defense行为变化由独立V2.3断言保护。最终全量210项PASS（24.719秒），无跳过；V2.3专项16项PASS（1.706秒）；入口/replay4项PASS（7.761秒）；legacy/shadow冻结对照262请求PASS。git diff --check通过。
+
+规格发生变化的断言逐项：
+
+| 测试 | 所属/原保护 | 新规格及理由 |
+|---|---|---|
+| test_shadow.wall_job_persists_and_stone_cost_scales | defense：采满全局8墙石头、job持久 | 有下一墙材料即可move/build；仍检查同owner/job创建回合，cost差另测单墙 |
+| test_shadow.impossible_full_wall_job_downgrades_before_early_return | defense：full batch降低目标 | 下一墙不可行PAUSED，8目标不降；不凭errand失败提前RETURN |
+| test_round3.benchmark_never_follows_execution_downgrade | defense：benchmark8/execution4/unmet4 | 本轮禁止递减execution；8/8/0，DEADLINE诊断仍存在 |
+| test_round3.day2_wall_service_precedes_upgrade_and_day3_targets | defense：D2 8000/D3 10000 | 用户明确改floor12000/15000；墙优先、禁止L3断言保留 |
+| test_round4.partial_wall_target_keeps_largest_feasible_and_rule_cost | defense：5/3/2/1全批降级、三墙石耗差3 | 改下一墙PAUSED与不坍缩，单墙cost1→2差1；新增两工与game17独立回归 |
+| test_round4.default_shadow_equal_legacy_and_defense_explicit | 启动默认与shadow隔离 | 默认defense已在HEAD；显式shadow仍必须与legacy相等 |
+| test_shadow_instrumentation.default_and_explicit_cli_mode_preserve_positional_port | 启动默认/端口 | 默认defense、显式legacy；端口断言不动，其余4项显式shadow而非改变隔离断言 |
+| test_http真实默认进程日志 | 启动模式 | expected mode=defense；密集机器人、响应、5秒门槛和清理不变 |
+| test_entrypoints直接HTTP/run.sh/package | 部署入口对照冻结shadow | 不传mode测试实际默认defense，与当前显式defense独立进程结果相等；legacy冻结等价另测 |
+| test_entrypoints.replay | 两个不同默认mode比较 | 工具新增仅本地--strategy-mode透传，双方显式legacy；原结果等价断言不变 |
+| test_equivalence定义与请求序列 | 重构期间所有策略都冻结 | 仅StrategicPlanner/新增战略字段允许改变；原字段默认、GameMemory、ActionValidator、EconomyPlanner、DefensePlanner、TaskPlanner、plan_turn、session全部AST冻结；controller匹配及夜战块单独AST冻结。legacy/shadow Response/HTTP/cache/fingerprint与所有非strategic记忆仍逐项比较，defense不再要求等于V2.2 |
+
+下列测试仅明确执行模式，**原断言完全不变**。原因统一是原用例验证legacy或注入的planner，HEAD默认defense不执行该planner；显式选择使原保护真实执行，既不要求legacy接受新防御政策，也不放宽协议/事务断言：
+
+| 文件 | 测试方法 | 模式 |
+|---|---|---|
+| tests\test_actions.py | test_default_callback_collect_then_sell_from_observation | legacy |
+| tests\test_actions.py | test_dynamic_mine_and_two_workers_no_move_collision | legacy |
+| tests\test_actions.py | test_final_gate_rolls_back_illegal_planner_output | legacy |
+| tests\test_actions.py | test_summon_duplicate_gap_and_day_reset | legacy |
+| tests\test_defense.py | test_default_summon_uses_inventory_with_daily_quota_and_night_priority | legacy |
+| tests\test_defense.py | test_low_level_wall_purchase_then_observed_repair | legacy |
+| tests\test_defense.py | test_emergency_procurement_does_not_duplicate_worker_errands | legacy |
+| tests\test_defense.py | test_full_callback_dense_robot_budget_and_repeat | legacy |
+| tests\test_defense.py | test_build_requires_confirmed_name_and_never_overwrites | legacy |
+| tests\test_diagnostics.py | test_actions_positions_feedback_and_unknown_phase | legacy |
+| tests\test_diagnostics.py | test_invalid_input_sampling_and_duplicate_suppression | legacy |
+| tests\test_diagnostics.py | test_diagnostic_failure_does_not_replace_response | legacy |
+| tests\test_diagnostics.py | test_every_turn_reports_actions_and_weapon_state_without_duplicate_logs | shadow |
+| tests\test_integration.py | test_two_halves_full_observation_replay | legacy |
+| tests\test_integration.py | test_malformed_optional_fields_do_not_collapse_planning | legacy |
+| tests\test_memory.py | test_callback_integration_and_duplicate_isolation | legacy |
+| tests\test_memory.py | test_parallel_duplicates_run_planner_once | legacy |
+| tests\test_memory.py | test_transaction_rolls_back_planner_and_validation_failures | legacy |
+| tests\test_memory.py | test_conflicting_same_round_does_not_commit_and_http_recovers | legacy |
+| tests\test_memory.py | test_history_is_not_current_obstacle_and_news_deduplicates | legacy |
+| tests\test_memory.py | test_feedback_does_not_infer_success_or_associate_across_gap | legacy |
+| tests\test_memory.py | test_identity_change_and_round_regression_reset_history | legacy |
+| tests\test_memory.py | test_missing_invalid_input_and_origin | legacy |
+| tests\test_memory.py | test_unserializable_response_does_not_commit | legacy |
+| tests\test_news.py | test_long_multiday_news_preserved_in_prompt | legacy |
+| tests\test_news.py | test_platform_quota_error_stops_ordinary_retries_until_day_reset | legacy |
+| tests\test_news.py | test_two_independent_readings_then_exact_sacrifice | legacy |
+| tests\test_news.py | test_bad_evidence_unknown_items_bounds_and_disagreement | legacy |
+| tests\test_news.py | test_all_result_codes_and_gap_do_not_repeat_consumption | legacy |
+| tests\test_news.py | test_snapshot_change_gap_task_quota_and_half_reset | legacy |
+| tests\test_round2.py | test_first_day_batch_stone_builds_eight_walls_and_releases_worker | legacy |
+| tests\test_round2.py | test_late_day_cash_really_becomes_upgrade_before_night | legacy |
+| tests\test_self5.py | test_wounded_pioneer_buys_before_accepting_task | legacy |
+| tests\test_self5.py | test_heal_reserves_controller_before_ready_gun | legacy |
+| tests\test_self5.py | test_last_exploration_round_has_result_answer_and_feedback_room | legacy |
+| tests\test_strategy_regressions.py | test_fifth_command_allowed_and_duplicate_is_idempotent | legacy |
+| tests\test_strategy_regressions.py | test_short_deadline_stops_commands_but_accepts_last_round_answer | legacy |
+| tests\test_strategy_regressions.py | test_task_budget_includes_return_and_rejects_unknown_timeout | legacy |
+| tests\test_strategy_regressions.py | test_idle_pioneer_prepares_defense | legacy |
+| tests\test_strategy_regressions.py | test_small_bag_is_sold_before_defense_and_income_not_prespent | legacy |
+| tests\test_strategy_regressions.py | test_full_bag_with_few_minerals_still_goes_to_vendor | legacy |
+| tests\test_strategy_regressions.py | test_disappearing_mine_does_not_interrupt_cash_delivery | legacy |
+| tests\test_strategy_regressions.py | test_survivor_moves_to_rocket_then_fires | legacy |
+| tests\test_strategy_regressions.py | test_command_status_logged_without_payload | legacy |
+| tests\test_tasks.py | test_submission_legality_feedback_uses_json_string_actor_key | legacy |
+| tests\test_tasks.py | test_full_task_text_and_large_answer_are_not_silently_limited | legacy |
+| tests\test_tasks.py | test_skill_is_preserved_when_later_decision_omits_it | legacy |
+| tests\test_tasks.py | test_overlapping_points_do_not_invent_task_timeout | legacy |
+| tests\test_tasks.py | test_expired_old_task_error_does_not_expire_new_description | legacy |
+| tests\test_tasks.py | test_timeout_and_same_description_new_instance | legacy |
+| tests\test_tasks.py | test_history_and_half_reset_only_preserves_labelled_experience | legacy |
+| tests\test_tasks.py | test_accept_then_prompt_command_result_answer_and_unverified_end | legacy |
+| tests\test_tasks.py | test_wrong_answer_while_active_uses_feedback | legacy |
+| tests\test_tasks.py | test_missing_malformed_late_or_cross_task_results_not_executed | legacy |
+| tests\test_tasks.py | test_dead_displaced_or_ended_task_cannot_execute | legacy |
+| tests\test_tasks.py | test_command_failure_markers_preserved | legacy |
+| tests\test_tasks.py | test_only_eligible_own_tasks_and_route | legacy |
+| tests\test_tasks.py | test_quota_gate_duplicate_reset_gap_and_rollback | legacy |
+
+运行命令：`.venv\Scripts\python.exe -B -m unittest discover -s tests -p test_round5.py -q`；最终全量使用 `discover -s tests -q`。不重复长序列全三模式V2.2等价（defense策略已获准改变）。以下为历史测试记录。
+
+
 当前是保持 V2.2 行为的模块拆分。历史 V2.2 全量186项PASS（27.028秒）；本轮新增等价与入口验证，结果见下节。默认仍 Shadow，实机收益未验证。
 
 最终模块版全量：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，194项PASS（47.111秒），无跳过。仅执行一次最终全量；长序列单独运行，不在普通全量中重复。

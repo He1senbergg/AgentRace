@@ -83,7 +83,7 @@ class LiveHTTPTests(unittest.TestCase):
                            for line in output.splitlines() if '[shadow_turn] ' in line]
                 self.assertEqual(len(shadows), 3)
                 self.assertTrue(all('error' not in row for row in shadows))
-                self.assertTrue(all(row['strategy_mode'] == 'shadow' for row in shadows))
+                self.assertTrue(all(row['strategy_mode'] == 'defense' for row in shadows))
                 # Exactly one expected malformed request; no silent valid-request fallback.
                 self.assertLessEqual(output.count('[process_request]'), 1, output)
             self.assertIsNotNone(process.returncode)

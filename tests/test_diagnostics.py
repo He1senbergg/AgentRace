@@ -10,7 +10,7 @@ class TurnDiagnosticTests(unittest.TestCase):
         data = state(role(1, 'worker', 5, 5), vendorShopList=[{'name': 'iron', 'price': 3}])
         data['roundNo'] = 5
         data['mapInfo']['zones'] = [{'neutralType': 'iron', 'pos': {'x': 7, 'y': 5}}]
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         with self.assertLogs(main.LOG, level='INFO') as logs:
             first = session.handle(data)
             data['roundNo'] = 6
@@ -29,14 +29,14 @@ class TurnDiagnosticTests(unittest.TestCase):
         self.assertNotIn('SECRET', '\n'.join(logs.output))
 
     def test_invalid_input_sampling_and_duplicate_suppression(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         with self.assertLogs(main.LOG, level='INFO') as logs:
             for _ in range(100):
                 self.assertEqual(session.handle({'roundNo': 'SECRET'}), main.empty_response())
         self.assertEqual(len(logs.output), 28)  # First 20 errors, then every tenth observation.
         self.assertIn('invalid_round_or_teamOur', logs.output[0])
         self.assertNotIn('SECRET', '\n'.join(logs.output))
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         with self.assertLogs(main.LOG, level='INFO') as logs:
             for _ in range(5):
                 session.handle(state())
@@ -45,7 +45,7 @@ class TurnDiagnosticTests(unittest.TestCase):
     def test_diagnostic_failure_does_not_replace_response(self):
         data = state(role(1, 'worker', 5, 5), vendorShopList=[{'name': 'iron', 'price': 3}])
         data['mapInfo']['zones'] = [{'neutralType': 'iron', 'pos': {'x': 6, 'y': 5}}]
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         with patch.object(session, '_trace_turn', side_effect=ValueError('SECRET')):
             with self.assertLogs(main.LOG, level='ERROR') as logs:
                 result = session.handle(data)
@@ -58,7 +58,7 @@ class TurnDiagnosticTests(unittest.TestCase):
         data = state(role(1, 'worker', 9, 10), role(2, 'rocket', 10, 10, level=1),
                      robot=[robot(50, 10, 12)])
         data['teamOur']['roles'][1].update(cooldown=0, attackRange=10)
-        session = main.GameSession(origin=1)
+        session = main.GameSession(origin=1, strategy_mode='shadow')
         session.diagnostic_turns = 10
         data['roundNo'] = 80
         with self.assertLogs(main.LOG, level='INFO') as logs:

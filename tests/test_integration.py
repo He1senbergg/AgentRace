@@ -25,7 +25,7 @@ def dense_state():
 
 class IntegrationTests(unittest.TestCase):
     def test_two_halves_full_observation_replay(self):
-        session = main.GameSession(origin=0)
+        session = main.GameSession(origin=0, strategy_mode='legacy')
         counts = Counter()
         maximum_seconds = 0
         for side in ('challenger', 'defender'):
@@ -109,5 +109,5 @@ class IntegrationTests(unittest.TestCase):
             for bad in (None, True, 42, [], {'unexpected': []}):
                 data = deepcopy(baseline)
                 data[field] = bad
-                response = main.GameSession().handle(data)
+                response = main.GameSession(strategy_mode='legacy').handle(data)
                 self.assertEqual(response['roleCommandMap']['1']['action'], 'collect', (field, bad))

@@ -100,14 +100,14 @@ class ShadowTests(unittest.TestCase):
         worker['backpack'] = ['stone'] * 8
         p, memory, _ = shadow(data, rules=main.Rules(2))
         self.assertEqual(p.plan.jobs['1'].job_type, 'BUILD_WALL')
-        self.assertEqual(p.v.commands['1']['action'], 'collect')
+        self.assertIn(p.v.commands['1']['action'], {'move', 'build'})
         created = p.plan.jobs['1'].created_round
         data['roundNo'] = 1
         zone(data, 'copper', 13, 24)
         p, _, _ = shadow(data, memory, main.Rules(2))
         self.assertEqual(p.plan.jobs['1'].job_type, 'BUILD_WALL')
         self.assertEqual(p.plan.jobs['1'].created_round, created)
-        self.assertEqual(p.v.commands['1']['action'], 'collect')
+        self.assertIn(p.v.commands['1']['action'], {'move', 'build'})
 
     def test_prenight_depends_on_path_not_fixed_round(self):
         data = state(role(1, 'worker', 0, 0), role(2, 'rocket', 30, 20, level=1),
@@ -191,7 +191,7 @@ class ShadowTests(unittest.TestCase):
         p, _, _ = shadow(data, memory)
         self.assertNotEqual(p.plan.jobs['1'].job_type, 'RETURN')
 
-    def test_impossible_full_wall_job_downgrades_before_early_return(self):
+    def test_impossible_next_wall_pauses_before_early_return(self):
         data = opening()
         for i, cell in enumerate(((9, 20), (8, 22), (8, 23)), 20):
             data['teamOur']['roles'].append(role(i, 'rocket', *cell, level=1))
@@ -204,7 +204,7 @@ class ShadowTests(unittest.TestCase):
             return (1, 1)
         with patch.object(strategy.StrategicPlanner, 'completion_trip', estimates):
             p, _, report = shadow(data, memory)
-        self.assertEqual(p.plan.execution_wall_target, 2)
+        self.assertEqual(p.plan.execution_wall_target, 8)
         self.assertEqual(p.plan.jobs[wall_owner].job_type, 'BUILD_WALL')
         self.assertIn('DEADLINE_INFEASIBLE', report['reasons'])
 

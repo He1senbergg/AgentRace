@@ -122,26 +122,25 @@ class Round4Tests(unittest.TestCase):
             p, _, report = plan(data)
         self.assertIn('STATION_GAP_FALLBACK', report['reasons'])
 
-    def test_partial_wall_target_keeps_largest_feasible_and_rule_cost(self):
-        for feasible in (5, 3, 2, 1):
-            data = checkpoint(11)
-            data['roundNo'] = 1
-            for r in data['teamOur']['roles']:
-                if r['roleType'] == 'station':
-                    r['health'] = 1500
-            def estimate(planner, job, slot):
-                return (100, 1) if job.job_type == 'BUILD_WALL' and planner.plan.execution_wall_target > feasible else (1, 1)
-            with patch.object(strategy.StrategicPlanner, 'completion_trip', estimate):
-                p, _, _ = plan(data)
-            self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target), (8, feasible))
+    def test_partial_wall_job_pauses_without_target_collapse_and_rule_cost(self):
+        data = checkpoint(11)
+        data['roundNo'] = 1
+        for r in data['teamOur']['roles']:
+            if r['roleType'] == 'station':
+                r['health'] = 1500
+        def estimate(planner, job, slot):
+            return (100, 1) if job.job_type == 'BUILD_WALL' else (1, 1)
+        with patch.object(strategy.StrategicPlanner, 'completion_trip', estimate):
+            p, _, _ = plan(data)
+        self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target), (8, 8))
+        self.assertTrue(all(j.phase == 'PAUSED' for j in p.plan.jobs.values() if j.job_type == 'BUILD_WALL'))
         data = defense_day(1)
         p, _, _ = plan(data)
         job = main.RoleJob('1', 'BUILD_WALL', None, 'START', 70, 1, 70)
-        p.plan.execution_wall_target = 3
         one = p.completion_trip(job, (8, 21))
         p.rules = main.Rules(wall_stone_cost=2)
         two = p.completion_trip(job, (8, 21))
-        self.assertEqual(two[0] - one[0], 3)
+        self.assertEqual(two[0] - one[0], 1)  # Next wall, not three globally remaining walls.
 
     def test_game11_r131_no_tall_weapon_and_station_emergency(self):
         p, _, report = plan(checkpoint(11))
@@ -233,10 +232,10 @@ class Round4Tests(unittest.TestCase):
         self.assertNotIn('3', response['roleCommandMap'])
         self.assertFalse(any(c.get('controllerId') == '3' for c in response['roleCommandMap'].values()))
 
-    def test_default_shadow_equal_legacy_and_defense_explicit(self):
+    def test_default_defense_and_explicit_shadow_equal_legacy(self):
         data = checkpoint()
-        self.assertEqual(main.DEFAULT_STRATEGY_MODE, 'shadow')
-        self.assertEqual(main.GameSession(origin=1).handle(deepcopy(data)),
+        self.assertEqual(main.DEFAULT_STRATEGY_MODE, 'defense')
+        self.assertEqual(main.GameSession(origin=1, strategy_mode='shadow').handle(deepcopy(data)),
                          main.GameSession(origin=1, strategy_mode='legacy').handle(deepcopy(data)))
         main.GameSession(origin=1, strategy_mode='defense').handle(data)
 

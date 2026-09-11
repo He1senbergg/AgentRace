@@ -28,7 +28,7 @@ def interpretation():
 
 class NewsTests(unittest.TestCase):
     def test_long_multiday_news_preserved_in_prompt(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         data = news_state()
         data['worldNews']['folkLegends'] = 'DAY1 START ' + '甲' * 60000 + ' DAY1 END'
         first_clue = data['worldNews']['folkLegends']
@@ -41,7 +41,7 @@ class NewsTests(unittest.TestCase):
         self.assertEqual(len(session.memory.news), 2)
 
     def test_platform_quota_error_stops_ordinary_retries_until_day_reset(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         data = news_state()
         session.handle(data)
         data['roundNo'] = 1
@@ -56,7 +56,7 @@ class NewsTests(unittest.TestCase):
         self.assertTrue(session.handle(data)['prompt'])
 
     def test_two_independent_readings_then_exact_sacrifice(self):
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         first = news_state()
         self.assertTrue(session.handle(first)['prompt'])
         first['roundNo'] = 1
@@ -81,7 +81,7 @@ class NewsTests(unittest.TestCase):
             decision = interpretation()
             mutate(decision['treasure'])
             self.assertIsNone(main.parse_news_decision(json.dumps(decision), news, 0, {'StarSand'}))
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         data = news_state()
         session.handle(data)
         data['roundNo'] = 1
@@ -96,7 +96,7 @@ class NewsTests(unittest.TestCase):
 
     def test_all_result_codes_and_gap_do_not_repeat_consumption(self):
         for code in range(5):
-            session = main.GameSession()
+            session = main.GameSession(strategy_mode='legacy')
             data = news_state()
             session.handle(data)
             for round_no in (1, 2):
@@ -110,7 +110,7 @@ class NewsTests(unittest.TestCase):
             self.assertEqual(session.memory.treasure_result, code)
             self.assertEqual(session.memory.treasure_terminal, {1: 'obtained', 4: 'empty'}.get(code, ''))
         data['roundNo'] = 0
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         session.handle(data)
         for round_no in (1, 2):
             data['roundNo'] = round_no
@@ -121,7 +121,7 @@ class NewsTests(unittest.TestCase):
 
     def test_snapshot_change_gap_task_quota_and_half_reset(self):
         for change in ('news', 'gap', 'active'):
-            session = main.GameSession()
+            session = main.GameSession(strategy_mode='legacy')
             data = news_state()
             session.handle(data)
             data['roundNo'] = 1
@@ -136,7 +136,7 @@ class NewsTests(unittest.TestCase):
             self.assertNotIn('summonTreasure', str(response['roleCommandMap']))
             if change in ('gap', 'active'):
                 self.assertFalse(response['prompt'])
-        session = main.GameSession()
+        session = main.GameSession(strategy_mode='legacy')
         data = news_state()
         for round_no in range(4):
             data['roundNo'] = round_no

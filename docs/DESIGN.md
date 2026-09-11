@@ -1,5 +1,22 @@
 # AgentRace 技术设计
 
+## V2.3 当前设计（覆盖下方 V2.2 历史日间策略）
+
+运行时仍为既有8个agentrace业务模块及main3入口。model.ProductionPolicy只服务V2.3，不修改legacy DefensePolicy/base_reserve。memory.CapitalGoal属于Day1Plan；NEW_DAY重建日计划，GameMemory.observe和候选事务不变。当前HEAD默认defense是此前已提交事实，本轮不变；显式shadow继续返回100% legacy Response。
+
+日间调用：reconcile → observe_growth/NEW_DAY → 预算与原健康/基地fallback → schedule_production → 当前回程安全截止 → 每个job经ActionArbiter提交。plan_turn、TaskPlanner、EconomyPlanner、DefensePlanner、controller匹配/夜战执行块不变。活动任务先锋TASK_LOCK，未活动且任务可行TASK，否则LOGISTICS；恢复健康先于新任务，LOGISTICS不可collect/build。
+
+购买目标按目标ID/目标等级持久保存。DEFICIT建立缺口；FUNDING只让worker筹资；观察金币充分为FUNDED，下一步PROCURE；缺口可用当前背包闭合则LIQUIDATE（原cash_in(force=True)），无新矿行程。BUY只扣本候选staged余额，不假定到包；观察到券才DELIVER/APPLY；USE接受后VERIFY，目标实际等级/HP达到才DONE。券消耗但目标未变保持VERIFICATION_PENDING，不重复买券；由其他目标完成同一武器等级数量目标时旧目标SUPERSEDED，不谎报该建筑升级成功。BLOCKED分别记录资金/预算/背包/角色/路径/截止等枚举。
+
+每个hard purchase记录goal_id/type/target/cost、观察现金、该owner背包可卖价值、现金是否足额/缺口、owner/role、路线与截止可行性、当前执行性、state/block_reason；附block_reasons允许同时出现资金与deadline。施工goal另外输出数量目标和stone_cost；无owner字段为null。不把背包估值当现金，执行出售后仍等goldNum对账。日志state是本候选接受动作后的状态，路径/资金诊断来自提交前观测；accepted_action只代表发出的动作，不证明平台成功。
+
+墙施工选择每个owner独立slot，跨回合保持；slot是建造目标，采石途中不把它覆盖为矿坐标。completion_trip只估算下一墙（k=1）：缺石采集 + 到slot建造 + 回防 + 5回合margin。不可行PAUSED，下一观察重算，benchmark与execution不会因full-batch估计下降。静态估计不含人物/机器人，包含其他已预留施工位置；当前一步仍看瞬时占位。8墙能否全部完成不是启动第一墙的条件。
+
+容量实验：D1/2/3 floor=8000/12000/15000；D4+为max(15000,上一夜观测初始capacity+ceil(压力/500)*500)。压力=0.5*墙HP减少+1000*缺失墙ID数+2*基地HP减少+1000*缺失控制员ID数。连续观察才能累计HP减少；夜首、夜末或连续性缺失标complete=false，只代表已观察下界。ID缺失是风险代理，不证明战斗死亡；参数不是平台规则。墙count benchmark仍8/9/10，武器最低仍D1/2=2/1/1，D3+=2/2/1，不追L3。
+
+限制：日志没有完整逐回合Request。game17资金冻结的证据与受控重放范围见ROUND5_ANALYSIS；未证明真实地图上所有deadlines可兑现、实验增长值最优或1300回合存活。无实机实验。以下模块拆分/旧策略段落保留为历史依据，不覆盖本节。
+
+
 ## Gate1 Shadow（当前；优先于下文历史策略记录）
 
 实现范围只到可运行的 Shadow，实际响应仍由原 plan_turn 生成。不提供 V2 authority 选项。

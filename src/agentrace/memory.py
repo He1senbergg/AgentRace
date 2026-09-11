@@ -2,6 +2,7 @@
 from copy import deepcopy
 from dataclasses import dataclass
 from dataclasses import field
+from enum import Enum
 from .model import (
     Phase,
     nonnegative_int,
@@ -40,6 +41,54 @@ class ControllerAssignment:
     safe_slot: tuple
 
 
+class CapitalState(str, Enum):
+    DEFICIT = 'DEFICIT'
+    FUNDING = 'FUNDING'
+    FUNDED = 'FUNDED'
+    LIQUIDATE = 'LIQUIDATE'
+    PROCURE = 'PROCURE'
+    DELIVER = 'DELIVER'
+    APPLY = 'APPLY'
+    VERIFY = 'VERIFY'
+    DONE = 'DONE'
+    BLOCKED = 'BLOCKED'
+
+
+class BlockReason(str, Enum):
+    FUNDING_GAP = 'FUNDING_GAP'
+    NEED_LIQUIDATION = 'NEED_LIQUIDATION'
+    NO_ACTOR = 'NO_ACTOR'
+    ACTOR_BUSY = 'ACTOR_BUSY'
+    SHOP_UNREACHABLE = 'SHOP_UNREACHABLE'
+    TARGET_UNREACHABLE = 'TARGET_UNREACHABLE'
+    RETURN_UNREACHABLE = 'RETURN_UNREACHABLE'
+    VENDOR_UNREACHABLE = 'VENDOR_UNREACHABLE'
+    DEADLINE = 'DEADLINE'
+    INVENTORY_FULL = 'INVENTORY_FULL'
+    BUDGET_BLOCKED = 'BUDGET_BLOCKED'
+    WRONG_JOB_STATE = 'WRONG_JOB_STATE'
+    ITEM_UNAVAILABLE = 'ITEM_UNAVAILABLE'
+    TARGET_MISSING = 'TARGET_MISSING'
+    ACTION_REJECTED = 'ACTION_REJECTED'
+    VERIFICATION_PENDING = 'VERIFICATION_PENDING'
+    SUPERSEDED = 'SUPERSEDED'
+
+
+@dataclass
+class CapitalGoal:
+    goal_id: str
+    goal_type: str
+    target: str
+    item: str
+    bucket: str
+    target_value: float
+    assigned_actor: object = None
+    state: str = 'DEFICIT'
+    block_reason: object = None
+    last_action_round: object = None
+    last_action: object = None
+
+
 @dataclass
 class Day1Plan:
     day: int = 1
@@ -52,6 +101,7 @@ class Day1Plan:
     wall_hp_target: int = 8000
     weapon_level_target: tuple = (2, 1, 1)
     reasons: list = field(default_factory=list)
+    capital_goals: dict = field(default_factory=dict)
 
     @property
     def unmet_wall_target(self):
@@ -69,6 +119,8 @@ class StrategicState:
     wall_damage: dict = field(default_factory=dict)
     previous_night_walls: dict = field(default_factory=dict)
     day_start: dict = field(default_factory=dict)
+    night_growth: dict = field(default_factory=dict)
+    growth_basis: dict = field(default_factory=dict)
 
 
 @dataclass
