@@ -5,6 +5,9 @@ import unittest
 from unittest.mock import patch
 
 from src import main3 as main
+from src.agentrace import strategy
+from src.agentrace import task_news
+from src.agentrace import session as session_module
 from test_actions import role, state, target, validator, zone
 
 
@@ -145,7 +148,7 @@ class ShadowTests(unittest.TestCase):
         self.assertNotIn('error', rows[0])
         old = deepcopy(session.memory.strategic)
         data['roundNo'] = 1
-        with patch.object(main.StrategicPlanner, 'run', side_effect=RuntimeError('secret')):
+        with patch.object(strategy.StrategicPlanner, 'run', side_effect=RuntimeError('secret')):
             with self.assertLogs(main.LOG, level='INFO') as logs:
                 self.assertEqual(session.handle(data), legacy.handle(data))
         self.assertEqual(session.memory.strategic, old)
@@ -175,7 +178,7 @@ class ShadowTests(unittest.TestCase):
         response = main.empty_response()
         def task(_self, result):
             result['prompt'] = 'private task intent'
-        with patch.object(main.TaskPlanner, 'run', task):
+        with patch.object(task_news.TaskPlanner, 'run', task):
             p.execute_job(p.plan.jobs['3'], response)
             p.execute_job(p.plan.jobs['2'], response)
         self.assertEqual(response['prompt'], 'private task intent')
@@ -199,7 +202,7 @@ class ShadowTests(unittest.TestCase):
             if job.job_type == 'BUILD_WALL':
                 return (100, 1) if planner.plan.execution_wall_target > 2 else (5, 1)
             return (1, 1)
-        with patch.object(main.StrategicPlanner, 'completion_trip', estimates):
+        with patch.object(strategy.StrategicPlanner, 'completion_trip', estimates):
             p, _, report = shadow(data, memory)
         self.assertEqual(p.plan.execution_wall_target, 2)
         self.assertEqual(p.plan.jobs[wall_owner].job_type, 'BUILD_WALL')
@@ -208,7 +211,7 @@ class ShadowTests(unittest.TestCase):
     def test_observation_replay_response_identity_across_boundaries(self):
         data = opening()
         legacy, session = main.GameSession(strategy_mode='legacy'), main.GameSession(strategy_mode='shadow')
-        with patch.object(main.LOG, 'info') as log:
+        with patch.object(session_module.LOG, 'info') as log:
             for r in (0, 1, 2, 59, 69, 70, 71, 129, 130, 259, 260):
                 data['roundNo'] = r
                 self.assertEqual(session.handle(deepcopy(data)), legacy.handle(deepcopy(data)))

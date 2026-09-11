@@ -1,6 +1,19 @@
 # AgentRace 测试计划
 
-当前 V2.2：round4 专项17项PASS，最终全量186项PASS（27.028秒），具体边界见文末 V2.2 小节。默认仍 Shadow，实机收益未验证。
+当前是保持 V2.2 行为的模块拆分。历史 V2.2 全量186项PASS（27.028秒）；本轮新增等价与入口验证，结果见下节。默认仍 Shadow，实机收益未验证。
+
+最终模块版全量：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，194项PASS（47.111秒），无跳过。仅执行一次最终全量；长序列单独运行，不在普通全量中重复。
+
+## 模块化等价验证（当前）
+
+- 不可变基线：tests/fixtures/v22_baseline.py，加 SHA-256 校验；.gitattributes 禁止对该基线做换行转换，Windows/Linux均按相同字节校验。基线只用于测试，不随比赛代码部署。
+- tests/test_equivalence.py：依赖层级/无环检查、58个函数类AST及常量表达式一致性、基线摘要、独立进程固定请求等价。比较完整 roleCommandMap/prompt/executeCmd、HTTP状态与正文、规范化记忆、cached_response、fingerprint；不比较类模块路径/repr/对象身份。
+- 短序列：11组387次请求，每次拆分后执行；legacy/shadow/defense、0/1起点、两侧、昼夜/Day4边界、任务LLM/命令/答案/错误、重复/冲突/断档/重置、HTTP畸形输入、planner/validation失败后恢复。
+- 长序列：同一生成器扩到11组15675次请求，固定两边PYTHONHASHSEED=0，不让两个实现各自生成后续输入。命令：PowerShell `$env:AGENTRACE_FULL_EQ='1'; .venv\Scripts\python.exe -B -m unittest discover -s tests -p test_equivalence.py -q`。之后清除该环境变量，避免普通全量重复长序列。
+- 长序列结果：4项PASS（357.106秒）。首轮大量展开快照导致测试父进程约1GB，新版子进程触发240秒工具超时；改为对完整规范化状态生成SHA-256，Response/HTTP正文/cached_response仍直接比较后通过，未调整240秒门槛或比赛代码。短序列保留完整字段；长序列状态不符可按定位回合重跑非摘要前缀。
+- tests/test_entrypoints.py：4项PASS（14.015秒）。仅复制src与run.sh的隔离部署目录，从其他工作目录直接启动/使用原run.sh；真实HTTP状态/正文与冻结基线一致。另测正常package导入和仓库外相对路径replay，baseline/modular均完成相同70回合离线模型。
+- 本轮run.sh验证使用Windows Git Bash及Windows Python3.11，不冒充当前模块版的WSL/CentOS验证。原run.sh未修改。未执行正式比赛或改默认模式。
+- 每步专项记录：model/world6；memory9；actions23+protocol7；economy/strategy_regressions12+round4 17；defense18+versus8+round系列32；task15+news9；strategy/shadow19+round系列32；session/memory9+shadow19+diagnostics4。各步短equivalence均通过。
 
 ## Gate1 Shadow 验证（历史）
 

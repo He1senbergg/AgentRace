@@ -1,10 +1,17 @@
 """Day-only controlled replay from Self log map. No combat, tasks or mine respawn.
 Usage: python tools/replay_day.py LOG [--source PATH]
 """
-import argparse, importlib.util, json, pathlib, re, sys
+import argparse, importlib.util, json, pathlib, re, subprocess, sys
 from collections import Counter
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('log');p.add_argument('--source',default='src/main3.py');a=p.parse_args()
-spec=importlib.util.spec_from_file_location('replay_player',a.source);m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)
+if not __package__:
+    raise SystemExit(subprocess.call([sys.executable, '-m', 'tools.replay_day',
+                                      str(pathlib.Path(a.log).resolve()), '--source', str(pathlib.Path(a.source).resolve())], cwd=ROOT))
+if pathlib.Path(a.source).resolve() == ROOT / 'src/main3.py':
+    from src import main3 as m
+else:
+    spec=importlib.util.spec_from_file_location('replay_player',a.source);m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)
 lines=pathlib.Path(a.log).read_text(encoding='utf-8').splitlines()
 first=next(json.loads(l.split('[trace_turn] ')[1]) for l in lines if '[trace_turn] ' in l)
 map_start=next(i for i,l in enumerate(lines) if '[trace_map] round=1' in l)

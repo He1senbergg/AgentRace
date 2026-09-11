@@ -230,3 +230,19 @@ HEAL 是一次恢复工作，不囤药。活跃任务先锋从防御 job 和夜�
 `GameSession(strategy_mode='defense')` 让 StrategicPlanner 使用真实 candidate memory；它先且只一次调用原 TaskPlanner，写入任务状态/频道并占用 active pioneer，再通过共享 validator/arbiter 执行其他 RoleJob。结束仍进行最终协议与动作验证、事务提交与重复缓存。没有执行旧防御后再覆盖动作的双 authority 合并。`shadow` 使用观测后的独立副本，真实输出仍由 legacy 产生；DEFAULT_STRATEGY_MODE 保持 shadow。defense 日志明确 authority，actual 为最终选择动作，divergence 不代表另跑一次 legacy 的对照；defense 计时独立列出。
 
 TaskPlanner 实现及 attack target scorer 不变。`GameMemory.observe()` 额外形成任务开始/结束的连续观测边界、错误码与金币前后值；StrategicPlanner 不重复解析 raw 反馈，也不据此推断任务收益。
+# 保持 V2.2 行为的模块拆分（2026-09-11，当前结构）
+
+人工确认平台支持多个 Python 文件。运行代码直接使用 src/main3.py 与 src/agentrace/，不生成 bundle。run.sh 原样保留；主入口继续创建 app/SESSION，持有 callback、HTTP hooks 和 CLI。原有项目类/函数显式重新导出，主入口采用 __package__ 分支支持直接脚本和 package import，不修改 sys.path，不引入业务源码加载器。
+
+模块依赖是 DAG：model 为底层；memory/actions → model；economy → model；defense → economy/model；task_news → actions/economy/model；strategy → 前述模块；session → strategy/memory/actions/model/task_news；main3 → 各模块。memory 保存 StrategicState/Day1Plan/RoleJob 等数据，不导入 strategy。业务模块均不导入 main3。
+
+- model：World、Phase、几何/布局、Rules/DefensePolicy、常量与基础数据函数。
+- memory：GameMemory/observe、ObservationDelta、战略状态数据类。
+- actions：协议校验、strict_json、ActionValidator、BudgetReserve、ActionArbiter。
+- economy / defense / task_news：原 planner 及相应辅助函数。
+- strategy：plan_turn 和 StrategicPlanner，调用顺序与所有方法体原样保留。
+- session：仅 GameSession，不接管入口的 app/SESSION/HTTP 全局状态。入口把原 LOG 对象显式绑定给 session，保持脚本与 package 导入时的日志名称；没有代理或函数重绑定。
+
+冻结基线为 tests/fixtures/v22_baseline.py（测试专用，不部署），SHA-256 见同目录 v22_baseline.sha256。所有原有顶层函数/类 AST 与常量表达式受测试锁定。行为等价通过独立进程输入同一固定请求序列，比较 Response、HTTP 原始正文/状态和字段规范化状态，不比较类模块名或对象身份。测试注入指向定义模块。
+
+replay 工具默认通过正常 src.main3 package import 运行；脚本启动以标准 -m 子进程切换到仓库根，转发前绝对化原调用者路径。自定义 --source 保留原有离线测试加载行为，未将该机制引入比赛运行模块；模拟规则不变。

@@ -6,6 +6,8 @@ import unittest
 from unittest.mock import patch
 
 from src import main3 as main
+from src.agentrace import strategy
+from src.agentrace import session as session_module
 from test_actions import role, state, target
 from test_shadow import opening
 
@@ -51,9 +53,9 @@ class InstrumentationTests(unittest.TestCase):
             response['prompt'] = 'must not escape'
             response['executeCmd'] = 'must not escape'
             raise RuntimeError('instrumentation failed')
-        with patch.object(main.StrategicPlanner, 'run', broken), \
-                patch.object(main.LOG, 'info', side_effect=RuntimeError('log failed')), \
-                patch.object(main.LOG, 'error', side_effect=RuntimeError('error logger failed')):
+        with patch.object(strategy.StrategicPlanner, 'run', broken), \
+                patch.object(session_module.LOG, 'info', side_effect=RuntimeError('log failed')), \
+                patch.object(session_module.LOG, 'error', side_effect=RuntimeError('error logger failed')):
             session = main.GameSession()
             self.assertEqual(session.handle(data), expected)
             self.assertEqual(session.handle(data), expected)
@@ -62,13 +64,13 @@ class InstrumentationTests(unittest.TestCase):
     def test_performance_warning_is_diagnostic_only(self):
         data = opening()
         expected = main.GameSession(strategy_mode='legacy').handle(deepcopy(data))
-        with patch.object(main.time, 'perf_counter', side_effect=count(0, 1)), \
-                patch.object(main.LOG, 'warning') as warning:
+        with patch.object(session_module.time, 'perf_counter', side_effect=count(0, 1)), \
+                patch.object(session_module.LOG, 'warning') as warning:
             self.assertEqual(main.GameSession().handle(data), expected)
         self.assertEqual(warning.call_count, 1)
         self.assertEqual(warning.call_args.args[0], '[shadow_performance] %s')
-        with patch.object(main.time, 'perf_counter', side_effect=count(0, 1)), \
-                patch.object(main.LOG, 'warning', side_effect=RuntimeError('warning failed')):
+        with patch.object(session_module.time, 'perf_counter', side_effect=count(0, 1)), \
+                patch.object(session_module.LOG, 'warning', side_effect=RuntimeError('warning failed')):
             self.assertEqual(main.GameSession().handle(data), expected)
 
     def test_weapon_and_controller_divergence_and_return_diagnostics(self):

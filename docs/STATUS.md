@@ -1,7 +1,17 @@
 # AgentRace 当前检查点
 
 ## 当前阶段
-2026-09-11：V2.2 Day2/Day3 Defense Growth 完成实现、测试和只读独立审查，已暂停等待用户审阅。默认仍 DEFAULT_STRATEGY_MODE=shadow，无参数平台启动仍返回 legacy 的全部响应；显式 --strategy-mode defense 才启用防御 authority，--strategy-mode legacy 保留。端口处理未改；1300 回合存活尚未证明。
+2026-09-11：V2.2 的 behavior-preserving 模块拆分已完成并通过测试/独立审查，已停止，未改策略。人工已确认允许额外 Python 源文件，保持既有 main3.py 启动方式即可；此前额外文件未确认项已解除。默认仍 DEFAULT_STRATEGY_MODE=shadow，端口/HTTP/callback 保持原样。无 bundle 或新增依赖；1300 回合存活尚未证明。
+
+## 模块拆分检查点（当前）
+- 基线是本轮开始时完整 V2.2，冻结于 tests/fixtures/v22_baseline.py，SHA-256：105a44200a24a0e5db8c2062e6206f129e3055568b0a6e5f4a10e101b5a76934。该文件只供测试，不部署。
+- src/main3.py 为186行薄入口，保留 app/SESSION/callback/CLI/HTTP hooks 与原项目名称显式导出；业务位于 src/agentrace/{model,memory,actions,economy,defense,task_news,strategy,session}.py。package __init__.py 无副作用。GameSession 仅整体迁入 session。
+- 58个原有函数/类 AST 完全一致，原有常量表达式受回归锁定；所有业务方法体、plan_turn调用次序、任务pending、候选事务和动作扣账未变。普通测试 patch 定义模块，不建立代理。
+- 每次只迁一模块，逐步专项及短序列equivalence全部通过。独立只读审查确认无循环依赖和比赛入口阻塞；replay仓库外相对路径问题已修复并专项验证。
+- 真实入口专项4项PASS（14.015秒）：package导入、隔离多文件目录直接HTTP、未改run.sh的Git Bash真实HTTP、仓库外相对路径replay。HTTP状态/正文及replay最终结果与冻结V2.2一致。
+- 长序列equivalence通过：11组15675次固定请求，4项门禁PASS（357.106秒），涵盖三模式、两起点、两侧及完整回合范围；Response/HTTP/缓存/fingerprint一致，所有规范化状态字段摘要一致。首轮工具保留两份完整对象树导致父进程约1GB且新版子进程240秒超时，未报告Response差异；只将长序列状态输出改为完整字段SHA-256摘要后通过，Response仍原样比较，240秒子进程门槛未变，独立审查确认未过滤字段。
+- 最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：194项PASS（47.111秒），无跳过；git diff --check通过，run.sh无修改。已停止，未自动提交、未进入实机策略实验。运行部署必须同时带上完整 src/agentrace/，不能继续只复制 main3.py。
+- 运行文件行数：main3 186；model359、memory167、actions365、economy141、defense523、task_news469、strategy811、session289；package标记__init__ 1行。当前可作为人工提交检查点。
 
 ## V2.2 当前检查点
 - 修改前完整读取 round4 game11/game12、ROUND3_ANALYSIS 和 main3.py。两局相反开局均在 Night3 崩溃：game11 投资单门 L3，game12 买 5 次 WallFixer、墙容量停留 8000，R330 有 75/220 HP worker。详见 [ROUND4_ANALYSIS.md](ROUND4_ANALYSIS.md)。
@@ -25,7 +35,7 @@
 - V2.1验证：round3专项（匹配、R331 fixtures、静态deadline、墙目标分层、NEW_DAY、Day2/Day3 wall service、墙缺失归因、MATCH2完整性）28项PASS；最终Windows全量169项PASS（28.788秒）。实际响应仍legacy，未启用V2 authority。
 
 ## 本轮 Shadow 检查点
-- src/main3.py 新增 ObservationDelta、RoleJob、ControllerAssignment、BudgetReserve、JobAuthorization/ActionProposal/ActionArbiter、CanonicalLayout、Day1Plan、StrategicState、StrategicPlanner。仍单文件部署，无新增依赖。
+- 历史实现将 ObservationDelta、RoleJob、ControllerAssignment、BudgetReserve、JobAuthorization/ActionProposal/ActionArbiter、CanonicalLayout、Day1Plan、StrategicState、StrategicPlanner 放在 main3.py；当前已按上述模块拆分。人工确认支持多文件，无新增依赖。
 - GameMemory.observe 是唯一原始反馈关联边界；Shadow 在观察后、legacy规划前的独立 memory 上计算。真实 previous_actions/配额/任务状态不接收 intended actions，缓存请求不重复运行 Shadow；失败保留旧战略检查点并记录异常类型。
 - attack 原子占用 weapon+controller；验证接受后才扣本回合 staged_gold，拒绝不扣。每次新观测以 goldNum 重新建立预算，不预支任务或售矿收益。初始75优先锁三炮，余款才进入首个升级预留。
 - 四种 mode：DAY_NORMAL/RECOVERY/PRE_NIGHT/NIGHT。首日建炮、批量取石筑墙、升级、任务和经济由持久 job 表达；回防基于当前路径、job完成动作、返程及5回合策略余量。墙计划不可完成先降低执行目标，benchmark仍为8墙。

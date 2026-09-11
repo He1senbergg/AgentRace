@@ -10,6 +10,8 @@ import unittest
 from unittest.mock import patch
 
 from src import main3 as main
+from src.agentrace import strategy
+from src.agentrace import task_news
 from test_actions import role, zone
 from test_round3 import defense_day
 from test_shadow import shadow
@@ -115,8 +117,8 @@ class Round4Tests(unittest.TestCase):
         original = main.StrategicPlanner.can_service
         def services(planner, actor, building, name, funds):
             return original(planner, actor, building, name, funds) if name in {'Medicine', 'StationUpgradeVoucher1'} else False
-        with patch.object(main.StrategicPlanner, 'can_service', services), \
-                patch.object(main.StrategicPlanner, 'completion_trip', return_value=None):
+        with patch.object(strategy.StrategicPlanner, 'can_service', services), \
+                patch.object(strategy.StrategicPlanner, 'completion_trip', return_value=None):
             p, _, report = plan(data)
         self.assertIn('STATION_GAP_FALLBACK', report['reasons'])
 
@@ -129,7 +131,7 @@ class Round4Tests(unittest.TestCase):
                     r['health'] = 1500
             def estimate(planner, job, slot):
                 return (100, 1) if job.job_type == 'BUILD_WALL' and planner.plan.execution_wall_target > feasible else (1, 1)
-            with patch.object(main.StrategicPlanner, 'completion_trip', estimate):
+            with patch.object(strategy.StrategicPlanner, 'completion_trip', estimate):
                 p, _, _ = plan(data)
             self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target), (8, feasible))
         data = defense_day(1)
@@ -222,7 +224,7 @@ class Round4Tests(unittest.TestCase):
             response['prompt'] = 'task prompt'
             response['executeCmd'] = 'echo task'
         session = main.GameSession(origin=1, strategy_mode='defense')
-        with patch.object(main.TaskPlanner, 'run', task_run):
+        with patch.object(task_news.TaskPlanner, 'run', task_run):
             response = session.handle(data)
         self.assertEqual(len(calls), 1)
         self.assertEqual(response['prompt'], 'task prompt')

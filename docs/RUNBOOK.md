@@ -31,9 +31,9 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 
 ## 最小运行文件与验证
 
-保留`run.sh`和`src/main3.py`的相对目录，另备requirements-dev.txt供环境复现。主程序只依赖标准库与Flask及其传递依赖，不依赖AI Spec、Official、docs或tests。
+人工确认比赛允许额外 Python 源文件，保持 main3.py 既有入口即可。保留 `run.sh`、`src/main3.py` 和完整 `src/agentrace/` 的相对目录，另备 requirements-dev.txt 供环境复现。无需 bundle/构建生成步骤。主程序只依赖标准库与 Flask 及其传递依赖，不依赖 AI Spec、Official、docs、tools 或 tests；tests/fixtures/v22_baseline.py 是测试基线，不上传。
 
-2026-09-10已将仅上述两个运行文件复制到临时目录，在Windows和WSL CPython3.11.10分别启动真实HTTP，提交工人邻接铁矿的观测，均得到预期collect响应，进程退出且临时目录清理。WSL执行了复制后的run.sh。这证明本地文件闭包，不证明官方打包格式或CentOS兼容。
+历史：2026-09-10 曾验证旧版单文件闭包。当前模块版已在临时目录仅复制上述运行文件，Windows Python 3.11 直接启动及 Git Bash 执行未修改 run.sh，真实 HTTP 状态/正文与冻结 V2.2 一致。该验证不冒充当前版本的 WSL/CentOS 或正式判题实测。
 
 ## 用户负责的正式接管验证
 

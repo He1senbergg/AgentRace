@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from src import main3 as main
+from src.agentrace import strategy
 from tools.decode_match2 import decode
 from test_actions import role, state, zone
 from test_shadow import shadow
@@ -72,7 +73,7 @@ class Round3Tests(unittest.TestCase):
         data = defense_day(1)
         def estimate(planner, job, slot):
             return (100, 1) if job.job_type == 'BUILD_WALL' and planner.plan.execution_wall_target > 4 else (1, 1)
-        with patch.object(main.StrategicPlanner, 'completion_trip', estimate):
+        with patch.object(strategy.StrategicPlanner, 'completion_trip', estimate):
             p, _, report = shadow(data)
         self.assertEqual((p.plan.benchmark_wall_target, p.plan.execution_wall_target, p.plan.unmet_wall_target), (8, 4, 4))
         self.assertIn('DEADLINE_INFEASIBLE', report['reasons'])
