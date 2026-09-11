@@ -89,7 +89,7 @@ class VersusTests(unittest.TestCase):
         d.maintain()
         self.assertFalse(v.commands)
 
-    def test_affordable_level_three_rocket_before_another_level_two(self):
+    def test_breadth_first_even_when_level_three_is_affordable(self):
         data = state(role(1, 'worker', 7, 10), role(2, 'rocket', 9, 10, level=2),
                      role(3, 'rocket', 10, 10, level=1),
                      weaponShopList=[dict(name='WeaponUpgradeVoucher2', price=150),
@@ -98,7 +98,7 @@ class VersusTests(unittest.TestCase):
         zone(data, 'weaponShop', 6, 10)
         v = validator(data)
         main.DefensePlanner(v).maintain()
-        self.assertEqual(v.commands['1']['name'], 'WeaponUpgradeVoucher2')
+        self.assertEqual(v.commands['1']['name'], 'WeaponUpgradeVoucher1')
 
 
 if __name__ == '__main__':

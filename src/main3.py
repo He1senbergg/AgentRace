@@ -358,6 +358,30 @@ class Rules:
     weapon_build_names: tuple = (("gatling", "gatling"), ("railgun", "railgun"), ("rocket", "rocket"))
 
 
+@dataclass(frozen=True)
+class DefensePolicy:
+    """Experimental policy parameters, not platform rules."""
+    controller_health_ratio: float = 0.8
+    station_emergency_ratio: float = 0.7
+    night3_capacity: int = 10000
+    night3_stretch: int = 12000
+
+    def __post_init__(self):
+        if not 0 < self.controller_health_ratio <= 1 or not 0 < self.station_emergency_ratio <= 1:
+            raise ValueError('invalid experimental health threshold')
+
+    def capacity_target(self, day):
+        return 8000 if day == 1 else 9000 if day == 2 else self.night3_capacity
+
+
+def max_health(role):
+    kind = role.get('roleType')
+    if isinstance(kind, str) and kind in CHARACTERS:
+        return 220 if kind == 'worker' else 200
+    level = level_of(role)
+    return (1500 * level if kind == 'station' else 500 + 500 * level) if level else None
+
+
 class ActionValidator:
     def __init__(self, world, memory, rules=None):
         self.world, self.memory = world, memory
@@ -793,15 +817,15 @@ class DefensePlanner:
                             and level_of(r) is not None and positive_health(r.get("health"))),
                            key=lambda r: (0 if r["roleType"] == "station" and r["health"] < 750 * level_of(r) else
                                           1 if r["roleType"] == "rocket" else 2 if r["roleType"] in WEAPONS else 3,
-                                          0 if r["roleType"] == "rocket" and level_of(r) == 2
-                                          and self.v.gold >= self.v.prices.get("WeaponUpgradeVoucher2", self.v.gold + 1)
-                                          else level_of(r), r["health"], r["id"]))
+                                          level_of(r), r["health"], r["id"]))
         for building in buildings:
             kind, level = building["roleType"], level_of(building)
             maximum = (1500 * level if kind == "station" else 500 + 500 * level)
             urgent = kind == "station" and building["health"] < maximum // 2
             if emergency_only and not urgent:
                 continue
+            if kind in WEAPONS and level >= 2 and any(level_of(w) == 1 for w in self.weapons):
+                continue  # Breadth first: do not spend on L3 while an L1 can grow.
             if kind == 'wall' and building['health'] >= maximum:
                 continue  # Do not spend scarce firepower money upgrading untouched walls.
             if kind == "wall" and building["health"] < maximum:
@@ -830,13 +854,22 @@ class DefensePlanner:
             # Keep construction/upgrade errands to one worker in normal daylight.
             phase = self.v.memory.phase
             if phase and phase.is_day and (urgent or self.v.weapon_count >= 2):
-                if kind == "wall" and building["health"] < maximum:
+                capacity = sum(max_health(w) or 0 for w in buildings if w.get('roleType') == 'wall')
+                growth = capacity < DefensePolicy().capacity_target(phase.day)
+                if kind == "wall" and building["health"] < maximum and (level == 3 or not growth):
                     name = "WallFixer"
                 errands = []
                 for character in self.characters():
-                    if character["roleType"] != "worker" or name not in self.v.prices or self.v.prices[name] > self.v.gold:
+                    if character["roleType"] != "worker":
                         continue
-                    if not urgent and self.v.prices[name] > self.v.gold - self.base_reserve():
+                    purchase_name = name
+                    if (purchase_name not in self.v.prices or self.v.prices[purchase_name] > self.v.gold):
+                        if kind != 'wall' or building['health'] >= maximum:
+                            continue
+                        purchase_name = 'WallFixer'
+                    if purchase_name not in self.v.prices or self.v.prices[purchase_name] > self.v.gold:
+                        continue
+                    if not urgent and self.v.prices[purchase_name] > self.v.gold - self.base_reserve():
                         continue
                     shop_route = self.world.path(character["cell"], self.world.adjacent_goals(
                         self.world.zones["weaponShop"], character["cell"]), self.v.targets)
@@ -846,8 +879,8 @@ class DefensePlanner:
                         {building["cell"]}, shop_route[-1]), self.v.targets)
                     if not return_route or len(shop_route) + len(return_route) + 2 > 71 - phase.round_in_day:
                         continue
-                    errands.append((len(shop_route) + len(return_route), character["id"]))
-                for _, actor in sorted(errands):
+                    errands.append((len(shop_route) + len(return_route), character["id"], purchase_name))
+                for _, actor, name in sorted(errands):
                     if self.economy.purchase(actor, name):
                         if name in UPGRADES:
                             self.v.memory.upgrade_trip = (actor, name, building["cell"])
@@ -1819,6 +1852,7 @@ class StrategicState:
     last_wall_hp: dict = field(default_factory=dict)
     wall_damage: dict = field(default_factory=dict)
     previous_night_walls: dict = field(default_factory=dict)
+    day_start: dict = field(default_factory=dict)
 
 
 class ShadowDefensePlanner(DefensePlanner):
@@ -1839,7 +1873,7 @@ class ShadowDefensePlanner(DefensePlanner):
 
 class StrategicPlanner:
     """Gate1 shadow policy. Intended commands are never execution evidence."""
-    def __init__(self, world, memory, delta, rules):
+    def __init__(self, world, memory, delta, rules, policy=None, authority=False):
         self.world, self.memory, self.delta, self.rules = world, memory, delta, rules
         self.state = deepcopy(memory.strategic)
         self.plan = self.state.plan
@@ -1848,6 +1882,71 @@ class StrategicPlanner:
         self.defense = ShadowDefensePlanner(self.v)
         self.return_diagnostics = {}
         self.coverage_relocations = set()
+        self.policy = policy or DefensePolicy()
+        self.authority = authority
+        self.intended_response = empty_response()
+
+    def service_trip(self, actor, building, name):
+        """Current static routes for buy/use/return, with no predicted income."""
+        phase = self.delta.phase
+        if not phase or not phase.is_day:
+            return None
+        character = self.world.characters[actor]
+        bag = inventory(character)
+        if bag is None:
+            return None
+        geometry = object.__new__(World)
+        geometry.occupied = set(self.world.static_occupied)
+        cursor, cost = character['cell'], 0
+        if not bag[name]:
+            route = geometry.path(cursor, geometry.adjacent_goals(self.world.zones['weaponShop'], cursor))
+            if not route:
+                return None
+            cursor, cost = route[-1], len(route)  # travel + one purchase
+        if building:
+            route = geometry.path(cursor, geometry.adjacent_goals({building['cell']}, cursor))
+            if not route:
+                return None
+            cursor, cost = route[-1], cost + len(route) - 1
+        cost += 1  # use
+        assignment = self.plan.controllers.get(actor)
+        goals = {assignment.safe_slot} if assignment else geometry.adjacent_goals(
+            {w['cell'] for w in self.defense.weapons}, cursor)
+        back = geometry.path(cursor, goals) if goals else [cursor]
+        if not back or cost + len(back) - 1 + 5 > 71 - phase.round_in_day:
+            return None
+        return cost, len(back) - 1
+
+    def can_service(self, actor, building, name, funds):
+        char = self.world.characters[actor]
+        bag = inventory(char)
+        if bag is None:
+            return False
+        capacity = char.get('backPackCapability', 100)
+        can_buy = (name in self.v.prices and self.v.prices[name] <= funds
+                   and nonnegative_int(capacity) and sum(bag.values()) < capacity)
+        return (bag[name] > 0 or can_buy) and self.service_trip(actor, building, name) is not None
+
+    def wall_totals(self):
+        walls = [w for w in self.world.roles.values() if w.get('roleType') == 'wall']
+        maxima = [max_health(w) for w in walls]
+        return sum(w['health'] for w in walls), sum(maxima) if all(x is not None for x in maxima) else None
+
+    def health_ready(self, char):
+        return positive_health(char.get('health')) and char['health'] >= self.policy.controller_health_ratio * max_health(char)
+
+    def execute_service(self, job, building, name, bucket):
+        bag = inventory(self.world.characters[job.owner]) or Counter()
+        if bag[name]:
+            if building and not self.v.near(self.world.characters[job.owner], {building['cell']}):
+                return self.move(job, {building['cell']})
+            command = {'action': 'use', 'name': name}
+            if building:
+                command['targetPos'] = [dict(x=building['cell'][0], y=building['cell'][1])]
+            return self.propose(job, command)
+        if self.v.near(self.world.characters[job.owner], self.world.zones['weaponShop']):
+            return self.propose(job, {'action': 'buy', 'name': name, 'num': 1}, bucket=bucket)
+        return self.move(job, self.world.zones['weaponShop'])
 
     def route(self, actor, cells, adjacent=True):
         start = self.world.characters[actor]["cell"]
@@ -1900,11 +1999,11 @@ class StrategicPlanner:
         elif job.job_type == 'WALL_SERVICE':
             wall = self.hot_wall()
             if wall:
-                bag = inventory(self.world.characters[job.owner]) or Counter()
-                if not bag[self.wall_item(wall)] and not visit(self.world.zones['weaponShop']):
-                    return None
-                if not visit({wall['cell']}):
-                    return None
+                name = self.wall_item(wall, job.owner)
+                return self.service_trip(job.owner, wall, name) if name else None
+        elif job.job_type in {'HEAL', 'STATION_SERVICE'}:
+            building = self.world.roles.get(job.target) if job.job_type == 'STATION_SERVICE' else None
+            return self.service_trip(job.owner, building, 'StationUpgradeVoucher1' if building else 'Medicine')
         elif job.job_type == "UPGRADE":
             weapons = {w['cell'] for w in self.defense.weapons if level_of(w) == 1}
             bag = inventory(self.world.characters[job.owner]) or Counter()
@@ -2001,15 +2100,27 @@ class StrategicPlanner:
         if damaged:
             return max(damaged, key=lambda w: (self.state.wall_damage.get(w['id'], 0),
                                                500 + 500 * level_of(w) - w['health'], w['id']))
-        if sum(w['health'] for w in walls) < self.plan.wall_hp_target:
+        if sum(w['health'] for w in walls) < self.plan.wall_hp_target or sum(max_health(w) for w in walls) < self.policy.capacity_target(self.plan.day):
             return next((w for w in sorted(walls, key=lambda w: (-self.state.wall_damage.get(w['id'], 0), w['id']))
                          if level_of(w) < 3), None)
         return None
 
-    def wall_item(self, wall):
-        if wall['health'] < 500 + 500 * level_of(wall):
-            return 'WallFixer'
-        return f'WallUpgradeVoucher{level_of(wall)}'
+    def wall_item(self, wall, actor=None):
+        current, capacity = self.wall_totals()
+        growth = capacity is not None and (capacity < self.policy.capacity_target(self.plan.day) or current < self.plan.wall_hp_target)
+        choices = []
+        if level_of(wall) < 3 and growth:
+            choices.append(f'WallUpgradeVoucher{level_of(wall)}')
+        if wall['health'] < max_health(wall):
+            choices.append('WallFixer')
+        if actor is None:
+            return choices[0] if choices else None
+        funds = self.plan.budget.available('wall') if self.plan.budget else self.v.gold
+        for name in choices:
+            if self.can_service(actor, wall, name, funds):
+                return name
+        self.plan.reasons.append('WALL_SERVICE_FUNDS_OR_DEADLINE')
+        return None
 
     def reconcile(self):
         d, plan = self.delta, self.plan
@@ -2044,6 +2155,7 @@ class StrategicPlanner:
         if d.phase and not d.phase.is_day and self.state.night_key != d.phase.day:
             self.state.night_key = d.phase.day
             self.state.night_start_walls = set(wall_hp) if d.phase.round_in_day == 71 else None
+            self.state.wall_damage = {}  # Attribute observed damage within this night, not lifetime.
         self.state.wall_damage = {a: v for a, v in self.state.wall_damage.items() if a in wall_hp}
         missing = max(0, 3 - len(weapons))
         upgrade_needed = sum((level_of(w) or 0) >= 2 for w in weapons) < sum(n >= 2 for n in plan.weapon_level_target)
@@ -2052,12 +2164,55 @@ class StrategicPlanner:
         build_reserve = min(d.gold, missing * 25)
         wall = self.hot_wall()
         wall_needs = [w for w in walls if level_of(w) and w['health'] < 500 + 500 * level_of(w)] if plan.day >= 2 else []
-        wall_cost = len(wall_needs) * self.v.prices.get('WallFixer', d.gold)
-        if wall and not wall_needs:
-            wall_cost = self.v.prices.get(self.wall_item(wall), d.gold)
-        wall_reserve = min(d.gold - build_reserve, wall_cost)
+        wall_cost = self.v.prices.get(self.wall_item(wall), 0) if wall else 0
+        self.assign_controllers()
+        healers = [a for a in plan.controllers if not self.health_ready(self.world.characters[a])
+                   and not (d.task_active and self.world.characters[a].get('roleType') == 'pioneer')
+                   and self.can_service(a, None, 'Medicine', d.gold)]
+        health_reserve = min(d.gold - build_reserve, sum(
+            0 if (inventory(self.world.characters[a]) or Counter())['Medicine'] else self.v.prices.get('Medicine', 0)
+            for a in healers))
+        base = next((b for b in self.defense.stations if level_of(b) == 1), None)
+        self.station_service = None
+        if base:
+            growth_possible = any(self.can_service(a, wall, self.wall_item(wall), d.gold)
+                                  for a, c in self.world.characters.items() if c.get('roleType') == 'worker') if wall else False
+            # A fallback never displaces a reachable, affordable structural upgrade.
+            growth_possible |= any(self.can_service(a, w, 'WeaponUpgradeVoucher1', d.gold)
+                                   for a, c in self.world.characters.items() if c.get('roleType') == 'worker'
+                                   for w in weapons if upgrade_needed and level_of(w) == 1)
+            if len(walls) < plan.execution_wall_target:
+                saved_target = plan.execution_wall_target
+                try:
+                    plan.execution_wall_target = len(walls) + 1
+                    for actor, char in self.world.characters.items():
+                        if char.get('roleType') != 'worker':
+                            continue
+                        slot = plan.controllers[actor].safe_slot if actor in plan.controllers else char['cell']
+                        trip = self.completion_trip(RoleJob(actor, 'BUILD_WALL', None, 'START', 70, d.round_no, d.round_no), slot)
+                        if trip is not None and d.phase and sum(trip) + 5 <= 71 - d.phase.round_in_day:
+                            growth_possible = True
+                finally:
+                    plan.execution_wall_target = saved_target
+            current_hp, capacity = self.wall_totals()
+            emergency = base['health'] < self.policy.station_emergency_ratio * 1500
+            gap = (plan.day >= 3 and capacity is not None and
+                   (capacity < self.policy.capacity_target(plan.day) or current_hp < plan.wall_hp_target))
+            if emergency or gap and not growth_possible:
+                candidates = [(self.service_trip(a, base, 'StationUpgradeVoucher1'), a)
+                              for a, c in self.world.characters.items() if c.get('roleType') == 'worker'
+                              and self.can_service(a, base, 'StationUpgradeVoucher1', d.gold - build_reserve - health_reserve)]
+                if candidates:
+                    self.station_service = (min(candidates)[1], base)
+                    plan.reasons.append('STATION_EMERGENCY' if emergency else 'STATION_GAP_FALLBACK')
+        station_reserve = (0 if not self.station_service or
+                           (inventory(self.world.characters[self.station_service[0]]) or Counter())['StationUpgradeVoucher1']
+                           else self.v.prices.get('StationUpgradeVoucher1', 100))
+        available = max(0, d.gold - build_reserve - health_reserve - station_reserve)
+        wall_reserve = min(available, wall_cost)
         reserve = {"build": build_reserve, "wall": wall_reserve,
-                   "upgrade": min(d.gold - build_reserve - wall_reserve, self.v.prices.get("WeaponUpgradeVoucher1", 100))
+                   "health": health_reserve, "station": station_reserve,
+                   "upgrade": min(available - wall_reserve, self.v.prices.get("WeaponUpgradeVoucher1", 100))
                    if upgrade_needed and not held else 0}
         plan.budget = BudgetReserve(d.gold, d.gold, reserve)
         self.arbiter = ActionArbiter(self.v, plan.budget)
@@ -2073,10 +2228,19 @@ class StrategicPlanner:
             complete = (job.job_type == "BUILD_WEAPON" and len(weapons) >= 3
                         or job.job_type == "BUILD_WALL" and len(walls) >= plan.execution_wall_target
                         or job.job_type == "UPGRADE" and not upgrade_needed
-                        or job.job_type == 'WALL_SERVICE' and wall is None)
+                        or job.job_type == 'WALL_SERVICE' and wall is None
+                        or job.job_type == 'HEAL' and actor not in healers
+                        or job.job_type == 'STATION_SERVICE' and self.station_service is None)
             if actor not in self.world.characters or orphan or complete or d.round_no > job.deadline:
                 del plan.jobs[actor]
-        if phase and phase.day <= 3 and phase.is_day:
+        if phase and phase.is_day:
+            for actor in healers:
+                if actor not in plan.jobs or plan.jobs[actor].job_type != 'HEAL':
+                    plan.jobs[actor] = RoleJob(actor, 'HEAL', None, 'RECOVER', 95, d.round_no, end)
+            if self.station_service:
+                actor, base = self.station_service
+                if actor not in healers and (actor not in plan.jobs or plan.jobs[actor].job_type != 'STATION_SERVICE'):
+                    plan.jobs[actor] = RoleJob(actor, 'STATION_SERVICE', base['id'], 'RECOVER', 90, d.round_no, end)
             # Wall service can preempt optional economy/weapon upgrades, never an active task.
             if wall and not any(j.job_type == 'WALL_SERVICE' for j in plan.jobs.values()):
                 for actor, job in sorted(plan.jobs.items()):
@@ -2148,6 +2312,7 @@ class StrategicPlanner:
             "BUILD_WEAPON": {"move", "build", "use"}, "BUILD_WALL": {"move", "collect", "build", "use"},
             "UPGRADE": {"move", "buy", "use"}, "TASK": {"move", "acceptTask", "submitAnswer", "use"},
             "WALL_SERVICE": {"move", "buy", "use"},
+            "HEAL": {"move", "buy", "use"}, "STATION_SERVICE": {"move", "buy", "use"},
             "ECONOMY": {"move", "collect", "sell", "use"}, "RETURN": {"move", "use"},
             "CONTROL": {"move", "attack", "use"},
         }
@@ -2165,7 +2330,9 @@ class StrategicPlanner:
         char = self.world.characters[actor]
         bag = inventory(char) or Counter()
         phase = self.delta.phase
-        if bag["Medicine"] and char.get("health", 100) <= 50:
+        if self.authority and actor in self.v.busy:
+            return
+        if bag["Medicine"] and not self.health_ready(char):
             self.propose(job, {"action": "use", "name": "Medicine"})
             return  # Lifesaving action pauses rather than deletes the persistent job.
         if job.job_type in {"RETURN", "CONTROL"}:
@@ -2184,25 +2351,27 @@ class StrategicPlanner:
                 return  # Already covers a weapon: changing controllerId is not moving station.
             self.move(job, {assignment.safe_slot}, adjacent=False)
             return  # Cooldown does not release the job for mining/shopping.
-        if not phase or not phase.is_day or phase.day > 3:
+        if not phase or not phase.is_day:
+            return
+        if job.job_type in {'HEAL', 'STATION_SERVICE'}:
+            building = self.world.roles.get(job.target) if job.job_type == 'STATION_SERVICE' else None
+            name = 'StationUpgradeVoucher1' if building else 'Medicine'
+            bucket = 'station' if building else 'health'
+            if self.can_service(actor, building, name, self.plan.budget.available(bucket)):
+                self.execute_service(job, building, name, bucket)
+            else:
+                self.plan.reasons.append('RECOVERY_FUNDS_OR_DEADLINE')
             return
         if job.job_type == 'WALL_SERVICE':
             wall = self.hot_wall()
             if wall is None:
                 return
-            name = self.wall_item(wall)
+            name = self.wall_item(wall, actor)
             job.target = wall['id']
-            if bag[name]:
-                if distance(char['cell'], wall['cell']) <= 1:
-                    self.propose(job, {'action': 'use', 'name': name,
-                                       'targetPos': [dict(x=wall['cell'][0], y=wall['cell'][1])]})
-                else:
-                    self.move(job, {wall['cell']})
-            elif self.v.prices.get(name, self.v.gold + 1) <= self.plan.budget.available('wall'):
-                if self.v.near(char, self.world.zones['weaponShop']):
-                    self.propose(job, {'action': 'buy', 'name': name, 'num': 1}, bucket='wall')
-                else:
-                    self.move(job, self.world.zones['weaponShop'])
+            if name:
+                self.execute_service(job, wall, name, 'wall')
+            else:
+                self.worker_income(job, response)
             return
         if job.job_type in {"BUILD_WEAPON", "BUILD_WALL"}:
             wall = job.job_type == "BUILD_WALL"
@@ -2223,9 +2392,16 @@ class StrategicPlanner:
                 geometry.occupied = set(self.world.static_occupied)
                 long_route = geometry.path(char['cell'], geometry.adjacent_goals({cell}, char['cell']))
                 minimum = (len(long_route) - 1 if long_route else 0) + max(0, needed - bag["stone"]) + max(0, self.plan.execution_wall_target - self.v.wall_count)
-                if minimum + 5 > 71 - phase.round_in_day:
+                while minimum + 5 > 71 - phase.round_in_day and self.plan.execution_wall_target > self.v.wall_count:
                     self.plan.reasons.append("DEADLINE_INFEASIBLE")
-                    self.plan.execution_wall_target = self.v.wall_count + bag["stone"] // stones
+                    self.plan.execution_wall_target -= 1
+                    needed = max(0, self.plan.execution_wall_target - self.v.wall_count) * stones
+                    minimum = (len(long_route) - 1 if long_route else 0) + max(0, needed - bag['stone']) + max(0, self.plan.execution_wall_target - self.v.wall_count)
+                if needed == 0:
+                    return
+                if bag['stone'] >= needed:
+                    job.phase = 'BUILD'
+                    self.execute_job(job, response)
                     return
                 job.target, job.phase = cell, "COLLECT"
                 if len(route) == 1:
@@ -2264,17 +2440,11 @@ class StrategicPlanner:
                 return
             name = "WeaponUpgradeVoucher1"
             job.target = weapon["id"]
-            if bag[name]:
-                if distance(char["cell"], weapon["cell"]) <= 1:
-                    self.propose(job, {"action": "use", "name": name,
-                                       "targetPos": [dict(x=weapon["cell"][0], y=weapon["cell"][1])]})
-                else:
-                    self.move(job, {weapon["cell"]})
-            elif self.v.prices.get(name, self.v.gold + 1) <= self.plan.budget.available("upgrade"):
-                if self.v.near(char, self.world.zones["weaponShop"]):
-                    self.propose(job, {"action": "buy", "name": name, "num": 1}, bucket="upgrade")
-                else:
-                    self.move(job, self.world.zones["weaponShop"])
+            if self.can_service(actor, weapon, name, self.plan.budget.available('upgrade')):
+                self.execute_service(job, weapon, name, 'upgrade')
+            else:
+                self.plan.reasons.append('WEAPON_UPGRADE_FUNDS_OR_DEADLINE')
+                self.worker_income(job, response)
         else:
             # Reuse task protocol and economic route logic on an isolated memory.
             # Restrict helper output to this job; re-submit through the arbiter.
@@ -2285,30 +2455,50 @@ class StrategicPlanner:
             if job.job_type == "TASK":
                 TaskPlanner(scratch).run(scratch_response)
             elif job.job_type == "ECONOMY":
+                scratch.memory.wall_builder = None  # RoleJob owns this worker's defense reservation.
+                scratch.memory.upgrade_trip = None
                 EconomyPlanner(scratch).workers()
             for owner, command in scratch.commands.items():
-                self.propose(job, command, owner)
+                if self.propose(job, command, owner) and self.authority and job.job_type == 'ECONOMY':
+                    self.memory.worker_mines = deepcopy(scratch.memory.worker_mines)
             if job.job_type == "TASK":
                 response["prompt"] = scratch_response["prompt"]
                 response["executeCmd"] = scratch_response["executeCmd"]
+
+    def worker_income(self, job, response):
+        """Only an infeasible service may yield to interruptible income work."""
+        if self.world.characters[job.owner].get('roleType') == 'worker':
+            paused = RoleJob(job.owner, 'ECONOMY', None, 'FUNDS', 20, job.created_round, job.deadline)
+            self.execute_job(paused, response)
 
     def run(self, actual):
         old_wall_target = self.plan.execution_wall_target
         self.reconcile()
         intended = empty_response()
+        if self.authority and (self.delta.task_active or any(j.job_type == 'TASK' for j in self.plan.jobs.values())):
+            # One legacy TaskPlanner owns both task state and task channels.
+            TaskPlanner(self.v).run(intended)
+            if self.delta.task_active:
+                self.v.busy.update(a for a, c in self.world.characters.items() if c.get('roleType') == 'pioneer')
         if self.delta.phase and not self.delta.phase.is_day:
             # Keep the existing target scorer. Only controller assignment changes.
             fireable = [w for w in self.defense.weapons if w.get('cooldown', 0) == 0
                         and self.defense.attack_plan(w)[2] > 0]
             healing = {a for a, c in self.world.characters.items()
-                       if (inventory(c) or Counter())['Medicine'] and c.get('health', 100) <= 50}
+                       if (inventory(c) or Counter())['Medicine'] and not self.health_ready(c)}
+            healing.update(self.v.busy)
             for weapon, actor in self.adjacent_matching(weapons=fireable, excluded=healing).items():
                 job = self.plan.jobs.get(actor)
                 if job and job.job_type == 'CONTROL':
                     job.target = weapon
         for job in sorted(self.plan.jobs.values(), key=lambda j: (-j.priority, j.owner)):
+            if self.authority and job.job_type == 'TASK':
+                continue
             self.execute_job(job, intended)
         intended["roleCommandMap"] = self.v.commands
+        self.intended_response = intended
+        if self.authority:
+            actual = intended
         matching = self.adjacent_matching()
         physical_matching = self.adjacent_matching(ready_only=False)
         ready = len(physical_matching)
@@ -2321,6 +2511,11 @@ class StrategicPlanner:
             "walls": sum(r.get("roleType") == "wall" for r in self.world.roles.values()),
             "wall_hp": [r.get("health") for r in self.world.roles.values() if r.get("roleType") == "wall"],
             "wall_count": len(wall_hp), "wall_total_hp": sum(wall_hp.values()), "wall_hp_by_id": wall_hp,
+            "wall_current_hp_total": sum(wall_hp.values()), "wall_max_hp_total": self.wall_totals()[1],
+            "wall_level_counts": dict(Counter(level_of(self.world.roles[a]) for a in wall_hp)),
+            "controller_health": {a: {'hp': self.world.characters[a]['health'], 'max_hp': max_health(self.world.characters[a])}
+                                  for a in self.plan.controllers},
+            "controller_health_ready": {a: self.health_ready(self.world.characters[a]) for a in self.plan.controllers},
             "wall_destroyed_since_night_start": None,  # Missing IDs do not identify cause of disappearance.
             "wall_ids_missing_since_night_start": sorted(self.state.night_start_walls - set(wall_hp))
             if self.delta.phase and not self.delta.phase.is_day and self.state.night_start_walls is not None else None,
@@ -2333,6 +2528,11 @@ class StrategicPlanner:
             "associated_failures": sum(v is False for v in self.delta.feedback["results"].values()) if self.delta.continuous else None,
         }
         levels = self.state.metrics["weapon_levels"]
+        snapshot = {'wall_current_hp': sum(wall_hp.values()), 'wall_max_hp': self.wall_totals()[1],
+                    'weapon_level': levels}
+        phase = self.delta.phase
+        if phase and self.state.day_start.get('day') != phase.day:
+            self.state.day_start = dict(day=phase.day, **{k: v if phase.round_in_day == 1 else None for k, v in snapshot.items()})
         self.state.metrics["day1_benchmark_met"] = (self.delta.phase is not None and self.delta.phase.day == 1 and
             sum(w.get("roleType") == "rocket" for w in self.defense.weapons) == 3
             and len(levels) == 3 and levels >= [2, 1, 1]
@@ -2344,8 +2544,9 @@ class StrategicPlanner:
                     for a, c in commands.items()}
         actual_commands = actual["roleCommandMap"]
         report = {"round": self.delta.round_no, "mode": self.plan.mode,
-                  "scope": "day1_to_day3_shadow" if self.delta.phase and self.delta.phase.day <= 3 else "metrics_only_daytime",
-                  "strategy_mode": "shadow",
+                  "scope": "day1_to_day3_policy_then_hold_day3_targets",
+                  "strategy_mode": "defense" if self.authority else "shadow",
+                  "authority": "defense_with_legacy_task" if self.authority else "legacy",
                   "defense_target": {"weapon_target": 3, "weapon_level_target": self.plan.weapon_level_target,
                                      "wall_target": self.plan.execution_wall_target, "controllers_target": 3,
                                      "benchmark_wall_target": self.plan.benchmark_wall_target,
@@ -2394,6 +2595,20 @@ class StrategicPlanner:
                           "estimated_finish": task_estimate.get("estimated_finish")
                           if task_estimate.get("job_type") == "TASK" else None,
                           "return_deadline": task_estimate.get("return_deadline")}
+        report['task'].update(self.memory.task_diagnostics)
+        report['defense_target'].update(wall_max_hp_target=self.policy.capacity_target(self.plan.day),
+                                        wall_max_hp_stretch=self.policy.night3_stretch if self.plan.day >= 3 else None,
+                                        controller_health_ratio=self.policy.controller_health_ratio)
+        report['defense_growth'] = ({**{k + '_start': self.state.day_start.get(k) for k in snapshot},
+                                    **{k + '_end': v for k, v in snapshot.items()},
+                                    'station_hp': self.state.metrics['station_hp'],
+                                    'controller_hp': self.state.metrics['controller_health']}
+                                   if phase and phase.round_in_day == 70 else None)
+        report['readiness_unmet'] = [name for name, unmet in (
+            ('WALL_CURRENT_HP', sum(wall_hp.values()) < self.plan.wall_hp_target),
+            ('WALL_MAX_HP', self.wall_totals()[1] is None or self.wall_totals()[1] < self.policy.capacity_target(self.plan.day)),
+            ('WEAPON_LEVELS', len(levels) < 3 or levels < list(self.plan.weapon_level_target)),
+            ('CONTROLLER_HEALTH', len(self.plan.controllers) < 3 or not all(self.state.metrics['controller_health_ready'].values()))) if unmet]
         return self.state, report
 
 
@@ -2428,6 +2643,9 @@ class GameMemory:
     treasure_terminal: str = ""
     treasure_result: object = None
     strategic: StrategicState = field(default_factory=StrategicState)
+    task_diagnostics: dict = field(default_factory=dict)
+    observed_task_active: object = None
+    observed_gold: object = None
 
     def observe(self, world, round_no):
         if round_no == 0:
@@ -2451,6 +2669,16 @@ class GameMemory:
         # These fields describe the previous platform round, not necessarily
         # the last request seen by this process. Never associate across a gap.
         continuous = self.last_round is not None and round_no == self.last_round + 1
+        active = isinstance(world.data.get('phaseTask'), str) and bool(world.data['phaseTask'])
+        self.task_diagnostics = {
+            'task_started': round_no if active and self.observed_task_active is False and continuous else None,
+            'task_end': round_no if not active and self.observed_task_active is True and continuous else None,
+            'task_error_codes': [e['errorCode'] for e in object_list(world.data.get('errors'))
+                                 if type(e.get('errorCode')) is int and e['errorCode'] in (1, 2)],
+            'gold_before': self.observed_gold if continuous else None,
+            'gold_after': world.our.get('goldNum'),
+        }
+        self.observed_task_active, self.observed_gold = active, world.our.get('goldNum')
         raw_results = world.data.get("lastRoundRoleActionResults")
         results = raw_results if isinstance(raw_results, dict) else {}
         self.feedback = {
@@ -2482,13 +2710,14 @@ class GameMemory:
 
 class GameSession:
     """Atomic in-process planning; transport delivery is not an execution ack."""
-    def __init__(self, planner=None, origin=None, rules=None, strategy_mode=DEFAULT_STRATEGY_MODE):
+    def __init__(self, planner=None, origin=None, rules=None, strategy_mode=DEFAULT_STRATEGY_MODE, policy=None):
         if origin is not None and (type(origin) is not int or origin not in (0, 1)):
             raise ValueError("invalid round origin")
         self.origin = origin
-        if strategy_mode not in {"legacy", "shadow"}:
-            raise ValueError("only legacy and shadow decision modes are available")
+        if strategy_mode not in {"legacy", "shadow", "defense"}:
+            raise ValueError("unknown strategy mode")
         self.strategy_mode = strategy_mode
+        self.policy = policy or DefensePolicy()
         self.rules = rules or Rules()
         self.planner = planner if planner is not None else lambda w, m: plan_turn(w, m, self.rules)
         self.memory = None
@@ -2665,8 +2894,16 @@ class GameSession:
                     shadow_report = {"round": round_no, "error": type(exc).__name__}
                 shadow_ms = (time.perf_counter() - shadow_started) * 1000
             legacy_started = time.perf_counter()
-            response = ensure_valid_response(self.planner(world, candidate))
+            if self.strategy_mode == 'defense':
+                defense = StrategicPlanner(world, candidate, delta, self.rules, self.policy, authority=True)
+                candidate.strategic, shadow_report = defense.run(empty_response())
+                response = ensure_valid_response(defense.intended_response)
+            else:
+                response = ensure_valid_response(self.planner(world, candidate))
             legacy_ms = (time.perf_counter() - legacy_started) * 1000
+            defense_ms = legacy_ms if self.strategy_mode == 'defense' else 0.0
+            if self.strategy_mode == 'defense':
+                legacy_ms = 0.0
             active_task = isinstance(data.get("phaseTask"), str) and bool(data["phaseTask"])
             if response["executeCmd"] and not active_task:
                 raise ValueError("sandbox command outside task")
@@ -2686,7 +2923,7 @@ class GameSession:
             if shadow_memory is not None:
                 shadow_started = time.perf_counter()
                 try:
-                    strategic, shadow_report = StrategicPlanner(world, shadow_memory, delta, self.rules).run(deepcopy(outgoing))
+                    strategic, shadow_report = StrategicPlanner(world, shadow_memory, delta, self.rules, self.policy).run(deepcopy(outgoing))
                     json.dumps(shadow_report, ensure_ascii=False, allow_nan=False)
                     candidate.strategic = strategic
                 except Exception as exc:
@@ -2704,6 +2941,7 @@ class GameSession:
                         shadow_report.setdefault(key, None)
                     shadow_report["timing_ms"] = {
                         "legacy": max(0.0, legacy_ms), "shadow": max(0.0, shadow_ms),
+                        "defense": max(0.0, defense_ms),
                         "total": max(0.0, (time.perf_counter() - processing_started) * 1000),
                     }
                     LOG.info("[shadow_turn] %s", json.dumps(shadow_report, ensure_ascii=False, allow_nan=False))
@@ -2765,8 +3003,8 @@ def process_request():
 def main():
     parser = argparse.ArgumentParser(description="AgentRace HTTP player")
     parser.add_argument("port", type=int)
-    parser.add_argument("--strategy-mode", choices=("legacy", "shadow"), default=DEFAULT_STRATEGY_MODE,
-                        help="shadow logs V2 intent; both modes return legacy actions")
+    parser.add_argument("--strategy-mode", choices=("legacy", "shadow", "defense"), default=DEFAULT_STRATEGY_MODE,
+                        help="shadow logs V2 intent and returns legacy; defense explicitly enables defense authority")
     parser.add_argument("--round-origin", type=int, choices=(0, 1), default=None,
                         help="override round origin; otherwise infer from opening observation 0 or 1")
     parser.add_argument("--wall-stone-cost", type=int, default=1,

@@ -1,7 +1,19 @@
 # AgentRace 当前检查点
 
 ## 当前阶段
-2026-09-10：当前上传版本默认 Shadow（DEFAULT_STRATEGY_MODE），无需平台添加参数；显式 --strategy-mode legacy 可本地回退。Shadow只记录V2意图，roleCommandMap/prompt/executeCmd全部仍由legacy返回。已补最小instrumentation，不改变策略或端口参数；本patch完成后停止，不切换V2实际决策权。以下round2实机成果为历史背景，1300回合目标尚未证明。
+2026-09-11：V2.2 Day2/Day3 Defense Growth 完成实现、测试和只读独立审查，已暂停等待用户审阅。默认仍 DEFAULT_STRATEGY_MODE=shadow，无参数平台启动仍返回 legacy 的全部响应；显式 --strategy-mode defense 才启用防御 authority，--strategy-mode legacy 保留。端口处理未改；1300 回合存活尚未证明。
+
+## V2.2 当前检查点
+- 修改前完整读取 round4 game11/game12、ROUND3_ANALYSIS 和 main3.py。两局相反开局均在 Night3 崩溃：game11 投资单门 L3，game12 买 5 次 WallFixer、墙容量停留 8000，R330 有 75/220 HP worker。详见 [ROUND4_ANALYSIS.md](ROUND4_ANALYSIS.md)。
+- 墙服务优先可交付的 L1/L2 升级，以同时恢复当前 HP 和增长最大 HP；L3/资金或时间不足时尝试 fixer。预算按当回合接受动作扣款，不预支任务收益；无法采购的服务允许同 owner 筹资，保留原工作目标。
+- 武器 breadth-first，Night3 2/2/1；legacy maintain 的 L2 特殊排序也已删除，因此默认 Shadow 的真实 legacy 行为包含这项修复和墙券采购修复。不是旧版本逐字不变；同版本 shadow/legacy 响应一致。
+- 控制员按实验 80% 阈值购买一个或使用已有 Medicine；不抢占活跃任务先锋。L1 基地低于实验 70% 可 emergency 升级；Night3 防线缺口且可行墙/武器增长均不可完成时才 fallback。
+- Day1 benchmark=8 不下降，execution 部分墙与 unmet/reason 保留，石耗 rules.wall_stone_cost。Night2 容量目标 9000，Night3 当前 HP 10000 preferred/最大 HP 10000/stretch12000、武器2/2/1；Day4+沿用 Day3 目标，无新长期战略。
+- defense 只接管防御/工人经济/回防/站位/夜间开火；TaskPlanner 类未修改，通过同一 validator、真实 candidate memory 执行一次并独占 active pioneer。Task prompt/executeCmd 仍属于 TaskPlanner；最终动作继续经协议与 ActionValidator 复验，失败不提交候选记忆。
+- 日志新增 current/max HP、墙等级计数、controller health/readiness、日初/日落恢复与容量对照、任务观测边界/错误/金币；断档及缺失的起点保留 null。独立审查发现的 Day4 停工和 authority 标记歧义已修复；最新只读复核未发现阻塞项。
+- 新增 round4 检查点、健康/升级/部分墙/筹资/交付/authority 隔离专项。原日志数值自动核对；测试几何人工构造并明确标注，不冒充完整战斗 replay。默认仍只 Shadow，不把本地逻辑通过写成第三夜实机成功。
+- 验证：round4 专项17项PASS；Shadow专项19项PASS。最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：186项PASS（27.028秒）。首轮全量仅旧“优先L3”策略断言不符新需求；更新后185项通过，再补满背包可购性边界和测试，最终186项通过。TaskPlanner、DefensePlanner.attack_plan/damage AST与HEAD一致；git diff --check通过（仅工作区换行格式提示）。
+- 下一步：用户审阅；已停止，不自动改默认模式，不自动提交 Git。当前可作为人工提交检查点。
 
 ## 默认 Shadow instrumentation patch
 - 日志增加strategy_mode、defense_target、详细jobs/deadline、controllers/assignment_status、budget、timing_ms、结构化divergence（保留weapon actor/controllerId）、wall_target_changed、pre_night估算和task估算；没有值时为null/空结构。
@@ -28,10 +40,10 @@
 - `git -c core.whitespace=cr-at-eol diff --check`通过。该批可作为人工Git提交检查点，尚未自动提交。
 
 ## Shadow 限制与停止点
-- Day2及以后白天仅观测指标，不提供通用恢复/经济战略；后续夜间只复用持久控制员框架。未实现Day10/MPC/GoldClaim/新宝藏或PvP/完整MatchAnalyzer。
+- V2.2 有前三天防御增长目标，之后仅沿用 Day3 目标；未实现 Day10/MPC/GoldClaim/新宝藏或PvP/完整MatchAnalyzer。
 - 路径估算不证明未来占位、任务成功或战斗安全；当前炮手补位是确定性贪心，缺员/动态堵路下的最优匹配和脱困尚未验证。safe_slot 是策略名，不是无伤保证。
 - Shadow逐轮跟随真实legacy观测，不是V2闭环实机；round2摘要日志不能补造完整观测进行比赛重放。不得以本地PASS证明R71 benchmark或R131/R261生存通过。
-- 下一步：向用户报告Shadow验证结果后停止。用户确认之前禁止添加/启用V2实际决策模式。
+- 下一步：向用户报告 V2.2 验证结果后停止。用户已允许显式 defense 模式，但默认仍 shadow，不能自行切换。
 
 ## 当前实现
 - 入口src/main3.py；保留严格协议校验、共享预算、重复缓存、事务回滚和诊断。

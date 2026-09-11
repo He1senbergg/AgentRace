@@ -101,7 +101,7 @@ class Round3Tests(unittest.TestCase):
         self.assertEqual(p.plan.benchmark_wall_target, 9)
         self.assertEqual(p.plan.wall_hp_target, 8000)
         self.assertTrue(any(j.job_type == 'WALL_SERVICE' for j in p.plan.jobs.values()))
-        self.assertTrue(any(c.get('name') == 'WallFixer' for c in p.v.commands.values()))
+        self.assertTrue(any(c.get('name') == 'WallUpgradeVoucher1' for c in p.v.commands.values()))
         self.assertGreater(p.plan.budget.committed_gold, 0)
         data['roundNo'] = 261
         p, _, report = shadow(data, main.GameMemory((7, 'challenger'), 1))

@@ -217,3 +217,16 @@ Self/1.log的原始roundNo从1开始且初始75金币/4单位，与demo开局一
 补药调度在领取/移动任务前，低血先锋可先备药；健康先锋仅顺路采购，避免专程绕行消耗任务窗口。活跃任务先锋仍不参与。已邻接炮手仅比较一步可达且仍邻接的安全格，不能绕到武器对侧而离岗。旧矿目标只在收益达到当前最佳的80%时保留，避免跨日/复活/升级运输后锁定远矿；20%滞后是策略选择，非比赛规则。
 
 任务剩余三回合时允许消费上一轮请求的命令决策：D-3执行、D-2结果及LLM请求、D-1答案、D反馈。剩余三回合发起新LLM请求仍要求答案，避免下一轮再探索。短截止和重复请求语义保持。提示要求按已验证字段维护部分答案，不由本地代码编造答案；原始命令正文缺失时不假定exit126的具体原因。
+# V2.2 防御增长增量（2026-09-11）
+
+`DefensePolicy` 保存实验参数：控制员健康比例 0.8、基地 L1 emergency 比例 0.7、Night3 容量 10000 / stretch12000；不是平台规则。`max_health()` 使用 AI Spec 的角色/建筑等级 HP。`Day1Plan` 继续承载前三天目标，后续重复 Day3 目标，不增加通用战略框架。
+
+`StrategicPlanner.reconcile()` 先从唯一 `ObservationDelta` 更新 HP/日夜状态，建立 observed/staged 预算，分别预留建炮、健康、基地 emergency/fallback、墙服务、武器升级。`wall_item()` 先尝试可交付的升级，再尝试 fixer；`service_trip()` 在静态障碍上计算取券、使用与回位的动作成本，加 5 回合实验余量，当前一步移动仍用动态障碍。持有道具省略购买成本。`execute_service()` 每次只发一个动作，下一观测确认持有/建筑等级与 HP，不把发出命令当成成功。墙收益由观测 current/max HP 分开体现。
+
+墙热点按上一夜实际观察到的净 HP 下降、当前缺损排序；该差值不等于总伤害，治疗和观测断档可能遮蔽伤害。日落输出 start/end current/max HP 和武器等级；首次观测若已在日中，start=null。未达成 readiness 与资金/deadline 原因保留，benchmark 不覆盖。
+
+HEAL 是一次恢复工作，不囤药。活跃任务先锋从防御 job 和夜间 controller 匹配中排除。无法采购的 WALL_SERVICE/UPGRADE 可在保留目标的同时调用受同 owner 限制的经济动作；scratch 清除 legacy 工人预留，避免两套 job 锁导致无法筹资。基金不提前计入售矿/任务奖励。
+
+`GameSession(strategy_mode='defense')` 让 StrategicPlanner 使用真实 candidate memory；它先且只一次调用原 TaskPlanner，写入任务状态/频道并占用 active pioneer，再通过共享 validator/arbiter 执行其他 RoleJob。结束仍进行最终协议与动作验证、事务提交与重复缓存。没有执行旧防御后再覆盖动作的双 authority 合并。`shadow` 使用观测后的独立副本，真实输出仍由 legacy 产生；DEFAULT_STRATEGY_MODE 保持 shadow。defense 日志明确 authority，actual 为最终选择动作，divergence 不代表另跑一次 legacy 的对照；defense 计时独立列出。
+
+TaskPlanner 实现及 attack target scorer 不变。`GameMemory.observe()` 额外形成任务开始/结束的连续观测边界、错误码与金币前后值；StrategicPlanner 不重复解析 raw 反馈，也不据此推断任务收益。

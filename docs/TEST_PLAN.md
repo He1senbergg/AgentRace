@@ -1,6 +1,8 @@
 # AgentRace 测试计划
 
-## Gate1 Shadow 验证（当前）
+当前 V2.2：round4 专项17项PASS，最终全量186项PASS（27.028秒），具体边界见文末 V2.2 小节。默认仍 Shadow，实机收益未验证。
+
+## Gate1 Shadow 验证（历史）
 
 默认模式与instrumentation patch最终全量：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，160项PASS（19.999秒）。首次全量159项通过、1项旧日志数量断言失败；仅将断言更新为[turn]/[shadow_turn]分别一次，重复请求不重复输出，再全量通过。没有新增策略功能或放宽超时限制。
 
@@ -117,3 +119,10 @@ tests/test_diagnostics.py新增3项：动作/坐标/未知昼夜及失败反馈�
 ## Self/3.log 分析后的待补验证
 
 本次仅执行日志JSON统计/连续性/动作与反馈核对，未重跑测试套件。新增待验证场景：矿点刷新后仍能在回防前出售不足20矿；短任务期限中多次LLM命令探索后及时提交；任务冷却空档的先锋准备动作；领取时限加回防路程门槛；炮手死亡后比较机枪/电磁炮/火箭的重新分配。沙盒执行结果缺摘要，19条executeCmd不能视为成功执行。详见SELF_LOG_ANALYSIS.md的Self/3.log章节。
+# V2.2 专项与实机门槛（2026-09-11）
+
+- `tests/test_round4.py`：17 项，game11 R131 与 game12 R131/R260/R330 数值自动核对原日志；受控几何检查墙升级/缺钱 fixer/L3 fixer、单瓶医疗、75/220 不健康、武器 breadth-first、基地 emergency/fallback 不抢可行增长、8→5/3/2/1 部分墙、非默认石耗、筹资不丢 job、满背包采购门禁及持券使用、墙券买入→观测持有→交付→观测容量增长、deadline、日落增长、任务断档诊断、TaskPlanner authority/频道/记忆隔离、默认 Shadow 等价、Day4 延续。
+- 更新原 round3 壁修测试为增长优先券；更新 Versus 旧“先升 L3”断言为“即使能买 L3 也先补 L2”；instrumentation task 字段断言增加新诊断字段。不是放宽动作合法性或性能门槛。
+- 专项命令：`.venv\Scripts\python.exe -m unittest discover -s tests -p test_round4.py -q`；Shadow 隔离专项 `-p "test_shadow*.py"`；最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。
+- 全量包含 HTTP、重复/并发、异常事务、密集状态性能及已有集成回放。新增 controlled checkpoint 测试仅证明程序分支/预算/状态关联，不能证明完整地图中的寻路交付成功、战斗收益、Night3 或 1300 回合存活。
+- 实机下一门槛：用户审阅后显式 defense 新比赛；核对实际 strategy_mode/authority、墙 current/max 的日初日末增量、2/2/1 就绪、控制员健康与邻接匹配、局内服务失败/时长，以及 R390/R1300 存活。当前默认仍 shadow，尚无 V2.2 authority 实机通过证据。

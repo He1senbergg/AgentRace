@@ -89,7 +89,8 @@ class InstrumentationTests(unittest.TestCase):
         self.assertEqual(report['controllers'][0]['weapon_id'], '2')
         self.assertIn('assignment_status', report['controllers'][0])
         self.assertIn('1', report['pre_night']['estimated_return_costs'])
-        self.assertEqual(set(report['task']), {'pioneer_job', 'estimated_finish', 'return_deadline'})
+        self.assertEqual(set(report['task']), {'pioneer_job', 'estimated_finish', 'return_deadline',
+                                              'task_started', 'task_end', 'task_error_codes', 'gold_before', 'gold_after'})
 
 
 if __name__ == '__main__':
