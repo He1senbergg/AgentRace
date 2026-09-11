@@ -8,6 +8,10 @@
 
 perf_counter分别测量legacy规划、Shadow复制和规划、handle入口至Shadow日志输出前的总处理时间。总计包含锁等待/原诊断，不含本条Shadow日志I/O或HTTP发送；这是诊断口径，不是判题端耗时。total>3000ms或shadow>1500ms仅输出[shadow_performance] WARNING。日志异常隔离；传给Shadow的是实际响应副本，不能写回roleCommandMap/prompt/executeCmd。
 
+V2.1 controller coverage：`ControllerAssignment`只保存角色的物理safe_slot；每回合`adjacent_matching()`按当前邻接关系为ready武器求最大匹配，weapon↔controller不是持久所有权。物理coverage匹配（忽略cooldown）和ready weapon匹配分开记录；只有未被物理匹配的角色才移动去补未覆盖炮位。冷却不触发换岗，且当前角色已邻接任意炮时不会因slot名字变化移动。
+
+V2.1 wall/day：`benchmark_wall_target`与`execution_wall_target`分离，`unmet_wall_target`只作差值；Day1 benchmark恒为8，deadline不足只能降低execution并记录`DEADLINE_INFEASIBLE`。长期可行性使用`World.static_occupied`，一步动作仍可使用完整临时占位。phase.day变化立即重建DayPlan并清掉CONTROL/RETURN/PRE_NIGHT残留；Day2/3只Shadow执行墙修复/升级优先，实验EHP/数量目标不会变成比赛规则。缺墙只输出`wall_ids_missing_since_night_start`，不声称击杀原因。
+
 最小数据结构及所有权：
 
 | 类型/字段 | 生命周期、写入者、读取者与重置 |

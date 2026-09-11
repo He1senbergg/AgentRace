@@ -122,11 +122,11 @@ class ShadowTests(unittest.TestCase):
                      role(9, 'station', 10, 12, level=1))
         data['roundNo'] = 71
         p, memory, _ = shadow(data)
-        assignment = p.plan.controllers['2']
+        assignment = p.plan.controllers['1']
         data['roundNo'] += 1
         data['teamOur']['roles'][1]['cooldown'] = 2
         p, _, _ = shadow(data, memory)
-        self.assertEqual(p.plan.controllers['2'], assignment)
+        self.assertEqual(p.plan.controllers['1'], assignment)
         self.assertEqual(p.plan.jobs['1'].job_type, 'CONTROL')
         self.assertNotIn(p.v.commands.get('1', {}).get('action'), {'collect', 'buy', 'sell'})
 
@@ -197,13 +197,13 @@ class ShadowTests(unittest.TestCase):
         data['roundNo'] = 1
         def estimates(planner, job, slot):
             if job.job_type == 'BUILD_WALL':
-                return (100, 1) if planner.plan.wall_target > 2 else (5, 1)
+                return (100, 1) if planner.plan.execution_wall_target > 2 else (5, 1)
             return (1, 1)
         with patch.object(main.StrategicPlanner, 'completion_trip', estimates):
             p, _, report = shadow(data, memory)
-        self.assertEqual(p.plan.wall_target, 2)
+        self.assertEqual(p.plan.execution_wall_target, 2)
         self.assertEqual(p.plan.jobs[wall_owner].job_type, 'BUILD_WALL')
-        self.assertIn('wall_target_degraded_for_deadline', report['reasons'])
+        self.assertIn('DEADLINE_INFEASIBLE', report['reasons'])
 
     def test_observation_replay_response_identity_across_boundaries(self):
         data = opening()

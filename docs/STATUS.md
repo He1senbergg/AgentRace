@@ -7,7 +7,10 @@
 - 日志增加strategy_mode、defense_target、详细jobs/deadline、controllers/assignment_status、budget、timing_ms、结构化divergence（保留weapon actor/controllerId）、wall_target_changed、pre_night估算和task估算；没有值时为null/空结构。
 - perf_counter计时：legacy规划、Shadow复制/规划、handle入口至日志输出前的总处理时间（包括锁等待和原诊断）。总计不包含本条Shadow日志自身I/O及HTTP发送；重复缓存不重复输出。total>3000ms或shadow>1500ms只告警，不改变实际动作。
 - Shadow只拿实际响应的副本；Shadow/report/日志异常不能替换实际响应。未改攻击评分、TaskPlanner或后续天政策。
+- 2026-09-11 round3 V2.1：拉取并分析 game8/game9/game10。修正 controller 为“持久角色站位/区域 + 每回合当前邻接最大匹配”；不因 exact safe_slot 或 cooldown 改换 weapon ownership。修正 benchmark_wall_target=8（Day1恒定）与 execution_wall_target/unmet_wall_target 分离；长期deadline使用static blockers。新白天重建DailyPlan并清除CONTROL/RETURN/PRE_NIGHT残留。Shadow扩展到Day3：Day2墙数9/EHP约8000，Day3墙数10/EHP约10000、武器2/2/1均为实验参数，不是规则。
+- round3 evidence：game10 R331旧Shadow ready=0而实际邻接至少3人，legacy两炮开火；game9旧映射漏掉实际炮手。game8/game10 Shadow早期墙目标降至7/4但legacy R70实际均8墙。敌方MATCH2三局共571事件全部完成分片、长度、SHA-256校验；R330敌墙总HP分别14580/9775/13755，精确R331缺失写unknown，详见 [ROUND3_ANALYSIS.md](ROUND3_ANALYSIS.md)。墙缺失指标改为wall_ids_missing_since_night_start，不归因摧毁。
 - 验证：新增5项instrumentation与原14项Shadow专项合计19项PASS；最终Windows全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，160项PASS（19.999秒），包含默认Shadow真实HTTP和显式legacy回退。首次全量仅旧日志数量断言失败，改为两类日志各一条后重验通过；未放宽性能门槛。diff --check通过。已停止于本patch，不进入V2 authority。
+- V2.1验证：round3专项（匹配、R331 fixtures、静态deadline、墙目标分层、NEW_DAY、Day2/Day3 wall service、墙缺失归因、MATCH2完整性）28项PASS；最终Windows全量169项PASS（28.788秒）。实际响应仍legacy，未启用V2 authority。
 
 ## 本轮 Shadow 检查点
 - src/main3.py 新增 ObservationDelta、RoleJob、ControllerAssignment、BudgetReserve、JobAuthorization/ActionProposal/ActionArbiter、CanonicalLayout、Day1Plan、StrategicState、StrategicPlanner。仍单文件部署，无新增依赖。

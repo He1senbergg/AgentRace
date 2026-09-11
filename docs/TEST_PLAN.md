@@ -4,6 +4,8 @@
 
 默认模式与instrumentation patch最终全量：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，160项PASS（19.999秒）。首次全量159项通过、1项旧日志数量断言失败；仅将断言更新为[turn]/[shadow_turn]分别一次，重复请求不重复输出，再全量通过。没有新增策略功能或放宽超时限制。
 
+V2.1 round3专项：`test_round3.py` 覆盖 game9/game10 R331 最大邻接匹配、cooldown与物理覆盖分离、静态deadline、benchmark/execution墙目标、NEW_DAY清理、Day2/Day3 wall service、墙缺失不归因摧毁、三局MATCH2完整性；28项（含既有Shadow instrumentation）PASS。最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：169项PASS（28.788秒）。
+
 - `tests/test_shadow.py`：双资源攻击与后续移动/另一炮冲突；接受扣staged、拒绝不扣、下观测gold对账；初始75建炮预留；gap不关联意图；镜像布局/临时占位/静态资源阻挡；cost=2墙工批量采集且不被铜矿抢占；动态路程触发回防；冷却保持映射；Shadow重复请求/异常隔离/实际响应一致；禁止v2启动模式；TASK频道不被ECONOMY覆盖；失效炮位释放job；八墙不足先降级；格子索引伤害与旧公式等价；跨昼夜与R131/R261观测边界响应对照。
 - `tests/test_http.py` 的密集真实进程测试不传strategy-mode，验证默认Shadow；仍保留原5秒限制、1302机器人、并发重复、可配置武器名/石耗、进程退出/端口释放，检查3条已提交Shadow报告且无异常。另一HTTP测试显式传legacy验证回退。
 - `tests/test_shadow_instrumentation.py` 新增5项：CLI默认与显式legacy/端口不变；完整日志字段及非负perf_counter耗时；Shadow改写副本后异常与日志异常不影响实际响应；性能告警及告警日志失败不改变响应；weapon actor与controllerId差异及回防/任务字段。与14项已有Shadow专项合计19项PASS（0.108秒）。既有响应对照测试改用显式legacy，避免误把两个默认Shadow互相对照。

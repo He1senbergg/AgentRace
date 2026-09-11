@@ -1,0 +1,190 @@
+{
+  "source": "log/Versus/round3/game10/ally_BlueSide_474.log:1641",
+  "roundNo": 331,
+  "limitations": "Partial diagnostic geometry only; missing walls/robots/inventory are not reconstructed. Fire targets are supplied by a test stub from actual legacy commands; no combat simulation.",
+  "roles": [
+    {
+      "id": 10010,
+      "roleType": "worker",
+      "pos": {
+        "x": 10,
+        "y": 23
+      },
+      "health": 175
+    },
+    {
+      "id": 10011,
+      "roleType": "pioneer",
+      "pos": {
+        "x": 7,
+        "y": 22
+      },
+      "health": 200
+    },
+    {
+      "id": 10012,
+      "roleType": "worker",
+      "pos": {
+        "x": 7,
+        "y": 20
+      },
+      "health": 220
+    },
+    {
+      "id": 10013,
+      "roleType": "station",
+      "pos": {
+        "x": 9,
+        "y": 22
+      },
+      "health": 1455
+    },
+    {
+      "id": 10040,
+      "roleType": "rocket",
+      "pos": {
+        "x": 9,
+        "y": 23
+      },
+      "health": 1375,
+      "level": 2,
+      "cooldown": 0,
+      "attackRange": 15
+    },
+    {
+      "id": 10041,
+      "roleType": "rocket",
+      "pos": {
+        "x": 8,
+        "y": 23
+      },
+      "health": 1500,
+      "level": 2,
+      "cooldown": 0,
+      "attackRange": 15
+    },
+    {
+      "id": 10042,
+      "roleType": "rocket",
+      "pos": {
+        "x": 8,
+        "y": 21
+      },
+      "health": 1000,
+      "level": 1,
+      "cooldown": 0,
+      "attackRange": 10
+    },
+    {
+      "id": 40000,
+      "roleType": "wall",
+      "pos": {
+        "x": 12,
+        "y": 19
+      },
+      "health": 755
+    },
+    {
+      "id": 40001,
+      "roleType": "wall",
+      "pos": {
+        "x": 12,
+        "y": 20
+      },
+      "health": 755
+    },
+    {
+      "id": 40002,
+      "roleType": "wall",
+      "pos": {
+        "x": 11,
+        "y": 19
+      },
+      "health": 1000
+    },
+    {
+      "id": 40003,
+      "roleType": "wall",
+      "pos": {
+        "x": 12,
+        "y": 21
+      },
+      "health": 1000
+    },
+    {
+      "id": 40004,
+      "roleType": "wall",
+      "pos": {
+        "x": 12,
+        "y": 22
+      },
+      "health": 790
+    }
+  ],
+  "task_active": false,
+  "legacy_actions": [
+    {
+      "id": "10040",
+      "action": "attack",
+      "name": null,
+      "targetPos": [
+        {
+          "x": 24,
+          "y": 28
+        },
+        {
+          "x": 24,
+          "y": 28
+        }
+      ],
+      "controllerId": "10010",
+      "num": null
+    },
+    {
+      "id": "10041",
+      "action": "attack",
+      "name": null,
+      "targetPos": [
+        {
+          "x": 23,
+          "y": 25
+        },
+        {
+          "x": 23,
+          "y": 25
+        }
+      ],
+      "controllerId": "10011",
+      "num": null
+    }
+  ],
+  "old_shadow_controllers": [
+    {
+      "weapon_id": "10040",
+      "controller_id": "10011",
+      "safe_slot": [
+        9,
+        24
+      ],
+      "assignment_status": "return_required"
+    },
+    {
+      "weapon_id": "10041",
+      "controller_id": "10012",
+      "safe_slot": [
+        8,
+        22
+      ],
+      "assignment_status": "return_required"
+    },
+    {
+      "weapon_id": "10042",
+      "controller_id": "10010",
+      "safe_slot": [
+        9,
+        20
+      ],
+      "assignment_status": "return_required"
+    }
+  ]
+}

@@ -34,7 +34,8 @@ class InstrumentationTests(unittest.TestCase):
         for key in ('defense_target', 'jobs', 'controllers', 'budget', 'timing_ms', 'divergence',
                     'wall_target_changed', 'pre_night', 'task'):
             self.assertIn(key, report)
-        self.assertEqual(set(report['defense_target']), {'weapon_target', 'weapon_level_target', 'wall_target', 'controllers_target'})
+        self.assertTrue({'weapon_target', 'weapon_level_target', 'wall_target', 'controllers_target',
+                         'benchmark_wall_target', 'execution_wall_target', 'unmet_wall_target'} <= set(report['defense_target']))
         self.assertEqual(set(report['budget']), {'observed_gold', 'staged_gold', 'reserved_gold', 'free_gold'})
         for job in report['jobs'].values():
             self.assertTrue({'job_type', 'phase', 'target', 'deadline'} <= set(job))
