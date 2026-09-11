@@ -1,6 +1,11 @@
 # AgentRace 技术设计
 
-## V2.3 当前设计（覆盖下方 V2.2 历史日间策略）
+## Round6封存覆盖声明
+
+V2.3在Round6七局均未达1300回合生存目标，策略验收失败。下方V2.3策略段落仅记录已实现机制，全部核心策略收益假设降级为hypothesis，不得作为V2.4正确性前提。事实、推断与未验证项以 [ROUND6_ANALYSIS.md](ROUND6_ANALYSIS.md) 为准。下一阶段是V2.4 Strategy Re-baseline；本轮未设计或实现新策略，模块和协议契约保持原样。
+
+
+## V2.3 已封存机制（策略收益均为hypothesis）
 
 运行时仍为既有8个agentrace业务模块及main3入口。model.ProductionPolicy只服务V2.3，不修改legacy DefensePolicy/base_reserve。memory.CapitalGoal属于Day1Plan；NEW_DAY重建日计划，GameMemory.observe和候选事务不变。当前HEAD默认defense是此前已提交事实，本轮不变；显式shadow继续返回100% legacy Response。
 

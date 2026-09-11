@@ -1,6 +1,11 @@
 # AgentRace 测试计划
 
-## V2.3 当前验证及测试规格变更
+## Round6 checkpoint复验
+
+Round6七局均未达生存目标，V2.3实战验收失败；本轮不新增或修改测试。现有全量命令：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，210项PASS（24.021秒），无跳过；git diff --check通过。通过仅表示既有工程回归正常，不能证明benchmark、墙HP代理、资金预留或deadline策略正确。下一阶段V2.4 Strategy Re-baseline需重新建立实战假设与对照；本轮不实现。
+
+
+## V2.3 历史验证及测试规格变更
 
 当前默认mode以进入本轮前HEAD的defense为准。本轮不改默认、不以默认切换掩盖回归。先完成只读诊断且387固定请求Response/状态一致，再改日间策略。新增test_round5.py覆盖真实game17时间线、下一墙/不坍缩、双工slot持久性、RETURN重分配、80+4铜变现/观察100再买/到包再用/观测等级DONE、资金与deadline拆分、先锋任务/权限、增长floor/压力、夜末断档、低血先锋、满包绕行、强制出售ROI、未验证use、死亡换owner、其他炮升级满足目标后旧goal停止采购、夜末最终损伤与完整性。独立审查补充的VERIFY/DONE动作关联一致性有断言覆盖。
 

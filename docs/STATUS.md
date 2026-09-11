@@ -1,13 +1,19 @@
 # AgentRace 当前检查点
 
 ## 当前阶段
-2026-09-11：V2.3 Parallel Production + Capital Deployment已完成本地实现、验证与独立审查，现暂停等待用户审阅。已完整解析game17的623条Shadow记录/82条trace。R18现金80，R28升级工提前RETURN，R37现金144时无升级owner，R70现金194仍三炮L1；不是全程缺钱。详见ROUND5_ANALYSIS.md。
+2026-09-11：Round6证据封存，下一阶段为 **V2.4 Strategy Re-baseline**。**V2.3已经过Round6实战验证失败**：game18～24七局均未达到1300回合生存目标，4局第二夜、3局第三夜首次观测到全部资产清空。完整证据与事实/推断/假设分级见 [ROUND6_ANALYSIS.md](ROUND6_ANALYSIS.md)。
 
-- 日间购买状态、强制变现、双worker独立施工slot、下一墙可行性、先锋LOGISTICS和实验增长floor已实现。legacy/base_reserve、夜战、TaskPlanner、共享validator/observe/session/入口未改。默认HEAD原本已defense，本轮保留，旧文档shadow属历史状态；人工确认多Python文件部署仍有效。
-- 16项V2.3专项通过；冻结legacy/shared/night AST及legacy/shadow实际Response对照通过。仅诊断阶段还验证了完整387请求状态/响应与V2.2一致。
-- 首轮全量208项有22失败/10错误；未称通过。临时目录还原未修改HEAD复现22失败/8错误，主要是旧测试隐式默认模式与HEAD defense不符。修正测试显式模式、保留legacy断言；V2.3政策断言变更逐项列TEST_PLAN。独立审查3项边界问题已修复并补测试。
-- 最终全量210项PASS（24.719秒），无跳过；入口/replay4项PASS（7.761秒），V2.3专项16项PASS（1.706秒）；冻结legacy/shadow对照262请求PASS，git diff --check通过。独立审查的执行边界及诊断关联问题均已修复并回归。
-- 下一步：用户审阅，已停止；不自动实机、不自动提交。1300回合存活、增长参数效果未证明。未增加依赖/运行模块/提交bundle。
+- 完整检查双方14个日志；我方4245条连续回合报告、579条trace，对手167个MATCH2事件包校验通过。比分仅文件名标签，官方最终结算原文缺失；不把日志结束回合当我方存活回合。
+- game18/game24达成Day1 benchmark仍失败；game24清空前有9墙9145HP、基地45。墙数/总HP不能单独代表基地安全。是否正相关及具体伤害路径尚未验证。
+- 确认存在无owner的升级目标仍预留资金，以及未达墙目标时deadline触发PAUSED。不能据此推定释放资金或延后回防一定能改变战果。
+- 原V2.3核心策略假设**全部降级为hypothesis**：固定开局benchmark、墙布局与总HP目标、增长公式、资本预留/服务优先级、并行生产与先锋物流收益、deadline/margin、健康/基地阈值及既有火力组合的长期有效性。保留代码机制和测试事实，不保留未经验证的策略正确结论。
+- 本轮只更新文档；未修改策略、scheduler、参数、默认模式、测试或部署入口。当前默认defense为既有HEAD事实，**不表示策略已通过实战验收**。远端新增14个日志已快进同步至b517128，无源码变化。
+- 当前现有测试复验：210项PASS（24.021秒），无跳过；git diff --check通过。独立只读核对未发现复盘数字或证据归因错误。历史V2.3全量210项PASS只是工程回归记录，不撤销本次策略失败。
+- 下一步：停止实现；等待用户开启V2.4 Strategy Re-baseline。届时先重建可检验假设/对照，不能沿用V2.3核心假设为既定前提。本轮不提供新策略、不修复、不实机、不自动提交。
+
+## V2.3 本地验证记录（历史，不代表实战有效）
+- 曾通过全量210项（24.719秒）、16项V2.3专项及legacy/shared/night冻结检查；已在Round6失败，测试通过不得解释为生存能力验证。
+- 模块化源码、GameMemory/ActionValidator/TaskPlanner契约与多文件部署事实保留。运行程序仍可复现现有策略行为；其收益需要重新建立证据。
 
 ## 模块拆分检查点（历史 V2.2）
 - 基线是本轮开始时完整 V2.2，冻结于 tests/fixtures/v22_baseline.py，SHA-256：105a44200a24a0e5db8c2062e6206f129e3055568b0a6e5f4a10e101b5a76934。该文件只供测试，不部署。
