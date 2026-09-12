@@ -144,16 +144,35 @@ class EquivalenceTests(unittest.TestCase):
                     # fixture immutable, freeze every other member, and verify default
                     # behavior against that fixture in test_identical_request_sequences.
                     changed = ({'__init__', 'base_reserve', 'maintain', 'construct',
-                                'fortify', 'attack_plan'} if node.name == 'DefensePlanner'
+                                'fortify', 'attack_plan', 'damage'} if node.name == 'DefensePlanner'
                                else {'__init__'})
                     new_members = {m.name: m for m in definitions[node.name].body
                                    if isinstance(m, ast.FunctionDef)}
                     old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
                     self.assertEqual(set(new_members), set(old_members) |
-                                     ({'threat_weight'} if node.name == 'DefensePlanner' else set()))
+                                     ({'threat_weight', 'construction_kind'} if node.name == 'DefensePlanner' else set()))
                     for name, member in old_members.items():
                         if name not in changed:
                             self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
+                elif node.name in {'GameMemory', 'TaskPlanner'}:
+                    # Audit fixes task retirement at the observation boundary.
+                    # test_audit_runtime covers ended/expired instances and rollback.
+                    changed = {'observe'} if node.name == 'GameMemory' else {'run'}
+                    added = {'finish_task'} if node.name == 'GameMemory' else set()
+                    old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
+                    new_members = {m.name: m for m in definitions[node.name].body if isinstance(m, ast.FunctionDef)}
+                    self.assertEqual(set(new_members), set(old_members) | added)
+                    for name, member in old_members.items():
+                        if name not in changed:
+                            self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
+                    self.assertEqual([ast.dump(m) for m in node.body if not isinstance(m, ast.FunctionDef)],
+                                     [ast.dump(m) for m in definitions[node.name].body if not isinstance(m, ast.FunctionDef)])
+                elif node.name in {'trace_request', 'trace_response', 'process_request'}:
+                    # Only logging-failure isolation changed; actual HTTP contracts
+                    # and fault recovery are exercised by test_audit_runtime.
+                    self.assertEqual(ast.dump(node.args), ast.dump(definitions[node.name].args))
+                    self.assertEqual([ast.dump(d) for d in node.decorator_list],
+                                     [ast.dump(d) for d in definitions[node.name].decorator_list])
                 elif node.name in {'StrategicState', 'Day1Plan', 'Rules'}:
                     # Additive V2.3 strategic state; old fields/properties still retain defaults.
                     for member in node.body:
@@ -171,7 +190,8 @@ class EquivalenceTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), expected)
 
     def test_identical_request_sequences(self):
-        # V2.3 changes defense decisions intentionally; legacy and Shadow responses remain frozen.
+        # These fixed requests must still agree. The audit intentionally corrects
+        # legacy off-axis interception; its changed behavior has a separate regression.
         selected = [c for c in cases(os.environ.get('AGENTRACE_FULL_EQ') == '1') if c['mode'] != 'defense']
         for case in selected:
             case.pop('compact_state', None)

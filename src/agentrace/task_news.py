@@ -186,14 +186,7 @@ class TaskPlanner:
         actor = role["id"]
         old = memory.task
         if not text:
-            if old and (old.get("answer") or old.get("command")):
-                memory.task_experience.append({"task": old["text"][:4000],
-                                               "procedure": old.get("skill", "")[:2000],
-                                               "outcome": "ended; correctness unverified",
-                                               "last_command": bounded_text(old.get("command", ""), 4096),
-                                               "last_observation": old["history"][-1:]})
-                memory.task_experience = memory.task_experience[-16:]
-            memory.task = None
+            memory.finish_task()
             if actor in self.v.busy:
                 return
             choices = []

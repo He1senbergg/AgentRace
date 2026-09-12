@@ -113,15 +113,21 @@ def trace_request():
             return
         HTTP_DIAGNOSTIC_COUNT += 1
         g.diagnostic_id = HTTP_DIAGNOSTIC_COUNT
-    LOG.info("[trace_request] 收到HTTP请求 #%s，匹配游戏入口=%s，JSON=%s",
-             g.diagnostic_id, request.endpoint == "process_request", request.is_json)
+    try:
+        LOG.info("[trace_request] 收到HTTP请求 #%s，匹配游戏入口=%s，JSON=%s",
+                 g.diagnostic_id, request.endpoint == "process_request", request.is_json)
+    except Exception:
+        pass  # A failed diagnostic sink must not prevent gameplay dispatch.
 
 
 @app.after_request
 def trace_response(response):
     if hasattr(g, "diagnostic_id"):
-        LOG.info("[trace_response] HTTP响应 #%s，状态=%s，字节数=%s",
-                 g.diagnostic_id, response.status_code, response.calculate_content_length())
+        try:
+            LOG.info("[trace_response] HTTP响应 #%s，状态=%s，字节数=%s",
+                     g.diagnostic_id, response.status_code, response.calculate_content_length())
+        except Exception:
+            pass  # The session may already have committed this response.
     return response
 
 
@@ -140,7 +146,10 @@ def process_request():
         return jsonify(ensure_valid_response(callback(data)))
     except Exception as exc:
         # Exception messages may contain untrusted request data or credentials.
-        LOG.error("[process_request] 请求处理失败: %s", type(exc).__name__)
+        try:
+            LOG.error("[process_request] 请求处理失败: %s", type(exc).__name__)
+        except Exception:
+            pass  # Error reporting cannot defeat the final protocol fallback.
         return jsonify(empty_response())
 
 

@@ -241,6 +241,8 @@ class StrategicPlanner:
                 building = None if goal.item == 'Medicine' else self.world.roles[goal.target]
                 bag = inventory(char) or Counter()
                 sellable = sum(bag[m] * self.v.vendor.get(m, 0) for m in MINERALS)
+                if not bag[goal.item] and goal.item not in self.v.prices:
+                    continue
                 gap = max(0, self.v.prices.get(goal.item, 0) - self.delta.gold)
                 # Pioneers cannot mine; require an item or a gap covered by current inventory.
                 if (char.get('roleType') == 'pioneer' and not bag[goal.item]
@@ -248,6 +250,8 @@ class StrategicPlanner:
                     continue
                 capacity = char.get('backPackCapability', 100 if char.get('roleType') == 'worker' else 40)
                 full = not nonnegative_int(capacity) or sum(bag.values()) >= capacity
+                if not bag[goal.item] and full and not sellable:
+                    continue
                 liquidation = not bag[goal.item] and bool(gap and sellable >= gap or full and sellable > 0)
                 route, deadline, duration, back, reason = self.service_route_status(actor, building, goal.item, liquidation)
                 if not route or not deadline:
@@ -831,6 +835,26 @@ class StrategicPlanner:
                 if phase and phase.is_day:
                     plan.mode = "PRE_NIGHT"
 
+        self.release_unowned_reserves()
+
+    def release_unowned_reserves(self):
+        """Release service purchase reserves after ownership and return decisions."""
+        owned = set()
+        for goal in self.plan.capital_goals.values():
+            char = self.world.characters.get(goal.assigned_actor)
+            job = self.plan.jobs.get(goal.assigned_actor)
+            if (goal.state == 'DONE' or goal.last_action == 'use' or char is None or job is None or job.target != goal.target
+                    or job.job_type not in {goal.goal_type, 'LOGISTICS'}
+                    or goal.target not in self.world.roles or goal.item not in self.v.prices
+                    or (inventory(char) or Counter())[goal.item]):
+                continue
+            owned.add(goal.bucket)
+        if any(j.job_type == 'BUILD_WEAPON' for j in self.plan.jobs.values()):
+            owned.add('build')
+        for bucket in self.plan.budget.reserved_gold:
+            if bucket not in owned:
+                self.plan.budget.reserved_gold[bucket] = 0
+
     def propose(self, job, command, actor=None, bucket="optional"):
         actor = actor or job.owner
         resources = frozenset({actor, command["controllerId"]} if command["action"] == "attack" else {actor})
@@ -917,6 +941,11 @@ class StrategicPlanner:
             wall = job.job_type == "BUILD_WALL"
             slots = self.layout.wall_slots if wall else self.layout.weapon_slots
             stones = self.rules.wall_stone_cost
+            if not wall and self.plan.budget.available('build') < 25:
+                job.phase = 'FUNDING'
+                sellable = sum(bag[m] * self.v.vendor.get(m, 0) for m in MINERALS)
+                self.worker_income(job, response, force=sellable >= 25 - self.plan.budget.available('build'))
+                return
             if wall and (not nonnegative_int(stones) or stones == 0):
                 return
             needed = stones if wall else 0
@@ -929,11 +958,19 @@ class StrategicPlanner:
                 if trip is None or sum(trip) + 5 > 71 - phase.round_in_day:
                     job.phase = 'PAUSED'
                     self.plan.reasons.append('DEADLINE' if trip else 'TARGET_UNREACHABLE')
+                    self.worker_income(job, response)
                     return
             if wall and bag['stone'] < needed:
+                capacity = char.get('backPackCapability', 100)
+                if not nonnegative_int(capacity) or capacity - sum(bag.values()) < needed - bag['stone']:
+                    job.phase = 'PAUSED'
+                    self.plan.reasons.append('INVENTORY_FULL')
+                    self.worker_income(job, response, force=True)
+                    return
                 routes = [(len(r), cell) for cell in sorted(self.world.zones['stone']) if (r := self.route(actor, {cell}))]
                 if not routes:
                     self.plan.reasons.append('TARGET_UNREACHABLE')
+                    self.worker_income(job, response)
                     return
                 length, cell = min(routes)
                 job.phase = 'COLLECT'  # target remains the reserved construction slot.
@@ -946,10 +983,9 @@ class StrategicPlanner:
             if wall:
                 name = "wall"
             else:
-                order = ("rocket", "rocket", "railgun")
-                preferred = order[min(self.v.weapon_count, len(order) - 1)]
-                name = names.get(preferred) or names.get("rocket")
+                name = names.get(self.defense.construction_kind(names))
             if name is None:
+                self.worker_income(job, response)
                 return
             choices = [job.target] if job.target in slots else []
             if not wall:
@@ -973,6 +1009,7 @@ class StrategicPlanner:
                     self.move(job, {cell})
                 return
             self.plan.reasons.append("build_slots_blocked")
+            self.worker_income(job, response)
         elif job.job_type == "UPGRADE":
             weapon = next((w for w in self.defense.weapons if level_of(w) == 1), None)
             if not weapon:
@@ -1004,10 +1041,12 @@ class StrategicPlanner:
                 response["prompt"] = scratch_response["prompt"]
                 response["executeCmd"] = scratch_response["executeCmd"]
 
-    def worker_income(self, job, response):
-        """Only an infeasible service may yield to interruptible income work."""
+    def worker_income(self, job, response, force=False):
+        """An infeasible construction/service yields to interruptible income work."""
         if self.world.characters[job.owner].get('roleType') == 'worker':
             paused = RoleJob(job.owner, 'ECONOMY', None, 'FUNDS', 20, job.created_round, job.deadline)
+            if force and self.forced_cash_in(paused):
+                return
             self.execute_job(paused, response)
 
     def run(self, actual):

@@ -14,6 +14,7 @@ from .model import (
     max_health,
     neighbors,
     nonnegative_int,
+    position,
     positive_health
 )
 from .economy import (
@@ -218,6 +219,22 @@ class DefensePlanner:
                         return True
         return False
 
+    def construction_kind(self, names):
+        """Fill the mixed defense's missing types, including accepted builds."""
+        existing = Counter(w["roleType"] for w in self.weapons)
+        wire_kinds = dict(self.v.rules.weapon_build_names)
+        for command in self.v.commands.values():
+            if command["action"] != "build" or command["name"] not in wire_kinds:
+                continue
+            old = self.v.building_at(position(command["targetPos"][0]))
+            if old and old.get("roleType") in WEAPONS:
+                existing[old["roleType"]] -= 1
+            existing[wire_kinds[command["name"]]] += 1
+        for kind, required in (("rocket", 2), ("railgun", 1)):
+            if kind in names and existing[kind] < required:
+                return kind
+        return next((kind for kind in ("rocket", "gatling", "railgun") if kind in names), None)
+
     def construct(self):
         phase = self.v.memory.phase
         if phase is None or not phase.is_day or len(self.stations) != 1:
@@ -229,12 +246,8 @@ class DefensePlanner:
             return False
         candidates = []
         if self.v.weapon_count < 3 and self.v.gold >= 25 and names:
-            existing = Counter(r["roleType"] for r in self.weapons)
             if self.growth_mode:
-                order = ("rocket", "rocket", "railgun")
-                preferred = order[min(self.v.weapon_count, len(order) - 1)]
-                kind = preferred if preferred in names else min(
-                    names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
+                kind = self.construction_kind(names)
             else:
                 kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
             candidates = [(names[kind], cell) for cell in sorted(building_ring(station, 1))]
@@ -334,11 +347,20 @@ class DefensePlanner:
                     for i, r in self.all_robots.items() if distance(r["cell"], target) <= 1 and self.remaining[i] > 0}
         dx, dy = target[0] - origin[0], target[1] - origin[1]
         length = dx * dx + dy * dy
+        x_min, x_max = min(0, dx), max(0, dx)
+        y_min, y_max = min(0, dy), max(0, dy)
+        width = abs(dx) + abs(dy)
         aligned = []
         for i, robot in self.all_robots.items():
             x, y = robot["cell"][0] - origin[0], robot["cell"][1] - origin[1]
             dot = x * dx + y * dy
-            if self.remaining[i] > 0 and x * dy == y * dx and 0 < dot <= length:
+            # A ballistic ray hits traversed cells, not only collinear centers.
+            # For an open unit square, the cross product varies by width / 2.
+            # Integer comparisons avoid rasterization/rounding assumptions;
+            # corner-only contacts remain excluded pending platform evidence.
+            if (self.remaining[i] > 0 and 0 < dot <= length
+                    and x_min <= x <= x_max and y_min <= y <= y_max
+                    and 2 * abs(x * dy - y * dx) < width):
                 aligned.append((dot, i))
         energy = 10 if kind == "gatling" else 10 * level_of(weapon)
         result = {}

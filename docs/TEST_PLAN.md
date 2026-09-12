@@ -1,5 +1,26 @@
 # AgentRace 测试计划
 
+## V2.4 离线可靠性修复验收（2026-09-12，当前）
+
+最终Windows CPython3.11.10全量：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，**250项PASS，34.494秒，无跳过**。当前源码及全部新断言均在这次执行范围内，之后仅更新文档。修改前基线224项PASS（25.401秒）。
+
+| 类别 | 用例位置 | 本轮覆盖与结果 |
+|---|---|---|
+| 建设/经济活性 | `test_audit_economy.py`，10项 | 零现金三炮重建闭环、售矿失败不预支收入、缺石/满包、回防门禁、无人维修与正常优先级对照、持券/VERIFY重复预留、不可采购owner；PASS |
+| 弹道/组成/原子性 | `test_audit_combat.py`，9项 | 9,600个独立Fraction几何组合、异阵营拦截/能量、终点/角点/地图边界、火箭叠格、拒绝攻击不锁人扣账、混编重建及同轮双建、200机器人三弹道炮callback；PASS |
+| 生命周期/HTTP故障 | `test_audit_runtime.py`，6项 | 默认defense同名任务结束/超时后重开、事务回滚/仅归档一次、断档不采用旧结果、before/after/error日志失败仍返回JSON并恢复；PASS |
+| 默认模式长期集成 | `test_audit_integration.py`，1项 | 两侧镜像、0/1起点、各1,300条观测、跨日、持续角色/炮损、无资产、每半场实际攻击/提交/沙盒动作、互斥/缓存；PASS |
+| 原回归与部署 | 原224项 | 保留原断言；仅明确修复方法调整AST许可。固定legacy/shadow请求与全部非strategic状态对照、冻结哈希、真实HTTP/并发、Git Bash入口与多文件部署；PASS |
+| 受控历史地图 | `tools/replay_day.py` | Round6 game18–24旧/新各70白天回合共14次完成，无错误/告警，完整对照见[OFFLINE_AUDIT.md](OFFLINE_AUDIT.md) |
+
+专项复现命令：`.venv\Scripts\python.exe -B -m unittest discover -s tests -p "test_audit_*.py" -q`。单项可替换文件pattern；此组合命令作为复现入口，以上最终结果来自完整套件及各实现专项实际执行。
+
+独立复核检查了夹具占位/合法环、任务及日志回滚边界、弹道几何/先后和资本预留时序。发现的VERIFY重复预留已修复；长序列加强为每半场分别确认非空有效功能，不以另一半场动作抵消遗漏。原fixture未改，legacy非共线弹道输出的有意修正另有明确回归，不宣称所有输入保持旧行为。
+
+仍不可本地验收：真实战斗命中/结算、动态堵塞的长期恢复、E2–E5收益、1,300回合生存、正式LLM/沙盒/计分、新闻/宝藏在默认defense中的执行（未接入）。不把观察回放当作实际动作闭环；仅经济专项对其声明范围内的动作进行结算。
+
+以下均为历史阶段记录，当前测试数量/默认能力以本节和STATUS为准。
+
 ## V2.4 Sonnet E2–E5 验证（2026-09-12）
 
 全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：224项 PASS（25.230秒），无跳过。专项 `-p test_sonnet_v24.py -q`：12项 PASS（0.406秒）；原 Round5 专项16项 PASS（1.741秒）。本次未改 HTTP 5秒时限或任何动作校验。

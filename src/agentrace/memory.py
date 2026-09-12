@@ -158,6 +158,21 @@ class GameMemory:
     observed_task_active: object = None
     observed_gold: object = None
 
+    def finish_task(self):
+        """Retire a task on observed completion, without inferring answer validity."""
+        old = self.task
+        if old and (old.get("answer") or old.get("command")):
+            command = old.get("command", "")
+            if len(command) > 4096:
+                command = command[:2048] + "\n[LOCAL_CONTEXT_TRUNCATED]\n" + command[-2048:]
+            self.task_experience.append({"task": old["text"][:4000],
+                                         "procedure": old.get("skill", "")[:2000],
+                                         "outcome": "ended; correctness unverified",
+                                         "last_command": command,
+                                         "last_observation": old["history"][-1:]})
+            self.task_experience = self.task_experience[-16:]
+        self.task = None
+
     def observe(self, world, round_no):
         if round_no == 0:
             self.origin = 0
@@ -181,6 +196,10 @@ class GameMemory:
         # the last request seen by this process. Never associate across a gap.
         continuous = self.last_round is not None and round_no == self.last_round + 1
         active = isinstance(world.data.get('phaseTask'), str) and bool(world.data['phaseTask'])
+        if not active:
+            # Defense may assign LOGISTICS/RETURN instead of running TaskPlanner
+            # after completion. Pending operations must still end with the task.
+            self.finish_task()
         self.task_diagnostics = {
             'task_started': round_no if active and self.observed_task_active is False and continuous else None,
             'task_end': round_no if not active and self.observed_task_active is True and continuous else None,

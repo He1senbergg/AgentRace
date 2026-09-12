@@ -1,6 +1,6 @@
 # 启动与人工接管
 
-当前本地程序可运行，尚未完成正式比赛联调。武器build.name按用户确认默认采用gatling/railgun/rocket；roundNo起点仍需确认。不要把测试里的test-rocket当作正式名称。
+当前为 V2.4 离线修复版本，默认 `defense`；本补丁尚无新实机结果。武器build.name按用户确认默认采用gatling/railgun/rocket；首观测0或1自动识别roundNo起点，中途接入应显式配置。不要把测试里的test-rocket当作正式名称。最新验证与风险见 [STATUS.md](STATUS.md) 和 [OFFLINE_AUDIT.md](OFFLINE_AUDIT.md)。
 
 ## 当前个人机器的本地检查
 
@@ -11,7 +11,7 @@
 .venv\Scripts\python.exe src\main3.py 8080
 ```
 
-上述默认启动适合检查服务；起点未知时仅观察到roundNo=0才能识别昼夜。按Ctrl+C停止。端口由启动参数决定。
+上述默认启动适合检查服务；首次观测roundNo=0或1可识别昼夜。按Ctrl+C停止。端口由启动参数决定。
 
 WSL必须选用已安装依赖的Linux解释器：
 
@@ -27,7 +27,7 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 - `--weapon-build-name TYPE=NAME`：TYPE为gatling、railgun或rocket；NAME默认与TYPE相同。传此参数会用提供的映射集合替换全部默认映射，每类传一个参数。
 - `--wall-stone-cost 1`：当前默认就是1，来自官方完整建筑图，无需额外设置。
 
-所有参数放在端口之后。默认已启用三类武器建造；出现起点未配置提示说明昼夜仍需观察0或明确配置。
+所有参数放在端口之后。默认已启用三类武器建造；起点未知时需观察首次0/1或明确配置。
 
 ## 最小运行文件与验证
 
@@ -39,7 +39,7 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 
 1. 确认正式端口、回合起点、武器名称，检查启动日志与首回合响应。
 2. 使用正式观测验证建造、控制者站位和首次夜间开火；核对动作合法性反馈。
-3. 验证一次真实LLM→沙盒→答案，以及新闻/宝藏流程；保留失败原始文本用于定位。
+3. 验证一次真实LLM→沙盒→答案，以及同描述任务结束后重新领取；默认 defense 尚未接入新闻/宝藏执行，不能据 legacy 的相关测试认定它已启用。
 4. 确认平台退出/半场重启行为与人工接管方式。程序状态在内存中，重启不会恢复当前任务和配额历史。
 
 本地检查不能替代这些步骤；尚未在正式平台执行，不可标记比赛就绪。
@@ -48,7 +48,7 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 
 ## 角色不动：采集回合诊断
 
-替换部署中的src/main3.py并重启，沿用原启动方式，无需开启debug或新增参数。Linux手动启动并保留控制台日志：
+替换部署中的src/main3.py及完整src/agentrace/并重启，沿用原启动方式，无需开启debug或新增参数。Linux手动启动并保留控制台日志：
 
 ```bash
 mkdir -p log
@@ -59,6 +59,6 @@ mkdir -p log
 
 ## 最新版本：1基开局与地图
 
-无需增加参数，首个有效观测roundNo=1时自动设origin=1（首观测0仍为0基）；中途接入请显式--round-origin。覆盖此前“只能观察0自动识别”的说明。更新文件并重启后确认首条[trace_turn]的phase非空、actions含build，之后weapons增长；第71回合检查回防和attack。摘要现为前10次、每10次及昼夜边界；[trace_map]在首观测、每50次和昼夜边界打印。将完整控制台日志保存到log/Self，保留地图的多行坐标，不仅截取HTTP 200行。诊断日志中的任务error_codes=[1]表示任务超时，不能当成网络超时。
+无需增加参数，首个有效观测roundNo=1时自动设origin=1（首观测0仍为0基）；中途接入请显式--round-origin。更新文件并重启后确认首条[trace_turn]的phase非空、actions含build，之后weapons增长；第71回合检查回防和attack。摘要现为前10次、每10次及昼夜边界；[trace_map]在首观测、每50次和昼夜边界打印。将比赛完整控制台日志保存到log/Versus对应新局目录，保留地图的多行坐标，不仅截取HTTP 200行。诊断日志中的任务error_codes=[1]表示任务超时，不能当成网络超时。
 
 最新日志：每个已提交非缓存回合均输出[turn]动作和角色状态；control_weapon表示正在操作指定武器，active_task表示任务占用，no_command仅表示未给该角色动作。武器cooldown/level/range及adjacent帮助定位不开火原因。详细[trace_turn]和[trace_map]仍按原周期采样；HTTP 200本身不证明动作成功。

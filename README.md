@@ -21,9 +21,9 @@
 
 ## 4. 当前开发检查点
 
-P0–P5已接入callback；Windows与WSL CPython3.11.10全套92项测试通过，含真实HTTP和WSL run.sh。本地开发交付与独立审查已完成，正式平台联调由用户负责，尚未宣称比赛就绪。围墙默认成本已从官方内嵌原图确认是1石头；武器建造名按用户确认默认采用roleType；回合起点仍需确认。恢复入口为docs/STATUS.md，覆盖审计见docs/COVERAGE.md。
+当前基于 V2.4，默认 `defense`。2026-09-12 离线审查修复建设筹资停工、无效/重复资金预留、同名任务旧状态污染、HTTP日志异常及斜线弹道拦截，并保持损炮后“两火箭、一电磁炮”组成。恢复开发先读 [docs/STATUS.md](docs/STATUS.md)，问题与验证边界见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)，规格映射见 [docs/COVERAGE.md](docs/COVERAGE.md)。本补丁尚无新实机结果，历史测试记录不代表当前胜率。
 
-Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -m unittest discover -s tests -v`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器；已在WSL执行POSIX启动脚本。项目依赖见 `requirements-dev.txt`。
+Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器。部署须同时复制完整 `src/agentrace/`，不能只换 `main3.py`。项目依赖见 `requirements-dev.txt`。
 
 准确的Windows/WSL启动、参数和人工接管检查见[docs/RUNBOOK.md](docs/RUNBOOK.md)。当前WSL须显式选择`.venv/linux-test/bin/python`，不能假定系统python3已安装依赖。
 

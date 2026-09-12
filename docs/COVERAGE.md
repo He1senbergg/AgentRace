@@ -1,4 +1,24 @@
-# 需求覆盖审计（2026-09-10，本地交付审计）
+# 需求覆盖审计
+
+## V2.4 离线修复覆盖更新（2026-09-12，优先于历史表）
+
+当前全量250项PASS（34.494秒，无跳过）。本节核对新改动与现有关键要求，完整证据和边界见[OFFLINE_AUDIT.md](OFFLINE_AUDIT.md)。
+
+| 规格/契约 | 实现 | 验证 |
+|---|---|---|
+| §11、12、20–23、26：工人能力、25金币建炮、库存容量、观察后消费 | `StrategicPlanner.execute_job/worker_income/schedule_production`；原ActionValidator/ActionArbiter | `test_audit_economy`零现金重建、失败售矿、缺料/满包、无可购物品owner；未假定同轮收入 |
+| §23：券由库存交付，效果看观测；可执行资本不被重复采购占用（策略契约） | `release_unowned_reserves`在分配和RETURN之后；保留execute_capital验证门 | 无owner墙/可达墙成对对照、持券、use后未验证三类测试 |
+| 既有V2.4两rocket一railgun契约；§12同存最多3炮 | `DefensePlanner.construction_kind`及construct/execute_job调用 | 幸存炮种、同轮双建、自定义名称、完整无钱重建；上限仍由原validator检验 |
+| §15.3、16、18：中心连线穿格拦截/能量/终点 | `DefensePlanner.damage`；Shadow非rocket沿用 | 9,600个独立Fraction裁剪组合；异阵营/死目标/终点、顺序独立复核；边角触碰仍未决 |
+| §13、17、56：controller互斥、冷却、合法攻击数组与火箭范围 | 原validator、attack_plan及Shadow索引 | 既有action/defense/shadow与新增拒绝原子性、火箭边角/叠格、密集真实callback |
+| §31.4、32、33、35：任务结束与跨回合结果隔离 | `GameMemory.finish_task/observe`、`TaskPlanner.run`、原Session事务 | 默认Session同名任务新实例/expired清理、失败回滚、断档结果不串用；经验仅未验证 |
+| §56、62、77：Response固定JSON、异常不导致比赛协议失败 | `main3.trace_request/trace_response/process_request` | 日志OSError故障注入、缓存/后续请求恢复；原真实HTTP异常输入/并发 |
+| §3、48、62、64–66：两半场、起点、持续观测/失效owner/缓存 | 当前默认GameSession及StrategicPlanner | 新default defense两半场2,600观测、镜像、角色/炮损、资产清空；旧legacy长序列仍执行 |
+| §42–45：部署与兼容 | 原main3端口CLI、完整agentrace包、run.sh | 全量中的真实临时多文件部署和Git Bash HTTP；本轮无正式CentOS/WSL复测 |
+
+尚未覆盖的目标：default defense没有接入NewsPlanner/TreasurePlanner，历史新闻/宝藏测试不得归为默认执行能力。真实战斗/评分、策略最优性、系统阻塞下5秒硬截止、没有实例ID时的任意乱序、动态障碍长期恢复仍需外部证据。原C17/C18的“非共线”缺口本轮只闭合格子内部穿越；同回合死亡/边角触碰未闭合。
+
+## 历史本地交付审计（2026-09-10）
 
 真值：`AI Spec/未来战争_v1.0_比赛全貌_开发整合版.md`。本表从规格逐项核对代码与测试，不把测试通过当作官方兼容证明。实现均位于`src/main3.py`；测试位置均位于`tests/`。已完成独立只读审查；本地交付完成，正式比赛行为仍按表中残余风险交由用户验证。
 
