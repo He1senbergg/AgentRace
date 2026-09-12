@@ -1,0 +1,2131 @@
+{
+  "scope": "Historical Round6; not a new deployment run of the September 12 patch",
+  "totals": {
+    "turns": 4245,
+    "acceptTask": 35,
+    "commands": 152,
+    "prompts": 198,
+    "active_prompts": 198,
+    "expected_command_result": 152,
+    "cmd_status_exited": 152,
+    "cmd_exit_0": 132,
+    "cmd_complete_True": 151,
+    "expected_llm": 198,
+    "llm_nonempty": 198,
+    "llm_valid": 174,
+    "active_expected_llm": 198,
+    "active_llm_valid": 174,
+    "cmd_exit_126": 10,
+    "submitAnswer": 27,
+    "llm_invalid": 24,
+    "active_llm_invalid": 24,
+    "nonempty_invalid_llm": 24,
+    "error_2": 20,
+    "error_1": 28,
+    "episodes": 35,
+    "episodes_timeout": 28,
+    "episodes_wrong_or_partial": 20,
+    "cmd_exit_2": 1,
+    "cmd_exit_1": 9,
+    "cmd_complete_False": 1
+  },
+  "flow": {
+    "counters": {
+      "valid_to_command": 117,
+      "valid_to_submission": 27,
+      "answer_only_prompts": 58,
+      "answer_only_valid": 53,
+      "answer_only_submission": 23,
+      "valid_to_neither": 30,
+      "neither_after_answer_only_True": 30,
+      "answer_only_invalid": 5,
+      "episodes_no_submission": 8,
+      "episodes_any_submission": 27,
+      "no_submit_with_timeout": 8
+    },
+    "prompt_chars": {
+      "count": 198,
+      "min": 6824,
+      "median": 16209.5,
+      "max": 43504
+    },
+    "valid_to_neither": [
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 38,
+        "response_round": 39,
+        "line": 184,
+        "deadline": 40,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          39
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 150,
+        "response_round": 151,
+        "line": 801,
+        "deadline": 152,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          151
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 164,
+        "response_round": 165,
+        "line": 845,
+        "deadline": 166,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          165
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 165,
+        "response_round": 166,
+        "line": 848,
+        "deadline": 166,
+        "previous_answer_only": true,
+        "pending": null
+      },
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 292,
+        "response_round": 293,
+        "line": 1435,
+        "deadline": 294,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          293
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+        "prompt_round": 307,
+        "response_round": 308,
+        "line": 1520,
+        "deadline": 309,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          308
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game19/ally_BlueSide_453.log",
+        "prompt_round": 34,
+        "response_round": 35,
+        "line": 172,
+        "deadline": 36,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          35
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game19/ally_BlueSide_453.log",
+        "prompt_round": 163,
+        "response_round": 164,
+        "line": 843,
+        "deadline": 165,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          164
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game19/ally_BlueSide_453.log",
+        "prompt_round": 164,
+        "response_round": 165,
+        "line": 846,
+        "deadline": 165,
+        "previous_answer_only": true,
+        "pending": null
+      },
+      {
+        "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+        "prompt_round": 22,
+        "response_round": 23,
+        "line": 135,
+        "deadline": 24,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          23
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+        "prompt_round": 162,
+        "response_round": 163,
+        "line": 838,
+        "deadline": 164,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          163
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+        "prompt_round": 293,
+        "response_round": 294,
+        "line": 1437,
+        "deadline": 296,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          294
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+        "prompt_round": 308,
+        "response_round": 309,
+        "line": 1523,
+        "deadline": 310,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          309
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+        "prompt_round": 309,
+        "response_round": 310,
+        "line": 1526,
+        "deadline": 310,
+        "previous_answer_only": true,
+        "pending": null
+      },
+      {
+        "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+        "prompt_round": 21,
+        "response_round": 22,
+        "line": 132,
+        "deadline": 23,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          22
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+        "prompt_round": 22,
+        "response_round": 23,
+        "line": 135,
+        "deadline": 23,
+        "previous_answer_only": true,
+        "pending": null
+      },
+      {
+        "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+        "prompt_round": 162,
+        "response_round": 163,
+        "line": 841,
+        "deadline": 164,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          163
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+        "prompt_round": 176,
+        "response_round": 177,
+        "line": 885,
+        "deadline": 178,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          177
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+        "prompt_round": 20,
+        "response_round": 21,
+        "line": 129,
+        "deadline": 23,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          21
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+        "prompt_round": 21,
+        "response_round": 22,
+        "line": 132,
+        "deadline": 23,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          22
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+        "prompt_round": 22,
+        "response_round": 23,
+        "line": 135,
+        "deadline": 23,
+        "previous_answer_only": true,
+        "pending": null
+      },
+      {
+        "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+        "prompt_round": 40,
+        "response_round": 41,
+        "line": 192,
+        "deadline": 42,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          41
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+        "prompt_round": 157,
+        "response_round": 158,
+        "line": 825,
+        "deadline": 159,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          158
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game23/ally_BlueSide_208.log",
+        "prompt_round": 33,
+        "response_round": 34,
+        "line": 169,
+        "deadline": 36,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          34
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game23/ally_BlueSide_208.log",
+        "prompt_round": 162,
+        "response_round": 163,
+        "line": 839,
+        "deadline": 164,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          163
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game23/ally_BlueSide_208.log",
+        "prompt_round": 178,
+        "response_round": 179,
+        "line": 889,
+        "deadline": 180,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          179
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+        "prompt_round": 34,
+        "response_round": 35,
+        "line": 172,
+        "deadline": 36,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          35
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+        "prompt_round": 142,
+        "response_round": 143,
+        "line": 738,
+        "deadline": 145,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          143
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+        "prompt_round": 143,
+        "response_round": 144,
+        "line": 741,
+        "deadline": 145,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          144
+        ]
+      },
+      {
+        "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+        "prompt_round": 186,
+        "response_round": 187,
+        "line": 915,
+        "deadline": 189,
+        "previous_answer_only": true,
+        "pending": [
+          "llm",
+          187
+        ]
+      }
+    ]
+  },
+  "games": [
+    {
+      "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+      "stats": {
+        "turns": 634,
+        "acceptTask": 6,
+        "commands": 28,
+        "prompts": 34,
+        "active_prompts": 34,
+        "expected_command_result": 28,
+        "cmd_status_exited": 28,
+        "cmd_exit_0": 25,
+        "cmd_complete_True": 28,
+        "expected_llm": 34,
+        "llm_nonempty": 34,
+        "llm_valid": 31,
+        "active_expected_llm": 34,
+        "active_llm_valid": 31,
+        "cmd_exit_126": 3,
+        "submitAnswer": 3,
+        "llm_invalid": 3,
+        "active_llm_invalid": 3,
+        "nonempty_invalid_llm": 3,
+        "error_2": 2,
+        "error_1": 5,
+        "episodes": 6,
+        "episodes_timeout": 5,
+        "episodes_wrong_or_partial": 2,
+        "prompt_min": 8721,
+        "prompt_max": 30840,
+        "prompt_median": 17288.5
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 6,
+          "commands": 6,
+          "submits": [
+            21
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              12,
+              8721
+            ],
+            [
+              14,
+              9156
+            ],
+            [
+              16,
+              12514
+            ],
+            [
+              18,
+              12728
+            ],
+            [
+              20,
+              12622
+            ]
+          ],
+          "end": 22
+        },
+        {
+          "start": 26,
+          "start_line": 144,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [
+            40
+          ],
+          "error_rounds": [
+            [
+              41,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              27,
+              17376
+            ],
+            [
+              29,
+              12589
+            ],
+            [
+              31,
+              16588
+            ],
+            [
+              32,
+              14526
+            ],
+            [
+              34,
+              21109
+            ],
+            [
+              36,
+              22124
+            ],
+            [
+              38,
+              22138
+            ],
+            [
+              39,
+              21239
+            ]
+          ],
+          "end": 41
+        },
+        {
+          "start": 143,
+          "start_line": 738,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              153,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              144,
+              18089
+            ],
+            [
+              146,
+              19220
+            ],
+            [
+              148,
+              25798
+            ],
+            [
+              150,
+              27762
+            ],
+            [
+              151,
+              24868
+            ]
+          ],
+          "end": 153
+        },
+        {
+          "start": 157,
+          "start_line": 820,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              167,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              158,
+              16866
+            ],
+            [
+              160,
+              13758
+            ],
+            [
+              162,
+              15159
+            ],
+            [
+              164,
+              15381
+            ],
+            [
+              165,
+              14883
+            ]
+          ],
+          "end": 167
+        },
+        {
+          "start": 285,
+          "start_line": 1410,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            294
+          ],
+          "error_rounds": [
+            [
+              295,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              286,
+              17201
+            ],
+            [
+              288,
+              12760
+            ],
+            [
+              290,
+              17867
+            ],
+            [
+              292,
+              17380
+            ],
+            [
+              293,
+              16539
+            ]
+          ],
+          "end": 295
+        },
+        {
+          "start": 300,
+          "start_line": 1457,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              310,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              301,
+              21271
+            ],
+            [
+              303,
+              23373
+            ],
+            [
+              305,
+              26712
+            ],
+            [
+              307,
+              30840
+            ],
+            [
+              308,
+              27782
+            ]
+          ],
+          "end": 310
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game19/ally_BlueSide_453.log",
+      "stats": {
+        "turns": 643,
+        "acceptTask": 6,
+        "commands": 25,
+        "prompts": 29,
+        "active_prompts": 29,
+        "expected_command_result": 25,
+        "cmd_status_exited": 25,
+        "cmd_exit_0": 25,
+        "cmd_complete_True": 25,
+        "expected_llm": 29,
+        "llm_nonempty": 29,
+        "llm_valid": 27,
+        "active_expected_llm": 29,
+        "active_llm_valid": 27,
+        "submitAnswer": 5,
+        "llm_invalid": 2,
+        "active_llm_invalid": 2,
+        "nonempty_invalid_llm": 2,
+        "error_2": 3,
+        "error_1": 4,
+        "episodes": 6,
+        "episodes_timeout": 4,
+        "episodes_wrong_or_partial": 3,
+        "prompt_min": 7727,
+        "prompt_max": 23676,
+        "prompt_median": 15691
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            17
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              12,
+              7727
+            ],
+            [
+              14,
+              9452
+            ],
+            [
+              16,
+              9310
+            ]
+          ],
+          "end": 18
+        },
+        {
+          "start": 22,
+          "start_line": 132,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [
+            36
+          ],
+          "error_rounds": [
+            [
+              37,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              23,
+              17291
+            ],
+            [
+              25,
+              23676
+            ],
+            [
+              27,
+              15691
+            ],
+            [
+              28,
+              15431
+            ],
+            [
+              30,
+              16133
+            ],
+            [
+              32,
+              19142
+            ],
+            [
+              34,
+              20969
+            ],
+            [
+              35,
+              19752
+            ]
+          ],
+          "end": 37
+        },
+        {
+          "start": 142,
+          "start_line": 735,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            150
+          ],
+          "error_rounds": [
+            [
+              151,
+              [
+                2
+              ]
+            ],
+            [
+              152,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              143,
+              17600
+            ],
+            [
+              145,
+              11922
+            ],
+            [
+              147,
+              12578
+            ],
+            [
+              149,
+              15600
+            ]
+          ],
+          "end": 152
+        },
+        {
+          "start": 156,
+          "start_line": 818,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              166,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              157,
+              15768
+            ],
+            [
+              159,
+              11298
+            ],
+            [
+              161,
+              12019
+            ],
+            [
+              163,
+              12243
+            ],
+            [
+              164,
+              12037
+            ]
+          ],
+          "end": 166
+        },
+        {
+          "start": 288,
+          "start_line": 1420,
+          "prompts": 4,
+          "commands": 3,
+          "submits": [
+            295
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              289,
+              20481
+            ],
+            [
+              290,
+              15876
+            ],
+            [
+              292,
+              14817
+            ],
+            [
+              294,
+              17819
+            ]
+          ],
+          "end": 296
+        },
+        {
+          "start": 299,
+          "start_line": 1454,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            307
+          ],
+          "error_rounds": [
+            [
+              308,
+              [
+                2
+              ]
+            ],
+            [
+              309,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              300,
+              17613
+            ],
+            [
+              302,
+              14908
+            ],
+            [
+              304,
+              16634
+            ],
+            [
+              306,
+              16893
+            ]
+          ],
+          "end": 309
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+      "stats": {
+        "turns": 496,
+        "acceptTask": 6,
+        "commands": 25,
+        "prompts": 33,
+        "active_prompts": 33,
+        "expected_command_result": 25,
+        "cmd_status_exited": 25,
+        "cmd_exit_0": 24,
+        "cmd_complete_True": 25,
+        "expected_llm": 33,
+        "llm_nonempty": 33,
+        "llm_valid": 28,
+        "active_expected_llm": 33,
+        "active_llm_valid": 28,
+        "llm_invalid": 5,
+        "active_llm_invalid": 5,
+        "nonempty_invalid_llm": 5,
+        "error_1": 4,
+        "cmd_exit_126": 1,
+        "submitAnswer": 4,
+        "error_2": 2,
+        "episodes": 6,
+        "episodes_timeout": 4,
+        "episodes_wrong_or_partial": 2,
+        "prompt_min": 11793,
+        "prompt_max": 33364,
+        "prompt_median": 19217
+      },
+      "episodes": [
+        {
+          "start": 10,
+          "start_line": 94,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [],
+          "error_rounds": [
+            [
+              25,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              11,
+              16435
+            ],
+            [
+              13,
+              23469
+            ],
+            [
+              15,
+              21095
+            ],
+            [
+              17,
+              20033
+            ],
+            [
+              19,
+              26805
+            ],
+            [
+              21,
+              33364
+            ],
+            [
+              22,
+              29132
+            ],
+            [
+              23,
+              29294
+            ]
+          ],
+          "end": 25
+        },
+        {
+          "start": 29,
+          "start_line": 154,
+          "prompts": 6,
+          "commands": 5,
+          "submits": [
+            40
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              30,
+              15988
+            ],
+            [
+              31,
+              12795
+            ],
+            [
+              33,
+              12529
+            ],
+            [
+              35,
+              13319
+            ],
+            [
+              37,
+              13566
+            ],
+            [
+              39,
+              13700
+            ]
+          ],
+          "end": 41
+        },
+        {
+          "start": 143,
+          "start_line": 738,
+          "prompts": 4,
+          "commands": 3,
+          "submits": [
+            150
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              144,
+              16178
+            ],
+            [
+              145,
+              13130
+            ],
+            [
+              147,
+              11793
+            ],
+            [
+              149,
+              12676
+            ]
+          ],
+          "end": 151
+        },
+        {
+          "start": 155,
+          "start_line": 813,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            164
+          ],
+          "error_rounds": [
+            [
+              165,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              156,
+              21661
+            ],
+            [
+              158,
+              21973
+            ],
+            [
+              160,
+              18362
+            ],
+            [
+              162,
+              25780
+            ],
+            [
+              163,
+              23281
+            ]
+          ],
+          "end": 165
+        },
+        {
+          "start": 287,
+          "start_line": 1415,
+          "prompts": 5,
+          "commands": 3,
+          "submits": [
+            295
+          ],
+          "error_rounds": [
+            [
+              296,
+              [
+                2
+              ]
+            ],
+            [
+              297,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              288,
+              24263
+            ],
+            [
+              290,
+              24421
+            ],
+            [
+              291,
+              22155
+            ],
+            [
+              293,
+              27245
+            ],
+            [
+              294,
+              24983
+            ]
+          ],
+          "end": 297
+        },
+        {
+          "start": 301,
+          "start_line": 1499,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              311,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              302,
+              18329
+            ],
+            [
+              304,
+              13891
+            ],
+            [
+              306,
+              16074
+            ],
+            [
+              308,
+              19217
+            ],
+            [
+              309,
+              17342
+            ]
+          ],
+          "end": 311
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+      "stats": {
+        "turns": 611,
+        "acceptTask": 4,
+        "commands": 20,
+        "prompts": 25,
+        "active_prompts": 25,
+        "expected_command_result": 20,
+        "cmd_status_exited": 20,
+        "cmd_exit_0": 14,
+        "cmd_complete_True": 20,
+        "expected_llm": 25,
+        "llm_nonempty": 25,
+        "llm_invalid": 2,
+        "active_expected_llm": 25,
+        "active_llm_invalid": 2,
+        "nonempty_invalid_llm": 2,
+        "llm_valid": 23,
+        "active_llm_valid": 23,
+        "cmd_exit_2": 1,
+        "cmd_exit_126": 2,
+        "error_1": 4,
+        "cmd_exit_1": 3,
+        "submitAnswer": 3,
+        "error_2": 3,
+        "episodes": 4,
+        "episodes_timeout": 4,
+        "episodes_wrong_or_partial": 3,
+        "prompt_min": 7496,
+        "prompt_max": 33081,
+        "prompt_median": 14601
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [],
+          "error_rounds": [
+            [
+              24,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              11,
+              8826
+            ],
+            [
+              13,
+              7496
+            ],
+            [
+              15,
+              9653
+            ],
+            [
+              17,
+              9483
+            ],
+            [
+              19,
+              9743
+            ],
+            [
+              21,
+              10101
+            ],
+            [
+              22,
+              9918
+            ]
+          ],
+          "end": 24
+        },
+        {
+          "start": 28,
+          "start_line": 151,
+          "prompts": 7,
+          "commands": 6,
+          "submits": [
+            41
+          ],
+          "error_rounds": [
+            [
+              42,
+              [
+                2
+              ]
+            ],
+            [
+              43,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              29,
+              16809
+            ],
+            [
+              31,
+              22468
+            ],
+            [
+              33,
+              28876
+            ],
+            [
+              35,
+              30925
+            ],
+            [
+              37,
+              27811
+            ],
+            [
+              39,
+              33081
+            ],
+            [
+              40,
+              30356
+            ]
+          ],
+          "end": 43
+        },
+        {
+          "start": 155,
+          "start_line": 816,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            164
+          ],
+          "error_rounds": [
+            [
+              165,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              156,
+              14601
+            ],
+            [
+              158,
+              11365
+            ],
+            [
+              160,
+              13752
+            ],
+            [
+              162,
+              14113
+            ],
+            [
+              163,
+              13407
+            ]
+          ],
+          "end": 165
+        },
+        {
+          "start": 169,
+          "start_line": 860,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            178
+          ],
+          "error_rounds": [
+            [
+              179,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              170,
+              19641
+            ],
+            [
+              172,
+              16241
+            ],
+            [
+              174,
+              20360
+            ],
+            [
+              176,
+              22876
+            ],
+            [
+              177,
+              20971
+            ]
+          ],
+          "end": 179
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+      "stats": {
+        "turns": 619,
+        "acceptTask": 4,
+        "commands": 18,
+        "prompts": 27,
+        "active_prompts": 27,
+        "expected_command_result": 18,
+        "cmd_status_exited": 18,
+        "cmd_exit_0": 13,
+        "cmd_complete_True": 17,
+        "expected_llm": 27,
+        "llm_nonempty": 27,
+        "llm_invalid": 5,
+        "active_expected_llm": 27,
+        "active_llm_invalid": 5,
+        "nonempty_invalid_llm": 5,
+        "llm_valid": 22,
+        "active_llm_valid": 22,
+        "cmd_exit_126": 2,
+        "error_1": 4,
+        "cmd_exit_1": 3,
+        "submitAnswer": 3,
+        "error_2": 3,
+        "cmd_complete_False": 1,
+        "episodes": 4,
+        "episodes_timeout": 4,
+        "episodes_wrong_or_partial": 3,
+        "prompt_min": 6824,
+        "prompt_max": 43504,
+        "prompt_median": 16855
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 10,
+          "commands": 4,
+          "submits": [],
+          "error_rounds": [
+            [
+              24,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              11,
+              8826
+            ],
+            [
+              12,
+              8908
+            ],
+            [
+              13,
+              8990
+            ],
+            [
+              14,
+              9071
+            ],
+            [
+              16,
+              7720
+            ],
+            [
+              18,
+              12040
+            ],
+            [
+              20,
+              10996
+            ],
+            [
+              21,
+              6824
+            ],
+            [
+              22,
+              6864
+            ]
+          ],
+          "end": 24
+        },
+        {
+          "start": 28,
+          "start_line": 151,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [
+            42
+          ],
+          "error_rounds": [
+            [
+              43,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              29,
+              16995
+            ],
+            [
+              31,
+              13557
+            ],
+            [
+              33,
+              14786
+            ],
+            [
+              35,
+              16957
+            ],
+            [
+              36,
+              15502
+            ],
+            [
+              38,
+              22734
+            ],
+            [
+              40,
+              25464
+            ],
+            [
+              41,
+              22815
+            ]
+          ],
+          "end": 43
+        },
+        {
+          "start": 137,
+          "start_line": 720,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            145
+          ],
+          "error_rounds": [
+            [
+              146,
+              [
+                2
+              ]
+            ],
+            [
+              147,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              138,
+              18919
+            ],
+            [
+              140,
+              16855
+            ],
+            [
+              142,
+              19291
+            ],
+            [
+              144,
+              43504
+            ]
+          ],
+          "end": 147
+        },
+        {
+          "start": 150,
+          "start_line": 762,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            159
+          ],
+          "error_rounds": [
+            [
+              160,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              151,
+              21169
+            ],
+            [
+              153,
+              17198
+            ],
+            [
+              155,
+              17840
+            ],
+            [
+              157,
+              18717
+            ],
+            [
+              158,
+              18355
+            ]
+          ],
+          "end": 160
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game23/ally_BlueSide_208.log",
+      "stats": {
+        "turns": 629,
+        "acceptTask": 4,
+        "commands": 16,
+        "prompts": 23,
+        "active_prompts": 23,
+        "expected_command_result": 16,
+        "cmd_status_exited": 16,
+        "cmd_exit_0": 14,
+        "cmd_complete_True": 16,
+        "expected_llm": 23,
+        "llm_nonempty": 23,
+        "llm_valid": 19,
+        "active_expected_llm": 23,
+        "active_llm_valid": 19,
+        "submitAnswer": 4,
+        "llm_invalid": 4,
+        "active_llm_invalid": 4,
+        "nonempty_invalid_llm": 4,
+        "cmd_exit_1": 2,
+        "error_2": 3,
+        "error_1": 3,
+        "episodes": 4,
+        "episodes_timeout": 3,
+        "episodes_wrong_or_partial": 3,
+        "prompt_min": 7961,
+        "prompt_max": 29739,
+        "prompt_median": 15013
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            17
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              12,
+              7961
+            ],
+            [
+              14,
+              8715
+            ],
+            [
+              16,
+              9076
+            ]
+          ],
+          "end": 18
+        },
+        {
+          "start": 22,
+          "start_line": 132,
+          "prompts": 8,
+          "commands": 5,
+          "submits": [
+            35
+          ],
+          "error_rounds": [
+            [
+              36,
+              [
+                2
+              ]
+            ],
+            [
+              37,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              23,
+              17508
+            ],
+            [
+              25,
+              13931
+            ],
+            [
+              26,
+              12819
+            ],
+            [
+              28,
+              15659
+            ],
+            [
+              30,
+              19402
+            ],
+            [
+              32,
+              22771
+            ],
+            [
+              33,
+              20479
+            ],
+            [
+              34,
+              20641
+            ]
+          ],
+          "end": 37
+        },
+        {
+          "start": 155,
+          "start_line": 814,
+          "prompts": 6,
+          "commands": 3,
+          "submits": [
+            164
+          ],
+          "error_rounds": [
+            [
+              165,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              156,
+              15013
+            ],
+            [
+              157,
+              11965
+            ],
+            [
+              158,
+              12047
+            ],
+            [
+              160,
+              12203
+            ],
+            [
+              162,
+              13999
+            ],
+            [
+              163,
+              12835
+            ]
+          ],
+          "end": 165
+        },
+        {
+          "start": 171,
+          "start_line": 865,
+          "prompts": 5,
+          "commands": 4,
+          "submits": [
+            180
+          ],
+          "error_rounds": [
+            [
+              181,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              172,
+              19961
+            ],
+            [
+              174,
+              23288
+            ],
+            [
+              176,
+              27121
+            ],
+            [
+              178,
+              29739
+            ],
+            [
+              179,
+              26885
+            ]
+          ],
+          "end": 181
+        }
+      ]
+    },
+    {
+      "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+      "stats": {
+        "turns": 613,
+        "acceptTask": 5,
+        "commands": 20,
+        "prompts": 27,
+        "active_prompts": 27,
+        "expected_command_result": 20,
+        "cmd_status_exited": 20,
+        "cmd_exit_0": 17,
+        "cmd_complete_True": 20,
+        "expected_llm": 27,
+        "llm_nonempty": 27,
+        "llm_valid": 24,
+        "active_expected_llm": 27,
+        "active_llm_valid": 24,
+        "cmd_exit_126": 2,
+        "submitAnswer": 5,
+        "llm_invalid": 3,
+        "active_llm_invalid": 3,
+        "nonempty_invalid_llm": 3,
+        "cmd_exit_1": 1,
+        "error_2": 4,
+        "error_1": 4,
+        "episodes": 5,
+        "episodes_timeout": 4,
+        "episodes_wrong_or_partial": 4,
+        "prompt_min": 8942,
+        "prompt_max": 22022,
+        "prompt_median": 14743
+      },
+      "episodes": [
+        {
+          "start": 9,
+          "start_line": 90,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            17
+          ],
+          "error_rounds": [],
+          "prompt_lengths": [
+            [
+              10,
+              12019
+            ],
+            [
+              12,
+              8942
+            ],
+            [
+              14,
+              12523
+            ],
+            [
+              16,
+              11032
+            ]
+          ],
+          "end": 18
+        },
+        {
+          "start": 22,
+          "start_line": 132,
+          "prompts": 8,
+          "commands": 6,
+          "submits": [
+            36
+          ],
+          "error_rounds": [
+            [
+              37,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              23,
+              17267
+            ],
+            [
+              25,
+              12635
+            ],
+            [
+              26,
+              11898
+            ],
+            [
+              28,
+              16711
+            ],
+            [
+              30,
+              17526
+            ],
+            [
+              32,
+              18393
+            ],
+            [
+              34,
+              20113
+            ],
+            [
+              35,
+              18988
+            ]
+          ],
+          "end": 37
+        },
+        {
+          "start": 136,
+          "start_line": 716,
+          "prompts": 6,
+          "commands": 3,
+          "submits": [
+            145
+          ],
+          "error_rounds": [
+            [
+              146,
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              137,
+              18180
+            ],
+            [
+              139,
+              13757
+            ],
+            [
+              141,
+              14965
+            ],
+            [
+              142,
+              14052
+            ],
+            [
+              143,
+              14214
+            ],
+            [
+              144,
+              14336
+            ]
+          ],
+          "end": 146
+        },
+        {
+          "start": 149,
+          "start_line": 757,
+          "prompts": 4,
+          "commands": 4,
+          "submits": [
+            157
+          ],
+          "error_rounds": [
+            [
+              158,
+              [
+                2
+              ]
+            ],
+            [
+              159,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              150,
+              14743
+            ],
+            [
+              152,
+              11340
+            ],
+            [
+              154,
+              11264
+            ],
+            [
+              156,
+              12473
+            ]
+          ],
+          "end": 159
+        },
+        {
+          "start": 180,
+          "start_line": 893,
+          "prompts": 5,
+          "commands": 3,
+          "submits": [
+            188
+          ],
+          "error_rounds": [
+            [
+              189,
+              [
+                2
+              ]
+            ],
+            [
+              190,
+              [
+                1
+              ]
+            ]
+          ],
+          "prompt_lengths": [
+            [
+              181,
+              20303
+            ],
+            [
+              183,
+              16053
+            ],
+            [
+              184,
+              15245
+            ],
+            [
+              186,
+              22022
+            ],
+            [
+              187,
+              19707
+            ]
+          ],
+          "end": 190
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "repository": "/mnt/data/agentrace_prompt_audit/AgentRace-main",
+  "tests_run": 10,
+  "failures": 0,
+  "errors": 0,
+  "observations": {
+    "parser": {
+      "valid_command": true,
+      "valid_string_answer": true,
+      "markdown_wrapped": false,
+      "object_answer": false,
+      "extra_reason_field": false
+    },
+    "invalid_response_repair": {
+      "offending_content_preserved": false,
+      "observation": "LLM response missing or not valid decision JSON; return the required JSON."
+    },
+    "final_prompt": {
+      "answer_only": true,
+      "still_advertises_command": true
+    },
+    "no_submit_fallback": {
+      "default_defense": true,
+      "deadline": 6,
+      "commands_refused_rounds": [
+        4,
+        5,
+        6
+      ],
+      "saved_partial_retained": true,
+      "submitted_answers": 0
+    },
+    "same_failed_command_reexecuted": true,
+    "same_rejected_answer_resubmitted": true,
+    "document_duplication": {
+      "raw_result_chars": 12138,
+      "prompt_chars": 34845,
+      "complete_start_marker_copies": 2,
+      "end_marker_copies_including_history": 3
+    },
+    "truncated_middle_evidence": {
+      "raw_result_chars": 18036,
+      "marker_available_in_input": true,
+      "marker_present_in_prompt": false,
+      "truncation_flag_present": true
+    },
+    "unrelated_unverified_experience_injected": true,
+    "answer_text_passed_through_without_task_schema_check": true
+  }
+}

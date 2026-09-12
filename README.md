@@ -31,5 +31,10 @@ Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.ven
 
 - ~v2.3：OpenAI -> Codex(GPT6 Astra low)
 - v2.4:
-    + OpenAI -> Codex(GPT6 Astra high)
-    + Claude -> Claude(Sonnet5 Medium)
+    + default
+        - OpenAI -> Codex(GPT6 Astra high)
+        - Claude -> Claude(Sonnet5 Medium)
+    + v2.4.1:
+        - OpenAI -> Codex(GPT6 Astra Ultra)
+    + v2.4.2:
+        - OpenAI -> ChatGPT Web(GPT6 Pro)
