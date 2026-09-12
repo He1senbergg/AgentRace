@@ -1,3 +1,8 @@
 .venv/
 __pycache__/
 *.pyc
+
+# Raw task traces may contain internal tasks, answers or credentials. Never commit.
+.private_task_traces/
+*.tasktrace.jsonl*
+_core_validation_*/

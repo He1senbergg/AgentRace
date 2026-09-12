@@ -1,0 +1,135 @@
+{
+  "record_scope": "Historical web-delivered overlay hashes, before local review fixes. Not current workspace hashes; see TASK_R1_LOCAL_REVIEW.md.",
+  "release": "V2.4 + Task R1",
+  "baseline_zip_sha256": "e167455e465c5d062cfd806be4fd03d5f29d5f0ff55cecde39a78392f22b1ffc",
+  "installation": "Merge overlay files into original repository root; preserve .git, .venv and local configuration. No deletions required.",
+  "deleted_files": [],
+  "production_files_changed": [
+    "src/agentrace/session.py",
+    "src/agentrace/task_news.py",
+    "src/agentrace/task_protocol.py",
+    "src/agentrace/task_trace.py"
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "modified",
+      "before_sha256": "472f568478bff9056ec56b5c5e8a7ca3d280c651d527321e1eb80892801164be",
+      "after_sha256": "5ae6066c9cd8e4ebef9563609f696b63adcd157fe2b8eff8d8810ca702f7d78e",
+      "bytes": 172
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "before_sha256": "2a14854bbf885ab24239e5eba52e7c0cd3910025f5b20b1aa27ca0da22281f53",
+      "after_sha256": "3f67467c0e340ba83f39c2a725ea08ccc0f661529aa4edc2466f34e65423dee6",
+      "bytes": 2387
+    },
+    {
+      "path": "docs/DESIGN.md",
+      "status": "modified",
+      "before_sha256": "4f71c4d99d362314ba3c997e37371072da946e04e4282374355f692989b7f06a",
+      "after_sha256": "d68a4a06a234f587d8ba5b695300488f42bf90c469d53f500ac072d37fecdf5b",
+      "bytes": 46293
+    },
+    {
+      "path": "docs/STATUS.md",
+      "status": "modified",
+      "before_sha256": "485d001caa3bb76e39301cff3bdaa7fa763425f18b8146a835cf2c9a9248f368",
+      "after_sha256": "89d748f281cf4608002aac4bdc21cd95c0bb1c11178b5a2fb2d9e59c0aeb3501",
+      "bytes": 3755
+    },
+    {
+      "path": "docs/TASK_R1_CHANGELOG.md",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "8b4a5722f8949deea9f125eed367876c61f3e1406905bde7304aa473da346ecf",
+      "bytes": 11641
+    },
+    {
+      "path": "docs/TASK_R1_VALIDATION.json",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "9a0f9cb1f71c946d5c4f367d2fb25c7c48dba8e1a4a66c1899aeaf0e3ba0028a",
+      "bytes": 7719
+    },
+    {
+      "path": "docs/TEST_PLAN.md",
+      "status": "modified",
+      "before_sha256": "bdb337b03e437538666750f7bd450a46fa39b099b54029a4c4238e4d503a37c7",
+      "after_sha256": "93274a5f7f17c395d5e8a615e1a36352e28f5283856ee63c7502f5b146f22767",
+      "bytes": 36444
+    },
+    {
+      "path": "src/agentrace/session.py",
+      "status": "modified",
+      "before_sha256": "e00c1ca34afef16e6efca0326d5ffcef49e5724a4c8900ac1ed0a745071c728d",
+      "after_sha256": "e8138f999932ccd84360333b061af44bfe353c3d56cd6770bd8bcbc4e6df55e6",
+      "bytes": 18537
+    },
+    {
+      "path": "src/agentrace/task_news.py",
+      "status": "modified",
+      "before_sha256": "95da918911d30bfb335e6f8e5071618d7a54ec03ffbbadc518e5963d1e983ab2",
+      "after_sha256": "35b0339d29673e2e4a2e47956d1206e2ba38f0086c5cd190314e8c15190dd56d",
+      "bytes": 26587
+    },
+    {
+      "path": "src/agentrace/task_protocol.py",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "23066df74965d9313e23e24e17607b6d3fa31f6b56a86e6d5696d4093edac104",
+      "bytes": 20881
+    },
+    {
+      "path": "src/agentrace/task_trace.py",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "4f098141dce0543751564c681442a1a21bc486d35a5c570dc02c973e2ba1c584",
+      "bytes": 4278
+    },
+    {
+      "path": "tests/test_audit_integration.py",
+      "status": "modified",
+      "before_sha256": "b20c5e32d78674ad2706c393865adb42d024694db66e920e1e9a4e7f6085dc53",
+      "after_sha256": "1aee05628943ac96dc7396ee8f377f39edb938003583fd2d6a4f45d71475d6f5",
+      "bytes": 7100
+    },
+    {
+      "path": "tests/test_equivalence.py",
+      "status": "modified",
+      "before_sha256": "b8d481d30bfb1bc5d78c4a8ca29e43e49a914000833c06410f39873ba3bd8f9f",
+      "after_sha256": "7dfb42f7649ec0c541a2ca16cc81fdd0fe9f1e881d96e99610c61df2d481daff",
+      "bytes": 15155
+    },
+    {
+      "path": "tests/test_integration.py",
+      "status": "modified",
+      "before_sha256": "5bcd03527322ffbb54f4676284cb4f5f4d0c639424191aef2bad3b7b84d0ef39",
+      "after_sha256": "b750abf91b943823c4039a90e987f253233ecedc896529210256d2f4783150af",
+      "bytes": 6561
+    },
+    {
+      "path": "tests/test_task_protocol_r1.py",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "905dcbf9cbaede830905c733b2d59bcade1eecb46959e00f98f55e0ac44dac79",
+      "bytes": 24319
+    },
+    {
+      "path": "tests/test_task_trace_r1.py",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "c7933d79cb5ad0cf3fe107085405147e915e0a38fe9e4152c3584cc9a4959d5d",
+      "bytes": 6025
+    },
+    {
+      "path": "tools/test_core_offline.py",
+      "status": "added",
+      "before_sha256": null,
+      "after_sha256": "39ec8e182d55f563d2686bc34804b92738ad5691a40bff856d3a66ba2dcca698",
+      "bytes": 4686
+    }
+  ],
+  "self_note": "This manifest is shipped in both archives and is not recursively hashed."
+}

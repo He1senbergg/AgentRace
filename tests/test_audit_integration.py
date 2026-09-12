@@ -75,7 +75,7 @@ class DefaultDefenseLifecycleTests(unittest.TestCase):
             for index in range(1300):
                 data = lifecycle_observation(index, origin, side)
                 offset = index % 130
-                if previous['prompt'].startswith('Solve only'):
+                if previous['prompt'] and data.get('phaseTask'):
                     data['llmResp'] = json.dumps({'command': 'python --version'} if offset % 4 == 2
                                                  else {'answer': 'Beijing', 'skill': 'Inspect city'})
                 elif previous['prompt']:

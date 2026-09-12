@@ -13,15 +13,19 @@ from test_shadow import opening
 
 
 class InstrumentationTests(unittest.TestCase):
-    def test_default_and_explicit_cli_mode_preserve_positional_port(self):
-        for args, expected in (([], 'defense'), (['--strategy-mode', 'legacy'], 'legacy')):
-            with patch.object(main, 'SESSION'), patch.object(main.sys, 'argv', ['main3.py', '9123', *args]), \
+    def test_port_only_cli_preserves_default_session_and_bind(self):
+        for port in (1, 9123, 65535):
+            with patch.object(main, 'SESSION'), patch.object(main.sys, 'argv', ['main3.py', str(port)]), \
                     patch.object(main.app, 'run') as run, patch.object(main, 'LOG'), \
                     patch.object(main.sys, 'stdout'), patch.object(main.sys, 'stderr'), \
                     patch.object(main.logging, 'basicConfig'):
                 main.main()
-                self.assertEqual(main.SESSION.strategy_mode, expected)
-                self.assertEqual(run.call_args.kwargs['port'], 9123)
+                self.assertEqual(main.SESSION.strategy_mode, 'defense')
+                self.assertIsNone(main.SESSION.origin)
+                self.assertEqual(main.SESSION.rules.wall_stone_cost, 1)
+                self.assertEqual(dict(main.SESSION.rules.weapon_build_names),
+                                 {'gatling': 'gatling', 'railgun': 'railgun', 'rocket': 'rocket'})
+                run.assert_called_once_with(host='0.0.0.0', port=port, debug=False, use_reloader=False)
         self.assertEqual(main.DEFAULT_STRATEGY_MODE, 'defense')
         self.assertEqual(main.GameSession().strategy_mode, 'defense')
 

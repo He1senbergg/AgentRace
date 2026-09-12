@@ -270,3 +270,32 @@ tests/test_diagnostics.py新增3项：动作/坐标/未知昼夜及失败反馈�
 - 专项命令：`.venv\Scripts\python.exe -m unittest discover -s tests -p test_round4.py -q`；Shadow 隔离专项 `-p "test_shadow*.py"`；最终全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。
 - 全量包含 HTTP、重复/并发、异常事务、密集状态性能及已有集成回放。新增 controlled checkpoint 测试仅证明程序分支/预算/状态关联，不能证明完整地图中的寻路交付成功、战斗收益、Night3 或 1300 回合存活。
 - 实机下一门槛：用户审阅后显式 defense 新比赛；核对实际 strategy_mode/authority、墙 current/max 的日初日末增量、2/2/1 就绪、控制员健康与邻接匹配、局内服务失败/时长，以及 R390/R1300 存活。当前默认仍 shadow，尚无 V2.2 authority 实机通过证据。
+
+## 2026-09-12：Task R1
+
+新增 `test_task_protocol_r1.py`（39 项）与 `test_task_trace_r1.py`（8 项）：严格 JSON/完整围栏/字段类型；独立模板/原文定向修复；文档去重/字符预算/全文保留；stdout 契约/候选来源/失败与截断；截止/未知截止/迟到/跨题/死亡/位移；重复请求/事务回滚；权限错误/瞬态重试/空 stdout 修复/重复答案；诊断默认关闭/原文私有文件/故障隔离/轮转/正常日志无原文。
+
+本轮真实执行：Python 3.13.5/Linux，无 Flask。新增 47 项直接用真实 core；通过测试导入适配运行总共 276 项（含原 229 项），没有替换模型/状态机/Flask；21 项 HTTP/入口/回调/进程级冻结比较明确未执行。完整环境仍运行 `python -B -m unittest discover -s tests -q`。本轮结果详见 `TASK_R1_VALIDATION.json`，不可覆盖过去记录的 Windows 验证环境与日期。
+
+额外对照：上传 V2.4 与 R1 在 366 条无任务请求上的完整响应、缓存、指纹、全游戏内存一致；不是官方战斗模拟或 LLM A/B 实验。随机 3,000 对象进行两阶段 6,000 次解析边界检查，不等于实际模型 JSON 合法率。
+
+冻结门禁仅放开 TaskPlanner.prompt/run/new submit/fallback、parse_llm_decision、GameSession 的两个诊断方法及明确新模块依赖。冻结 V2.2 fixture 不变。任务 prompt 有意改变，所以旧模型的严格等价使用显式 task-free 请求，不忽略新任务字段；任务时序由原任务测试与新增端到端专项覆盖。长序列模型夹具用 phaseTask 而非英文前缀辨别任务调用。
+
+无依赖复现：`python -B -m unittest discover -s tests -p 'test_task_*r1.py' -q`；核心适配回归：`python -B tools/test_core_offline.py --report core_validation.json`。审计文件仅在临时目录测试，未连接赛事模型、未执行官方沙盒任务。下一轮仍需真实模型/评分反馈验证。
+
+## 2026-09-12：Task R1 本地复核完成
+
+- 新增 `test_task_review.py` 6 项：高精度数/下溢/布尔与字符串区分、等价指数、极端指数安全拒绝、最终 command 附带来源候选的保底、非法字段与假来源仍拒绝、真实流程拒绝被浮点舍入混淆的候选。先复现失败，修复后通过。
+- 新增 `test_http.py` 1 项：真实子进程下格式修复→工具契约→提交→错误反馈→改进，4 个并发重复请求仅处理一次，5 秒响应边界与日志无原文。
+- 完整命令：Windows `.venv/Scripts/python.exe -B -m unittest discover -s tests -q`；WSL 在仓库目录运行 `.venv/linux-test/bin/python -B -m unittest discover -s tests -q`。
+- Windows Python 3.11.10 / Flask 3.1.3：304 项中 303 通过、1 项 POSIX symlink 跳过（39.746 秒）；WSL 同版本完整 304 项全部通过、无跳过（49.752 秒）。HTTP、入口和 run.sh 已执行，解除网页端缺依赖导致的未验证项。
+- 补充系统 Python 核心适配检查 282 通过、22 排除；当前 HEAD 的三模式/两起点 387 条无任务请求完整 Response/缓存/指纹/内存一致；Round6 核心日志统计与原报告一致。
+- 完整规格覆盖、审查和仍不能本地验证的模型/沙盒/评分场景见 `TASK_R1_LOCAL_REVIEW.md`。上节 276 项为网页端历史结果，不是本次完整测试计数。
+
+## 2026-09-12：仅端口比赛入口
+
+- 根据用户确认删除 main3.py 的四项额外 CLI 选项；内部 Rules/GameSession 参数仍由原动作/策略测试覆盖，不再通过生产命令行做规则覆盖。
+- HTTP 密集请求、任务修复/自动提交及重复/畸形恢复均改为真正的仅端口启动；建造断言验证正式默认 rocket 名称。
+- 启动测试验证端口1、9123、65535和默认 defense/自动起点/墙成本1/三武器映射，保持0.0.0.0及关闭debug/reloader。子进程验证缺端口、负数、0、65536、非数字退出码2，以及四项旧选项和多余位置参数明确拒绝。
+- 实际执行：Windows HTTP 5项（6.654秒）与入口诊断5项（0.048秒）通过；Windows全套304项，303通过/1项POSIX跳过（38.854秒）；WSL全套304项全部通过（49.894秒）。完整命令沿用上节。未修改冻结fixture，仅对有意改变的main函数体增加例外，未放宽HTTP响应和资源清理门槛。
+- 变更完成后复核AI Spec §42–43、调用方、测试及Git diff；README/RUNBOOK同步为仅端口启动。正式平台实机仍由人工接管验收。

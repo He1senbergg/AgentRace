@@ -84,9 +84,10 @@ class EquivalenceTests(unittest.TestCase):
     def test_package_dependencies_are_acyclic_and_downward(self):
         allowed = {
             'model': set(), 'memory': {'model'}, 'actions': {'model'}, 'economy': {'model'},
-            'defense': {'model', 'economy'}, 'task_news': {'model', 'actions', 'economy'},
+            'defense': {'model', 'economy'}, 'task_news': {'model', 'actions', 'economy', 'task_protocol'},
+            'task_protocol': {'actions'}, 'task_trace': set(),
             'strategy': {'model', 'memory', 'actions', 'economy', 'defense', 'task_news'},
-            'session': {'model', 'memory', 'actions', 'task_news', 'strategy'},
+            'session': {'model', 'memory', 'actions', 'task_news', 'strategy', 'task_trace'},
         }
         edges = {}
         for name, dependencies in allowed.items():
@@ -155,10 +156,11 @@ class EquivalenceTests(unittest.TestCase):
                         if name not in changed:
                             self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
                 elif node.name in {'GameMemory', 'TaskPlanner'}:
-                    # Audit fixes task retirement at the observation boundary.
-                    # test_audit_runtime covers ended/expired instances and rollback.
-                    changed = {'observe'} if node.name == 'GameMemory' else {'run'}
-                    added = {'finish_task'} if node.name == 'GameMemory' else set()
+                    # R1 changes only task prompt/runtime methods and evidence fallback.
+                    # test_task_protocol_r1 exercises these intentional differences;
+                    # task acquisition/legality and memory retirement stay protected.
+                    changed = {'observe'} if node.name == 'GameMemory' else {'run', 'prompt'}
+                    added = {'finish_task'} if node.name == 'GameMemory' else {'submit', 'fallback'}
                     old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
                     new_members = {m.name: m for m in definitions[node.name].body if isinstance(m, ast.FunctionDef)}
                     self.assertEqual(set(new_members), set(old_members) | added)
@@ -167,6 +169,25 @@ class EquivalenceTests(unittest.TestCase):
                             self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
                     self.assertEqual([ast.dump(m) for m in node.body if not isinstance(m, ast.FunctionDef)],
                                      [ast.dump(m) for m in definitions[node.name].body if not isinstance(m, ast.FunctionDef)])
+                elif node.name == 'GameSession':
+                    # R1 adds task-only metadata and a disabled-by-default local trace.
+                    # Transport/cache/transaction/planning methods must remain frozen.
+                    old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
+                    new_members = {m.name: m for m in definitions[node.name].body if isinstance(m, ast.FunctionDef)}
+                    self.assertEqual(set(old_members), set(new_members))
+                    for name, member in old_members.items():
+                        if name not in {'trace_turn', '_trace_turn'}:
+                            self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
+                elif node.name == 'main':
+                    # User requested a port-only competition CLI. Default session,
+                    # binding, port limits and rejected flags are checked by the
+                    # instrumentation and real HTTP/entrypoint tests.
+                    self.assertEqual(ast.dump(node.args), ast.dump(definitions[node.name].args))
+                    self.assertEqual([ast.dump(d) for d in node.decorator_list],
+                                     [ast.dump(d) for d in definitions[node.name].decorator_list])
+                elif node.name == 'parse_llm_decision':
+                    # Same public signature; strict/additive R1 reply schema has its own tests.
+                    self.assertEqual(ast.dump(node.args), ast.dump(definitions[node.name].args))
                 elif node.name in {'trace_request', 'trace_response', 'process_request'}:
                     # Only logging-failure isolation changed; actual HTTP contracts
                     # and fault recovery are exercised by test_audit_runtime.
@@ -190,11 +211,27 @@ class EquivalenceTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), expected)
 
     def test_identical_request_sequences(self):
-        # These fixed requests must still agree. The audit intentionally corrects
-        # legacy off-axis interception; its changed behavior has a separate regression.
+        # Task prompts/state intentionally changed in R1 and cannot be equal to V2.2.
+        # Compare COMPLETE responses and state on explicitly task-free requests,
+        # rather than hiding selected fields in task-active snapshots. Active task
+        # behavior is asserted end-to-end in test_tasks/test_task_protocol_r1.
         selected = [c for c in cases(os.environ.get('AGENTRACE_FULL_EQ') == '1') if c['mode'] != 'defense']
         for case in selected:
             case.pop('compact_state', None)
+            for request in case['requests']:
+                if case.get('http'):
+                    # Only valid JSON objects can be transformed; leave malformed
+                    # bodies (including duplicate keys) byte-for-byte unchanged.
+                    body = request['body']
+                    if '"teamOur"' not in body:
+                        continue
+                    value = json.loads(body)
+                    value['phaseTask'] = ''
+                    value['teamOur']['playerTasks'] = []
+                    request['body'] = json.dumps(value)
+                elif isinstance(request, dict) and isinstance(request.get('teamOur'), dict):
+                    request['phaseTask'] = ''
+                    request['teamOur']['playerTasks'] = []
         payload = json.dumps(selected, ensure_ascii=True)
         old, new = run_impl('baseline',payload), run_impl('modular',payload)
         self.assertEqual(len(old), len(new))

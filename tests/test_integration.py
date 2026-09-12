@@ -54,7 +54,7 @@ class IntegrationTests(unittest.TestCase):
                 data['phaseTask'] = ('Read the city for day %s' % (round_no // 130 + 1)
                                      if 1 <= offset <= 60 else '')
                 data['worldNews'] = {'officialNews': '第%s天平静。' % (round_no // 130 + 1)}
-                if previous['prompt'].startswith('Solve only'):
+                if previous['prompt'] and data.get('phaseTask'):
                     data['llmResp'] = json.dumps({'command': 'python --version'} if offset % 4 == 2
                                                  else {'answer': 'Beijing', 'skill': 'Inspect then extract city'})
                 elif previous['prompt']:

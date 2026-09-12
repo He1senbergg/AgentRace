@@ -1,0 +1,180 @@
+{
+  "record_scope": "Historical web-environment validation before local review fixes. Current Windows/WSL full-suite results are in TASK_R1_LOCAL_REVIEW.md.",
+  "release": "V2.4 + Task R1",
+  "prompt_version": "task-r1",
+  "date": "2026-09-12",
+  "baseline_zip_sha256": "e167455e465c5d062cfd806be4fd03d5f29d5f0ff55cecde39a78392f22b1ffc",
+  "basis": "User-uploaded archive; not a fetched remote HEAD",
+  "environment": {
+    "python": "3.13.5",
+    "os": "Linux",
+    "flask_available": false
+  },
+  "core_regression_import_adapter": {
+    "mode": "real_core_exports_import_adapter_no_http",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "tests_run": 276,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "excluded_http_entry_callback_and_frozen_process_tests": [
+      "test_audit_runtime.AuditRuntimeTests.test_http_diagnostic_failure_keeps_committed_response_and_recovers",
+      "test_audit_runtime.AuditRuntimeTests.test_http_error_logging_failure_still_returns_safe_json",
+      "test_entrypoints.EntrypointTests.test_direct_entry_http_from_deployment_closure",
+      "test_entrypoints.EntrypointTests.test_existing_replay_cli_relative_paths_outside_repository",
+      "test_entrypoints.EntrypointTests.test_package_import",
+      "test_entrypoints.EntrypointTests.test_unmodified_run_sh_http_from_deployment_closure",
+      "test_equivalence.EquivalenceTests.test_identical_request_sequences",
+      "test_http.LiveHTTPTests.test_dense_http_concurrent_duplicates_and_valid_configuration",
+      "test_http.LiveHTTPTests.test_invalid_configuration",
+      "test_http.LiveHTTPTests.test_invalid_port",
+      "test_http.LiveHTTPTests.test_start_repeat_malformed_stop",
+      "test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+      "test_memory.MemoryTests.test_conflicting_same_round_does_not_commit_and_http_recovers",
+      "test_protocol.ProtocolTests.test_bad_requests_recover",
+      "test_protocol.ProtocolTests.test_command_shapes",
+      "test_protocol.ProtocolTests.test_duplicate_nonfinite_and_invalid_utf8_requests_are_atomic",
+      "test_protocol.ProtocolTests.test_fresh_empty_response",
+      "test_protocol.ProtocolTests.test_initial_http_diagnostics_cover_routing_without_payloads",
+      "test_protocol.ProtocolTests.test_internal_exception_and_invalid_response",
+      "test_protocol.ProtocolTests.test_unicode_response",
+      "test_shadow_instrumentation.InstrumentationTests.test_default_and_explicit_cli_mode_preserve_positional_port"
+    ],
+    "passed": true
+  },
+  "uploaded_baseline_core_import_adapter": {
+    "mode": "real_core_exports_import_adapter_no_http",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "tests_run": 229,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "excluded_http_entry_callback_and_frozen_process_tests": [
+      "test_audit_runtime.AuditRuntimeTests.test_http_diagnostic_failure_keeps_committed_response_and_recovers",
+      "test_audit_runtime.AuditRuntimeTests.test_http_error_logging_failure_still_returns_safe_json",
+      "test_entrypoints.EntrypointTests.test_direct_entry_http_from_deployment_closure",
+      "test_entrypoints.EntrypointTests.test_existing_replay_cli_relative_paths_outside_repository",
+      "test_entrypoints.EntrypointTests.test_package_import",
+      "test_entrypoints.EntrypointTests.test_unmodified_run_sh_http_from_deployment_closure",
+      "test_equivalence.EquivalenceTests.test_identical_request_sequences",
+      "test_http.LiveHTTPTests.test_dense_http_concurrent_duplicates_and_valid_configuration",
+      "test_http.LiveHTTPTests.test_invalid_configuration",
+      "test_http.LiveHTTPTests.test_invalid_port",
+      "test_http.LiveHTTPTests.test_start_repeat_malformed_stop",
+      "test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+      "test_memory.MemoryTests.test_conflicting_same_round_does_not_commit_and_http_recovers",
+      "test_protocol.ProtocolTests.test_bad_requests_recover",
+      "test_protocol.ProtocolTests.test_command_shapes",
+      "test_protocol.ProtocolTests.test_duplicate_nonfinite_and_invalid_utf8_requests_are_atomic",
+      "test_protocol.ProtocolTests.test_fresh_empty_response",
+      "test_protocol.ProtocolTests.test_initial_http_diagnostics_cover_routing_without_payloads",
+      "test_protocol.ProtocolTests.test_internal_exception_and_invalid_response",
+      "test_protocol.ProtocolTests.test_unicode_response",
+      "test_shadow_instrumentation.InstrumentationTests.test_default_and_explicit_cli_mode_preserve_positional_port"
+    ],
+    "passed": true
+  },
+  "direct_new_tests": {
+    "command": "python -B -m unittest discover -s tests -p 'test_task_*r1.py' -q",
+    "tests_run": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "log": "----------------------------------------------------------------------\nRan 47 tests in 0.250s\n\nOK\n",
+    "subset_of_core_regression": true
+  },
+  "non_task_differential": {
+    "comparison": "uploaded_V2.4_core_vs_task_R1_core",
+    "scope": "task-free complete responses, caches, fingerprint and ALL game memory fields",
+    "http_tested": false,
+    "cases": [
+      {
+        "mode": "legacy",
+        "origin": 0,
+        "requests": 60,
+        "equal": true
+      },
+      {
+        "mode": "legacy",
+        "origin": 1,
+        "requests": 58,
+        "equal": true
+      },
+      {
+        "mode": "shadow",
+        "origin": 0,
+        "requests": 60,
+        "equal": true
+      },
+      {
+        "mode": "shadow",
+        "origin": 1,
+        "requests": 58,
+        "equal": true
+      },
+      {
+        "mode": "defense",
+        "origin": 0,
+        "requests": 60,
+        "equal": true
+      },
+      {
+        "mode": "defense",
+        "origin": 1,
+        "requests": 58,
+        "equal": true
+      },
+      {
+        "mode": "legacy",
+        "origin": null,
+        "requests": 6,
+        "equal": true
+      },
+      {
+        "mode": "shadow",
+        "origin": null,
+        "requests": 6,
+        "equal": true
+      }
+    ],
+    "total_requests": 366,
+    "passed": true
+  },
+  "synthetic_parser_stress": {
+    "kind": "synthetic_only_not_model_evaluation",
+    "random_objects": 3000,
+    "parser_checks": 6000,
+    "malformed_large_responses": 3,
+    "parser_seconds": 0.08152137299998685,
+    "long_ascii_task_chars": 80000,
+    "long_ascii_prompt_seconds": 0.024824940999906175,
+    "full_task_preserved": true,
+    "passed": true
+  },
+  "syntax_compile": {
+    "files_checked": 50,
+    "passed": true
+  },
+  "byte_identical_key_files": {
+    "src/main3.py": "7a04724519fbfb29cf53c3a312e8fe3cc4cad2a243dfb052b5bbb4caf31e6456",
+    "run.sh": "73d035f65c048df2cdcb9663bbddf17b669aac96b940a3da4e58daf661fab335",
+    "requirements-dev.txt": "0a0bb81231f97be434b1b9a4c136262ad2c2b9049a49a0631aa7508546c767d1",
+    "src/agentrace/model.py": "563a478506bf1795c731550db64bf469991449c0a8211b33421a1d5cc94f3c6d",
+    "src/agentrace/memory.py": "d6ffcd66e81574fc91cbe1db51ea98c663de46a87a9d52ce412f193c54bb371f",
+    "src/agentrace/economy.py": "02f10dd64d543faa626f1153b7719e7371f6387237a39e42596a46a2d5e6d037",
+    "src/agentrace/defense.py": "a2ac2962d905fd1361dfc15fc5305412384985000bb56a07d46dab6aa5ca7b42",
+    "src/agentrace/strategy.py": "545112c14735f207e03aef1ac6fba5410486877e4c8c0697c1e9b36a9c85525c"
+  },
+  "byte_identical_trees": [
+    "Official/",
+    "AI Spec/",
+    "log/"
+  ],
+  "not_validated": [
+    "21 HTTP/Flask/CLI/callback and frozen process tests excluded, enumerated in core report",
+    "No real competition model invocation",
+    "No official sandbox execution or live game",
+    "No empirical field accuracy or win-rate improvement claim"
+  ],
+  "interpretation": "276 core checks includes 47 new tests; not full HTTP suite verification. Source-backed candidate is not proof of semantic correctness."
+}

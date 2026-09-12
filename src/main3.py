@@ -156,37 +156,16 @@ def process_request():
 def main():
     parser = argparse.ArgumentParser(description="AgentRace HTTP player")
     parser.add_argument("port", type=int)
-    parser.add_argument("--strategy-mode", choices=("legacy", "shadow", "defense"), default=DEFAULT_STRATEGY_MODE,
-                        help="shadow logs V2 intent and returns legacy; defense explicitly enables defense authority")
-    parser.add_argument("--round-origin", type=int, choices=(0, 1), default=None,
-                        help="override round origin; otherwise infer from opening observation 0 or 1")
-    parser.add_argument("--wall-stone-cost", type=int, default=1,
-                        help="confirmed positive stone cost of one wall")
-    parser.add_argument("--weapon-build-name", action="append", default=[], metavar="TYPE=NAME",
-                        help="confirmed build name, e.g. gatling=gatling; repeat for other types")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error("port must be between 1 and 65535")
-    if args.wall_stone_cost is not None and args.wall_stone_cost <= 0:
-        parser.error("wall stone cost must be positive")
-    names, kinds = {}, set()
-    for entry in args.weapon_build_name or [f"{kind}={kind}" for kind in sorted(WEAPONS)]:
-        kind, separator, name = entry.partition("=")
-        if not separator or kind not in WEAPONS or not name or name == "wall" or name in names or kind in kinds:
-            parser.error("weapon build names must be unique TYPE=NAME mappings")
-        names[name] = kind
-        kinds.add(kind)
     global SESSION
-    SESSION = GameSession(origin=args.round_origin, strategy_mode=args.strategy_mode,
-                          rules=Rules(args.wall_stone_cost, tuple(names.items())))
+    SESSION = GameSession()
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", line_buffering=True)
     logging.basicConfig(level=logging.INFO)
-    if not names:
-        LOG.warning("[main] 未配置已确认的武器建造名称，自动建造武器已停用")
-    if args.round_origin is None:
-        LOG.info("[main] 回合起点自动识别：开局0或1；中途接入请配置--round-origin")
+    LOG.info("[main] 回合起点自动识别：开局0或1")
     # Keep the SDK positional port; accept judger traffic on all IPv4 interfaces (§43.2).
     app.run(host="0.0.0.0", port=args.port, debug=False, use_reloader=False)
 

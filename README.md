@@ -21,7 +21,9 @@
 
 ## 4. 当前开发检查点
 
-当前基于 V2.4，默认 `defense`。2026-09-12 离线审查修复建设筹资停工、无效/重复资金预留、同名任务旧状态污染、HTTP日志异常及斜线弹道拦截，并保持损炮后“两火箭、一电磁炮”组成。恢复开发先读 [docs/STATUS.md](docs/STATUS.md)，问题与验证边界见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)，规格映射见 [docs/COVERAGE.md](docs/COVERAGE.md)。本补丁尚无新实机结果，历史测试记录不代表当前胜率。
+当前为 **V2.4 + Task R1（2026-09-12，本地复核完成）**，默认 `defense`。本轮实现 LLM 任务链路修复：分阶段提示词、定向格式修复、有工具来源的候选保底、重复操作限制、上下文去重和可选私有原文审计。本地复核额外修复最终阶段候选丢失与 JSON 来源数字精度。按用户要求，比赛主入口已收敛为只接收端口，删除四项命令行覆盖选项；经济/防御策略默认值及第三方依赖未改。
+
+先读 [docs/STATUS.md](docs/STATUS.md)，本地复核见 [docs/TASK_R1_LOCAL_REVIEW.md](docs/TASK_R1_LOCAL_REVIEW.md)，部署见 [docs/TASK_R1_CHANGELOG.md](docs/TASK_R1_CHANGELOG.md)。Python 3.11.10 / Flask 3.1.3：Windows 完整测试 303 通过、1 项平台跳过；WSL 304 项全部通过，包含真实 HTTP 和入口测试。真实模型与比赛收益仍需实机验收。此前 V2.4 审查见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)。
 
 Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器。部署须同时复制完整 `src/agentrace/`，不能只换 `main3.py`。项目依赖见 `requirements-dev.txt`。
 
@@ -38,3 +40,4 @@ Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.ven
         - OpenAI -> Codex(GPT6 Astra Ultra)
     + v2.4.2:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
+        - 本地 Codex：任务链路复核、边界修复与 Windows / WSL 完整验证。

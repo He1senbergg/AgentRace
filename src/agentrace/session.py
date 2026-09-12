@@ -38,6 +38,7 @@ from .strategy import (
     StrategicPlanner,
     plan_turn
 )
+from .task_trace import write_task_trace
 import logging
 LOG = logging.getLogger("src.main3")
 
@@ -70,6 +71,12 @@ class GameSession:
                 LOG.error("[trace_turn] 诊断失败: %s", type(exc).__name__)
             except Exception:
                 pass
+        # Optional local raw evidence, separately isolated from ordinary logging.
+        # Disabled by default; no filesystem access unless explicitly configured.
+        try:
+            write_task_trace(data, response or empty_response(), memory, format(id(self), "x"))
+        except Exception:
+            pass
 
     def _trace_turn(self, data, world=None, memory=None, response=None, reason=None):
         """Bounded metadata only; called under the session lock for valid turns."""
@@ -136,6 +143,17 @@ class GameSession:
                             "expired": memory.task.get("expired") if memory and memory.task else None,
                             "answer_only": memory.task.get("answer_only", False) if memory and memory.task else False,
                             "command_count": memory.task.get("command_count", 0) if memory and memory.task else 0,
+                            "prompt_version": memory.task.get("prompt_version") if memory and memory.task else None,
+                            "prompt_stage": memory.task.get("prompt_stage") if memory and memory.task else None,
+                            "protocol_error": memory.task.get("last_protocol_error") if memory and memory.task else None,
+                            "candidate_available": bool(memory and memory.task and memory.task.get("candidate")),
+                            "candidate_source_round": (memory.task.get("candidate") or {}).get("source_round") if memory and memory.task else None,
+                            "candidate_reject_reason": memory.task.get("candidate_reject_reason") if memory and memory.task else None,
+                            "evidence_version": memory.task.get("evidence_version", 0) if memory and memory.task else 0,
+                            "submit_mode": memory.task.get("submit_mode") if memory and memory.task else None,
+                            "submission_block": memory.task.get("submission_block") if memory and memory.task else None,
+                            "dedup_block": memory.task.get("dedup_block") if memory and memory.task else None,
+                            "context_omissions": memory.task.get("context_omissions", []) if memory and memory.task else [],
                             "command_result": {k: v for k, v in command_observation(data.get("lastCmdResult")).items()
                                                if k != "result"},
                             "llm_type": type(data.get("llmResp")).__name__,

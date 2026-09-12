@@ -1,6 +1,6 @@
 # 启动与人工接管
 
-当前为 V2.4 离线修复版本，默认 `defense`；本补丁尚无新实机结果。武器build.name按用户确认默认采用gatling/railgun/rocket；首观测0或1自动识别roundNo起点，中途接入应显式配置。不要把测试里的test-rocket当作正式名称。最新验证与风险见 [STATUS.md](STATUS.md) 和 [OFFLINE_AUDIT.md](OFFLINE_AUDIT.md)。
+当前为 V2.4 + Task R1 本地复核版本，默认 `defense`；本补丁尚无新实机结果。比赛入口只接收端口。武器build.name按用户确认采用gatling/railgun/rocket；首观测0或1自动识别roundNo起点，按正常比赛流程从开局启动。最新验证与风险见 [STATUS.md](STATUS.md) 和 [TASK_R1_LOCAL_REVIEW.md](TASK_R1_LOCAL_REVIEW.md)。
 
 ## 当前个人机器的本地检查
 
@@ -21,13 +21,11 @@ wsl --exec bash -c 'AGENTRACE_PYTHON="$PWD/.venv/linux-test/bin/python" bash run
 
 不要在WSL使用Windows的`.venv/Scripts/python.exe`，也不要使用创建失败的`.venv/linux`。`run.sh`默认优先`.venv/bin/python`，否则使用系统python3；当前WSL的有效环境位于linux-test，故需上面的显式选择。
 
-## 已确认参数的传入方式
+## 比赛启动参数
 
-- `--round-origin 0`或`--round-origin 1`：只能使用已确认的值。
-- `--weapon-build-name TYPE=NAME`：TYPE为gatling、railgun或rocket；NAME默认与TYPE相同。传此参数会用提供的映射集合替换全部默认映射，每类传一个参数。
-- `--wall-stone-cost 1`：当前默认就是1，来自官方完整建筑图，无需额外设置。
+只传一个位置参数 `port`，范围 1–65535，例如 `python src/main3.py 8080` 或 `bash run.sh 8080`。原策略模式、回合起点、墙成本及武器名称覆盖选项已删除，传入会报参数错误。
 
-所有参数放在端口之后。默认已启用三类武器建造；起点未知时需观察首次0/1或明确配置。
+生产默认使用 defense、墙消耗1石头、三类武器同名建造映射和开局0/1自动识别。内部 GameSession / Rules 仍可在测试中显式构造；离线回放工具可单独选择历史策略。中途冷启动缺少起点历史的限制仍在，不通过比赛命令行猜测或覆盖。
 
 ## 最小运行文件与验证
 
@@ -59,6 +57,6 @@ mkdir -p log
 
 ## 最新版本：1基开局与地图
 
-无需增加参数，首个有效观测roundNo=1时自动设origin=1（首观测0仍为0基）；中途接入请显式--round-origin。更新文件并重启后确认首条[trace_turn]的phase非空、actions含build，之后weapons增长；第71回合检查回防和attack。摘要现为前10次、每10次及昼夜边界；[trace_map]在首观测、每50次和昼夜边界打印。将比赛完整控制台日志保存到log/Versus对应新局目录，保留地图的多行坐标，不仅截取HTTP 200行。诊断日志中的任务error_codes=[1]表示任务超时，不能当成网络超时。
+只传端口，首个有效观测roundNo=1时自动设origin=1（首观测0仍为0基）；按比赛开局启动。更新文件并重启后确认首条[trace_turn]的phase非空、actions含build，之后weapons增长；第71回合检查回防和attack。摘要现为前10次、每10次及昼夜边界；[trace_map]在首观测、每50次和昼夜边界打印。将比赛完整控制台日志保存到log/Versus对应新局目录，保留地图的多行坐标，不仅截取HTTP 200行。诊断日志中的任务error_codes=[1]表示任务超时，不能当成网络超时。
 
 最新日志：每个已提交非缓存回合均输出[turn]动作和角色状态；control_weapon表示正在操作指定武器，active_task表示任务占用，no_command仅表示未给该角色动作。武器cooldown/level/range及adjacent帮助定位不开火原因。详细[trace_turn]和[trace_map]仍按原周期采样；HTTP 200本身不证明动作成功。
