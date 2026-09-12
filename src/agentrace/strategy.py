@@ -83,7 +83,9 @@ class StrategicPlanner:
         self.plan = self.state.plan
         self.layout = CanonicalLayout.from_world(world)
         self.v = ActionValidator(world, memory, rules)
-        self.defense = ShadowDefensePlanner(self.v)
+        # Experiments run in defense and shadow intentions; legacy output stays frozen.
+        self.defense = ShadowDefensePlanner(self.v, capacity_target=lambda day: self.capacity_target(),
+                                            growth_mode=True)
         self.return_diagnostics = {}
         self.coverage_relocations = set()
         self.policy = policy or DefensePolicy()
@@ -139,14 +141,15 @@ class StrategicPlanner:
         planned_layout = replace(self.layout, static_blockers=self.layout.static_blockers | reserved)
         start = self.world.characters[job.owner]['cell']
         choices = []
-        for cell in self.layout.wall_slots:
+        # Keep a valid reservation, then prefer canonical front slots over worker distance.
+        for priority, cell in enumerate(self.layout.wall_slots):
             if cell in forbidden or not planned_layout.connected(self.world, cell, [w['cell'] for w in self.defense.weapons]):
                 continue
             route = geometry.path(start, geometry.adjacent_goals({cell}, start))
             if route:
-                choices.append((cell != job.target, len(route), cell))
+                choices.append((cell != job.target, priority, len(route), cell))
         if choices:
-            job.target = min(choices)[2]
+            job.target = min(choices)[-1]
             return job.target
         return None
 
@@ -239,6 +242,10 @@ class StrategicPlanner:
                 bag = inventory(char) or Counter()
                 sellable = sum(bag[m] * self.v.vendor.get(m, 0) for m in MINERALS)
                 gap = max(0, self.v.prices.get(goal.item, 0) - self.delta.gold)
+                # Pioneers cannot mine; require an item or a gap covered by current inventory.
+                if (char.get('roleType') == 'pioneer' and not bag[goal.item]
+                        and gap and sellable < gap):
+                    continue
                 capacity = char.get('backPackCapability', 100 if char.get('roleType') == 'worker' else 40)
                 full = not nonnegative_int(capacity) or sum(bag.values()) >= capacity
                 liquidation = not bag[goal.item] and bool(gap and sellable >= gap or full and sellable > 0)
@@ -936,7 +943,12 @@ class StrategicPlanner:
                     self.move(job, {cell})
                 return
             names = {kind: wire for wire, kind in self.rules.weapon_build_names}
-            name = "wall" if wall else names.get("rocket")
+            if wall:
+                name = "wall"
+            else:
+                order = ("rocket", "rocket", "railgun")
+                preferred = order[min(self.v.weapon_count, len(order) - 1)]
+                name = names.get(preferred) or names.get("rocket")
             if name is None:
                 return
             choices = [job.target] if job.target in slots else []
@@ -1070,7 +1082,7 @@ class StrategicPlanner:
         if phase and self.state.day_start.get('day') != phase.day:
             self.state.day_start = dict(day=phase.day, **{k: v if phase.round_in_day == 1 else None for k, v in snapshot.items()})
         self.state.metrics["day1_benchmark_met"] = (self.delta.phase is not None and self.delta.phase.day == 1 and
-            sum(w.get("roleType") == "rocket" for w in self.defense.weapons) == 3
+            Counter(w.get("roleType") for w in self.defense.weapons) == Counter(rocket=2, railgun=1)
             and len(levels) == 3 and levels >= [2, 1, 1]
             and self.state.metrics["walls"] >= 8 and len(self.world.characters) == 3 and ready == 3)
         def safe(commands):
@@ -1080,7 +1092,7 @@ class StrategicPlanner:
                     for a, c in commands.items()}
         actual_commands = actual["roleCommandMap"]
         report = {"round": self.delta.round_no, "mode": self.plan.mode,
-                  "scope": "v23_parallel_production_experimental_growth",
+                  "scope": "v24_e2_e5_experiments",
                   "strategy_mode": "defense" if self.authority else "shadow",
                   "authority": "defense_with_legacy_task" if self.authority else "legacy",
                   "defense_target": {"weapon_target": 3, "weapon_level_target": self.plan.weapon_level_target,

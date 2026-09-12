@@ -63,6 +63,24 @@ class Self4Tests(unittest.TestCase):
             if built==3:break
         self.assertEqual(built,3)
 
+    def test_default_construction_uses_two_rockets_and_one_railgun(self):
+        # Opt-in composition reduces shared cooldown gaps; legal fire still needs a target/controller.
+        data=state(role(1,'worker',9,11),role(2,'station',10,10,level=1))
+        built=0
+        expected=['rocket','rocket','railgun']
+        for _ in range(12):
+            v=validator(data);main.DefensePlanner(v,growth_mode=True).construct()
+            command=v.commands['1']
+            if command['action']=='move':
+                data['teamOur']['roles'][0]['pos']=command['targetPos'][0]
+                continue
+            self.assertEqual(command['name'],expected[built])
+            p=command['targetPos'][0]
+            data['teamOur']['roles'].append(role(20+built,command['name'],p['x'],p['y'],level=1))
+            data['teamOur']['goldNum']-=25;built+=1
+            if built==3:break
+        self.assertEqual(built,3)
+
     def test_healthy_base_does_not_preempt_rocket_upgrade(self):
         data=state(role(1,'worker',9,10),role(2,'station',10,10,level=1),role(3,'rocket',9,9,level=1),role(4,'rocket',8,9,level=1),weaponShopList=[dict(name='WeaponUpgradeVoucher1',price=100),dict(name='StationUpgradeVoucher1',price=100)])
         data['teamOur']['roles'][1]['health']=1500

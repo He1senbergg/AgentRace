@@ -1,5 +1,22 @@
 # AgentRace 测试计划
 
+## V2.4 Sonnet E2–E5 验证（2026-09-12）
+
+全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q`：224项 PASS（25.230秒），无跳过。专项 `-p test_sonnet_v24.py -q`：12项 PASS（0.406秒）；原 Round5 专项16项 PASS（1.741秒）。本次未改 HTTP 5秒时限或任何动作校验。
+
+| 要求/实验 | 实现 | 验证 |
+|---|---|---|
+| E2 前侧优先、有效旧目标持久化；规范§5/12的合法建造区 | StrategicPlanner.wall_slot；原 ActionValidator | 左右半场镜像、旧目标保留/失效、双工预留/炮手站位避让、不可达/无候选；既有出口及建造合法性回归 |
+| E3 三炮上限/各25G、允许混搭；§10.3电磁零冷却/§13控制者 | execute_job BUILD_WEAPON；DefensePlanner.construct(growth_mode) | 两工人同回合建第二/第三炮及扣款，自定义名字/缺电磁映射回退，完整session开局/重复缓存，两火箭冷却时电磁合法开火，新benchmark；原legacy三火箭测试保留 |
+| E4 评分实验；§14射程/§16伤害及原控制者约束 | threat_weight/attack_plan | 基地威胁与远端角色威胁对照、默认旧评分、精确击杀边界、无基地/无存活目标、试算不污染剩余HP；已有伤害/弹道/控制者专项继续运行 |
+| E5 §20.3仅worker采矿；现金只能后续观测入账 | schedule_production/execute_capital | 原先锋owner重分配、背包不足/恰好足额、现金足额/持券、仅剩先锋无owner、工人实际筹资动作；既有活动任务隔离/出售→观测→买→交付及deadline测试 |
+| 附带helper门控与构造参数兼容 | DefensePlanner/ShadowDefensePlanner/Rules | growth到8墙后继续取石、20墙停工、默认legacy8墙不变、容量回调改变维修物品、138/150G预留边界 |
+| 保持回退与协议 | plan_turn/Session/原冻结fixture | 原V2.2 SHA不变、未改方法AST冻结、legacy/shadow实际Response/HTTP/记忆等价，完整HTTP与部署入口/并发/异常清理/观测集成 |
+
+受控集成命令：`.venv\Scripts\python.exe -B tools/replay_day.py log/Versus/round6/game18/ally_BlueSide_274.log --strategy-mode defense`。退出0；earned50/gold50/build11/move76/collect19/sell2；rocket L1×2 + railgun L1；stderr错误/警告扫描为空。未声称与本轮修改前完整V2.3实测对照，未运行带战斗模拟。
+
+首次新专项的两个夹具问题（ControllerAssignment参数数量、维修场景仍有可优先采购的武器升级券）已纠正，未为此改变生产代码/校验条件。最终全量之后仅整理测试方法位置和注释、更新文档，不改变已验证的断言或运行逻辑。差异采用CRLF感知检查；最终平台生存、地图堵塞与炮损重建后的组成效果仍待实战。
+
 ## Round6 checkpoint复验
 
 Round6七局均未达生存目标，V2.3实战验收失败；本轮不新增或修改测试。现有全量命令：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`，210项PASS（24.021秒），无跳过；git diff --check通过。通过仅表示既有工程回归正常，不能证明benchmark、墙HP代理、资金预留或deadline策略正确。下一阶段V2.4 Strategy Re-baseline需重新建立实战假设与对照；本轮不实现。

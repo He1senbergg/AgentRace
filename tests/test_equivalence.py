@@ -139,7 +139,22 @@ class EquivalenceTests(unittest.TestCase):
                             blocks.append(next(n for n in ast.walk(method) if isinstance(n, ast.If)
                                                and ast.unparse(n.test) == condition))
                         self.assertEqual(ast.dump(blocks[0]), ast.dump(blocks[1]), name)
-                elif node.name in {'StrategicState', 'Day1Plan'}:
+                elif node.name in {'DefensePlanner', 'ShadowDefensePlanner'}:
+                    # V2.4 explicitly changes these opt-in methods. Keep the original
+                    # fixture immutable, freeze every other member, and verify default
+                    # behavior against that fixture in test_identical_request_sequences.
+                    changed = ({'__init__', 'base_reserve', 'maintain', 'construct',
+                                'fortify', 'attack_plan'} if node.name == 'DefensePlanner'
+                               else {'__init__'})
+                    new_members = {m.name: m for m in definitions[node.name].body
+                                   if isinstance(m, ast.FunctionDef)}
+                    old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
+                    self.assertEqual(set(new_members), set(old_members) |
+                                     ({'threat_weight'} if node.name == 'DefensePlanner' else set()))
+                    for name, member in old_members.items():
+                        if name not in changed:
+                            self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
+                elif node.name in {'StrategicState', 'Day1Plan', 'Rules'}:
                     # Additive V2.3 strategic state; old fields/properties still retain defaults.
                     for member in node.body:
                         self.assertIn(ast.dump(member), [ast.dump(m) for m in definitions[node.name].body], node.name)

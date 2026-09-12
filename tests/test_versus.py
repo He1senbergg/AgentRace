@@ -89,6 +89,26 @@ class VersusTests(unittest.TestCase):
         d.maintain()
         self.assertFalse(v.commands)
 
+    def test_base_reserve_only_blocks_spending_once_affordable(self):
+        """Opt-in helper preserves spending until the station voucher is affordable."""
+        data = state(role(1, 'worker', 7, 10), role(2, 'station', 10, 10, level=2),
+                     role(3, 'rocket', 8, 9, level=1), role(4, 'rocket', 8, 8, level=1),
+                     weaponShopList=[dict(name='StationUpgradeVoucher2', price=150),
+                                     dict(name='WeaponUpgradeVoucher1', price=100), dict(name='Medicine', price=10)])
+        data['teamOur']['goldNum'] = 138
+        zone(data, 'weaponShop', 6, 10)
+        v = validator(data)
+        d = main.DefensePlanner(v, growth_mode=True)
+        d.provision()
+        d.maintain()
+        self.assertEqual(v.commands.get('1'), {'action': 'buy', 'name': 'Medicine', 'num': 2})
+
+        data['teamOur']['goldNum'] = 150
+        v = validator(data)
+        d = main.DefensePlanner(v, growth_mode=True)
+        d.provision()
+        self.assertFalse(v.commands)
+
     def test_breadth_first_even_when_level_three_is_affordable(self):
         data = state(role(1, 'worker', 7, 10), role(2, 'rocket', 9, 10, level=2),
                      role(3, 'rocket', 10, 10, level=1),

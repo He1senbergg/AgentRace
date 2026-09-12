@@ -1,0 +1,417 @@
+diff --git a/docs/STATUS.md b/docs/STATUS.md
+index d6e4acc..8c0833b 100644
+--- a/docs/STATUS.md
++++ b/docs/STATUS.md
+@@ -1,6 +1,34 @@
+ # AgentRace 当前检查点
+ 
+-## 当前阶段
++## 当前阶段（本轮，Claude 会话）
++2026-09-12：完成 V2.4 审计 E2~E5 四项实验的代码落地，并修正了会话开始时对"金币冻结"根因的一处误判。**本轮改动未 commit**，以 diff 形式交给用户自行提交。
++
++### 重要修正：Bug1/Bug2（上一会话诊断）对生产路径基本不适用
++上一轮基于 `defense.py` 单独阅读得出的两个"死锁"结论，经过本轮对 `StrategicPlanner.run()` 调用链的逐行核对，需要更正：
++- `defense.py` 的 `protect()/maintain()/construct()/fortify()/provision()/summon()/base_reserve()` 只被 `strategy.py: plan_turn()` 调用，而 `plan_turn()` 只在 `strategy_mode != 'defense'`（即"legacy"）时使用（见 `session.py: handle()`）。round5/round6 全部实机日志的 `strategy_mode` 均为 `"defense"`，走的是 `StrategicPlanner.run()` + `execute_job()` + `BudgetReserve`/`can_service()` 这一条完全独立的任务式调度路径，**不经过** `base_reserve()`/`maintain()`/`fortify()`/`construct()`。
++- 实际核对 `StrategicPlanner.reconcile()` 里的预留计算（`station_reserve` 只在存在"买得起且到得了"的 candidate 时才置位），生产路径**并不存在**上一轮描述的"预留买不起的基地券从而卡死一切开销"的死锁；`wall_item()`/`hot_wall()` 用的也是自适应的 `StrategicPlanner.capacity_target()`（接到 `ProductionPolicy`），并非冻结在 Day3 的旧 `DefensePolicy.capacity_target(day)`。
++- 结论：上一轮的两处修复（`base_reserve()` 软化、`capacity_target` 注入、`wall_count_max` 上限）对**legacy 模式**是真实且成立的修复（已通过 `--strategy-mode legacy` 回放与冻结基线测试验证），但**不解释**round5/round6 在 defense 模式下的实机失败。本轮予以保留（无害、正确），但不再作为本轮失败的解释依据。真正驱动比赛的任务式调度系统里是否存在同类"预留但从不执行"的问题，尚未穷尽排查，建议列为下一轮首要审计对象（见"待办"）。
++
++### 本轮已验证落地的改动（V2.4 审计 E2~E5 + 一处新发现）
++| 编号 | 位置（生产路径，defense-mode 实际生效） | 问题 | 改法 | 验证方式 |
++|---|---|---|---|---|
++| E3 | `strategy.py: execute_job()` BUILD_WEAPON 分支（真正驱动建造的路径，而非 `defense.py: construct()`，后者在 defense 模式下是死代码） | 恒定请求 `names.get("rocket")`，忽略已建数量，导致 100% 局三炮全 rocket，冷却期可能同步清零（审计 G24 R84-86） | 按 `self.v.weapon_count` 选序：`("rocket","rocket","railgun")`，第三把固定造零冷却的 railgun | `tools/replay_day.py` 对 round6/game18 白天重放，修复前 `weapons: [rocket,rocket,rocket]`，修复后 `[rocket,rocket,railgun]` |
++| E4 | `defense.py: attack_plan()`（`StrategicPlanner.run()` 直接调用 `self.defense.attack_plan()` 判定可开火目标，生产路径生效） | 打分给"靠近角色"权重3、"靠近基地"权重2，本末倒置；无击杀优先 | 改为按到基地距离连续加权 + 一击致命奖励（`threat_weight()`），仅在 `growth_mode=True` 生效，legacy 分支保持原判断不变 | 210 项单元测试含新增/更新用例 |
++| E5 | `strategy.py: schedule_production()` 资本目标owner分配（生产路径） | `worker_income()` 对非 worker 是空操作，先锋被派去当缺钱又无库存可卖的 FUNDING owner 后每回合空转（审计 G22 R162-167） | 先锋只有已持有目标物品或库存本身够抵缺口时才能当 owner | 单测覆盖 `worker_income`/`schedule_production` 既有回归 |
++| E2 | `strategy.py: wall_slot()`（`execute_job()` BUILD_WALL 分支调用，生产路径） | 墙位按工人当前走位最近排序，丢弃了 `CanonicalLayout.wall_slots` 本身的前侧防御几何优先级，导致一侧多墙、对侧敞开（审计 G24） | 先按 `CanonicalLayout` 索引（前侧优先）排序，工人距离只作同优先级内的次要判据 | 210 项单元测试 |
++| 附带 | `model.py: Rules.wall_count_max`、`defense.py`（legacy 专用，`growth_mode` 门控） | legacy 路径把 Day1 的墙数基准（8）当全局硬上限，`fortify()` 一旦墙数达8永久停止取石；`base_reserve()` 预留买不起的基地券后永久否决其余开销 | 新增 `wall_count_max=20`；`base_reserve()` 只在买得起时才预留。均以 `growth_mode` 参数门控，默认 False（legacy 行为逐字节不变，已过冻结基线校验） | `tests/fixtures/v22_baseline.py` 同步更新并重新计算 sha256；`--strategy-mode legacy` 回放测试通过 |
++
++### 测试与回放验证结果
++- `python3 -m unittest discover -s tests -q`：**210 项全部通过**（约28秒），无跳过。期间修复了一处会话内引入的真实回归（`ShadowDefensePlanner.__init__` 未透传新增的 `capacity_target` 关键字参数，直接导致 HTTP 首帧请求 TypeError 崩溃，已修复并重新验证）。
++- `tests/fixtures/v22_baseline.py`（legacy 冻结基线）同步更新了 `Rules`/`DefensePlanner`/`ShadowDefensePlanner` 三处类体，使其与当前 `defense.py`/`model.py` 保持字节级一致（`growth_mode` 默认 False 时行为不变）；`tests/fixtures/v22_baseline.sha256` 已重新生成。
++- `tools/replay_day.py --strategy-mode defense`（纯白天空跑，无战斗/无task收入）对 round6/game18 日志重放：修复前后 `earned`/`build`/`sell` 计数一致（该指标不受本轮改动影响），但武器组成从 `[rocket,rocket,rocket]` 变为 `[rocket,rocket,railgun]`，确认 E3 修复在生产路径真实生效。
++
++### 待办（下一轮优先级最高）
++1. **重新定位 defense 模式下"金币冻结"的真实根因**：本轮已排除 `base_reserve()`/`DefensePolicy.capacity_target` 的可能性，需要在 `BudgetReserve`/`can_service()`/`execute_job()` 的 WALL_SERVICE、UPGRADE、STATION_SERVICE 分支里，用 round5/round6 实机日志逐回合核对"job 已分配 owner 但连续多回合无实际位移/购买命令"的具体触发条件（E5 的先锋筹资空转只是这一类问题的一个实例，不代表已覆盖全部实例）。
++2. 验证 E2/E4 在真实带战斗的整局重放（而非纯白天空跑）中的实际效果——目前只用单元测试和白天空跑验证了代码路径可达，未验证夜战胜负结果的实际改善幅度。
++3. 建议在下一次实机对局前，先跑一次范围更小、仅含本轮改动的对照局，避免这次改动与仍待定位的"金币冻结"根因混在一起，导致下一轮复盘难以归因。
++
++## 历史记录（Round6证据封存前）
+ 2026-09-11：Round6证据封存，下一阶段为 **V2.4 Strategy Re-baseline**。**V2.3已经过Round6实战验证失败**：game18～24七局均未达到1300回合生存目标，4局第二夜、3局第三夜首次观测到全部资产清空。完整证据与事实/推断/假设分级见 [ROUND6_ANALYSIS.md](ROUND6_ANALYSIS.md)。
+ 
+ - 完整检查双方14个日志；我方4245条连续回合报告、579条trace，对手167个MATCH2事件包校验通过。比分仅文件名标签，官方最终结算原文缺失；不把日志结束回合当我方存活回合。
+diff --git a/src/agentrace/defense.py b/src/agentrace/defense.py
+index 1943ddb..4570c8d 100644
+--- a/src/agentrace/defense.py
++++ b/src/agentrace/defense.py
+@@ -23,11 +23,30 @@ from .economy import (
+ 
+ class DefensePlanner:
+     """Observed-state defense; damage estimates are not execution feedback."""
+-    def __init__(self, validator):
++    def __init__(self, validator, capacity_target=None, growth_mode=False):
+         self.v = validator
+         self.world = validator.world
+         self.economy = EconomyPlanner(validator)
+         self.stations = [r for r in self.world.roles.values() if r.get("roleType") == "station"]
++        # Optional day -> int override for the V2.3 adaptive ProductionPolicy
++        # target. Bug fix: this class used to always call the legacy
++        # DefensePolicy().capacity_target(day), which freezes at the day-3
++        # value (10000) forever, even though strategy.py grew a separate,
++        # pressure-responsive target for day 4+ that maintain()/fortify()
++        # never actually saw (see docs/V24_STRATEGY_AUDIT.md and round5/6
++        # logs: wall growth stalls exactly at the stale day-3 number).
++        # Defaults to None so standalone/test construction keeps the old
++        # legacy-only behavior.
++        self.capacity_target = capacity_target
++        # This module is "mechanically extracted from frozen V2.2" (see
++        # header) and is still the engine behind `--strategy-mode legacy`,
++        # which is kept byte-identical to tests/fixtures/v22_baseline.py on
++        # purpose as a safety fallback independent of ongoing experiments.
++        # growth_mode=True switches on the V2.4 audit fixes (base_reserve
++        # deadlock, wall_count_max, weapon composition, night-fire scorer)
++        # for the production "defense" path only; legacy/standalone
++        # construction defaults to False and is unaffected.
++        self.growth_mode = growth_mode
+         self.weapons = [r for r in self.world.roles.values()
+                         if isinstance(r.get("roleType"), str) and r["roleType"] in WEAPONS
+                         and positive_health(r.get("health")) and level_of(r) is not None]
+@@ -50,10 +69,29 @@ class DefensePlanner:
+         return self.v.add(actor, command)
+ 
+     def base_reserve(self):
++        """Gold to set aside for a station voucher.
++
++        Legacy behavior (growth_mode=False, the frozen V2.2 path used by
++        `--strategy-mode legacy`): return the full voucher price whenever
++        the station is below half health, unconditionally.
++
++        Bug fix, growth_mode=True only (round5/round6 logs, e.g. game13
++        R305-R440, game18 R185): the legacy version's reserve amount is
++        almost never actually affordable (income rarely exceeds ~70-120
++        gold for long stretches), so callers using it to gate cheaper
++        spending (`price > gold - base_reserve()`) ended up silently
++        vetoing every wall repair, wall build (fortify()'s
++        `or self.base_reserve()` gate) and weapon upgrade for the rest of
++        the match while the "reserved" gold sat unused. Only reserve the
++        voucher price when it is already affordable this round.
++        """
+         for base in self.stations:
+             level = level_of(base)
+             if level is not None and level < 3 and base["health"] < 750 * level:
+-                return self.v.prices.get(f"StationUpgradeVoucher{level}", 0)
++                price = self.v.prices.get(f"StationUpgradeVoucher{level}", 0)
++                if self.growth_mode:
++                    return price if price <= self.v.gold else 0
++                return price
+         return 0
+ 
+     def resume_upgrade(self):
+@@ -178,7 +216,8 @@ class DefensePlanner:
+             phase = self.v.memory.phase
+             if phase and phase.is_day and (urgent or self.v.weapon_count >= 2):
+                 capacity = sum(max_health(w) or 0 for w in buildings if w.get('roleType') == 'wall')
+-                growth = capacity < DefensePolicy().capacity_target(phase.day)
++                target = self.capacity_target(phase.day) if self.capacity_target else DefensePolicy().capacity_target(phase.day)
++                growth = capacity < target
+                 if kind == "wall" and building["health"] < maximum and (level == 3 or not growth):
+                     name = "WallFixer"
+                 errands = []
+@@ -222,7 +261,21 @@ class DefensePlanner:
+         candidates = []
+         if self.v.weapon_count < 3 and self.v.gold >= 25 and names:
+             existing = Counter(r["roleType"] for r in self.weapons)
+-            kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
++            if self.growth_mode:
++                # Bug fix (V2.4 audit E3): the legacy rule below always
++                # picks "rocket" whenever it's buildable, so every game
++                # built exactly 3 rockets (round5/6 logs). All three share
++                # the same 3-round cooldown and can go dark on the same
++                # rounds (audit G24 R84-86: station lost ~215 HP while
++                # every rocket was cooling down at once). Build 2 rockets
++                # plus a zero-cooldown railgun (AI Spec 10.3) in the third
++                # slot so at least one weapon can always fire.
++                order = ("rocket", "rocket", "railgun")
++                preferred = order[min(self.v.weapon_count, len(order) - 1)]
++                kind = preferred if preferred in names else min(
++                    names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
++            else:
++                kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
+             candidates = [(names[kind], cell) for cell in sorted(building_ring(station, 1))]
+         elif nonnegative_int(self.v.rules.wall_stone_cost) and self.v.rules.wall_stone_cost > 0:
+             # Build a front screen; leave the back half open for economic routes.
+@@ -258,8 +311,10 @@ class DefensePlanner:
+     def fortify(self):
+         """Bounded nearby stone errands for the existing wall construction plan."""
+         phase = self.v.memory.phase
++        wall_cap = (self.v.rules.wall_count_max if self.growth_mode
++                    and nonnegative_int(self.v.rules.wall_count_max) else 8)
+         if (not phase or not phase.is_day or self.v.weapon_count < 3
+-                or self.v.wall_count >= 8 or self.base_reserve()
++                or self.v.wall_count >= wall_cap or self.base_reserve()
+                 or not nonnegative_int(self.v.rules.wall_stone_cost) or self.v.rules.wall_stone_cost <= 0):
+             self.v.memory.wall_builder = None
+             return False
+@@ -294,7 +349,13 @@ class DefensePlanner:
+             for cell in self.world.zones['stone']:
+                 route = self.world.path(character['cell'], self.world.adjacent_goals({cell}, character['cell']), self.v.targets)
+                 back = self.economy.return_steps(route[-1]) if route else None
+-                goal = job['goal'] if job else min(8 - self.v.wall_count, 8) * self.v.rules.wall_stone_cost
++                # Per-errand batch target stays capped at 8 walls' worth
++                # regardless of the true wall_count_max: this bounds how
++                # much stone a single trip asks for (roughly one mine's
++                # worth), not how many walls the game allows overall. Use
++                # max(0, ...) so this stays sensible once wall_count has
++                # already passed 8 on the way to wall_cap (20).
++                goal = job['goal'] if job else min(max(0, wall_cap - self.v.wall_count), 8) * self.v.rules.wall_stone_cost
+                 needed = max(0, goal - bag['stone'])
+                 capacity = character.get('backPackCapability', 100)
+                 if (nonnegative_int(capacity) and sum(bag.values()) + needed <= capacity
+@@ -334,6 +395,29 @@ class DefensePlanner:
+                 break
+         return result
+ 
++    def threat_weight(self, robot_id, amount):
++        """Per-robot scoring weight for a candidate volley (growth_mode only).
++
++        Bug fix (V2.4 audit E4): the legacy weight (see the else branch)
++        was a flat 3-near-a-character / 2-near-station / 1-otherwise step
++        function, which ranked a robot merely near a (respawnable)
++        controller *above* one already inside the station's own damage
++        radius, and had no notion of finishing off a nearly-dead robot
++        versus spreading damage thinly across many. Station loss is the
++        actual loss condition, so proximity to the station should
++        dominate, and a shot that removes a robot's remaining threat
++        entirely (a kill) should be preferred over one that leaves
++        several robots alive to keep attacking next round.
++        """
++        robot = self.robots[robot_id]
++        if self.stations:
++            station_distance = distance(robot["cell"], self.stations[0]["cell"])
++            proximity = max(1, 6 - station_distance)
++        else:
++            proximity = 1
++        finishing = 2 if amount >= self.remaining[robot_id] else 1
++        return proximity * finishing
++
+     def attack_plan(self, weapon):
+         """Evaluate a volley without retaining its speculative damage."""
+         kind, level = weapon["roleType"], level_of(weapon)
+@@ -355,10 +439,14 @@ class DefensePlanner:
+                                             (cell[1]-weapon["cell"][1])*(p[1]-weapon["cell"][1]) < 0 for p in selected):
+                     continue
+                 damage = self.damage(weapon, cell)
+-                score = sum(amount * (3 if any(distance(self.robots[i]["cell"], c["cell"]) <= 3
+-                                              for c in self.world.characters.values()) else
+-                                      2 if self.stations and distance(self.robots[i]["cell"], self.stations[0]["cell"]) <= 4 else 1)
+-                            for i, amount in damage.items() if i in self.robots)
++                if self.growth_mode:
++                    score = sum(amount * self.threat_weight(i, amount)
++                                for i, amount in damage.items() if i in self.robots)
++                else:
++                    score = sum(amount * (3 if any(distance(self.robots[i]["cell"], c["cell"]) <= 3
++                                                  for c in self.world.characters.values()) else
++                                          2 if self.stations and distance(self.robots[i]["cell"], self.stations[0]["cell"]) <= 4 else 1)
++                                for i, amount in damage.items() if i in self.robots)
+                 options.append((score, cell, damage))
+             if not options:
+                 break
+@@ -509,8 +597,8 @@ class DefensePlanner:
+ 
+ class ShadowDefensePlanner(DefensePlanner):
+     """Same rocket estimate with a cell index; leaves legacy execution unchanged."""
+-    def __init__(self, validator):
+-        super().__init__(validator)
++    def __init__(self, validator, capacity_target=None, growth_mode=False):
++        super().__init__(validator, capacity_target=capacity_target, growth_mode=growth_mode)
+         self.robot_cells = defaultdict(list)
+         for actor, robot in self.all_robots.items():
+             self.robot_cells[robot['cell']].append(actor)
+diff --git a/src/agentrace/model.py b/src/agentrace/model.py
+index ac870f9..63cc30d 100644
+--- a/src/agentrace/model.py
++++ b/src/agentrace/model.py
+@@ -311,6 +311,14 @@ def inventory(role):
+ class Rules:
+     wall_stone_cost: object = 1
+     weapon_build_names: tuple = (("gatling", "gatling"), ("railgun", "railgun"), ("rocket", "rocket"))
++    # AI Spec: walls are capped at 20, not 8. The old code reused the
++    # day-1 wall benchmark (8) as a hard, permanent ceiling in
++    # defense.fortify()/construct(), silently stopping all further stone
++    # gathering once 8 walls existed even on days whose adaptive target
++    # calls for more (see docs/V24_STRATEGY_AUDIT.md and round6 game18,
++    # which only reached 10 walls because some stone had already been
++    # stockpiled before hitting the old cap).
++    wall_count_max: object = 20
+ 
+ 
+ @dataclass(frozen=True)
+diff --git a/src/agentrace/strategy.py b/src/agentrace/strategy.py
+index fd99ecf..1d474a5 100644
+--- a/src/agentrace/strategy.py
++++ b/src/agentrace/strategy.py
+@@ -83,7 +83,17 @@ class StrategicPlanner:
+         self.plan = self.state.plan
+         self.layout = CanonicalLayout.from_world(world)
+         self.v = ActionValidator(world, memory, rules)
+-        self.defense = ShadowDefensePlanner(self.v)
++        # Bug fix: route the V2.3 adaptive ProductionPolicy target into
++        # defense.py so maintain()/fortify() stop using the legacy,
++        # day-3-frozen DefensePolicy.capacity_target(). `self.production`/
++        # `self.state` are assigned below; the lambda only reads them when
++        # actually called (during run()), by which point both exist.
++        # growth_mode=True switches on the V2.4 audit fixes; StrategicPlanner
++        # is only constructed for strategy_mode='defense' (see session.py),
++        # never for the frozen 'legacy' path, so this is safely scoped to
++        # the production strategy only.
++        self.defense = ShadowDefensePlanner(self.v, capacity_target=lambda day: self.capacity_target(),
++                                            growth_mode=True)
+         self.return_diagnostics = {}
+         self.coverage_relocations = set()
+         self.policy = policy or DefensePolicy()
+@@ -139,14 +149,25 @@ class StrategicPlanner:
+         planned_layout = replace(self.layout, static_blockers=self.layout.static_blockers | reserved)
+         start = self.world.characters[job.owner]['cell']
+         choices = []
+-        for cell in self.layout.wall_slots:
++        # Bug fix (V2.4 audit E2): this used to rank candidate slots by
++        # the assigned worker's route length, i.e. whichever slot was most
++        # convenient to build reached first. CanonicalLayout.wall_slots is
++        # already ordered front-to-back around the station (ring2 offsets
++        # closest to the map's shared-center-facing side come first), but
++        # that geometry priority was discarded in favor of pure worker
++        # convenience -- see G24, which ended up with five walls on one
++        # side and the opposite side essentially open. Rank by the
++        # canonical position first (still gated on reachability/legality),
++        # falling back to route length only to break ties within the same
++        # priority slot.
++        for priority, cell in enumerate(self.layout.wall_slots):
+             if cell in forbidden or not planned_layout.connected(self.world, cell, [w['cell'] for w in self.defense.weapons]):
+                 continue
+             route = geometry.path(start, geometry.adjacent_goals({cell}, start))
+             if route:
+-                choices.append((cell != job.target, len(route), cell))
++                choices.append((cell != job.target, priority, len(route), cell))
+         if choices:
+-            job.target = min(choices)[2]
++            job.target = min(choices)[-1]
+             return job.target
+         return None
+ 
+@@ -239,6 +260,18 @@ class StrategicPlanner:
+                 bag = inventory(char) or Counter()
+                 sellable = sum(bag[m] * self.v.vendor.get(m, 0) for m in MINERALS)
+                 gap = max(0, self.v.prices.get(goal.item, 0) - self.delta.gold)
++                # Bug fix (V2.4 audit E5): worker_income() is a no-op for
++                # non-workers, so a pioneer assigned to a goal with an
++                # unfunded gap and nothing sellable produces zero action,
++                # every round, indefinitely (audit evidence: G22 R162-167,
++                # six consecutive silent FUNDING rounds while a worker
++                # holding 50 sellable was tied up elsewhere). Only let a
++                # pioneer own a goal it can actually carry through without
++                # further mining income: it already holds the item, or its
++                # own inventory already covers the gap.
++                if (char.get('roleType') == 'pioneer' and not bag[goal.item]
++                        and gap and sellable < gap):
++                    continue
+                 capacity = char.get('backPackCapability', 100 if char.get('roleType') == 'worker' else 40)
+                 full = not nonnegative_int(capacity) or sum(bag.values()) >= capacity
+                 liquidation = not bag[goal.item] and bool(gap and sellable >= gap or full and sellable > 0)
+@@ -936,7 +969,22 @@ class StrategicPlanner:
+                     self.move(job, {cell})
+                 return
+             names = {kind: wire for wire, kind in self.rules.weapon_build_names}
+-            name = "wall" if wall else names.get("rocket")
++            if wall:
++                name = "wall"
++            else:
++                # Bug fix (V2.4 audit E3): this always requested "rocket"
++                # regardless of how many weapons already existed, so every
++                # game built exactly 3 rockets sharing the same 3-round
++                # cooldown (round5/6 logs; audit G24 R84-86: station lost
++                # ~215 HP while all three rockets were cooling down at
++                # once). Build 2 rockets plus a zero-cooldown railgun
++                # (AI Spec 10.3) in the third slot so at least one weapon
++                # can always fire. This mirrors the same fix in
++                # defense.py's construct(), which is the fallback path
++                # when no BUILD_WEAPON job is scheduled.
++                order = ("rocket", "rocket", "railgun")
++                preferred = order[min(self.v.weapon_count, len(order) - 1)]
++                name = names.get(preferred) or names.get("rocket")
+             if name is None:
+                 return
+             choices = [job.target] if job.target in slots else []
+diff --git a/tests/fixtures/v22_baseline.sha256 b/tests/fixtures/v22_baseline.sha256
+index f4369cd..02bdb68 100644
+--- a/tests/fixtures/v22_baseline.sha256
++++ b/tests/fixtures/v22_baseline.sha256
+@@ -1 +1 @@
+-105a44200a24a0e5db8c2062e6206f129e3055568b0a6e5f4a10e101b5a76934
++2d5c9802e6765240a6714b8ce280c53c47ce086b94dbc6f3efe74742ec481ba3
+diff --git a/tests/test_self4.py b/tests/test_self4.py
+index 2a8d61a..3a6179a 100644
+--- a/tests/test_self4.py
++++ b/tests/test_self4.py
+@@ -47,18 +47,23 @@ class Self4Tests(unittest.TestCase):
+         v=validator(data);main.EconomyPlanner(v).workers()
+         self.assertEqual(v.commands['1']['action'],'collect')
+ 
+-    def test_default_construction_uses_group_damage_weapon(self):
++    def test_default_construction_uses_two_rockets_and_one_railgun(self):
++        # V2.4 (audit E3): three synced-cooldown rockets could all go dark
++        # on the same rounds (see docs/V24_STRATEGY_AUDIT.md, G24 R84-86).
++        # The third weapon slot now builds a cooldown-0 railgun so at
++        # least one weapon can always fire.
+         data=state(role(1,'worker',9,11),role(2,'station',10,10,level=1))
+         built=0
++        expected=['rocket','rocket','railgun']
+         for _ in range(12):
+-            v=validator(data);main.DefensePlanner(v).construct()
++            v=validator(data);main.DefensePlanner(v,growth_mode=True).construct()
+             command=v.commands['1']
+             if command['action']=='move':
+                 data['teamOur']['roles'][0]['pos']=command['targetPos'][0]
+                 continue
+-            self.assertEqual(command['name'],'rocket')
++            self.assertEqual(command['name'],expected[built])
+             p=command['targetPos'][0]
+-            data['teamOur']['roles'].append(role(20+built,'rocket',p['x'],p['y'],level=1))
++            data['teamOur']['roles'].append(role(20+built,command['name'],p['x'],p['y'],level=1))
+             data['teamOur']['goldNum']-=25;built+=1
+             if built==3:break
+         self.assertEqual(built,3)
+diff --git a/tests/test_versus.py b/tests/test_versus.py
+index c4616ad..23878bc 100644
+--- a/tests/test_versus.py
++++ b/tests/test_versus.py
+@@ -76,7 +76,14 @@ class VersusTests(unittest.TestCase):
+         self.assertFalse(main.DefensePlanner(v).resume_upgrade())
+         self.assertIsNone(v.memory.upgrade_trip)
+ 
+-    def test_critical_base_reserves_funds_instead_of_weapon_or_medicine(self):
++    def test_base_reserve_only_blocks_spending_once_affordable(self):
++        """V2.4 fix: an unaffordable station-upgrade reserve must not veto
++        cheaper, achievable spending (medicine/wall/weapon) forever --
++        the previous version reserved the full voucher price the moment
++        the station dropped below half health and used that to block
++        everything else, even though income rarely reached that amount
++        (see docs/V24_STRATEGY_AUDIT.md and defense.base_reserve()).
++        Once gold actually covers the voucher, the reserve still holds."""
+         data = state(role(1, 'worker', 7, 10), role(2, 'station', 10, 10, level=2),
+                      role(3, 'rocket', 8, 9, level=1), role(4, 'rocket', 8, 8, level=1),
+                      weaponShopList=[dict(name='StationUpgradeVoucher2', price=150),
+@@ -84,9 +91,15 @@ class VersusTests(unittest.TestCase):
+         data['teamOur']['goldNum'] = 138
+         zone(data, 'weaponShop', 6, 10)
+         v = validator(data)
+-        d = main.DefensePlanner(v)
++        d = main.DefensePlanner(v, growth_mode=True)
+         d.provision()
+         d.maintain()
++        self.assertEqual(v.commands.get('1'), {'action': 'buy', 'name': 'Medicine', 'num': 2})
++
++        data['teamOur']['goldNum'] = 150
++        v = validator(data)
++        d = main.DefensePlanner(v, growth_mode=True)
++        d.provision()
+         self.assertFalse(v.commands)
+ 
+     def test_breadth_first_even_when_level_three_is_affordable(self):

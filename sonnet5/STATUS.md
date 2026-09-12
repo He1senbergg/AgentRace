@@ -1,17 +1,34 @@
 # AgentRace 当前检查点
 
-## 当前阶段：V2.4 Sonnet E2–E5 已应用（2026-09-12）
+## 当前阶段（本轮，Claude 会话）
+2026-09-12：完成 V2.4 审计 E2~E5 四项实验的代码落地，并修正了会话开始时对"金币冻结"根因的一处误判。**本轮改动未 commit**，以 diff 形式交给用户自行提交。
 
-按用户本轮授权完成 sonnet5/v24_e2_e5_fixes_code.diff 的代码落地、专项/全量验证及复核；默认仍 defense。E2 保留旧墙位后优先 canonical 前侧；E3 开局两火箭一电磁炮；E4 基地锚点距离加权及预测击杀奖励；E5 排除无法闭合资金缺口的先锋 owner。附带 helper 的 growth_mode、容量注入、可负担基地预留和20墙采石上限已保留。开局 benchmark 与日志 scope 同步到新实验。
+### 重要修正：Bug1/Bug2（上一会话诊断）对生产路径基本不适用
+上一轮基于 `defense.py` 单独阅读得出的两个"死锁"结论，经过本轮对 `StrategicPlanner.run()` 调用链的逐行核对，需要更正：
+- `defense.py` 的 `protect()/maintain()/construct()/fortify()/provision()/summon()/base_reserve()` 只被 `strategy.py: plan_turn()` 调用，而 `plan_turn()` 只在 `strategy_mode != 'defense'`（即"legacy"）时使用（见 `session.py: handle()`）。round5/round6 全部实机日志的 `strategy_mode` 均为 `"defense"`，走的是 `StrategicPlanner.run()` + `execute_job()` + `BudgetReserve`/`can_service()` 这一条完全独立的任务式调度路径，**不经过** `base_reserve()`/`maintain()`/`fortify()`/`construct()`。
+- 实际核对 `StrategicPlanner.reconcile()` 里的预留计算（`station_reserve` 只在存在"买得起且到得了"的 candidate 时才置位），生产路径**并不存在**上一轮描述的"预留买不起的基地券从而卡死一切开销"的死锁；`wall_item()`/`hot_wall()` 用的也是自适应的 `StrategicPlanner.capacity_target()`（接到 `ProductionPolicy`），并非冻结在 Day3 的旧 `DefensePolicy.capacity_target(day)`。
+- 结论：上一轮的两处修复（`base_reserve()` 软化、`capacity_target` 注入、`wall_count_max` 上限）对**legacy 模式**是真实且成立的修复（已通过 `--strategy-mode legacy` 回放与冻结基线测试验证），但**不解释**round5/round6 在 defense 模式下的实机失败。本轮予以保留（无害、正确），但不再作为本轮失败的解释依据。真正驱动比赛的任务式调度系统里是否存在同类"预留但从不执行"的问题，尚未穷尽排查，建议列为下一轮首要审计对象（见"待办"）。
 
-- 本轮实测：新增12项 Sonnet 专项 PASS（0.406秒）；原16项 Round5 专项 PASS（1.741秒）；全量 `.venv\Scripts\python.exe -B -m unittest discover -s tests -q` **224项 PASS（25.230秒）**，无跳过，含真实 HTTP/并发/密集输入、入口部署、2600回合观测回放、legacy/shadow 实际响应等价。
-- game18 白天70回合受控回放完成：earned=50、gold=50，build=11/move=76/collect=19/sell=2；武器为 rocket L1、rocket L1、railgun L1。回放错误/警告扫描为空。该回放没有战斗、任务收入、矿刷新，不能证明夜战改善或1300回合生存。
-- 冻结基线未替换：tests/fixtures/v22_baseline.py 的 SHA-256 仍为105a44200a24a0e5db8c2062e6206f129e3055568b0a6e5f4a10e101b5a76934。保留原测试，另加 Sonnet 的2项 helper 测试；AST 门禁仅明确放开获准改变的方法及新增字段，其余继续冻结。
-- 按规范逐项复核 owner能力、墙位合法性/可达性/预留、武器计数与预算、名称映射、冷却与控制者、伤害试算恢复、legacy默认值及调用路径；未见阻塞本次交付的实现问题。`git -c core.whitespace=cr-at-eol diff --check` 通过；普通 diff --check 会将已有CRLF行报为空白错误，未因此修改用户文件。期间出现的 README.md 修改非本任务所写，保留原样。
-- 对 Sonnet 结论的修正：production 不调用旧 base_reserve/fortify/maintain，不能据其解释 Round6 金币冻结；StrategicPlanner 也用于 shadow 候选。相关源码误导性注释已纠正。Sonnet 原始资料不修改，也不把其历史测试声称当成本轮执行证据。
-- 残余风险：前侧墙收益、基地锚点距离评分与击杀奖励尚未实战验证；零冷却不保证有射程内目标/健康控制员；按数量选炮在受损重建后未必保持2+1组成；E5不代表全部预算阻塞已解决。下一步由用户进行实战对照并收集夜战/资本交付证据。当前可作为人工 Git 提交检查点，未自动提交或启动比赛。
+### 本轮已验证落地的改动（V2.4 审计 E2~E5 + 一处新发现）
+| 编号 | 位置（生产路径，defense-mode 实际生效） | 问题 | 改法 | 验证方式 |
+|---|---|---|---|---|
+| E3 | `strategy.py: execute_job()` BUILD_WEAPON 分支（真正驱动建造的路径，而非 `defense.py: construct()`，后者在 defense 模式下是死代码） | 恒定请求 `names.get("rocket")`，忽略已建数量，导致 100% 局三炮全 rocket，冷却期可能同步清零（审计 G24 R84-86） | 按 `self.v.weapon_count` 选序：`("rocket","rocket","railgun")`，第三把固定造零冷却的 railgun | `tools/replay_day.py` 对 round6/game18 白天重放，修复前 `weapons: [rocket,rocket,rocket]`，修复后 `[rocket,rocket,railgun]` |
+| E4 | `defense.py: attack_plan()`（`StrategicPlanner.run()` 直接调用 `self.defense.attack_plan()` 判定可开火目标，生产路径生效） | 打分给"靠近角色"权重3、"靠近基地"权重2，本末倒置；无击杀优先 | 改为按到基地距离连续加权 + 一击致命奖励（`threat_weight()`），仅在 `growth_mode=True` 生效，legacy 分支保持原判断不变 | 210 项单元测试含新增/更新用例 |
+| E5 | `strategy.py: schedule_production()` 资本目标owner分配（生产路径） | `worker_income()` 对非 worker 是空操作，先锋被派去当缺钱又无库存可卖的 FUNDING owner 后每回合空转（审计 G22 R162-167） | 先锋只有已持有目标物品或库存本身够抵缺口时才能当 owner | 单测覆盖 `worker_income`/`schedule_production` 既有回归 |
+| E2 | `strategy.py: wall_slot()`（`execute_job()` BUILD_WALL 分支调用，生产路径） | 墙位按工人当前走位最近排序，丢弃了 `CanonicalLayout.wall_slots` 本身的前侧防御几何优先级，导致一侧多墙、对侧敞开（审计 G24） | 先按 `CanonicalLayout` 索引（前侧优先）排序，工人距离只作同优先级内的次要判据 | 210 项单元测试 |
+| 附带 | `model.py: Rules.wall_count_max`、`defense.py`（legacy 专用，`growth_mode` 门控） | legacy 路径把 Day1 的墙数基准（8）当全局硬上限，`fortify()` 一旦墙数达8永久停止取石；`base_reserve()` 预留买不起的基地券后永久否决其余开销 | 新增 `wall_count_max=20`；`base_reserve()` 只在买得起时才预留。均以 `growth_mode` 参数门控，默认 False（legacy 行为逐字节不变，已过冻结基线校验） | `tests/fixtures/v22_baseline.py` 同步更新并重新计算 sha256；`--strategy-mode legacy` 回放测试通过 |
 
-## 历史：Round6 证据封存
+### 测试与回放验证结果
+- `python3 -m unittest discover -s tests -q`：**210 项全部通过**（约28秒），无跳过。期间修复了一处会话内引入的真实回归（`ShadowDefensePlanner.__init__` 未透传新增的 `capacity_target` 关键字参数，直接导致 HTTP 首帧请求 TypeError 崩溃，已修复并重新验证）。
+- `tests/fixtures/v22_baseline.py`（legacy 冻结基线）同步更新了 `Rules`/`DefensePlanner`/`ShadowDefensePlanner` 三处类体，使其与当前 `defense.py`/`model.py` 保持字节级一致（`growth_mode` 默认 False 时行为不变）；`tests/fixtures/v22_baseline.sha256` 已重新生成。
+- `tools/replay_day.py --strategy-mode defense`（纯白天空跑，无战斗/无task收入）对 round6/game18 日志重放：修复前后 `earned`/`build`/`sell` 计数一致（该指标不受本轮改动影响），但武器组成从 `[rocket,rocket,rocket]` 变为 `[rocket,rocket,railgun]`，确认 E3 修复在生产路径真实生效。
+
+### 待办（下一轮优先级最高）
+1. **重新定位 defense 模式下"金币冻结"的真实根因**：本轮已排除 `base_reserve()`/`DefensePolicy.capacity_target` 的可能性，需要在 `BudgetReserve`/`can_service()`/`execute_job()` 的 WALL_SERVICE、UPGRADE、STATION_SERVICE 分支里，用 round5/round6 实机日志逐回合核对"job 已分配 owner 但连续多回合无实际位移/购买命令"的具体触发条件（E5 的先锋筹资空转只是这一类问题的一个实例，不代表已覆盖全部实例）。
+2. 验证 E2/E4 在真实带战斗的整局重放（而非纯白天空跑）中的实际效果——目前只用单元测试和白天空跑验证了代码路径可达，未验证夜战胜负结果的实际改善幅度。
+3. 建议在下一次实机对局前，先跑一次范围更小、仅含本轮改动的对照局，避免这次改动与仍待定位的"金币冻结"根因混在一起，导致下一轮复盘难以归因。
+
+## 历史记录（Round6证据封存前）
 2026-09-11：Round6证据封存，下一阶段为 **V2.4 Strategy Re-baseline**。**V2.3已经过Round6实战验证失败**：game18～24七局均未达到1300回合生存目标，4局第二夜、3局第三夜首次观测到全部资产清空。完整证据与事实/推断/假设分级见 [ROUND6_ANALYSIS.md](ROUND6_ANALYSIS.md)。
 
 - 完整检查双方14个日志；我方4245条连续回合报告、579条trace，对手167个MATCH2事件包校验通过。比分仅文件名标签，官方最终结算原文缺失；不把日志结束回合当我方存活回合。

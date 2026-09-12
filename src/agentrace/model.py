@@ -311,6 +311,8 @@ def inventory(role):
 class Rules:
     wall_stone_cost: object = 1
     weapon_build_names: tuple = (("gatling", "gatling"), ("railgun", "railgun"), ("rocket", "rocket"))
+    # AI Spec §12.2 ceiling; used by the opt-in DefensePlanner helper.
+    wall_count_max: object = 20
 
 
 @dataclass(frozen=True)

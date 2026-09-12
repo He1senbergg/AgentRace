@@ -23,11 +23,14 @@ from .economy import (
 
 class DefensePlanner:
     """Observed-state defense; damage estimates are not execution feedback."""
-    def __init__(self, validator):
+    def __init__(self, validator, capacity_target=None, growth_mode=False):
         self.v = validator
         self.world = validator.world
         self.economy = EconomyPlanner(validator)
         self.stations = [r for r in self.world.roles.values() if r.get("roleType") == "station"]
+        # Optional helper policy; production services use StrategicPlanner directly.
+        self.capacity_target = capacity_target
+        self.growth_mode = growth_mode
         self.weapons = [r for r in self.world.roles.values()
                         if isinstance(r.get("roleType"), str) and r["roleType"] in WEAPONS
                         and positive_health(r.get("health")) and level_of(r) is not None]
@@ -50,10 +53,14 @@ class DefensePlanner:
         return self.v.add(actor, command)
 
     def base_reserve(self):
+        """Legacy full reserve; opt-in growth reserves only affordable vouchers."""
         for base in self.stations:
             level = level_of(base)
             if level is not None and level < 3 and base["health"] < 750 * level:
-                return self.v.prices.get(f"StationUpgradeVoucher{level}", 0)
+                price = self.v.prices.get(f"StationUpgradeVoucher{level}", 0)
+                if self.growth_mode:
+                    return price if price <= self.v.gold else 0
+                return price
         return 0
 
     def resume_upgrade(self):
@@ -178,7 +185,8 @@ class DefensePlanner:
             phase = self.v.memory.phase
             if phase and phase.is_day and (urgent or self.v.weapon_count >= 2):
                 capacity = sum(max_health(w) or 0 for w in buildings if w.get('roleType') == 'wall')
-                growth = capacity < DefensePolicy().capacity_target(phase.day)
+                target = self.capacity_target(phase.day) if self.capacity_target else DefensePolicy().capacity_target(phase.day)
+                growth = capacity < target
                 if kind == "wall" and building["health"] < maximum and (level == 3 or not growth):
                     name = "WallFixer"
                 errands = []
@@ -222,7 +230,13 @@ class DefensePlanner:
         candidates = []
         if self.v.weapon_count < 3 and self.v.gold >= 25 and names:
             existing = Counter(r["roleType"] for r in self.weapons)
-            kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
+            if self.growth_mode:
+                order = ("rocket", "rocket", "railgun")
+                preferred = order[min(self.v.weapon_count, len(order) - 1)]
+                kind = preferred if preferred in names else min(
+                    names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
+            else:
+                kind = min(names, key=lambda k: ("rocket", "gatling", "railgun").index(k))
             candidates = [(names[kind], cell) for cell in sorted(building_ring(station, 1))]
         elif nonnegative_int(self.v.rules.wall_stone_cost) and self.v.rules.wall_stone_cost > 0:
             # Build a front screen; leave the back half open for economic routes.
@@ -258,8 +272,10 @@ class DefensePlanner:
     def fortify(self):
         """Bounded nearby stone errands for the existing wall construction plan."""
         phase = self.v.memory.phase
+        wall_cap = (self.v.rules.wall_count_max if self.growth_mode
+                    and nonnegative_int(self.v.rules.wall_count_max) else 8)
         if (not phase or not phase.is_day or self.v.weapon_count < 3
-                or self.v.wall_count >= 8 or self.base_reserve()
+                or self.v.wall_count >= wall_cap or self.base_reserve()
                 or not nonnegative_int(self.v.rules.wall_stone_cost) or self.v.rules.wall_stone_cost <= 0):
             self.v.memory.wall_builder = None
             return False
@@ -294,7 +310,7 @@ class DefensePlanner:
             for cell in self.world.zones['stone']:
                 route = self.world.path(character['cell'], self.world.adjacent_goals({cell}, character['cell']), self.v.targets)
                 back = self.economy.return_steps(route[-1]) if route else None
-                goal = job['goal'] if job else min(8 - self.v.wall_count, 8) * self.v.rules.wall_stone_cost
+                goal = job['goal'] if job else min(max(0, wall_cap - self.v.wall_count), 8) * self.v.rules.wall_stone_cost
                 needed = max(0, goal - bag['stone'])
                 capacity = character.get('backPackCapability', 100)
                 if (nonnegative_int(capacity) and sum(bag.values()) + needed <= capacity
@@ -334,6 +350,17 @@ class DefensePlanner:
                 break
         return result
 
+    def threat_weight(self, robot_id, amount):
+        """Experimental anchor-distance weighting and predicted-kill bonus."""
+        robot = self.robots[robot_id]
+        if self.stations:
+            station_distance = distance(robot["cell"], self.stations[0]["cell"])
+            proximity = max(1, 6 - station_distance)
+        else:
+            proximity = 1
+        finishing = 2 if amount >= self.remaining[robot_id] else 1
+        return proximity * finishing
+
     def attack_plan(self, weapon):
         """Evaluate a volley without retaining its speculative damage."""
         kind, level = weapon["roleType"], level_of(weapon)
@@ -355,10 +382,14 @@ class DefensePlanner:
                                             (cell[1]-weapon["cell"][1])*(p[1]-weapon["cell"][1]) < 0 for p in selected):
                     continue
                 damage = self.damage(weapon, cell)
-                score = sum(amount * (3 if any(distance(self.robots[i]["cell"], c["cell"]) <= 3
-                                              for c in self.world.characters.values()) else
-                                      2 if self.stations and distance(self.robots[i]["cell"], self.stations[0]["cell"]) <= 4 else 1)
-                            for i, amount in damage.items() if i in self.robots)
+                if self.growth_mode:
+                    score = sum(amount * self.threat_weight(i, amount)
+                                for i, amount in damage.items() if i in self.robots)
+                else:
+                    score = sum(amount * (3 if any(distance(self.robots[i]["cell"], c["cell"]) <= 3
+                                                  for c in self.world.characters.values()) else
+                                          2 if self.stations and distance(self.robots[i]["cell"], self.stations[0]["cell"]) <= 4 else 1)
+                                for i, amount in damage.items() if i in self.robots)
                 options.append((score, cell, damage))
             if not options:
                 break
@@ -509,8 +540,8 @@ class DefensePlanner:
 
 class ShadowDefensePlanner(DefensePlanner):
     """Same rocket estimate with a cell index; leaves legacy execution unchanged."""
-    def __init__(self, validator):
-        super().__init__(validator)
+    def __init__(self, validator, capacity_target=None, growth_mode=False):
+        super().__init__(validator, capacity_target=capacity_target, growth_mode=growth_mode)
         self.robot_cells = defaultdict(list)
         for actor, robot in self.all_robots.items():
             self.robot_cells[robot['cell']].append(actor)
