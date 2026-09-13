@@ -84,10 +84,12 @@ class EquivalenceTests(unittest.TestCase):
     def test_package_dependencies_are_acyclic_and_downward(self):
         allowed = {
             'model': set(), 'memory': {'model'}, 'actions': {'model'}, 'economy': {'model'},
-            'defense': {'model', 'economy'}, 'task_news': {'model', 'actions', 'economy', 'task_protocol'},
-            'task_protocol': {'actions'}, 'task_trace': set(),
+            'defense': {'model', 'economy'}, 'task_news': {'model', 'actions', 'economy', 'task_protocol', 'task_inspection'},
+            'task_protocol': {'actions', 'task_inspection'}, 'task_trace': set(),
             'strategy': {'model', 'memory', 'actions', 'economy', 'defense', 'task_news'},
-            'session': {'model', 'memory', 'actions', 'task_news', 'strategy', 'task_trace'},
+            'session': {'model', 'memory', 'actions', 'task_news', 'strategy', 'task_trace', 'survival'},
+            'survival': {'model', 'actions', 'defense', 'task_news'},
+            'task_inspection': set(),
         }
         edges = {}
         for name, dependencies in allowed.items():
@@ -175,9 +177,23 @@ class EquivalenceTests(unittest.TestCase):
                     old_members = {m.name: m for m in node.body if isinstance(m, ast.FunctionDef)}
                     new_members = {m.name: m for m in definitions[node.name].body if isinstance(m, ast.FunctionDef)}
                     self.assertEqual(set(old_members), set(new_members))
+                    class StripSurvivalRouting(ast.NodeTransformer):
+                        def visit_If(self, node):
+                            if ast.unparse(node.test) == "self.strategy_mode == 'survival'":
+                                return self.visit(node.orelse[0])
+                            return self.generic_visit(node)
+                        def visit_Compare(self, node):
+                            if ast.unparse(node) == "self.strategy_mode in {'defense', 'survival'}":
+                                return ast.parse("self.strategy_mode == 'defense'", mode='eval').body
+                            return self.generic_visit(node)
+                        def visit_Set(self, node):
+                            # Constructor only: existing modes and defaults stay frozen.
+                            node.elts = [v for v in node.elts if not (isinstance(v, ast.Constant) and v.value == 'survival')]
+                            return node
                     for name, member in old_members.items():
                         if name not in {'trace_turn', '_trace_turn'}:
-                            self.assertEqual(ast.dump(member), ast.dump(new_members[name]), name)
+                            normalized = StripSurvivalRouting().visit(new_members[name])
+                            self.assertEqual(ast.dump(member), ast.dump(normalized), name)
                 elif node.name == 'main':
                     # User requested a port-only competition CLI. Default session,
                     # binding, port limits and rejected flags are checked by the
@@ -202,8 +218,16 @@ class EquivalenceTests(unittest.TestCase):
                     self.assertEqual(ast.dump(node), ast.dump(definitions[node.name]), node.name)
             elif isinstance(node, ast.Assign):
                 for target in node.targets:
-                    if isinstance(target, ast.Name) and target.id.isupper() and target.id not in {'LOG', 'DEFAULT_STRATEGY_MODE'}:
+                    if isinstance(target, ast.Name) and target.id.isupper() and target.id not in {'LOG', 'DEFAULT_STRATEGY_MODE', 'SESSION'}:
                         self.assertEqual([ast.dump(node.value)], [ast.dump(v) for v in assignments[target.id]], target.id)
+
+    def test_survival_entry_selector_is_explicit_not_implicit_library_default(self):
+        tree = ast.parse((ROOT/'src/main3.py').read_text(encoding='utf-8'))
+        selectors = [n.value for n in ast.walk(tree) if isinstance(n, ast.Assign)
+                     and any(isinstance(t, ast.Name) and t.id == 'SESSION' for t in n.targets)]
+        self.assertEqual(len(selectors), 2)
+        expected = ast.parse('GameSession(strategy_mode=os.environ.get("AGENTRACE_STRATEGY", "survival"))', mode='eval').body
+        self.assertTrue(all(ast.dump(n) == ast.dump(expected) for n in selectors))
 
     def test_frozen_digest(self):
         fixture = ROOT/'tests/fixtures/v22_baseline.py'

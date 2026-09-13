@@ -21,13 +21,13 @@
 
 ## 4. 当前开发检查点
 
-当前为 **V2.4 + Task R1（2026-09-12，本地复核完成）**，默认 `defense`。本轮实现 LLM 任务链路修复：分阶段提示词、定向格式修复、有工具来源的候选保底、重复操作限制、上下文去重和可选私有原文审计。本地复核额外修复最终阶段候选丢失与 JSON 来源数字精度。按用户要求，比赛主入口已收敛为只接收端口，删除四项命令行覆盖选项；经济/防御策略默认值及第三方依赖未改。
+当前为 **Survival V3 candidate（2026-09-13）**。真实入口默认 `survival`，可用环境变量 `AGENTRACE_STRATEGY=defense` 回滚；原 `defense` 代码保留。新策略包含批量采石建墙、真实券库存/运输/三级升级、角色站位与返防、维护预算优先级及任务首次检查包。
 
-先读 [docs/STATUS.md](docs/STATUS.md)，本地复核见 [docs/TASK_R1_LOCAL_REVIEW.md](docs/TASK_R1_LOCAL_REVIEW.md)，部署见 [docs/TASK_R1_CHANGELOG.md](docs/TASK_R1_CHANGELOG.md)。Python 3.11.10 / Flask 3.1.3：Windows 完整测试 303 通过、1 项平台跳过；WSL 304 项全部通过，包含真实 HTTP 和入口测试。真实模型与比赛收益仍需实机验收。此前 V2.4 审查见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)。
+先读 [docs/V3_AUDIT_AND_FIX_REPORT.md](docs/V3_AUDIT_AND_FIX_REPORT.md) 和 [docs/STATUS.md](docs/STATUS.md)。**本轮 322 项核心测试通过；22 项 HTTP/入口相关测试未获通过，当前容器缺 Flask，完整套件尝试失败。** 当前环境 Python 3.13.5，不是赛事 Python 3.11。
 
-Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器。部署须同时复制完整 `src/agentrace/`，不能只换 `main3.py`。项目依赖见 `requirements-dev.txt`。
+另完成 48 次首日经济对照、2×1300 步经济连续性和 12 组密集夜战输入检查。**无官方机器人伤害模拟、真实模型评分或新对局成绩，不能称存活满 1300 回合。** 原始证据见 `docs/validation_v3/`。
 
-准确的Windows/WSL启动、参数和人工接管检查见[docs/RUNBOOK.md](docs/RUNBOOK.md)。当前WSL须显式选择`.venv/linux-test/bin/python`，不能假定系统python3已安装依赖。
+入口仍只接收端口：Linux/WSL `bash run.sh 6666`；Windows `.venv\Scripts\python.exe src\main3.py 6666`。使用原来正常工作的依赖环境和端口。部署必须带完整 `src/agentrace/`，不能只换入口。未新增第三方依赖；未 Git 提交或推送。
 
 ## 5. 开发记录
 
@@ -41,3 +41,17 @@ Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.ven
     + v2.4.2:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
         - 本地 Codex：任务链路复核、边界修复与 Windows / WSL 完整验证。
+    + v3:
+        - OpenAI -> ChatGPT Web(GPT6 Pro)
+
+## 历史检查点：Task R1（不代表 V3 验证）
+
+
+当前为 **V2.4 + Task R1（2026-09-12，本地复核完成）**，默认 `defense`。本轮实现 LLM 任务链路修复：分阶段提示词、定向格式修复、有工具来源的候选保底、重复操作限制、上下文去重和可选私有原文审计。本地复核额外修复最终阶段候选丢失与 JSON 来源数字精度。按用户要求，比赛主入口已收敛为只接收端口，删除四项命令行覆盖选项；经济/防御策略默认值及第三方依赖未改。
+
+先读 [docs/STATUS.md](docs/STATUS.md)，本地复核见 [docs/TASK_R1_LOCAL_REVIEW.md](docs/TASK_R1_LOCAL_REVIEW.md)，部署见 [docs/TASK_R1_CHANGELOG.md](docs/TASK_R1_CHANGELOG.md)。Python 3.11.10 / Flask 3.1.3：Windows 完整测试 303 通过、1 项平台跳过；WSL 304 项全部通过，包含真实 HTTP 和入口测试。真实模型与比赛收益仍需实机验收。此前 V2.4 审查见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)。
+
+Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器。部署须同时复制完整 `src/agentrace/`，不能只换 `main3.py`。项目依赖见 `requirements-dev.txt`。
+
+准确的Windows/WSL启动、参数和人工接管检查见[docs/RUNBOOK.md](docs/RUNBOOK.md)。当前WSL须显式选择`.venv/linux-test/bin/python`，不能假定系统python3已安装依赖。
+

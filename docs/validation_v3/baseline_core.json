@@ -1,0 +1,33 @@
+{
+  "mode": "real_core_exports_import_adapter_no_http",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "tests_run": 282,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "excluded_http_entry_callback_and_frozen_process_tests": [
+    "test_audit_runtime.AuditRuntimeTests.test_http_diagnostic_failure_keeps_committed_response_and_recovers",
+    "test_audit_runtime.AuditRuntimeTests.test_http_error_logging_failure_still_returns_safe_json",
+    "test_entrypoints.EntrypointTests.test_direct_entry_http_from_deployment_closure",
+    "test_entrypoints.EntrypointTests.test_existing_replay_cli_relative_paths_outside_repository",
+    "test_entrypoints.EntrypointTests.test_package_import",
+    "test_entrypoints.EntrypointTests.test_unmodified_run_sh_http_from_deployment_closure",
+    "test_equivalence.EquivalenceTests.test_identical_request_sequences",
+    "test_http.LiveHTTPTests.test_dense_http_concurrent_duplicates_with_default_configuration",
+    "test_http.LiveHTTPTests.test_invalid_port",
+    "test_http.LiveHTTPTests.test_removed_options_and_extra_arguments_are_rejected",
+    "test_http.LiveHTTPTests.test_start_repeat_malformed_stop",
+    "test_http.LiveHTTPTests.test_task_repair_stdout_submission_and_duplicate_delivery",
+    "test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+    "test_memory.MemoryTests.test_conflicting_same_round_does_not_commit_and_http_recovers",
+    "test_protocol.ProtocolTests.test_bad_requests_recover",
+    "test_protocol.ProtocolTests.test_command_shapes",
+    "test_protocol.ProtocolTests.test_duplicate_nonfinite_and_invalid_utf8_requests_are_atomic",
+    "test_protocol.ProtocolTests.test_fresh_empty_response",
+    "test_protocol.ProtocolTests.test_initial_http_diagnostics_cover_routing_without_payloads",
+    "test_protocol.ProtocolTests.test_internal_exception_and_invalid_response",
+    "test_protocol.ProtocolTests.test_unicode_response",
+    "test_shadow_instrumentation.InstrumentationTests.test_port_only_cli_preserves_default_session_and_bind"
+  ],
+  "passed": true
+}

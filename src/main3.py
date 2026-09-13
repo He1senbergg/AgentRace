@@ -8,6 +8,7 @@ from itertools import product
 import json
 import logging
 import math
+import os
 import re
 import shlex
 import sys
@@ -99,7 +100,7 @@ app.json.ensure_ascii = False
 # Shared action legality and conservative same-round reservations (§75–76).
 
 
-SESSION = GameSession()
+SESSION = GameSession(strategy_mode=os.environ.get("AGENTRACE_STRATEGY", "survival"))
 HTTP_DIAGNOSTIC_LOCK = threading.Lock()
 HTTP_DIAGNOSTIC_COUNT = 0
 
@@ -160,12 +161,13 @@ def main():
     if not 1 <= args.port <= 65535:
         parser.error("port must be between 1 and 65535")
     global SESSION
-    SESSION = GameSession()
+    SESSION = GameSession(strategy_mode=os.environ.get("AGENTRACE_STRATEGY", "survival"))
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", line_buffering=True)
     logging.basicConfig(level=logging.INFO)
     LOG.info("[main] 回合起点自动识别：开局0或1")
+    LOG.info("[main] strategy_mode=%s; survival policy=v3-candidate", SESSION.strategy_mode)
     # Keep the SDK positional port; accept judger traffic on all IPv4 interfaces (§43.2).
     app.run(host="0.0.0.0", port=args.port, debug=False, use_reloader=False)
 

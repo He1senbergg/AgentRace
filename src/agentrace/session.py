@@ -38,6 +38,7 @@ from .strategy import (
     StrategicPlanner,
     plan_turn
 )
+from .survival import SurvivalPlanner
 from .task_trace import write_task_trace
 import logging
 LOG = logging.getLogger("src.main3")
@@ -49,7 +50,7 @@ class GameSession:
         if origin is not None and (type(origin) is not int or origin not in (0, 1)):
             raise ValueError("invalid round origin")
         self.origin = origin
-        if strategy_mode not in {"legacy", "shadow", "defense"}:
+        if strategy_mode not in {"legacy", "shadow", "defense", "survival"}:
             raise ValueError("unknown strategy mode")
         self.strategy_mode = strategy_mode
         self.policy = policy or DefensePolicy()
@@ -246,15 +247,18 @@ class GameSession:
                     shadow_report = {"round": round_no, "error": type(exc).__name__}
                 shadow_ms = (time.perf_counter() - shadow_started) * 1000
             legacy_started = time.perf_counter()
-            if self.strategy_mode == 'defense':
+            if self.strategy_mode == 'survival':
+                response, shadow_report = SurvivalPlanner(world, candidate, delta, self.rules).run()
+                response = ensure_valid_response(response)
+            elif self.strategy_mode == 'defense':
                 defense = StrategicPlanner(world, candidate, delta, self.rules, self.policy, authority=True)
                 candidate.strategic, shadow_report = defense.run(empty_response())
                 response = ensure_valid_response(defense.intended_response)
             else:
                 response = ensure_valid_response(self.planner(world, candidate))
             legacy_ms = (time.perf_counter() - legacy_started) * 1000
-            defense_ms = legacy_ms if self.strategy_mode == 'defense' else 0.0
-            if self.strategy_mode == 'defense':
+            defense_ms = legacy_ms if self.strategy_mode in {'defense', 'survival'} else 0.0
+            if self.strategy_mode in {'defense', 'survival'}:
                 legacy_ms = 0.0
             active_task = isinstance(data.get("phaseTask"), str) and bool(data["phaseTask"])
             if response["executeCmd"] and not active_task:

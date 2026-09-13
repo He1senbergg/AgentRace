@@ -1,0 +1,38 @@
+{
+  "mode": "survival",
+  "seed": 28,
+  "exogenous_reward": 160,
+  "turns": 70,
+  "walls": 8,
+  "weapons": 3,
+  "weapon_levels": [
+    2,
+    1,
+    1
+  ],
+  "controllers_ready": 3,
+  "gold": 113,
+  "stats": {
+    "move": 112,
+    "mineral_revenue": 73,
+    "build": 11,
+    "build:rocket": 2,
+    "build:railgun": 1,
+    "collect": 27,
+    "build:wall": 8,
+    "buy": 2,
+    "buy:Medicine": 2,
+    "buy:WeaponUpgradeVoucher1": 1,
+    "sell": 12,
+    "sell:copper": 8,
+    "sell:iron": 11,
+    "use": 1,
+    "use:WeaponUpgradeVoucher1": 1
+  },
+  "rejected": [],
+  "timing_ms": {
+    "mean": 53.03844075713511,
+    "max": 125.12240699970789,
+    "p95": 89.15988500029925
+  }
+}

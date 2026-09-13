@@ -1,0 +1,148 @@
+{
+  "version": "survival-v3-candidate",
+  "date": "2026-09-13",
+  "baseline_uploaded_zip": "AgentRace-main(1).zip",
+  "baseline_sha256": "66fd37de4718b668aa7c188c9b90b8ecc142bc2480c03e5a1b31789f0be55142",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "production_entry_default": "survival",
+  "library_GameSession_default": "defense",
+  "rollback_environment": "AGENTRACE_STRATEGY=defense",
+  "dependencies_changed": false,
+  "core": {
+    "mode": "real_core_exports_import_adapter_no_http",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "tests_run": 322,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "excluded_http_entry_callback_and_frozen_process_tests": [
+      "test_audit_runtime.AuditRuntimeTests.test_http_diagnostic_failure_keeps_committed_response_and_recovers",
+      "test_audit_runtime.AuditRuntimeTests.test_http_error_logging_failure_still_returns_safe_json",
+      "test_entrypoints.EntrypointTests.test_direct_entry_http_from_deployment_closure",
+      "test_entrypoints.EntrypointTests.test_existing_replay_cli_relative_paths_outside_repository",
+      "test_entrypoints.EntrypointTests.test_package_import",
+      "test_entrypoints.EntrypointTests.test_unmodified_run_sh_http_from_deployment_closure",
+      "test_equivalence.EquivalenceTests.test_identical_request_sequences",
+      "test_http.LiveHTTPTests.test_dense_http_concurrent_duplicates_with_default_configuration",
+      "test_http.LiveHTTPTests.test_invalid_port",
+      "test_http.LiveHTTPTests.test_removed_options_and_extra_arguments_are_rejected",
+      "test_http.LiveHTTPTests.test_start_repeat_malformed_stop",
+      "test_http.LiveHTTPTests.test_task_repair_stdout_submission_and_duplicate_delivery",
+      "test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+      "test_memory.MemoryTests.test_conflicting_same_round_does_not_commit_and_http_recovers",
+      "test_protocol.ProtocolTests.test_bad_requests_recover",
+      "test_protocol.ProtocolTests.test_command_shapes",
+      "test_protocol.ProtocolTests.test_duplicate_nonfinite_and_invalid_utf8_requests_are_atomic",
+      "test_protocol.ProtocolTests.test_fresh_empty_response",
+      "test_protocol.ProtocolTests.test_initial_http_diagnostics_cover_routing_without_payloads",
+      "test_protocol.ProtocolTests.test_internal_exception_and_invalid_response",
+      "test_protocol.ProtocolTests.test_unicode_response",
+      "test_shadow_instrumentation.InstrumentationTests.test_port_only_cli_preserves_default_session_and_bind"
+    ],
+    "passed": true
+  },
+  "daytime_comparison": {
+    "runs": 48,
+    "paired_conditions": 24,
+    "state_transitions": 3360,
+    "real_initial_maps": 4,
+    "generated_maps": 8,
+    "exogenous_rewards": [
+      0,
+      160
+    ],
+    "real_map_mean_walls_old": 3.5,
+    "real_map_mean_walls_new": 8,
+    "generated_mean_walls_old": 3.0625,
+    "generated_mean_walls_new": 7.625,
+    "generated_new_wall_range": [
+      6,
+      8
+    ],
+    "all_actions_accepted_by_rule_subset": true,
+    "official_combat": false
+  },
+  "economic_continuity": {
+    "runs": 2,
+    "steps_each": 1300,
+    "origins": [
+      0,
+      1
+    ],
+    "exogenous_gold_each_day": 160,
+    "final_weapons": [
+      [
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3
+      ]
+    ],
+    "final_base_levels": [
+      3,
+      3
+    ],
+    "official_survival_proof": false
+  },
+  "dense_night_input_cases": 12,
+  "headless_entry": {
+    "mode": "headless real GameSession, NOT HTTP",
+    "fixture_source": "tests/test_http.py dense_state/build_data",
+    "robots": 1302,
+    "concurrent_requests": 4,
+    "equal_replies": true,
+    "fire_commands": 3,
+    "wall_ms": 368.9910379998764,
+    "passed": true
+  },
+  "full_suite": {
+    "status": "blocked_not_passed",
+    "reason": "Missing real Flask; installation failed due unavailable network/DNS",
+    "attempt_log": "docs/validation_v3/full_suite_attempt.log",
+    "excluded_tests": 22,
+    "attempt_tests_loaded": 127,
+    "attempt_failures": 5,
+    "attempt_errors": 26,
+    "not_a_full_discovered_test_count": true
+  },
+  "not_verified": [
+    "Actual Flask HTTP/entrypoint integration",
+    "Execution under competition Python 3.11",
+    "Official robot movement and damage",
+    "Real LLM sandbox task correctness",
+    "Official score or survival outcome"
+  ],
+  "intermediate_regressions_found_and_fixed": [
+    "Optional cheap wall upgrades starved final level-three gun upgrade",
+    "Idle pioneer occupied another returning controller slot"
+  ],
+  "source_sha256": {
+    "src/main3.py": "f044fde31a08f08e05c108cd6596d61721be97b3447771797908958efc7a4e07",
+    "src/agentrace/defense.py": "a2ac2962d905fd1361dfc15fc5305412384985000bb56a07d46dab6aa5ca7b42",
+    "src/agentrace/task_inspection.py": "0b757e46cea9705b5136312be91f6ba9b34d53f089d41561c90a8ba4556bf47e",
+    "src/agentrace/__init__.py": "10f028361fb79fcfd276ed2e757cb894748d405daaa2cccca59e07a8361faab4",
+    "src/agentrace/memory.py": "d6ffcd66e81574fc91cbe1db51ea98c663de46a87a9d52ce412f193c54bb371f",
+    "src/agentrace/economy.py": "02f10dd64d543faa626f1153b7719e7371f6387237a39e42596a46a2d5e6d037",
+    "src/agentrace/strategy.py": "545112c14735f207e03aef1ac6fba5410486877e4c8c0697c1e9b36a9c85525c",
+    "src/agentrace/task_protocol.py": "6e87a0a0f7b74eded079cc0e8fd22d1dd9223bba64e4165d61e781cd760c76fa",
+    "src/agentrace/model.py": "563a478506bf1795c731550db64bf469991449c0a8211b33421a1d5cc94f3c6d",
+    "src/agentrace/actions.py": "adebf03aee8cffdb0e34461009968a25e3507b25f46ae949691b08222c3eb9ff",
+    "src/agentrace/session.py": "d410863982a618640414d13eee9994b6014b67c97c306037742ba21d2ff397d3",
+    "src/agentrace/task_trace.py": "4f098141dce0543751564c681442a1a21bc486d35a5c570dc02c973e2ba1c584",
+    "src/agentrace/task_news.py": "07f522b56f4d9a913845646076137569894c27ccbf9bcb9e9ab2e7aa2dbb18c9",
+    "src/agentrace/survival.py": "ea6e1d729432e01f19576c8d7851d9bc5d88a741ecdbac2b0a4a4383b94cf0c0"
+  },
+  "evidence_directory": "docs/validation_v3",
+  "overlay_validation": {
+    "fresh_extract_of_original_uploaded_zip": true,
+    "patch_applied": true,
+    "source_tests_tools_byte_identical": true,
+    "core_tests_run": 322,
+    "passed": true,
+    "excluded_http_related": 22
+  }
+}

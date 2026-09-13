@@ -23,6 +23,7 @@ from .actions import (
 from .economy import (
     EconomyPlanner
 )
+from .task_inspection import fast_task_discovery_command
 from .task_protocol import (
     clip_task_text, decode_task_reply, render_task_prompt, task_repair_observation,
     save_task_candidate, observe_task_command, repeated_task_command,
@@ -135,6 +136,7 @@ class TaskPlanner:
 
     def prompt(self, response, task, observation):
         remaining = task["deadline"] - self.memory.last_round if task["deadline"] is not None else None
+        task["fast_inspection"] = hasattr(self.memory, "survival")
         response["prompt"] = render_task_prompt(task, observation, self.memory.task_experience, remaining)
         task["pending"] = ("llm", self.memory.last_round)
 
@@ -225,7 +227,8 @@ class TaskPlanner:
             return
         if not task["discovery_started"]:
             task["discovery_started"] = True
-            command = task_discovery_command(text)
+            command = (fast_task_discovery_command(text) if hasattr(memory, "survival")
+                       else task_discovery_command(text))
             if command and (task["deadline"] is None or task["deadline"] - memory.last_round > 3):
                 response["executeCmd"] = command
                 task["command"] = command

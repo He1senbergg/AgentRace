@@ -20,7 +20,7 @@ class InstrumentationTests(unittest.TestCase):
                     patch.object(main.sys, 'stdout'), patch.object(main.sys, 'stderr'), \
                     patch.object(main.logging, 'basicConfig'):
                 main.main()
-                self.assertEqual(main.SESSION.strategy_mode, 'defense')
+                self.assertEqual(main.SESSION.strategy_mode, 'survival')
                 self.assertIsNone(main.SESSION.origin)
                 self.assertEqual(main.SESSION.rules.wall_stone_cost, 1)
                 self.assertEqual(dict(main.SESSION.rules.weapon_build_names),

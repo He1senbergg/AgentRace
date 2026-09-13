@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tools/validate_survival_stress.py", line 79, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/mnt/data/work/AgentRace-main/tools/validate_survival_stress.py", line 74, in main
+    results['economic_continuity'].append(economic_continuity(origin));save()
+                                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/tools/validate_survival_stress.py", line 35, in economic_continuity
+    assert checkpoints[-1]['weapon_levels']==[3,3,3],checkpoints[-1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'day': 10, 'gold': 6, 'walls': 18, 'wall_levels': {3: 15, 2: 2, 1: 1}, 'weapon_levels': [3, 3, 2], 'station_levels': [3]}

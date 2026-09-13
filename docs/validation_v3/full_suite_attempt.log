@@ -1,0 +1,556 @@
+======================================================================
+ERROR: test_actions (unittest.loader._FailedTest.test_actions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_actions
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_actions.py", line 4, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_audit_combat (unittest.loader._FailedTest.test_audit_combat)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_combat
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_audit_combat.py", line 7, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_audit_economy (unittest.loader._FailedTest.test_audit_economy)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_economy
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_audit_economy.py", line 6, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_audit_integration (unittest.loader._FailedTest.test_audit_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_integration
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_audit_integration.py", line 8, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_audit_runtime (unittest.loader._FailedTest.test_audit_runtime)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_runtime
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_audit_runtime.py", line 7, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_defense (unittest.loader._FailedTest.test_defense)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_defense
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_defense.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_diagnostics (unittest.loader._FailedTest.test_diagnostics)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_diagnostics
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_diagnostics.py", line 4, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_http (unittest.loader._FailedTest.test_http)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_http
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_http.py", line 12, in <module>
+    from test_integration import dense_state
+  File "/mnt/data/work/AgentRace-main/tests/test_integration.py", line 8, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_integration (unittest.loader._FailedTest.test_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_integration
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_integration.py", line 8, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_live_regressions (unittest.loader._FailedTest.test_live_regressions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_live_regressions
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_live_regressions.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_memory (unittest.loader._FailedTest.test_memory)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_memory
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_memory.py", line 6, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_news (unittest.loader._FailedTest.test_news)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_news
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_news.py", line 4, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_protocol (unittest.loader._FailedTest.test_protocol)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_protocol
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_protocol.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_round2 (unittest.loader._FailedTest.test_round2)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_round2
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_round2.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_round3 (unittest.loader._FailedTest.test_round3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_round3
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_round3.py", line 10, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_round4 (unittest.loader._FailedTest.test_round4)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_round4
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_round4.py", line 12, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_round5 (unittest.loader._FailedTest.test_round5)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_round5
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_round5.py", line 8, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_self4 (unittest.loader._FailedTest.test_self4)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_self4
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_self4.py", line 9, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_self5 (unittest.loader._FailedTest.test_self5)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_self5
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_self5.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_shadow (unittest.loader._FailedTest.test_shadow)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_shadow
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_shadow.py", line 7, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_shadow_instrumentation (unittest.loader._FailedTest.test_shadow_instrumentation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_shadow_instrumentation
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_shadow_instrumentation.py", line 8, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_sonnet_v24 (unittest.loader._FailedTest.test_sonnet_v24)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_sonnet_v24
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_sonnet_v24.py", line 7, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_strategy_regressions (unittest.loader._FailedTest.test_strategy_regressions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_strategy_regressions
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_strategy_regressions.py", line 4, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_tasks (unittest.loader._FailedTest.test_tasks)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_tasks
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_tasks.py", line 5, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_versus (unittest.loader._FailedTest.test_versus)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_versus
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_versus.py", line 3, in <module>
+    from src import main3 as main
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+ERROR: test_world (unittest.loader._FailedTest.test_world)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_world
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_world.py", line 2, in <module>
+    from src.main3 import World, Phase, MoveReservations, station_cells, building_ring, neighbors
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+FAIL: test_direct_entry_http_from_deployment_closure (test_entrypoints.EntrypointTests.test_direct_entry_http_from_deployment_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 78, in test_direct_entry_http_from_deployment_closure
+    self.check_http()
+    ~~~~~~~~~~~~~~~^^
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 34, in check_http
+    expected = run_impl('modular', json.dumps([dict(mode='survival', http=True, requests=requests)]))[0]
+               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_equivalence.py", line 79, in run_impl
+    raise AssertionError(result.stderr[-4000:])
+AssertionError: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 70, in <module>
+    main()
+    ~~~~^^
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 28, in main
+    from src import main3 as player
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+FAIL: test_existing_replay_cli_relative_paths_outside_repository (test_entrypoints.EntrypointTests.test_existing_replay_cli_relative_paths_outside_repository)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 95, in test_existing_replay_cli_relative_paths_outside_repository
+    self.assertEqual(result.returncode,0,result.stderr[-3000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/work/AgentRace-main/tools/replay_day.py", line 14, in <module>
+    spec=importlib.util.spec_from_file_location('replay_player',a.source);m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)
+                                                                                                                                           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/data/work/AgentRace-main/tests/fixtures/v22_baseline.py", line 17, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+FAIL: test_package_import (test_entrypoints.EntrypointTests.test_package_import)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 86, in test_package_import
+    self.assertEqual(result.returncode,0,result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from src import main3; assert main3.SESSION.strategy_mode == "survival"; assert main3.app
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+FAIL: test_unmodified_run_sh_http_from_deployment_closure (test_entrypoints.EntrypointTests.test_unmodified_run_sh_http_from_deployment_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 81, in test_unmodified_run_sh_http_from_deployment_closure
+    self.check_http(bash=True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_entrypoints.py", line 34, in check_http
+    expected = run_impl('modular', json.dumps([dict(mode='survival', http=True, requests=requests)]))[0]
+               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_equivalence.py", line 79, in run_impl
+    raise AssertionError(result.stderr[-4000:])
+AssertionError: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 70, in <module>
+    main()
+    ~~~~^^
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 28, in main
+    from src import main3 as player
+  File "/mnt/data/work/AgentRace-main/src/main3.py", line 18, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+======================================================================
+FAIL: test_identical_request_sequences (test_equivalence.EquivalenceTests.test_identical_request_sequences)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work/AgentRace-main/tests/test_equivalence.py", line 260, in test_identical_request_sequences
+    old, new = run_impl('baseline',payload), run_impl('modular',payload)
+               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/work/AgentRace-main/tests/test_equivalence.py", line 79, in run_impl
+    raise AssertionError(result.stderr[-4000:])
+AssertionError: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 70, in <module>
+    main()
+    ~~~~^^
+  File "/mnt/data/work/AgentRace-main/tests/equivalence_runner.py", line 26, in main
+    from .fixtures import v22_baseline as player
+  File "/mnt/data/work/AgentRace-main/tests/fixtures/v22_baseline.py", line 17, in <module>
+    from flask import Flask, g, jsonify, request
+ModuleNotFoundError: No module named 'flask'
+
+
+----------------------------------------------------------------------
+Ran 127 tests in 29.342s
+
+FAILED (failures=5, errors=26)

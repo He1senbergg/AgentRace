@@ -1,3 +1,27 @@
+# AgentRace 当前检查点：Survival V3 candidate
+
+日期：2026-09-13。基线为用户本次上传 `AgentRace-main(1).zip`，未拉远程仓库、未自动提交。
+
+## 当前实现与验收状态
+
+真实 `main3.py` 默认 `survival`，库直接 `GameSession()` 默认 `defense` 继续保留；可用 `AGENTRACE_STRATEGY=defense` 回滚。入口仍只接收端口，依赖和 run.sh 未改，必须部署完整 src。
+
+生产变更：新增 survival.py、task_inspection.py；调整 session.py、task_news.py、task_protocol.py、main3.py。核心改动是批量建墙、真实库存与三级升级、资金未到不占工、角色联合返位、空闲开拓者腾位、便宜墙升级不抢大额升级资金、任务一次检查包。
+
+本轮 322 项离线核心测试通过；22 项 HTTP/入口/回调/冻结子进程对照相关用例未执行通过。当前环境 Python 3.13.5 缺 Flask，完整测试入口已尝试并失败；不能把下方旧版本 Windows/WSL 成绩算到本版。
+
+完成 4 初始地图与 8 生成地图、两种奖励、两模式共 48 次首日对照；两个起点各 1300 步经济连续性；12 个密集输入及 1302 机器人并发核心检查。没有机器人伤害和真实任务判分，所有结果均不是官方实战胜率或满局生存认证。
+
+完整分析：[V3_AUDIT_AND_FIX_REPORT.md](V3_AUDIT_AND_FIX_REPORT.md)。代码说明：[V3_CODE_GUIDE.md](V3_CODE_GUIDE.md)。证据：validation_v3/ 和 V3_VALIDATION.json。
+
+## 下一次正式平台验收应关注
+
+确认 `strategy_mode=survival`，保留基地缺失前后日志，检查 R70 的墙数/炮等级/三个真实操控人，任务耗时与错误码，实际 buy→背包→use→等级变化；不能以动作合法反馈或金币增长证明答案全部正确。官方夜战、真实 HTTP 全套和任务准确率仍待验收。
+
+---
+
+# 历史记录：以下是 Task R1 当时状态，不是本轮结论
+
 # AgentRace 当前检查点
 
 ## 当前阶段：Task R1 复核及端口入口清理完成，Windows / WSL 完整测试通过（2026-09-12）

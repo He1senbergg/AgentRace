@@ -1,0 +1,7 @@
+{
+  "pid": 2361,
+  "source_test_tool_byte_match": true,
+  "source_compile_and_3_11_grammar": true,
+  "patch_base": "original uploaded ZIP",
+  "deployed_root": "/mnt/data/verify_v3_overlay/AgentRace-main"
+}

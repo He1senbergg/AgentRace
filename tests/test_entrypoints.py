@@ -31,7 +31,7 @@ class EntrypointTests(unittest.TestCase):
             self.skipTest('POSIX bash with compatible Python not installed')
         requests = [dict(body=json.dumps(request_at(r)), content_type='application/json') for r in (1, 2, 2, 70, 71)]
         requests += [dict(body='{', content_type='application/json'), dict(body='{}', content_type='text/plain')]
-        expected = run_impl('modular', json.dumps([dict(mode='defense', http=True, requests=requests)]))[0]
+        expected = run_impl('modular', json.dumps([dict(mode='survival', http=True, requests=requests)]))[0]
         with tempfile.TemporaryDirectory() as directory:
             deployed = Path(directory)
             shutil.copytree(ROOT/'src', deployed/'src', ignore=shutil.ignore_patterns('__pycache__'))
@@ -81,7 +81,7 @@ class EntrypointTests(unittest.TestCase):
         self.check_http(bash=True)
 
     def test_package_import(self):
-        result = subprocess.run([sys.executable,'-B','-c','from src import main3; assert main3.SESSION.strategy_mode == "defense"; assert main3.app'],
+        result = subprocess.run([sys.executable,'-B','-c','from src import main3; assert main3.SESSION.strategy_mode == "survival"; assert main3.app'],
                                 cwd=ROOT,capture_output=True,text=True,timeout=10)
         self.assertEqual(result.returncode,0,result.stderr)
 

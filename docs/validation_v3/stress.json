@@ -1,0 +1,499 @@
+{
+  "economic_continuity": [
+    {
+      "origin": 0,
+      "steps": 1300,
+      "model": "No robots/damage/task grading; 160 exogenous gold each day; NOT 1300-turn survival proof",
+      "illegal_commands": [],
+      "stats": {
+        "move": 1364,
+        "build": 21,
+        "build:rocket": 2,
+        "mineral_revenue": 128,
+        "build:railgun": 1,
+        "collect": 44,
+        "buy": 24,
+        "buy:Medicine": 6,
+        "buy:WeaponUpgradeVoucher1": 3,
+        "build:wall": 18,
+        "use": 35,
+        "use:WeaponUpgradeVoucher1": 3,
+        "sell": 6,
+        "sell:copper": 25,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "buy:StationUpgradeVoucher2": 1,
+        "use:StationUpgradeVoucher2": 1,
+        "buy:WeaponUpgradeVoucher2": 3,
+        "use:WeaponUpgradeVoucher2": 3,
+        "sell:iron": 1,
+        "buy:WallUpgradeVoucher1": 15,
+        "use:WallUpgradeVoucher1": 15,
+        "buy:WallUpgradeVoucher2": 12,
+        "use:WallUpgradeVoucher2": 12
+      },
+      "day_end": [
+        {
+          "day": 1,
+          "gold": 70,
+          "walls": 7,
+          "wall_levels": {
+            "1": 7
+          },
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "station_levels": [
+            1
+          ]
+        },
+        {
+          "day": 2,
+          "gold": 30,
+          "walls": 12,
+          "wall_levels": {
+            "1": 12
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            1
+          ]
+        },
+        {
+          "day": 3,
+          "gold": 90,
+          "walls": 16,
+          "wall_levels": {
+            "1": 16
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            2
+          ]
+        },
+        {
+          "day": 4,
+          "gold": 100,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 5,
+          "gold": 95,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 6,
+          "gold": 28,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 7,
+          "gold": 18,
+          "walls": 18,
+          "wall_levels": {
+            "3": 1,
+            "2": 6,
+            "1": 11
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 8,
+          "gold": 8,
+          "walls": 18,
+          "wall_levels": {
+            "3": 6,
+            "1": 10,
+            "2": 2
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 9,
+          "gold": 18,
+          "walls": 18,
+          "wall_levels": {
+            "3": 7,
+            "2": 7,
+            "1": 4
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 10,
+          "gold": 8,
+          "walls": 18,
+          "wall_levels": {
+            "3": 12,
+            "2": 3,
+            "1": 3
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        }
+      ],
+      "mean_ms": 25.31781775845607,
+      "max_ms": 114.72614500007694
+    },
+    {
+      "origin": 1,
+      "steps": 1300,
+      "model": "No robots/damage/task grading; 160 exogenous gold each day; NOT 1300-turn survival proof",
+      "illegal_commands": [],
+      "stats": {
+        "move": 1234,
+        "build": 21,
+        "build:rocket": 2,
+        "mineral_revenue": 208,
+        "build:railgun": 1,
+        "collect": 62,
+        "buy": 24,
+        "buy:Medicine": 6,
+        "buy:WeaponUpgradeVoucher1": 3,
+        "build:wall": 18,
+        "use": 35,
+        "use:WeaponUpgradeVoucher1": 3,
+        "sell": 9,
+        "sell:copper": 38,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "buy:WeaponUpgradeVoucher2": 3,
+        "sell:iron": 6,
+        "use:WeaponUpgradeVoucher2": 3,
+        "buy:StationUpgradeVoucher2": 1,
+        "use:StationUpgradeVoucher2": 1,
+        "buy:WallUpgradeVoucher1": 15,
+        "use:WallUpgradeVoucher1": 15,
+        "buy:WallUpgradeVoucher2": 12,
+        "use:WallUpgradeVoucher2": 12
+      },
+      "day_end": [
+        {
+          "day": 1,
+          "gold": 40,
+          "walls": 8,
+          "wall_levels": {
+            "1": 8
+          },
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "station_levels": [
+            1
+          ]
+        },
+        {
+          "day": 2,
+          "gold": 10,
+          "walls": 12,
+          "wall_levels": {
+            "1": 12
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            1
+          ]
+        },
+        {
+          "day": 3,
+          "gold": 70,
+          "walls": 16,
+          "wall_levels": {
+            "1": 16
+          },
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "station_levels": [
+            2
+          ]
+        },
+        {
+          "day": 4,
+          "gold": 98,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            3,
+            2,
+            2
+          ],
+          "station_levels": [
+            2
+          ]
+        },
+        {
+          "day": 5,
+          "gold": 150,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            3,
+            3,
+            2
+          ],
+          "station_levels": [
+            2
+          ]
+        },
+        {
+          "day": 6,
+          "gold": 18,
+          "walls": 18,
+          "wall_levels": {
+            "1": 18
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 7,
+          "gold": 18,
+          "walls": 18,
+          "wall_levels": {
+            "2": 8,
+            "1": 10
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 8,
+          "gold": 8,
+          "walls": 18,
+          "wall_levels": {
+            "3": 5,
+            "2": 4,
+            "1": 9
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 9,
+          "gold": 38,
+          "walls": 18,
+          "wall_levels": {
+            "3": 9,
+            "2": 3,
+            "1": 6
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        },
+        {
+          "day": 10,
+          "gold": 88,
+          "walls": 18,
+          "wall_levels": {
+            "3": 12,
+            "1": 3,
+            "2": 3
+          },
+          "weapon_levels": [
+            3,
+            3,
+            3
+          ],
+          "station_levels": [
+            3
+          ]
+        }
+      ],
+      "mean_ms": 27.178369069237167,
+      "max_ms": 106.4093340000909
+    }
+  ],
+  "dense_night": [
+    {
+      "robots": 50,
+      "seed": 1,
+      "ms": 21.590695999748277,
+      "commands": 3,
+      "firing_weapons": 3
+    },
+    {
+      "robots": 50,
+      "seed": 2,
+      "ms": 20.46445300038613,
+      "commands": 3,
+      "firing_weapons": 3
+    },
+    {
+      "robots": 50,
+      "seed": 3,
+      "ms": 19.16837699991447,
+      "commands": 3,
+      "firing_weapons": 3
+    },
+    {
+      "robots": 150,
+      "seed": 1,
+      "ms": 40.88662399999521,
+      "commands": 3,
+      "firing_weapons": 2
+    },
+    {
+      "robots": 150,
+      "seed": 2,
+      "ms": 27.75455300024987,
+      "commands": 3,
+      "firing_weapons": 0
+    },
+    {
+      "robots": 150,
+      "seed": 3,
+      "ms": 52.3187659996438,
+      "commands": 3,
+      "firing_weapons": 2
+    },
+    {
+      "robots": 350,
+      "seed": 1,
+      "ms": 74.52347000025838,
+      "commands": 3,
+      "firing_weapons": 1
+    },
+    {
+      "robots": 350,
+      "seed": 2,
+      "ms": 73.75275499998679,
+      "commands": 3,
+      "firing_weapons": 1
+    },
+    {
+      "robots": 350,
+      "seed": 3,
+      "ms": 74.64319800010344,
+      "commands": 3,
+      "firing_weapons": 1
+    },
+    {
+      "robots": 700,
+      "seed": 1,
+      "ms": 197.45326199972624,
+      "commands": 3,
+      "firing_weapons": 3
+    },
+    {
+      "robots": 700,
+      "seed": 2,
+      "ms": 166.09633200005192,
+      "commands": 3,
+      "firing_weapons": 2
+    },
+    {
+      "robots": 700,
+      "seed": 3,
+      "ms": 134.75419299993519,
+      "commands": 3,
+      "firing_weapons": 1
+    }
+  ]
+}

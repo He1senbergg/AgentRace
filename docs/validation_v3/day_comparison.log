@@ -1,0 +1,16 @@
+[main] game25_initial_map reward=0 defense: walls=3 guns=[1, 1, 1] controllers=3
+[main] game25_initial_map reward=0 survival: walls=8 guns=[1, 1, 1] controllers=3
+[main] game25_initial_map reward=160 defense: walls=4 guns=[2, 1, 1] controllers=3
+[main] game25_initial_map reward=160 survival: walls=8 guns=[2, 1, 1] controllers=3
+[main] game26_initial_map reward=0 defense: walls=4 guns=[1, 1, 1] controllers=3
+[main] game26_initial_map reward=0 survival: walls=8 guns=[1, 1, 1] controllers=3
+[main] game26_initial_map reward=160 defense: walls=5 guns=[2, 1, 1] controllers=3
+[main] game26_initial_map reward=160 survival: walls=8 guns=[2, 1, 1] controllers=3
+[main] game27_initial_map reward=0 defense: walls=4 guns=[1, 1, 1] controllers=3
+[main] game27_initial_map reward=0 survival: walls=8 guns=[1, 1, 1] controllers=3
+[main] game27_initial_map reward=160 defense: walls=3 guns=[2, 1, 1] controllers=3
+[main] game27_initial_map reward=160 survival: walls=8 guns=[2, 1, 1] controllers=3
+[main] game28_initial_map reward=0 defense: walls=2 guns=[1, 1, 1] controllers=3
+[main] game28_initial_map reward=0 survival: walls=8 guns=[1, 1, 1] controllers=3
+[main] game28_initial_map reward=160 defense: walls=3 guns=[2, 1, 1] controllers=3
+[main] game28_initial_map reward=160 survival: walls=8 guns=[2, 1, 1] controllers=3

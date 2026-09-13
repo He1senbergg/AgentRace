@@ -16,7 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class LiveHTTPTests(unittest.TestCase):
     def test_task_repair_stdout_submission_and_duplicate_delivery(self):
-        from test_task_protocol_r1 import r1_state
+        from test_task_protocol_r1 import r1_state as task_fixture
+
+        def r1_state(*args, **kwargs):
+            # The production survival entry requires a live base. Keep task
+            # assertions intact, but stop using an impossible base-less opening.
+            data = task_fixture(*args, **kwargs)
+            data['teamOur']['roles'].append(dict(id=99, roleType='station',
+                pos=dict(x=7, y=8), health=1500, level=1, backpack=[]))
+            return data
 
         with socket.socket() as probe:
             probe.bind(('127.0.0.1', 0))
@@ -127,7 +135,7 @@ class LiveHTTPTests(unittest.TestCase):
                             self.fail('startup exceeded five seconds')
                         time.sleep(.02)
                 build_data = {'roundNo': 0, 'teamOur': {'teamId': 7, 'type': 'challenger', 'goldNum': 75,
-                              'roles': [dict(id=1, roleType='worker', pos=dict(x=9, y=8), health=220, backpack=[]),
+                              'roles': [dict(id=1, roleType='worker', pos=dict(x=9, y=9), health=220, backpack=[]),
                                         dict(id=4, roleType='station', pos=dict(x=10, y=10), health=4500, level=3)]}}
                 self.assertEqual(post(build_data)['roleCommandMap']['1']['name'], 'rocket')
                 dense = dense_state()
@@ -156,7 +164,7 @@ class LiveHTTPTests(unittest.TestCase):
                            for line in output.splitlines() if '[shadow_turn] ' in line]
                 self.assertEqual(len(shadows), 3)
                 self.assertTrue(all('error' not in row for row in shadows))
-                self.assertTrue(all(row['strategy_mode'] == 'defense' for row in shadows))
+                self.assertTrue(all(row['strategy_mode'] == 'survival' for row in shadows))
                 # Exactly one expected malformed request; no silent valid-request fallback.
                 self.assertLessEqual(output.count('[process_request]'), 1, output)
             self.assertIsNotNone(process.returncode)

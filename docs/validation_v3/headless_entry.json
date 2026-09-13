@@ -1,0 +1,10 @@
+{
+  "mode": "headless real GameSession, NOT HTTP",
+  "fixture_source": "tests/test_http.py dense_state/build_data",
+  "robots": 1302,
+  "concurrent_requests": 4,
+  "equal_replies": true,
+  "fire_commands": 3,
+  "wall_ms": 368.9910379998764,
+  "passed": true
+}

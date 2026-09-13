@@ -1,0 +1,16 @@
+[main] game13: base_absent=479 last_spend=304 failed_feedback={'move': 22}
+[main] game14: base_absent=367 last_spend=275 failed_feedback={'move': 11}
+[main] game15: base_absent=374 last_spend=301 failed_feedback={}
+[main] game16: base_absent=487 last_spend=398 failed_feedback={'move': 17}
+[main] game17: base_absent=111 last_spend=4 failed_feedback={}
+[main] game18: base_absent=357 last_spend=276 failed_feedback={}
+[main] game19: base_absent=359 last_spend=305 failed_feedback={}
+[main] game20: base_absent=369 last_spend=296 failed_feedback={}
+[main] game21: base_absent=215 last_spend=166 failed_feedback={'move': 1}
+[main] game22: base_absent=228 last_spend=168 failed_feedback={}
+[main] game23: base_absent=220 last_spend=149 failed_feedback={}
+[main] game24: base_absent=226 last_spend=165 failed_feedback={}
+[main] game25: base_absent=360 last_spend=303 failed_feedback={'move': 4}
+[main] game26: base_absent=380 last_spend=302 failed_feedback={}
+[main] game27: base_absent=258 last_spend=167 failed_feedback={}
+[main] game28: base_absent=358 last_spend=287 failed_feedback={}

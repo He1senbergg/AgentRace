@@ -1,0 +1,3628 @@
+{
+  "method": "Unique [turn] records; command feedback associated only with consecutive previous round. Post-base-absence records excluded from economic stall metrics. Scores are filename labels. An errorCode=2 or legal submit does not establish full correctness.",
+  "matches": [
+    {
+      "file": "log/Versus/round5/game13/ally_BlueSide_591.log",
+      "score_from_filename": 591,
+      "unique_turns": 609,
+      "first_base_absent": 479,
+      "live_turns": 478,
+      "death_evidence_line": 2410,
+      "last_live_spend_command": 304,
+      "last_live_gold_decrease": 305,
+      "last_spend_to_base_absent": 175,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 361,
+          "gold": 66,
+          "station_hp": [
+            1500
+          ],
+          "walls": 3,
+          "wall_hp": 3000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 662,
+          "gold": 66,
+          "station_hp": [
+            1355
+          ],
+          "walls": 3,
+          "wall_hp": 2055,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 215
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 995,
+          "gold": 148,
+          "station_hp": [
+            1355
+          ],
+          "walls": 4,
+          "wall_hp": 4780,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 215
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1296,
+          "gold": 148,
+          "station_hp": [
+            1090
+          ],
+          "walls": 4,
+          "wall_hp": 2360,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 55,
+            "10011": 180,
+            "10012": 200
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1630,
+          "gold": 68,
+          "station_hp": [
+            1090
+          ],
+          "walls": 6,
+          "wall_hp": 7380,
+          "weapon_levels": [
+            2,
+            2,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 180,
+            "10012": 200
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 430,
+        "build:rocket": 3,
+        "collect": 34,
+        "acceptTask": 6,
+        "build:wall": 8,
+        "submitAnswer": 5,
+        "buy:WeaponUpgradeVoucher1": 2,
+        "sell:copper": 3,
+        "sell:stone": 3,
+        "use:WeaponUpgradeVoucher1": 2,
+        "attack": 88,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "buy:Medicine": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:Medicine": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 430,
+        "collect": 34,
+        "acceptTask": 6,
+        "build:wall": 8,
+        "submitAnswer": 5,
+        "buy:WeaponUpgradeVoucher1": 2,
+        "sell:copper": 3,
+        "sell:stone": 3,
+        "use:WeaponUpgradeVoucher1": 2,
+        "attack": 88,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "buy:Medicine": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:Medicine": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {
+        "move": 22
+      },
+      "live_error_codes": {
+        "1": 2,
+        "2": 1
+      },
+      "live_day_activity": {
+        "build": 11,
+        "move": 430,
+        "collect": 34,
+        "acceptTask": 6,
+        "active_task": 54,
+        "submitAnswer": 5,
+        "buy": 7,
+        "no_command": 220,
+        "sell": 6,
+        "use": 7
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 19,
+          "errors": [],
+          "prompts": 5,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 20,
+          "elapsed_observed": 11
+        },
+        {
+          "first_active": 24,
+          "last_active": 35,
+          "errors": [],
+          "prompts": 6,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 36,
+          "elapsed_observed": 12
+        },
+        {
+          "first_active": 138,
+          "last_active": 144,
+          "errors": [],
+          "prompts": 3,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 145,
+          "elapsed_observed": 7
+        },
+        {
+          "first_active": 148,
+          "last_active": 157,
+          "errors": [
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 0,
+          "first_inactive": 158,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 266,
+          "last_active": 274,
+          "errors": [
+            2
+          ],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 2,
+          "first_inactive": 275,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 278,
+          "last_active": 287,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 288,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round5/game14/ally_RedSide_286.log",
+      "score_from_filename": 286,
+      "unique_turns": 501,
+      "first_base_absent": 367,
+      "live_turns": 366,
+      "death_evidence_line": 1829,
+      "last_live_spend_command": 275,
+      "last_live_gold_decrease": 276,
+      "last_spend_to_base_absent": 92,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 362,
+          "gold": 84,
+          "station_hp": [
+            1500
+          ],
+          "walls": 2,
+          "wall_hp": 2000,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 663,
+          "gold": 84,
+          "station_hp": [
+            735
+          ],
+          "walls": 1,
+          "wall_hp": 820,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 155,
+            "20011": 85,
+            "20012": 90
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 1003,
+          "gold": 32,
+          "station_hp": [
+            3000
+          ],
+          "walls": 5,
+          "wall_hp": 6000,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1304,
+          "gold": 32,
+          "station_hp": [
+            2060
+          ],
+          "walls": 4,
+          "wall_hp": 2270,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 1,
+          "actors_hp": {
+            "20010": 125
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1638,
+          "gold": 15,
+          "station_hp": [
+            2060
+          ],
+          "walls": 7,
+          "wall_hp": 6675,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 334,
+        "build:rocket": 3,
+        "collect": 35,
+        "acceptTask": 6,
+        "build:wall": 9,
+        "sell:stone": 3,
+        "sell:copper": 3,
+        "attack": 85,
+        "buy:Medicine": 4,
+        "use:Medicine": 4,
+        "buy:WallUpgradeVoucher1": 2,
+        "submitAnswer": 2,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "move": 334,
+        "build:rocket": 3,
+        "collect": 35,
+        "acceptTask": 6,
+        "build:wall": 9,
+        "sell:stone": 3,
+        "sell:copper": 3,
+        "attack": 85,
+        "buy:Medicine": 4,
+        "use:Medicine": 4,
+        "buy:WallUpgradeVoucher1": 2,
+        "submitAnswer": 2,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {
+        "move": 11
+      },
+      "live_error_codes": {
+        "1": 5,
+        "2": 1
+      },
+      "live_day_activity": {
+        "move": 334,
+        "build": 12,
+        "collect": 35,
+        "acceptTask": 6,
+        "active_task": 67,
+        "sell": 6,
+        "no_command": 112,
+        "buy": 8,
+        "use": 8,
+        "submitAnswer": 2
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 0,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 43,
+          "errors": [
+            1
+          ],
+          "prompts": 9,
+          "commands": 5,
+          "submissions": 0,
+          "first_inactive": 44,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 143,
+          "last_active": 151,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 152,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 156,
+          "last_active": 165,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 166,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 287,
+          "last_active": 296,
+          "errors": [
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 0,
+          "first_inactive": 297,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 301,
+          "last_active": 310,
+          "errors": [
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 0,
+          "first_inactive": 311,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round5/game15/ally_RedSide_383.log",
+      "score_from_filename": 383,
+      "unique_turns": 623,
+      "first_base_absent": 374,
+      "live_turns": 373,
+      "death_evidence_line": 1842,
+      "last_live_spend_command": 301,
+      "last_live_gold_decrease": 302,
+      "last_spend_to_base_absent": 73,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 20,
+          "station_hp": [
+            1500
+          ],
+          "walls": 3,
+          "wall_hp": 3000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 20,
+          "station_hp": [
+            1290
+          ],
+          "walls": 3,
+          "wall_hp": 2280,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 170,
+            "20011": 200,
+            "20012": 205
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 994,
+          "gold": 21,
+          "station_hp": [
+            1290
+          ],
+          "walls": 6,
+          "wall_hp": 5690,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 205
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1295,
+          "gold": 21,
+          "station_hp": [
+            1095
+          ],
+          "walls": 6,
+          "wall_hp": 3635,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 105,
+            "20011": 200,
+            "20012": 110
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1629,
+          "gold": 73,
+          "station_hp": [
+            1095
+          ],
+          "walls": 8,
+          "wall_hp": 8045,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 330,
+        "build:rocket": 3,
+        "collect": 29,
+        "acceptTask": 6,
+        "build:wall": 8,
+        "sell:stone": 1,
+        "submitAnswer": 4,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 72,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "buy:WallFixer": 1,
+        "use:WallFixer": 1,
+        "sell:iron": 1,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "feedback_by_action": {
+        "move": 330,
+        "build:rocket": 3,
+        "collect": 29,
+        "acceptTask": 6,
+        "build:wall": 8,
+        "sell:stone": 1,
+        "submitAnswer": 4,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 72,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "buy:WallFixer": 1,
+        "use:WallFixer": 1,
+        "sell:iron": 1,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "1": 4,
+        "2": 2
+      },
+      "live_day_activity": {
+        "move": 330,
+        "build": 11,
+        "collect": 29,
+        "acceptTask": 6,
+        "active_task": 60,
+        "sell": 3,
+        "no_command": 173,
+        "submitAnswer": 4,
+        "buy": 7,
+        "use": 7
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            1
+          ],
+          "prompts": 9,
+          "commands": 5,
+          "submissions": 0,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 40,
+          "errors": [],
+          "prompts": 6,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 41,
+          "elapsed_observed": 12
+        },
+        {
+          "first_active": 138,
+          "last_active": 147,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 148,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 152,
+          "last_active": 161,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 162,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 268,
+          "last_active": 274,
+          "errors": [],
+          "prompts": 3,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 275,
+          "elapsed_observed": 7
+        },
+        {
+          "first_active": 279,
+          "last_active": 288,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 289,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round5/game16/ally_RedSide_568.log",
+      "score_from_filename": 568,
+      "unique_turns": 501,
+      "first_base_absent": 487,
+      "live_turns": 486,
+      "death_evidence_line": 2435,
+      "last_live_spend_command": 398,
+      "last_live_gold_decrease": 399,
+      "last_spend_to_base_absent": 89,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 373,
+          "gold": 18,
+          "station_hp": [
+            1500
+          ],
+          "walls": 2,
+          "wall_hp": 2000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 674,
+          "gold": 18,
+          "station_hp": [
+            1230
+          ],
+          "walls": 2,
+          "wall_hp": 1270,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 170,
+            "20012": 175
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 1008,
+          "gold": 48,
+          "station_hp": [
+            1230
+          ],
+          "walls": 7,
+          "wall_hp": 8000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 170,
+            "20012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1309,
+          "gold": 48,
+          "station_hp": [
+            1145
+          ],
+          "walls": 7,
+          "wall_hp": 6055,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 140,
+            "20011": 30,
+            "20012": 220
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1642,
+          "gold": 18,
+          "station_hp": [
+            1145
+          ],
+          "walls": 8,
+          "wall_hp": 9500,
+          "weapon_levels": [
+            2,
+            2,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 435,
+        "build:rocket": 3,
+        "collect": 43,
+        "acceptTask": 6,
+        "build:wall": 10,
+        "submitAnswer": 4,
+        "sell:stone": 2,
+        "buy:WeaponUpgradeVoucher1": 2,
+        "use:WeaponUpgradeVoucher1": 2,
+        "sell:copper": 8,
+        "attack": 107,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallFixer": 2,
+        "buy:WallUpgradeVoucher2": 2,
+        "use:WallUpgradeVoucher2": 2,
+        "use:WallFixer": 2
+      },
+      "feedback_by_action": {
+        "move": 435,
+        "build:rocket": 3,
+        "collect": 43,
+        "acceptTask": 6,
+        "build:wall": 10,
+        "submitAnswer": 4,
+        "sell:stone": 2,
+        "buy:WeaponUpgradeVoucher1": 2,
+        "use:WeaponUpgradeVoucher1": 2,
+        "sell:copper": 8,
+        "attack": 107,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallFixer": 2,
+        "buy:WallUpgradeVoucher2": 2,
+        "use:WallUpgradeVoucher2": 2,
+        "use:WallFixer": 2
+      },
+      "failed_feedback": {
+        "move": 17
+      },
+      "live_error_codes": {
+        "2": 1,
+        "1": 3
+      },
+      "live_day_activity": {
+        "move": 435,
+        "build": 13,
+        "collect": 43,
+        "acceptTask": 6,
+        "active_task": 56,
+        "submitAnswer": 4,
+        "sell": 10,
+        "buy": 11,
+        "no_command": 251,
+        "use": 11
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 37,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 38,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 137,
+          "last_active": 144,
+          "errors": [],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 145,
+          "elapsed_observed": 8
+        },
+        {
+          "first_active": 147,
+          "last_active": 156,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 157,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 273,
+          "last_active": 280,
+          "errors": [],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 281,
+          "elapsed_observed": 8
+        },
+        {
+          "first_active": 285,
+          "last_active": 294,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 295,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round5/game17/ally_BlueSide_192.log",
+      "score_from_filename": 192,
+      "unique_turns": 623,
+      "first_base_absent": 111,
+      "live_turns": 110,
+      "death_evidence_line": 564,
+      "last_live_spend_command": 4,
+      "last_live_gold_decrease": 5,
+      "last_spend_to_base_absent": 107,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 194,
+          "station_hp": [
+            1500
+          ],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 194,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 200,
+          "source_line": 993,
+          "gold": 194,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 260,
+          "source_line": 1294,
+          "gold": 194,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1626,
+          "gold": 194,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 83,
+        "build:rocket": 3,
+        "collect": 23,
+        "acceptTask": 2,
+        "submitAnswer": 2,
+        "sell:copper": 1,
+        "attack": 24
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 83,
+        "collect": 23,
+        "acceptTask": 2,
+        "submitAnswer": 2,
+        "sell:copper": 1,
+        "attack": 23
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 1,
+        "1": 1
+      },
+      "live_day_activity": {
+        "build": 3,
+        "move": 83,
+        "collect": 23,
+        "acceptTask": 2,
+        "active_task": 22,
+        "submitAnswer": 2,
+        "no_command": 74,
+        "sell": 1
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 17,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 18,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 22,
+          "last_active": 36,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 37,
+          "elapsed_observed": 15
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game18/ally_BlueSide_274.log",
+      "score_from_filename": 274,
+      "unique_turns": 634,
+      "first_base_absent": 357,
+      "live_turns": 356,
+      "death_evidence_line": 1788,
+      "last_live_spend_command": 276,
+      "last_live_gold_decrease": 277,
+      "last_spend_to_base_absent": 81,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 47,
+          "station_hp": [
+            1500
+          ],
+          "walls": 8,
+          "wall_hp": 8000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 47,
+          "station_hp": [
+            1340
+          ],
+          "walls": 8,
+          "wall_hp": 7300,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 195,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 994,
+          "gold": 62,
+          "station_hp": [
+            1340
+          ],
+          "walls": 9,
+          "wall_hp": 9935,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 195,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1295,
+          "gold": 62,
+          "station_hp": [
+            840
+          ],
+          "walls": 9,
+          "wall_hp": 8500,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 195,
+            "10011": 75,
+            "10012": 150
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1628,
+          "gold": 12,
+          "station_hp": [
+            840
+          ],
+          "walls": 10,
+          "wall_hp": 10985,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 195,
+            "10011": 200,
+            "10012": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 359,
+        "build:rocket": 3,
+        "acceptTask": 6,
+        "collect": 29,
+        "build:wall": 10,
+        "submitAnswer": 3,
+        "sell:copper": 3,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 57,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallUpgradeVoucher2": 1,
+        "buy:Medicine": 2,
+        "use:Medicine": 2,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 359,
+        "acceptTask": 6,
+        "collect": 29,
+        "build:wall": 10,
+        "submitAnswer": 3,
+        "sell:copper": 3,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 56,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:WallUpgradeVoucher2": 1,
+        "buy:Medicine": 2,
+        "use:Medicine": 2,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 2,
+        "1": 5
+      },
+      "live_day_activity": {
+        "build": 13,
+        "move": 359,
+        "no_command": 140,
+        "acceptTask": 6,
+        "active_task": 65,
+        "collect": 29,
+        "submitAnswer": 3,
+        "sell": 3,
+        "buy": 6,
+        "use": 6
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 21,
+          "errors": [],
+          "prompts": 6,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 22,
+          "elapsed_observed": 13
+        },
+        {
+          "first_active": 26,
+          "last_active": 40,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 41,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 143,
+          "last_active": 152,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 153,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 157,
+          "last_active": 166,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 167,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 285,
+          "last_active": 294,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 295,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 300,
+          "last_active": 309,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 310,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game19/ally_BlueSide_453.log",
+      "score_from_filename": 453,
+      "unique_turns": 643,
+      "first_base_absent": 359,
+      "live_turns": 358,
+      "death_evidence_line": 1796,
+      "last_live_spend_command": 305,
+      "last_live_gold_decrease": 306,
+      "last_spend_to_base_absent": 54,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 84,
+          "station_hp": [
+            1500
+          ],
+          "walls": 4,
+          "wall_hp": 4000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 84,
+          "station_hp": [
+            990
+          ],
+          "walls": 4,
+          "wall_hp": 3765,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 210,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 995,
+          "gold": 8,
+          "station_hp": [
+            3000
+          ],
+          "walls": 6,
+          "wall_hp": 6500,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 210,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1296,
+          "gold": 8,
+          "station_hp": [
+            2320
+          ],
+          "walls": 6,
+          "wall_hp": 5340,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 2,
+          "actors_hp": {
+            "10010": 165,
+            "10012": 35
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1630,
+          "gold": 48,
+          "station_hp": [
+            2320
+          ],
+          "walls": 6,
+          "wall_hp": 7450,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10012": 35,
+            "10011": 200
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 355,
+        "build:rocket": 3,
+        "acceptTask": 6,
+        "collect": 26,
+        "submitAnswer": 5,
+        "build:wall": 6,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 58,
+        "buy:WallUpgradeVoucher1": 2,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 355,
+        "acceptTask": 6,
+        "collect": 26,
+        "submitAnswer": 5,
+        "build:wall": 6,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 58,
+        "buy:WallUpgradeVoucher1": 2,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 2,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 3,
+        "1": 4
+      },
+      "live_day_activity": {
+        "build": 9,
+        "move": 353,
+        "no_command": 141,
+        "acceptTask": 6,
+        "active_task": 57,
+        "collect": 26,
+        "submitAnswer": 5,
+        "sell": 1,
+        "buy": 6,
+        "use": 6
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 17,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 18,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 22,
+          "last_active": 36,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 37,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 142,
+          "last_active": 151,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 152,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 156,
+          "last_active": 165,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 166,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 288,
+          "last_active": 295,
+          "errors": [],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 296,
+          "elapsed_observed": 8
+        },
+        {
+          "first_active": 299,
+          "last_active": 308,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 309,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game20/ally_RedSide_376.log",
+      "score_from_filename": 376,
+      "unique_turns": 496,
+      "first_base_absent": 369,
+      "live_turns": 368,
+      "death_evidence_line": 1826,
+      "last_live_spend_command": 296,
+      "last_live_gold_decrease": 297,
+      "last_spend_to_base_absent": 73,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 80,
+          "station_hp": [
+            1500
+          ],
+          "walls": 5,
+          "wall_hp": 5000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 80,
+          "station_hp": [
+            965
+          ],
+          "walls": 5,
+          "wall_hp": 4855,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 95,
+            "20012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 993,
+          "gold": 26,
+          "station_hp": [
+            3000
+          ],
+          "walls": 7,
+          "wall_hp": 8000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1294,
+          "gold": 26,
+          "station_hp": [
+            2520
+          ],
+          "walls": 7,
+          "wall_hp": 6465,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 2,
+          "actors_hp": {
+            "20010": 220,
+            "20012": 205
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1629,
+          "gold": 52,
+          "station_hp": [
+            2520
+          ],
+          "walls": 7,
+          "wall_hp": 8895,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20012": 205,
+            "20011": 200
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 305,
+        "build:rocket": 3,
+        "acceptTask": 6,
+        "collect": 46,
+        "build:wall": 7,
+        "submitAnswer": 4,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 64,
+        "buy:WallUpgradeVoucher1": 4,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "use:WallUpgradeVoucher1": 4,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1
+      },
+      "feedback_by_action": {
+        "move": 305,
+        "build:rocket": 3,
+        "acceptTask": 6,
+        "collect": 46,
+        "build:wall": 7,
+        "submitAnswer": 4,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 64,
+        "buy:WallUpgradeVoucher1": 4,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "use:WallUpgradeVoucher1": 4,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "1": 4,
+        "2": 2
+      },
+      "live_day_activity": {
+        "move": 305,
+        "build": 10,
+        "acceptTask": 6,
+        "active_task": 61,
+        "collect": 46,
+        "submitAnswer": 4,
+        "no_command": 162,
+        "sell": 2,
+        "buy": 7,
+        "use": 7
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 0,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 40,
+          "errors": [],
+          "prompts": 6,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 41,
+          "elapsed_observed": 12
+        },
+        {
+          "first_active": 143,
+          "last_active": 150,
+          "errors": [],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 151,
+          "elapsed_observed": 8
+        },
+        {
+          "first_active": 155,
+          "last_active": 164,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 165,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 287,
+          "last_active": 296,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 297,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 301,
+          "last_active": 310,
+          "errors": [
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 311,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game21/ally_BlueSide_84.log",
+      "score_from_filename": 84,
+      "unique_turns": 611,
+      "first_base_absent": 215,
+      "live_turns": 214,
+      "death_evidence_line": 1082,
+      "last_live_spend_command": 166,
+      "last_live_gold_decrease": 167,
+      "last_spend_to_base_absent": 49,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 361,
+          "gold": 96,
+          "station_hp": [
+            1500
+          ],
+          "walls": 8,
+          "wall_hp": 8000,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 662,
+          "gold": 96,
+          "station_hp": [
+            200
+          ],
+          "walls": 8,
+          "wall_hp": 7180,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 90,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 997,
+          "gold": 68,
+          "station_hp": [
+            200
+          ],
+          "walls": 9,
+          "wall_hp": 9945,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1298,
+          "gold": 68,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1630,
+          "gold": 68,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 230,
+        "build:rocket": 3,
+        "acceptTask": 4,
+        "collect": 33,
+        "build:wall": 9,
+        "sell:copper": 5,
+        "submitAnswer": 3,
+        "attack": 35,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "sell:stone": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 230,
+        "acceptTask": 4,
+        "collect": 33,
+        "build:wall": 9,
+        "sell:copper": 5,
+        "submitAnswer": 3,
+        "attack": 35,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2,
+        "sell:stone": 1
+      },
+      "failed_feedback": {
+        "move": 1
+      },
+      "live_error_codes": {
+        "1": 4,
+        "2": 3
+      },
+      "live_day_activity": {
+        "build": 12,
+        "move": 230,
+        "acceptTask": 4,
+        "active_task": 47,
+        "collect": 33,
+        "sell": 6,
+        "submitAnswer": 3,
+        "no_command": 79,
+        "buy": 3,
+        "use": 3
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 23,
+          "errors": [
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 0,
+          "first_inactive": 24,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 28,
+          "last_active": 42,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 7,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 43,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 155,
+          "last_active": 164,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 165,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 169,
+          "last_active": 178,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 179,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game22/ally_BlueSide_172.log",
+      "score_from_filename": 172,
+      "unique_turns": 619,
+      "first_base_absent": 228,
+      "live_turns": 227,
+      "death_evidence_line": 1120,
+      "last_live_spend_command": 168,
+      "last_live_gold_decrease": 169,
+      "last_spend_to_base_absent": 60,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 32,
+          "station_hp": [
+            1500
+          ],
+          "walls": 6,
+          "wall_hp": 6000,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 32,
+          "station_hp": [
+            585
+          ],
+          "walls": 6,
+          "wall_hp": 5070,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 2,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 995,
+          "gold": 56,
+          "station_hp": [
+            585
+          ],
+          "walls": 8,
+          "wall_hp": 9000,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1296,
+          "gold": 56,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1628,
+          "gold": 56,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 204,
+        "build:rocket": 3,
+        "acceptTask": 4,
+        "collect": 22,
+        "build:wall": 8,
+        "submitAnswer": 3,
+        "attack": 43,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 204,
+        "acceptTask": 4,
+        "collect": 22,
+        "build:wall": 8,
+        "submitAnswer": 3,
+        "attack": 43,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "1": 4,
+        "2": 3
+      },
+      "live_day_activity": {
+        "build": 11,
+        "move": 204,
+        "acceptTask": 4,
+        "active_task": 47,
+        "collect": 22,
+        "submitAnswer": 3,
+        "no_command": 105,
+        "buy": 2,
+        "use": 2
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 23,
+          "errors": [
+            1
+          ],
+          "prompts": 10,
+          "commands": 4,
+          "submissions": 0,
+          "first_inactive": 24,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 28,
+          "last_active": 42,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 43,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 137,
+          "last_active": 146,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 147,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 150,
+          "last_active": 159,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 160,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game23/ally_BlueSide_208.log",
+      "score_from_filename": 208,
+      "unique_turns": 629,
+      "first_base_absent": 220,
+      "live_turns": 219,
+      "death_evidence_line": 1096,
+      "last_live_spend_command": 149,
+      "last_live_gold_decrease": 150,
+      "last_spend_to_base_absent": 71,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 62,
+          "station_hp": [
+            1500
+          ],
+          "walls": 2,
+          "wall_hp": 2000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 62,
+          "station_hp": [
+            835
+          ],
+          "walls": 2,
+          "wall_hp": 2000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 150,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 995,
+          "gold": 48,
+          "station_hp": [
+            835
+          ],
+          "walls": 5,
+          "wall_hp": 5500,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1296,
+          "gold": 48,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1628,
+          "gold": 48,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 239,
+        "build:rocket": 3,
+        "collect": 15,
+        "acceptTask": 4,
+        "submitAnswer": 4,
+        "build:wall": 5,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 30,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 239,
+        "collect": 15,
+        "acceptTask": 4,
+        "submitAnswer": 4,
+        "build:wall": 5,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 30,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 3,
+        "1": 3
+      },
+      "live_day_activity": {
+        "build": 8,
+        "move": 239,
+        "collect": 15,
+        "acceptTask": 4,
+        "active_task": 40,
+        "submitAnswer": 4,
+        "sell": 1,
+        "buy": 3,
+        "no_command": 103,
+        "use": 3
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 17,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 18,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 22,
+          "last_active": 36,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 37,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 155,
+          "last_active": 164,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 165,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 171,
+          "last_active": 180,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 181,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round6/game24/ally_BlueSide_240.log",
+      "score_from_filename": 240,
+      "unique_turns": 613,
+      "first_base_absent": 226,
+      "live_turns": 225,
+      "death_evidence_line": 1115,
+      "last_live_spend_command": 165,
+      "last_live_gold_decrease": 166,
+      "last_spend_to_base_absent": 61,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 32,
+          "station_hp": [
+            1500
+          ],
+          "walls": 8,
+          "wall_hp": 8000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 32,
+          "station_hp": [
+            890
+          ],
+          "walls": 8,
+          "wall_hp": 7635,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 996,
+          "gold": 29,
+          "station_hp": [
+            890
+          ],
+          "walls": 9,
+          "wall_hp": 10000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1297,
+          "gold": 29,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1629,
+          "gold": 29,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 225,
+        "build:rocket": 3,
+        "acceptTask": 5,
+        "collect": 14,
+        "build:wall": 9,
+        "submitAnswer": 5,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 33,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "feedback_by_action": {
+        "build:rocket": 3,
+        "move": 225,
+        "acceptTask": 5,
+        "collect": 14,
+        "build:wall": 9,
+        "submitAnswer": 5,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 31,
+        "buy:WallUpgradeVoucher1": 2,
+        "use:WallUpgradeVoucher1": 2
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 4,
+        "1": 4
+      },
+      "live_day_activity": {
+        "build": 12,
+        "move": 225,
+        "acceptTask": 5,
+        "collect": 14,
+        "active_task": 49,
+        "submitAnswer": 5,
+        "sell": 2,
+        "buy": 3,
+        "no_command": 102,
+        "use": 3
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 17,
+          "errors": [],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 18,
+          "elapsed_observed": 9
+        },
+        {
+          "first_active": 22,
+          "last_active": 36,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 8,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 37,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 136,
+          "last_active": 145,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 6,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 146,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 149,
+          "last_active": 158,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 159,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 180,
+          "last_active": 189,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 190,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {}
+    },
+    {
+      "file": "log/Versus/round7/game25/ally_RedSide_298.log",
+      "score_from_filename": 298,
+      "unique_turns": 633,
+      "first_base_absent": 360,
+      "live_turns": 359,
+      "death_evidence_line": 1807,
+      "last_live_spend_command": 303,
+      "last_live_gold_decrease": 304,
+      "last_spend_to_base_absent": 57,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 12,
+          "station_hp": [
+            1500
+          ],
+          "walls": 3,
+          "wall_hp": 3000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 12,
+          "station_hp": [
+            960
+          ],
+          "walls": 3,
+          "wall_hp": 1555,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 2,
+          "actors_hp": {
+            "20010": 55,
+            "20012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 997,
+          "gold": 28,
+          "station_hp": [
+            960
+          ],
+          "walls": 6,
+          "wall_hp": 6810,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20012": 220,
+            "20011": 200
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1298,
+          "gold": 28,
+          "station_hp": [
+            810
+          ],
+          "walls": 5,
+          "wall_hp": 2860,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 95,
+            "20012": 15,
+            "20011": 200
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1637,
+          "gold": 62,
+          "station_hp": [
+            810
+          ],
+          "walls": 6,
+          "wall_hp": 6075,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20012": 220,
+            "20011": 200
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 366,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "acceptTask": 6,
+        "collect": 31,
+        "submitAnswer": 7,
+        "build:wall": 7,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 143,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "sell:copper": 3,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "sell:iron": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "move": 366,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "acceptTask": 6,
+        "collect": 31,
+        "submitAnswer": 7,
+        "build:wall": 7,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 142,
+        "buy:Medicine": 3,
+        "use:Medicine": 3,
+        "sell:copper": 3,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "sell:iron": 1,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {
+        "move": 4
+      },
+      "live_error_codes": {
+        "2": 6,
+        "1": 5
+      },
+      "live_day_activity": {
+        "move": 365,
+        "build": 10,
+        "no_command": 112,
+        "acceptTask": 6,
+        "active_task": 59,
+        "collect": 31,
+        "submitAnswer": 7,
+        "buy": 8,
+        "use": 8,
+        "sell": 4
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 7,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 39,
+          "errors": [],
+          "prompts": 5,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 40,
+          "elapsed_observed": 11
+        },
+        {
+          "first_active": 159,
+          "last_active": 168,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 169,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 174,
+          "last_active": 183,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 184,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 268,
+          "last_active": 277,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 278,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 282,
+          "last_active": 291,
+          "errors": [
+            2,
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 3,
+          "submissions": 2,
+          "first_inactive": 292,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {
+        "invalid_json": 1
+      }
+    },
+    {
+      "file": "log/Versus/round7/game26/ally_RedSide_353.log",
+      "score_from_filename": 353,
+      "unique_turns": 627,
+      "first_base_absent": 380,
+      "live_turns": 379,
+      "death_evidence_line": 1866,
+      "last_live_spend_command": 302,
+      "last_live_gold_decrease": 303,
+      "last_spend_to_base_absent": 78,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 104,
+          "station_hp": [
+            1500
+          ],
+          "walls": 5,
+          "wall_hp": 5000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 220,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 104,
+          "station_hp": [
+            1335
+          ],
+          "walls": 5,
+          "wall_hp": 3475,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 205,
+            "20011": 70,
+            "20012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 997,
+          "gold": 50,
+          "station_hp": [
+            1335
+          ],
+          "walls": 9,
+          "wall_hp": 10270,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 205,
+            "20011": 200,
+            "20012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1298,
+          "gold": 50,
+          "station_hp": [
+            1335
+          ],
+          "walls": 9,
+          "wall_hp": 6795,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 195,
+            "20011": 105,
+            "20012": 220
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1634,
+          "gold": 56,
+          "station_hp": [
+            1335
+          ],
+          "walls": 9,
+          "wall_hp": 9730,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "20010": 195,
+            "20011": 200,
+            "20012": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 329,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 49,
+        "acceptTask": 6,
+        "build:wall": 9,
+        "submitAnswer": 6,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 172,
+        "buy:Medicine": 2,
+        "use:Medicine": 2,
+        "buy:WallUpgradeVoucher1": 4,
+        "use:WallUpgradeVoucher1": 4,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "feedback_by_action": {
+        "move": 329,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 49,
+        "acceptTask": 6,
+        "build:wall": 9,
+        "submitAnswer": 6,
+        "sell:copper": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 170,
+        "buy:Medicine": 2,
+        "use:Medicine": 2,
+        "buy:WallUpgradeVoucher1": 4,
+        "use:WallUpgradeVoucher1": 4,
+        "buy:WallUpgradeVoucher2": 1,
+        "use:WallUpgradeVoucher2": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 5,
+        "1": 5
+      },
+      "live_day_activity": {
+        "move": 328,
+        "build": 12,
+        "no_command": 150,
+        "collect": 49,
+        "acceptTask": 6,
+        "active_task": 61,
+        "submitAnswer": 6,
+        "sell": 2,
+        "buy": 8,
+        "use": 8
+      },
+      "tasks": [
+        {
+          "first_active": 10,
+          "last_active": 24,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 7,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 25,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 29,
+          "last_active": 40,
+          "errors": [],
+          "prompts": 6,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 41,
+          "elapsed_observed": 12
+        },
+        {
+          "first_active": 143,
+          "last_active": 152,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 153,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 157,
+          "last_active": 166,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 167,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 272,
+          "last_active": 281,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 282,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 286,
+          "last_active": 295,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 296,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {
+        "unknown_field": 1,
+        "invalid_json": 1
+      }
+    },
+    {
+      "file": "log/Versus/round7/game27/ally_BlueSide_269.log",
+      "score_from_filename": 269,
+      "unique_turns": 627,
+      "first_base_absent": 258,
+      "live_turns": 257,
+      "death_evidence_line": 1251,
+      "last_live_spend_command": 167,
+      "last_live_gold_decrease": 168,
+      "last_spend_to_base_absent": 91,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 359,
+          "gold": 110,
+          "station_hp": [
+            1500
+          ],
+          "walls": 3,
+          "wall_hp": 3000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 660,
+          "gold": 110,
+          "station_hp": [
+            855
+          ],
+          "walls": 2,
+          "wall_hp": 1315,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 2,
+          "actors_hp": {
+            "10010": 180,
+            "10011": 200
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 995,
+          "gold": 6,
+          "station_hp": [
+            3000
+          ],
+          "walls": 3,
+          "wall_hp": 3230,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 180,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1296,
+          "gold": 6,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        },
+        {
+          "round": 330,
+          "source_line": 1628,
+          "gold": 6,
+          "station_hp": [],
+          "walls": 0,
+          "wall_hp": 0,
+          "weapon_levels": [],
+          "actors_alive": 0,
+          "actors_hp": {}
+        }
+      ],
+      "live_actions": {
+        "move": 192,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "acceptTask": 4,
+        "collect": 14,
+        "submitAnswer": 5,
+        "build:wall": 4,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 78,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "buy:WallUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 2,
+        "move": 192,
+        "build:railgun": 1,
+        "acceptTask": 4,
+        "collect": 14,
+        "submitAnswer": 5,
+        "build:wall": 4,
+        "sell:copper": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 78,
+        "buy:StationUpgradeVoucher1": 1,
+        "use:StationUpgradeVoucher1": 1,
+        "buy:WallUpgradeVoucher1": 1,
+        "use:WallUpgradeVoucher1": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 3,
+        "1": 2
+      },
+      "live_day_activity": {
+        "build": 7,
+        "move": 192,
+        "acceptTask": 4,
+        "active_task": 39,
+        "collect": 14,
+        "submitAnswer": 5,
+        "sell": 1,
+        "buy": 3,
+        "no_command": 132,
+        "use": 3
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 19,
+          "errors": [
+            2
+          ],
+          "prompts": 5,
+          "commands": 4,
+          "submissions": 2,
+          "first_inactive": 20,
+          "elapsed_observed": 11
+        },
+        {
+          "first_active": 24,
+          "last_active": 36,
+          "errors": [],
+          "prompts": 6,
+          "commands": 6,
+          "submissions": 1,
+          "first_inactive": 37,
+          "elapsed_observed": 13
+        },
+        {
+          "first_active": 138,
+          "last_active": 147,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 148,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 151,
+          "last_active": 160,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 161,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {
+        "invalid_json": 1
+      }
+    },
+    {
+      "file": "log/Versus/round7/game28/ally_BlueSide_294.log",
+      "score_from_filename": 294,
+      "unique_turns": 646,
+      "first_base_absent": 358,
+      "live_turns": 357,
+      "death_evidence_line": 1795,
+      "last_live_spend_command": 287,
+      "last_live_gold_decrease": 288,
+      "last_spend_to_base_absent": 71,
+      "checkpoints": [
+        {
+          "round": 70,
+          "source_line": 360,
+          "gold": 42,
+          "station_hp": [
+            1500
+          ],
+          "walls": 3,
+          "wall_hp": 3000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 130,
+          "source_line": 661,
+          "gold": 42,
+          "station_hp": [
+            1285
+          ],
+          "walls": 2,
+          "wall_hp": 1180,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 65,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 200,
+          "source_line": 996,
+          "gold": 8,
+          "station_hp": [
+            1285
+          ],
+          "walls": 5,
+          "wall_hp": 6000,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10010": 220,
+            "10011": 200,
+            "10012": 220
+          }
+        },
+        {
+          "round": 260,
+          "source_line": 1297,
+          "gold": 8,
+          "station_hp": [
+            635
+          ],
+          "walls": 4,
+          "wall_hp": 2815,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 1,
+          "actors_hp": {
+            "10012": 220
+          }
+        },
+        {
+          "round": 330,
+          "source_line": 1632,
+          "gold": 32,
+          "station_hp": [
+            635
+          ],
+          "walls": 5,
+          "wall_hp": 5205,
+          "weapon_levels": [
+            2,
+            1,
+            1
+          ],
+          "actors_alive": 3,
+          "actors_hp": {
+            "10012": 220,
+            "10011": 200,
+            "10010": 220
+          }
+        }
+      ],
+      "live_actions": {
+        "move": 357,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 18,
+        "acceptTask": 6,
+        "build:wall": 7,
+        "submitAnswer": 8,
+        "sell:copper": 3,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 131,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "sell:iron": 1
+      },
+      "feedback_by_action": {
+        "build:rocket": 2,
+        "move": 357,
+        "build:railgun": 1,
+        "collect": 18,
+        "acceptTask": 6,
+        "build:wall": 7,
+        "submitAnswer": 8,
+        "sell:copper": 3,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "attack": 131,
+        "buy:Medicine": 1,
+        "use:Medicine": 1,
+        "buy:WallUpgradeVoucher1": 3,
+        "use:WallUpgradeVoucher1": 3,
+        "sell:iron": 1
+      },
+      "failed_feedback": {},
+      "live_error_codes": {
+        "2": 7,
+        "1": 5
+      },
+      "live_day_activity": {
+        "build": 10,
+        "move": 355,
+        "collect": 18,
+        "acceptTask": 6,
+        "active_task": 58,
+        "submitAnswer": 8,
+        "sell": 4,
+        "buy": 5,
+        "no_command": 121,
+        "use": 5
+      },
+      "tasks": [
+        {
+          "first_active": 9,
+          "last_active": 19,
+          "errors": [],
+          "prompts": 5,
+          "commands": 5,
+          "submissions": 1,
+          "first_inactive": 20,
+          "elapsed_observed": 11
+        },
+        {
+          "first_active": 24,
+          "last_active": 38,
+          "errors": [
+            2,
+            2,
+            1
+          ],
+          "prompts": 7,
+          "commands": 6,
+          "submissions": 2,
+          "first_inactive": 39,
+          "elapsed_observed": 15
+        },
+        {
+          "first_active": 137,
+          "last_active": 146,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 147,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 150,
+          "last_active": 159,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 1,
+          "first_inactive": 160,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 287,
+          "last_active": 296,
+          "errors": [
+            2,
+            2,
+            1
+          ],
+          "prompts": 5,
+          "commands": 3,
+          "submissions": 2,
+          "first_inactive": 297,
+          "elapsed_observed": 10
+        },
+        {
+          "first_active": 300,
+          "last_active": 309,
+          "errors": [
+            2,
+            1
+          ],
+          "prompts": 4,
+          "commands": 4,
+          "submissions": 1,
+          "first_inactive": 310,
+          "elapsed_observed": 10
+        }
+      ],
+      "task_protocol_errors": {
+        "unknown_field": 1,
+        "invalid_json": 1
+      }
+    }
+  ]
+}

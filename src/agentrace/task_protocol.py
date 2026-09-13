@@ -10,6 +10,7 @@ import json
 import re
 
 from .actions import strict_json
+from .task_inspection import TASK_FAST_GUIDANCE
 
 TASK_PROMPT_VERSION = "task-r1"
 TASK_CONTEXT_BUDGET = 36000  # Serialized characters, NOT a claimed token limit.
@@ -186,7 +187,7 @@ def make_task_context(task: dict, observation, experience: list, remaining, fina
                "candidate_answer": clip_task_text((task.get("candidate") or {}).get("answer", ""), 4096),
                "candidate_source_round": (task.get("candidate") or {}).get("source_round"),
                "successful_source_rounds": [s["round"] for s in task.get("sources", [])],
-               "prompt_version": TASK_PROMPT_VERSION, "context_omissions": []}
+               "prompt_version": task.get("prompt_version", TASK_PROMPT_VERSION), "context_omissions": []}
 
     def optional_length():
         return len(json.dumps({key: value for key, value in context.items() if key != "task"}, ensure_ascii=False))
@@ -229,7 +230,7 @@ def remember_task_observation(task: dict, observation) -> None:
 def render_task_prompt(task: dict, observation, experience: list, remaining) -> str:
     final = remaining is not None and remaining <= 3
     repair = isinstance(observation, dict) and "protocol_error" in observation
-    task["answer_only"], task["prompt_version"] = final, TASK_PROMPT_VERSION
+    task["answer_only"], task["prompt_version"] = final, ("task-r2-inspect" if task.get("fast_inspection") else TASK_PROMPT_VERSION)
     task["prompt_stage"] = "final" if final else "repair" if repair else "explore"
     context = make_task_context(task, observation, experience, remaining, final)
     if final:
@@ -274,6 +275,8 @@ def render_task_prompt(task: dict, observation, experience: list, remaining) -> 
                    'without changed evidence. Failed or truncated output cannot authorize automatic submission. '
                    'Leave time for command result, answer and feedback. Submit a supported partial answer before the deadline '
                    'rather than wait indefinitely for every field. ')
+    if task.get("fast_inspection") and not final and not repair:
+        header += TASK_FAST_GUIDANCE
     result = header + "\n" + json.dumps(context, ensure_ascii=False, allow_nan=False)
     remember_task_observation(task, observation)  # AFTER composing: latest observation appears only once.
     return result

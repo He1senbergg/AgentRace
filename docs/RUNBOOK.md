@@ -1,3 +1,15 @@
+# V3 部署补充（2026-09-13）
+
+默认已变为 survival。沿用原解释器、Flask 环境和端口，Linux/WSL：`bash run.sh 6666`；Windows：`.venv\Scripts\python.exe src\main3.py 6666`。复制完整 src 目录，不能只复制 main3.py。启动应出现 `[main] strategy_mode=survival; survival policy=v3-candidate`。
+
+回滚：Linux/WSL `AGENTRACE_STRATEGY=defense bash run.sh 6666`；Windows CMD `set AGENTRACE_STRATEGY=defense` 后执行原启动命令。恢复新策略将环境变量设为 survival 或清除。端口位置参数之外不新增参数。
+
+依赖环境中运行 `python -B -m unittest discover -s tests -q`。当前交付容器缺 Flask，22 项真实 HTTP/入口相关用例未获通过，不代表比赛环境无需再验证。证据和具体边界见 V3_AUDIT_AND_FIX_REPORT.md。
+
+以下原运行手册保留供环境与旧模式参考。
+
+---
+
 # 启动与人工接管
 
 当前为 V2.4 + Task R1 本地复核版本，默认 `defense`；本补丁尚无新实机结果。比赛入口只接收端口。武器build.name按用户确认采用gatling/railgun/rocket；首观测0或1自动识别roundNo起点，按正常比赛流程从开局启动。最新验证与风险见 [STATUS.md](STATUS.md) 和 [TASK_R1_LOCAL_REVIEW.md](TASK_R1_LOCAL_REVIEW.md)。
