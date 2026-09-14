@@ -44,9 +44,7 @@ Python 3.11.10 / Flask 3.1.3：**完整 383 项通过，干净覆盖副本 383 �
         - OpenAI -> ChatGPT Web(GPT6 Pro)
         - 本地 Codex：任务链路复核、边界修复与 Windows / WSL 完整验证。
 - v3:
-    + v3.1:
-        - OpenAI -> ChatGPT Web(GPT6 Pro)
-    + v3.2:
+    + v3.1 ~ v3.4:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
 
 ## 历史检查点：Task R1（不代表 V3 验证）
