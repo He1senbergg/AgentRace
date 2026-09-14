@@ -1,0 +1,40 @@
+{
+  "version": "v3.5-clearwave-capital",
+  "source_sha256": "b70698f67d11ca703df5b130e613e6c8b3da0894a94968bd62d477646ad36c9f",
+  "platform_members": [
+    "CoreGeek/main3.py"
+  ],
+  "files": {
+    "CoreGeek.tar.gz": "5f1734aa72f0bfe8caaefecdc7b19b3d2a6783e822cd440dbdcb22234db6bf7b",
+    "README.md": "c4f8a613e0983f4096001b28ec0ee58fbc72ad3fc1fb3b43fce5b82668154bad",
+    "tests_v35/test_capital_clearwave.py": "045ac92c16696c36900b37a8ebec7dc1c5776556bafd1b7b5df90c066fc494b0",
+    "CoreGeek/main3.py": "b70698f67d11ca703df5b130e613e6c8b3da0894a94968bd62d477646ad36c9f",
+    "tests_v34/test_frontline.py": "716c9d89f6965a26588366f6632779120e8ce49c7523a63ba5696c5581dc414f",
+    "tests_v34/test_memory.py": "8f885b0bdefaaf8a46c5735235db40b276602236f867e883dd9218b0eae1f820",
+    "tests_v34/test_world.py": "de3c2b1fce1f980d0ae93767c00222e8fbd8b49b5c32da2f67714ad83a533008",
+    "tests_v34/test_actions.py": "4bce69f109d16f9e39a6ea4ec51af433355cf60f698c5f1debac3f741038cd56",
+    "src/main3.py": "b70698f67d11ca703df5b130e613e6c8b3da0894a94968bd62d477646ad36c9f",
+    "docs/STATUS.md": "aafb83392ab6d943aeb1868f7cfdd7bae2456bfe054213e74f2c2cf037d1c1cd",
+    "docs/V3.5_代码差异.patch": "624dadd9b2a476a323182fa7146123ccb8da2fe368f5146dc94da49696f71339",
+    "docs/V3.5_README.md": "0d064c7ec47eaa1ad0474d09ba1221a2ef835058c5e63b64bb0b8360251ce309",
+    "docs/V3.5_证据与验证.json": "5da0b466b022c8465058a2e8967a24083b3fc5b5bcbb6d1aaf6f2a277cb119fb",
+    "docs/V3.5_审计报告.md": "e73141f68acae4e9ece56416c884e73812f480e654788b2e435e9044c8481db3",
+    "tools/compare_economy_v35.py": "139b11ba2b32c6c277714aed4edddaeb75a1cda6b5426aae9845596b68d5c1bc",
+    "tools/run_v35_tests.py": "a1b24b561f4a3152551c3fcf22079b3b07e9190dfe1573f3ac244a2cbd10f555",
+    "tools/verify_platform.py": "460d10f88ea31517f49db0ef526b254120cac0e5122cf4dcfc2242ba325c3625",
+    "tools/build_single_file.py": "b9408acf2b4cce43f87d643f04d6a49349e2ebed59c4f6b2aadc142cce5a7a68",
+    "tools/verify_task_commands.py": "f829d57ce941e1c013d01bf06c4655f582b45c3622c07477dde45997309a07b6",
+    "tools/economy_engine.py": "d397105715319524728cdfc3e2132cd71a86fba09fa37f0c2cc3b254c4478676",
+    "docs/validation_v35/economy_comparison.json": "73f197a0cf451a01712db23a640d5785dce6008f7df78618b36056157e528ad1",
+    "docs/validation_v35/replay_validation.json": "f692c8a60da4fc9c2b5000d024824cf7362ac4a4af2a469ef323cfc23b783f61",
+    "docs/validation_v35/task_validation.json": "1d72d603e503ae0ad01e3d06de4127b4c3aaaf2403253ccf64620266de73dbe9",
+    "docs/validation_v35/unchanged_components.json": "1cbbdf1f5cc7dd3b9e8124f4f846dca83fb443247b79e6bfe6377a5fa7374777",
+    "docs/validation_v35/platform_validation.json": "369f16c471efc0bce04852a6dc666fe6adaf60dea21b4e4a583143743ee6d58c",
+    "docs/validation_v35/unit_validation.json": "f28bd6ae9a4005ea18c0afd5a2e0e3f497050e7d6e143876c887ed384fd2c510",
+    "tests_v34/fixtures/states.json": "16207dbfe94606bf8825d80efe7736deed38ab98d2e2d5e195b70b5a2c89bda2",
+    "tests_v34/fixtures/v33_page_runner.txt": "28582affe7b00efd5e33da8570ce4771909a6ed366083018f270b445e0a140c9",
+    "tests_v34/fixtures/task_packets.json": "95c002da39ec65230ed0486834d90b372c4e674786b293b597a3449e2780a705",
+    "tests_v35/fixtures/baseline_v34.py": "d24db8a6654822c1720424dbaebd4533a714439c7fdf4ba81ee7df1f28b43ee9",
+    "tests_v35/fixtures/economy_inputs.json": "c9051ec5df03d78a3b03e58caf95a29f67703beef3435884c331812746a2cd36"
+  }
+}

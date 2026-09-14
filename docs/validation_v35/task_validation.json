@@ -1,0 +1,1975 @@
+[
+  {
+    "case": "game43:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game43:139",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game43:176",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game44:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game44:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game44:273",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game45:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game45:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game45:281",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game46:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game46:140",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game46:279",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game47:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game47:140",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game47:275",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game48:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game48:155",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game48:277",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game49:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game49:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game49:272",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game50:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game50:154",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game50:306",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game51:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game51:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game51:271",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game52:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game52:138",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game52:270",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game53:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game53:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game53:270",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game54:10",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game54:156",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game54:403",
+    "kind": "CRLF_deployment_actual_command",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "case": "game43:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game43:146",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game43:288",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game44:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game44:142",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game44:405",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game45:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game45:142",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game45:274",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game46:16",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game46:148",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game46:272",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game47:16",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game47:167",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game47:268",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game48:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game48:140",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game48:270",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game49:16",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game49:141",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game49:304",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game50:16",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game50:139",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game50:270",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game51:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game51:142",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game51:278",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game52:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game52:145",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game52:277",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game53:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game53:142",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game53:404",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game54:17",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "北京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "北京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "2"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game54:142",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 1,
+    "baseline_correct": false,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "南京"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "南京"
+        ],
+        "offset": [
+          "10"
+        ],
+        "limit": [
+          "100"
+        ]
+      },
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "game54:273",
+    "kind": "current_docs_actual_offset_contract",
+    "passed": true,
+    "baseline_returncode": 0,
+    "baseline_correct": true,
+    "new_returncode": 0,
+    "requests": [
+      {
+        "location": [
+          "成都"
+        ],
+        "page": [
+          "1"
+        ],
+        "page_size": [
+          "100"
+        ]
+      }
+    ],
+    "error": ""
+  },
+  {
+    "case": "401",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: HTTP 401 Authentication failed: Missing 'Authorization' header. Expected format: 'Authorization: Bearer <api_key>'\n"
+  },
+  {
+    "case": "fail_page2",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: HTTP 500 page unavailable\n"
+  },
+  {
+    "case": "repeat",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+  },
+  {
+    "case": "unknown_era",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] NeedReasoning: {\"reason\": \"unrecognized era\", \"partial_answer\": {\"city\": \"成都\", \"total_count\": 15, \"world_heritage_count\": 5, \"types\": [\"建筑\", \"遗址\"]}, \"records\": [{\"id\": \"NEW0\", \"name\": \"独立测试记录0\", \"type\": \"遗址\", \"era\": \"元\", \"protected_level\": \"世界遗产\"}, {\"id\": \"NEW1\", \"name\": \"独立测试记录1\", \"t"
+  },
+  {
+    "case": "changed_total",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: total changed during pagination\n"
+  },
+  {
+    "case": "bad_offset",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+  },
+  {
+    "case": "empty_page2",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: empty page before total reached\n"
+  },
+  {
+    "case": "overlap",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 1,
+    "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+  },
+  {
+    "case": "page",
+    "kind": "API_compatibility_or_negative",
+    "passed": true,
+    "returncode": 0,
+    "error": ""
+  }
+]

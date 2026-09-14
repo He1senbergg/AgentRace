@@ -1,0 +1,122 @@
+[
+  {
+    "game": "game55",
+    "frames": 1001,
+    "errors": [],
+    "changed_responses": 135,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 70,
+    "mean_ms": 28.825151696303468,
+    "max_ms": 209.18258999995487
+  },
+  {
+    "game": "game56",
+    "frames": 879,
+    "errors": [],
+    "changed_responses": 142,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 73,
+    "mean_ms": 26.39569540728069,
+    "max_ms": 175.06226000000424
+  },
+  {
+    "game": "game57",
+    "frames": 881,
+    "errors": [],
+    "changed_responses": 166,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 73,
+    "mean_ms": 27.899458481267725,
+    "max_ms": 133.73008300004585
+  },
+  {
+    "game": "game58",
+    "frames": 872,
+    "errors": [],
+    "changed_responses": 162,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 70,
+    "mean_ms": 20.430403855504647,
+    "max_ms": 112.74417699996775
+  },
+  {
+    "game": "game59",
+    "frames": 1013,
+    "errors": [],
+    "changed_responses": 144,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 66,
+    "mean_ms": 18.788570749258433,
+    "max_ms": 145.1119230000586
+  },
+  {
+    "game": "game60",
+    "frames": 615,
+    "errors": [],
+    "changed_responses": 148,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 70,
+    "mean_ms": 43.78770654308671,
+    "max_ms": 123.06755300005534
+  },
+  {
+    "game": "game61",
+    "frames": 637,
+    "errors": [],
+    "changed_responses": 152,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 73,
+    "mean_ms": 37.80333532809566,
+    "max_ms": 126.50476900012109
+  },
+  {
+    "game": "game62",
+    "frames": 615,
+    "errors": [],
+    "changed_responses": 141,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 69,
+    "mean_ms": 28.946786521952323,
+    "max_ms": 125.94067600002745
+  },
+  {
+    "game": "game63",
+    "frames": 1008,
+    "errors": [],
+    "changed_responses": 131,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 70,
+    "mean_ms": 20.617538547617368,
+    "max_ms": 156.81190199984485
+  },
+  {
+    "game": "game64",
+    "frames": 643,
+    "errors": [],
+    "changed_responses": 133,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 89,
+    "mean_ms": 39.66622489269619,
+    "max_ms": 122.4041660000239
+  },
+  {
+    "game": "game65",
+    "frames": 758,
+    "errors": [],
+    "changed_responses": 128,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 74,
+    "mean_ms": 33.185240882586356,
+    "max_ms": 130.6726370000888
+  },
+  {
+    "game": "game66",
+    "frames": 638,
+    "errors": [],
+    "changed_responses": 131,
+    "active_task_pipeline_changes": 0,
+    "night_work_observations": 70,
+    "mean_ms": 36.421614760188575,
+    "max_ms": 153.21844400000373
+  }
+]

@@ -1,0 +1,4111 @@
+[
+  {
+    "game": "game55",
+    "version": "old",
+    "elapsed": 23.616258878000053,
+    "history": [
+      {
+        "round": 70,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 193,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 3,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 193,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 3,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 32,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 32,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 128,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 158,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 128,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 158,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 39,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 219,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      141,
+      147
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 167,
+      "rocket3_count_2": 586
+    },
+    "rejected": [],
+    "stats": {
+      "move": 664,
+      "mineral_revenue": 219,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 65,
+      "buy": 9,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "build:wall": 14,
+      "use": 5,
+      "use:WeaponUpgradeVoucher1": 2,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 12,
+      "sell:stone": 9,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:copper": 42,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game55",
+    "version": "new",
+    "elapsed": 28.308321178999904,
+    "history": [
+      {
+        "round": 70,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 60,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 101,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 101,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 146,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 246,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 146,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 246,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 49,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 299,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 49,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 299,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 131,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 381,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      106,
+      112
+    ],
+    "night_work_commands": {
+      "move": 136,
+      "buy": 4,
+      "collect": 26,
+      "sell": 1
+    },
+    "milestones": {
+      "rocket3_count_1": 134,
+      "rocket3_count_2": 448
+    },
+    "rejected": [],
+    "stats": {
+      "move": 733,
+      "mineral_revenue": 381,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 97,
+      "buy": 9,
+      "buy:Medicine": 3,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "sell": 14,
+      "sell:copper": 70,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:stone": 4,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 9
+    }
+  },
+  {
+    "game": "game56",
+    "version": "old",
+    "elapsed": 21.427796639999997,
+    "history": [
+      {
+        "round": 70,
+        "gold": 205,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 9,
+        "mining_gold": 5,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 205,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 9,
+        "mining_gold": 5,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 195,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 5,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 195,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 5,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 47,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 77,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 47,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 77,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 147,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 177,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 147,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 177,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 52,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 232,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      141,
+      147
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 168,
+      "rocket3_count_2": 585
+    },
+    "rejected": [],
+    "stats": {
+      "move": 616,
+      "mineral_revenue": 232,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 64,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "use": 5,
+      "use:WeaponUpgradeVoucher1": 2,
+      "sell": 9,
+      "sell:copper": 41,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:iron": 9,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game56",
+    "version": "new",
+    "elapsed": 27.065640557999814,
+    "history": [
+      {
+        "round": 70,
+        "gold": 215,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 9,
+        "mining_gold": 5,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 15,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 9,
+        "mining_gold": 5,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 65,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 55,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 53,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 153,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 270,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 270,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 40,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 290,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 40,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 290,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 110,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 360,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      106,
+      112
+    ],
+    "night_work_commands": {
+      "move": 154,
+      "buy": 6,
+      "collect": 29,
+      "use": 1,
+      "sell": 3
+    },
+    "milestones": {
+      "rocket3_count_1": 130,
+      "rocket3_count_2": 324
+    },
+    "rejected": [],
+    "stats": {
+      "move": 790,
+      "mineral_revenue": 360,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 94,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 3,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 14,
+      "sell:copper": 65,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell:iron": 10,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 5
+    }
+  },
+  {
+    "game": "game57",
+    "version": "old",
+    "elapsed": 20.864272253999843,
+    "history": [
+      {
+        "round": 70,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 217,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 27,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 217,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 27,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 46,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 76,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 46,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 76,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 133,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 163,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 133,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 163,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 86,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 266,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      141,
+      147
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 165,
+      "rocket3_count_2": 583
+    },
+    "rejected": [],
+    "stats": {
+      "move": 656,
+      "mineral_revenue": 266,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 78,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "use": 5,
+      "use:WeaponUpgradeVoucher1": 2,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 18,
+      "sell:copper": 50,
+      "sell:stone": 13,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 1
+    }
+  },
+  {
+    "game": "game57",
+    "version": "new",
+    "elapsed": 23.17545456200014,
+    "history": [
+      {
+        "round": 70,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 56,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 18,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 108,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 241,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 241,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 90,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 330,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 90,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 330,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 115,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 355,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      106,
+      112
+    ],
+    "night_work_commands": {
+      "move": 162,
+      "collect": 22,
+      "buy": 5,
+      "use": 1,
+      "sell": 2
+    },
+    "milestones": {
+      "rocket3_count_1": 130,
+      "rocket3_count_2": 328
+    },
+    "rejected": [],
+    "stats": {
+      "move": 811,
+      "mineral_revenue": 355,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 101,
+      "build:wall": 14,
+      "buy": 8,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 24,
+      "sell:copper": 67,
+      "sell:stone": 20,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game58",
+    "version": "old",
+    "elapsed": 22.52129891100003,
+    "history": [
+      {
+        "round": 70,
+        "gold": 218,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 18,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 218,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 18,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 220,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 30,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 220,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 30,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 107,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 137,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 107,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 137,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 63,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 243,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 63,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 243,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 66,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 346,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      140,
+      146
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 164,
+      "rocket3_count_2": 448
+    },
+    "rejected": [],
+    "stats": {
+      "move": 648,
+      "mineral_revenue": 346,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 92,
+      "build:wall": 14,
+      "buy": 10,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 19,
+      "sell:iron": 10,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:copper": 62,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 6
+    }
+  },
+  {
+    "game": "game58",
+    "version": "new",
+    "elapsed": 26.99611614199989,
+    "history": [
+      {
+        "round": 70,
+        "gold": 228,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 18,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 38,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 18,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 83,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 63,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 23,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 113,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 13,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 253,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 13,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 253,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 316,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 316,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 6,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 396,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      105,
+      111
+    ],
+    "night_work_commands": {
+      "move": 150,
+      "collect": 26,
+      "buy": 5,
+      "use": 1,
+      "sell": 1
+    },
+    "milestones": {
+      "rocket3_count_1": 129,
+      "rocket3_count_2": 328,
+      "rocket3_count_3": 589
+    },
+    "rejected": [],
+    "stats": {
+      "move": 769,
+      "mineral_revenue": 396,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 130,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 25,
+      "sell:iron": 60,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "sell:copper": 40,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 16
+    }
+  },
+  {
+    "game": "game59",
+    "version": "old",
+    "elapsed": 19.34596038399991,
+    "history": [
+      {
+        "round": 70,
+        "gold": 225,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 25,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 225,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 25,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 220,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 30,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 220,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 30,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 70,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 100,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 70,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 100,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 21,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 201,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 21,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 201,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 16,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 296,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      140,
+      146
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 164,
+      "rocket3_count_2": 450
+    },
+    "rejected": [],
+    "stats": {
+      "move": 640,
+      "mineral_revenue": 296,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 74,
+      "build:wall": 14,
+      "buy": 10,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 9,
+      "sell:copper": 59,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 1
+    }
+  },
+  {
+    "game": "game59",
+    "version": "new",
+    "elapsed": 26.44192646600004,
+    "history": [
+      {
+        "round": 70,
+        "gold": 235,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 25,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 45,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 25,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 95,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 75,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 35,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 125,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 260,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 260,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 85,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 325,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 85,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 325,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 35,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 425,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      109,
+      115
+    ],
+    "night_work_commands": {
+      "move": 138,
+      "buy": 5,
+      "collect": 15,
+      "sell": 1
+    },
+    "milestones": {
+      "rocket3_count_1": 133,
+      "rocket3_count_2": 329,
+      "rocket3_count_3": 581
+    },
+    "rejected": [],
+    "stats": {
+      "move": 726,
+      "mineral_revenue": 425,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 99,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 10,
+      "sell:copper": 85,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game60",
+    "version": "old",
+    "elapsed": 21.576053162000107,
+    "history": [
+      {
+        "round": 70,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 190,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 0,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 190,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 0,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 100,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 130,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 100,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 130,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 18,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 198,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 18,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 198,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 28,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 208,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      141,
+      147
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 169,
+      "rocket3_count_2": 441
+    },
+    "rejected": [],
+    "stats": {
+      "move": 587,
+      "mineral_revenue": 208,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 72,
+      "buy": 9,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "build:wall": 14,
+      "use": 5,
+      "use:WeaponUpgradeVoucher1": 2,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 16,
+      "sell:copper": 22,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:iron": 31,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 5
+    }
+  },
+  {
+    "game": "game60",
+    "version": "new",
+    "elapsed": 25.753774858000043,
+    "history": [
+      {
+        "round": 70,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 10,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 63,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 53,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 42,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 142,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 155,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 255,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 155,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 255,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 85,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 335,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 85,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 335,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 120,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 370,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      106,
+      112
+    ],
+    "night_work_commands": {
+      "move": 147,
+      "collect": 27,
+      "buy": 6,
+      "sell": 4
+    },
+    "milestones": {
+      "rocket3_count_1": 133,
+      "rocket3_count_2": 429
+    },
+    "rejected": [],
+    "stats": {
+      "move": 804,
+      "mineral_revenue": 370,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 96,
+      "buy": 9,
+      "buy:Medicine": 3,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 18,
+      "sell:copper": 62,
+      "sell:iron": 20,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game61",
+    "version": "old",
+    "elapsed": 20.281785313,
+    "history": [
+      {
+        "round": 70,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 10,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 10,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 210,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 20,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 210,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 20,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 38,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 68,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 38,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 68,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 105,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 135,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 105,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 135,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 137,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 167,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      141,
+      147
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 168
+    },
+    "rejected": [],
+    "stats": {
+      "move": 644,
+      "mineral_revenue": 167,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 53,
+      "sell": 26,
+      "sell:copper": 32,
+      "buy": 8,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "build:wall": 14,
+      "use": 4,
+      "use:WeaponUpgradeVoucher1": 2,
+      "buy:WeaponUpgradeVoucher2": 1,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 1,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:stone": 7,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game61",
+    "version": "new",
+    "elapsed": 25.135295069999984,
+    "history": [
+      {
+        "round": 70,
+        "gold": 220,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 10,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 60,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          2,
+          2,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 7,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 97,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 7,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 97,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 132,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 222,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 132,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 222,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 316,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 316,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 27,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 417,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      12,
+      19,
+      46,
+      53,
+      106,
+      112
+    ],
+    "night_work_commands": {
+      "move": 143,
+      "buy": 4,
+      "collect": 19,
+      "sell": 8,
+      "use": 1
+    },
+    "milestones": {
+      "rocket3_count_1": 132,
+      "rocket3_count_2": 429,
+      "rocket3_count_3": 590
+    },
+    "rejected": [],
+    "stats": {
+      "move": 736,
+      "mineral_revenue": 417,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 103,
+      "sell": 24,
+      "sell:copper": 82,
+      "buy": 9,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:stone": 7,
+      "use:StationUpgradeVoucher1": 1
+    }
+  },
+  {
+    "game": "game62",
+    "version": "old",
+    "elapsed": 20.917265124000096,
+    "history": [
+      {
+        "round": 70,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 200,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 230,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 10,
+        "mining_gold": 40,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 230,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 10,
+        "mining_gold": 40,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 105,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 13,
+        "mining_gold": 135,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 105,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 13,
+        "mining_gold": 135,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 25,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 205,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 25,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 205,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 81,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 261,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      19,
+      47,
+      53,
+      140,
+      146
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 168,
+      "rocket3_count_2": 441
+    },
+    "rejected": [],
+    "stats": {
+      "move": 591,
+      "mineral_revenue": 261,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 71,
+      "buy": 9,
+      "buy:Medicine": 4,
+      "build:wall": 14,
+      "buy:WeaponUpgradeVoucher1": 2,
+      "use": 5,
+      "use:WeaponUpgradeVoucher1": 2,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "sell": 12,
+      "sell:copper": 51,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 6
+    }
+  },
+  {
+    "game": "game62",
+    "version": "new",
+    "elapsed": 24.311408335000124,
+    "history": [
+      {
+        "round": 70,
+        "gold": 210,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 0,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 60,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 10,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 110,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 61,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 161,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 58,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 308,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 58,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 308,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 11,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 411,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 11,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 411,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 476,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      13,
+      19,
+      47,
+      53,
+      105,
+      111
+    ],
+    "night_work_commands": {
+      "move": 138,
+      "collect": 20,
+      "buy": 4,
+      "sell": 3,
+      "use": 1
+    },
+    "milestones": {
+      "rocket3_count_1": 131,
+      "rocket3_count_2": 309,
+      "rocket3_count_3": 451
+    },
+    "rejected": [],
+    "stats": {
+      "move": 751,
+      "mineral_revenue": 476,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 114,
+      "buy": 10,
+      "buy:Medicine": 3,
+      "build:wall": 14,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "sell": 18,
+      "sell:copper": 94,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 6
+    }
+  },
+  {
+    "game": "game63",
+    "version": "old",
+    "elapsed": 22.499930680000034,
+    "history": [
+      {
+        "round": 70,
+        "gold": 220,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 220,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 90,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 20,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 90,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 20,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 102,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 132,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 102,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 132,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 256,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 76,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 256,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 80,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 380,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      140,
+      146
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 157,
+      "rocket3_count_2": 433
+    },
+    "rejected": [],
+    "stats": {
+      "move": 624,
+      "mineral_revenue": 380,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 94,
+      "sell": 27,
+      "sell:copper": 70,
+      "buy": 11,
+      "buy:Medicine": 6,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 10
+    }
+  },
+  {
+    "game": "game63",
+    "version": "new",
+    "elapsed": 25.72003688599989,
+    "history": [
+      {
+        "round": 70,
+        "gold": 230,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 1,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 8,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 9,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 109,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 59,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 159,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 80,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 330,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 80,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 330,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 10,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 410,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 10,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 410,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 72,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 472,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      105,
+      111
+    ],
+    "night_work_commands": {
+      "move": 132,
+      "buy": 4,
+      "collect": 21,
+      "use": 3,
+      "sell": 2
+    },
+    "milestones": {
+      "rocket3_count_1": 119,
+      "rocket3_count_2": 295,
+      "rocket3_count_3": 450
+    },
+    "rejected": [],
+    "stats": {
+      "move": 676,
+      "mineral_revenue": 472,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 122,
+      "sell": 30,
+      "sell:copper": 81,
+      "buy": 10,
+      "buy:Medicine": 3,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "sell:iron": 20,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 7
+    }
+  },
+  {
+    "game": "game64",
+    "version": "old",
+    "elapsed": 20.29044498799999,
+    "history": [
+      {
+        "round": 70,
+        "gold": 250,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 250,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 40,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 50,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 40,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 50,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 180,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 20,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 180,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 9,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 269,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 9,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 269,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 22,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 282,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      141,
+      148
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 151,
+      "rocket3_count_2": 318
+    },
+    "rejected": [],
+    "stats": {
+      "move": 588,
+      "mineral_revenue": 282,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 80,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 23,
+      "sell:copper": 42,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 24
+    }
+  },
+  {
+    "game": "game64",
+    "version": "new",
+    "elapsed": 26.29222938199996,
+    "history": [
+      {
+        "round": 70,
+        "gold": 260,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          2,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 70,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 160,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 160,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 58,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 298,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 58,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 298,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 141,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 381,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 141,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 381,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 29,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 419,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      98,
+      105
+    ],
+    "night_work_commands": {
+      "move": 171,
+      "buy": 3,
+      "collect": 30,
+      "use": 3
+    },
+    "milestones": {
+      "rocket3_count_1": 107,
+      "rocket3_count_2": 168,
+      "rocket3_count_3": 571
+    },
+    "rejected": [],
+    "stats": {
+      "move": 741,
+      "mineral_revenue": 419,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 111,
+      "build:wall": 14,
+      "buy": 9,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 26,
+      "sell:copper": 64,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 33
+    }
+  },
+  {
+    "game": "game65",
+    "version": "old",
+    "elapsed": 20.133276859000034,
+    "history": [
+      {
+        "round": 70,
+        "gold": 0,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 0,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 91,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 101,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 91,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 101,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 9,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 189,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 9,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 189,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 19,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 299,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 19,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 299,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 128,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 408,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      141,
+      147
+    ],
+    "night_work_commands": {
+      "move": 2
+    },
+    "milestones": {
+      "rocket3_count_1": 68,
+      "rocket3_count_2": 314
+    },
+    "rejected": [],
+    "stats": {
+      "move": 599,
+      "mineral_revenue": 408,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 106,
+      "buy": 11,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 22,
+      "sell:copper": 70,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:stone": 4,
+      "sell:iron": 18
+    }
+  },
+  {
+    "game": "game65",
+    "version": "new",
+    "elapsed": 24.836570989000165,
+    "history": [
+      {
+        "round": 70,
+        "gold": 10,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 70,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 50,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 132,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 232,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 7,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 387,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 7,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 387,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 113,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 493,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 113,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 493,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 6,
+        "tasks": 6,
+        "base_level": 3,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 566,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      102,
+      108
+    ],
+    "night_work_commands": {
+      "move": 137,
+      "use": 2,
+      "collect": 33,
+      "buy": 2,
+      "sell": 2
+    },
+    "milestones": {
+      "rocket3_count_1": 68,
+      "rocket3_count_2": 187,
+      "rocket3_count_3": 308
+    },
+    "rejected": [],
+    "stats": {
+      "move": 714,
+      "mineral_revenue": 566,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 138,
+      "buy": 12,
+      "buy:Medicine": 2,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 8,
+      "use:WeaponUpgradeVoucher1": 3,
+      "sell": 22,
+      "sell:copper": 101,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 19,
+      "sell:stone": 4,
+      "buy:StationUpgradeVoucher2": 1,
+      "buy:WallFixer": 2,
+      "use:StationUpgradeVoucher2": 1
+    }
+  },
+  {
+    "game": "game66",
+    "version": "old",
+    "elapsed": 21.694343695000043,
+    "history": [
+      {
+        "round": 70,
+        "gold": 85,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 35,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 85,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 8,
+        "mining_gold": 35,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 40,
+        "maintenance": 20
+      },
+      {
+        "round": 260,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 40,
+        "maintenance": 20
+      },
+      {
+        "round": 330,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 181,
+        "maintenance": 20
+      },
+      {
+        "round": 390,
+        "gold": 1,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 181,
+        "maintenance": 20
+      },
+      {
+        "round": 460,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 282,
+        "maintenance": 20
+      },
+      {
+        "round": 520,
+        "gold": 2,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 282,
+        "maintenance": 20
+      },
+      {
+        "round": 590,
+        "gold": 103,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 383,
+        "maintenance": 20
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      140,
+      146
+    ],
+    "night_work_commands": {},
+    "milestones": {
+      "rocket3_count_1": 69,
+      "rocket3_count_2": 315
+    },
+    "rejected": [],
+    "stats": {
+      "move": 586,
+      "mineral_revenue": 383,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 97,
+      "sell": 21,
+      "sell:copper": 70,
+      "buy": 10,
+      "buy:Medicine": 4,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 6,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 2,
+      "use:WeaponUpgradeVoucher2": 2,
+      "buy:WallFixer": 2,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 10,
+      "sell:stone": 3
+    }
+  },
+  {
+    "game": "game66",
+    "version": "new",
+    "elapsed": 24.963814446000015,
+    "history": [
+      {
+        "round": 70,
+        "gold": 80,
+        "tasks": 4,
+        "base_level": 1,
+        "weapons": [
+          3,
+          1,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 130,
+        "gold": 30,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 7,
+        "mining_gold": 20,
+        "maintenance": 0
+      },
+      {
+        "round": 200,
+        "gold": 118,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 108,
+        "maintenance": 0
+      },
+      {
+        "round": 260,
+        "gold": 118,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          2,
+          1
+        ],
+        "walls": 14,
+        "mining_gold": 108,
+        "maintenance": 0
+      },
+      {
+        "round": 330,
+        "gold": 43,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 293,
+        "maintenance": 0
+      },
+      {
+        "round": 390,
+        "gold": 43,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 293,
+        "maintenance": 0
+      },
+      {
+        "round": 460,
+        "gold": 108,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 358,
+        "maintenance": 0
+      },
+      {
+        "round": 520,
+        "gold": 108,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          2
+        ],
+        "walls": 14,
+        "mining_gold": 358,
+        "maintenance": 0
+      },
+      {
+        "round": 590,
+        "gold": 38,
+        "tasks": 6,
+        "base_level": 2,
+        "weapons": [
+          3,
+          3,
+          3
+        ],
+        "walls": 14,
+        "mining_gold": 438,
+        "maintenance": 0
+      }
+    ],
+    "tasks_end": [
+      13,
+      20,
+      47,
+      54,
+      102,
+      109
+    ],
+    "night_work_commands": {
+      "move": 127,
+      "collect": 29,
+      "buy": 3,
+      "use": 2
+    },
+    "milestones": {
+      "rocket3_count_1": 62,
+      "rocket3_count_2": 276,
+      "rocket3_count_3": 576
+    },
+    "rejected": [],
+    "stats": {
+      "move": 744,
+      "mineral_revenue": 438,
+      "build": 17,
+      "build:rocket": 3,
+      "collect": 118,
+      "sell": 26,
+      "sell:copper": 71,
+      "buy": 10,
+      "buy:Medicine": 3,
+      "buy:WeaponUpgradeVoucher1": 3,
+      "build:wall": 14,
+      "use": 7,
+      "use:WeaponUpgradeVoucher1": 3,
+      "buy:WeaponUpgradeVoucher2": 3,
+      "use:WeaponUpgradeVoucher2": 3,
+      "buy:StationUpgradeVoucher1": 1,
+      "use:StationUpgradeVoucher1": 1,
+      "sell:iron": 25,
+      "sell:stone": 8
+    }
+  }
+]

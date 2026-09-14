@@ -30,7 +30,7 @@ def build_single_file() -> Path:
     with tarfile.open(output, 'r:gz') as archive:
         assert archive.getnames() == ['CoreGeek/main3.py']
         assert archive.extractfile('CoreGeek/main3.py').read() == raw
-    print(f'[build_single_file] build=v3.4-cursor-frontline; sha256={hashlib.sha256(raw).hexdigest()}', flush=True)
+    print(f'[build_single_file] build=v3.5-clearwave-capital; sha256={hashlib.sha256(raw).hexdigest()}', flush=True)
     print(f'[build_single_file] archive={output}; entry=CoreGeek/main3.py; dependencies=stdlib-only', flush=True)
     return output
 

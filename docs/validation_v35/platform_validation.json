@@ -1,0 +1,94 @@
+{
+  "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "checks": [
+    {
+      "case": "Python_3_11_syntax",
+      "passed": true
+    },
+    {
+      "case": "only_stdlib_imports",
+      "passed": true
+    },
+    {
+      "case": "starts_in_clean_single_file_directory",
+      "passed": true
+    },
+    {
+      "case": "platform_positional_port",
+      "passed": true
+    },
+    {
+      "case": "real_initial_HTTP_has_actions",
+      "passed": true
+    },
+    {
+      "case": "duplicate_HTTP_idempotent",
+      "passed": true
+    },
+    {
+      "case": "conflicting_same_round_safely_rejected",
+      "passed": true
+    },
+    {
+      "case": "malformed_JSON_safe_empty",
+      "passed": true
+    },
+    {
+      "case": "wrong_content_type_safe_empty",
+      "passed": true
+    },
+    {
+      "case": "wrong_route_404",
+      "passed": true
+    },
+    {
+      "case": "GET_rejected_405",
+      "passed": true
+    },
+    {
+      "case": "next_turn_after_bad_requests_recovers",
+      "passed": true
+    },
+    {
+      "case": "chunked_HTTP_request",
+      "passed": true
+    },
+    {
+      "case": "no_companion_files_created",
+      "passed": true
+    },
+    {
+      "case": "print_frame_parts_complete",
+      "passed": true
+    },
+    {
+      "case": "print_frame_SHA256",
+      "passed": true
+    },
+    {
+      "case": "print_frame_parts_complete",
+      "passed": true
+    },
+    {
+      "case": "print_frame_SHA256",
+      "passed": true
+    },
+    {
+      "case": "print_frames_not_duplicated",
+      "passed": true
+    },
+    {
+      "case": "bad_port_0",
+      "passed": true
+    },
+    {
+      "case": "bad_port_65536",
+      "passed": true
+    },
+    {
+      "case": "bad_port_not-a-port",
+      "passed": true
+    }
+  ],
+  "scope": "Real TCP localhost, directory containing only release main3.py; not official container."
+}

@@ -1,0 +1,9 @@
+{
+  "parse_deployment_spec": true,
+  "deployment_repair_command": true,
+  "heritage_query_command": true,
+  "canonical_task_answer": true,
+  "CombatPlanner": true,
+  "_DEPLOYMENT_RUNNER": true,
+  "_HERITAGE_RUNNER": true
+}

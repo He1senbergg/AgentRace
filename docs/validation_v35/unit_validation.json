@@ -1,0 +1,16 @@
+{
+  "run": 79,
+  "failures": [],
+  "errors": [],
+  "replaced_policy_tests": [
+    {
+      "test": "tests_v34.test_frontline.FrontlineTests.test_hot_wall_upgrade_does_not_wait_for_all_guns_level_three",
+      "reason": "Replaced: capped walls after two global rockets; capital clearwave tests enforce the new ordering."
+    },
+    {
+      "test": "tests_v34.test_frontline.FrontlineTests.test_preemptive_stock_two_fixers_bound",
+      "reason": "Replaced: one pre-completion fixer, two only for a complete level-three battery."
+    }
+  ],
+  "passed": true
+}
