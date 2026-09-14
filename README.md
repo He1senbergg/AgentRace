@@ -62,7 +62,7 @@
         - OpenAI -> Codex(GPT6 Astra Ultra)
     + v2.4.2:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
-        - 本地 Codex：任务链路复核、边界修复与 Windows / WSL 完整验证。
+        - OpenAI -> Codex(GPT6 Astra Ultra) 任务链路复核、边界修复与 Windows / WSL 完整验证。
 - v3:
     + v3.1 ~ v3.5:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
