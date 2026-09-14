@@ -64,7 +64,11 @@
         - OpenAI -> ChatGPT Web(GPT6 Pro)
         - OpenAI -> Codex(GPT6 Astra Ultra) 任务链路复核、边界修复与 Windows / WSL 完整验证。
 - v3:
-    + v3.1 ~ v3.5:
+    + v3.1:
+        - OpenAI -> ChatGPT Web(GPT6 Pro)
+    + v3.2:
+        - DeepSeek -> OpenCode(DeepSeek V4 Flash 0731)
+    + v3.3 ~ v3.5:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
 
 ## 历史检查点：Task R1（不代表 V3 验证）
