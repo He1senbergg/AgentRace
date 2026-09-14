@@ -68,6 +68,7 @@
         - OpenAI -> ChatGPT Web(GPT6 Pro)
     + v3.2:
         - DeepSeek -> OpenCode(DeepSeek V4 Flash 0731)
+        - OpenAI -> ChatGPT Web(GPT6 Pro)
     + v3.3 ~ v3.5:
         - OpenAI -> ChatGPT Web(GPT6 Pro)
 
