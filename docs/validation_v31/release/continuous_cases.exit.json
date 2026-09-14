@@ -1,0 +1,16 @@
+{
+  "name": "continuous_cases",
+  "command": [
+    "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+    "-B",
+    "docs/validation_v31/reproduction/review_cases.py",
+    "/mnt/data/work_fix/AgentRace",
+    "--output",
+    "/mnt/data/work_fix/evidence/release/continuous_cases.json"
+  ],
+  "cwd": "/mnt/data/work_fix/AgentRace",
+  "log": "continuous_cases.log",
+  "passed": true,
+  "returncode": 0,
+  "seconds": 3.223
+}

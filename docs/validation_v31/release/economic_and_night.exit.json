@@ -1,0 +1,15 @@
+{
+  "name": "economic_and_night",
+  "command": [
+    "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+    "-B",
+    "tools/validate_survival_stress.py",
+    "--output",
+    "/mnt/data/work_fix/evidence/release/economic_and_night.json"
+  ],
+  "cwd": "/mnt/data/work_fix/AgentRace",
+  "log": "economic_and_night.log",
+  "passed": true,
+  "returncode": 0,
+  "seconds": 71.492
+}

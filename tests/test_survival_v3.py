@@ -254,6 +254,86 @@ class SurvivalMechanismTests(unittest.TestCase):
         self.assertEqual(engine.rejected,[])
 
 
+class SurvivalWallBatchProtectionTests(unittest.TestCase):
+    def setUp(self):
+        self.old_disable=logging.root.manager.disable;logging.disable(logging.CRITICAL)
+    def tearDown(self):logging.disable(self.old_disable)
+
+    def test_wall_builder_never_sells_wall_stone(self):
+        data=battle_state();actor(data,2)['pos']=dict(x=13,y=20);actor(data,2)['backpack']=['stone']*8
+        p=planner(data);p.jobs['2']=dict(kind='wall',stage='build',cell=(12,24),quota=8)
+        self.assertFalse(p.sell('2',force=True))
+        self.assertEqual(p.v.commands,{})
+        self.assertEqual(p.jobs['2']['kind'],'wall')
+
+    def test_in_flight_wall_batch_stones_are_never_liquidated(self):
+        data=battle_state();actor(data,2)['backpack']=['stone']*8
+        p=planner(data);p.jobs['2']=dict(kind='wall',stage='quarry',cell=(12,24),quota=8)
+        p.income('2')
+        self.assertEqual(p.jobs['2']['kind'],'wall')
+        self.assertFalse(any(c.get('action')=='sell' for c in p.v.commands.values()))
+        # Execute the response before checking inventory; the input is immutable.
+        engine=DayEngine(data)
+        engine.apply(dict(roleCommandMap=p.v.commands,prompt='',executeCmd=''))
+        self.assertEqual((inventory(actor(engine.data,2)) or Counter())['stone'],8)
+
+    def test_liquidating_copper_keeps_the_wall_job(self):
+        data=battle_state();actor(data,2)['pos']=dict(x=13,y=20);actor(data,2)['backpack']=['copper']*10
+        p=planner(data);p.jobs['2']=dict(kind='wall',stage='quarry',cell=(12,24),quota=8)
+        self.assertTrue(p.sell('2',force=True))
+        self.assertEqual(p.v.commands['2'],dict(action='sell',name='copper',num=10))
+        self.assertEqual(p.jobs['2']['kind'],'wall')
+
+    def test_held_voucher_is_delivered_even_when_roundtrip_is_tight(self):
+        data=battle_state(round_no=68,levels=(2,2,2));actor(data,4)['pos']=dict(x=11,y=23)
+        actor(data,4)['backpack']=['WeaponUpgradeVoucher2']
+        # A strict margined round-trip no longer fits at R68, but the paid
+        # voucher must still be applied rather than abandoned (stuck capital).
+        p=planner(data);self.assertTrue(p.held_delivery('4'))
+        self.assertIn(p.v.commands['4']['action'],{'move','use'})
+        self.assertEqual(p.jobs['4']['kind'],'service')
+
+    def test_completed_wall_target_releases_the_builder(self):
+        data=battle_state(gold=100)
+        for n,xy in enumerate(sorted(building_ring((9,22),2))[:8]):
+            data['teamOur']['roles'].append(make_role(100+n,'wall',xy))
+        actor(data,2)['pos']=dict(x=13,y=20);actor(data,2)['backpack']=['copper']*10
+        p=planner(data);p.jobs['2']=dict(kind='wall',stage='build',cell=(12,24),quota=8)
+        self.assertEqual(p.v.wall_count,8)
+        self.assertTrue(p.sell('2',force=True))
+        self.assertEqual(p.jobs['2']['kind'],'sell')
+
+
+class SurvivalNightFirePriorityTests(unittest.TestCase):
+    def setUp(self):
+        self.old_disable=logging.root.manager.disable;logging.disable(logging.CRITICAL)
+    def tearDown(self):logging.disable(self.old_disable)
+
+    @staticmethod
+    def _night_state(cooldown=0,bag=None):
+        data=battle_state(round_no=71,gold=100)
+        actor(data,2)['backpack']=list(bag or [])
+        for role in data['teamOur']['roles']:
+            if role['roleType'] in {'rocket','railgun'}:
+                role['cooldown']=cooldown
+        # Valid non-overlapping footprints, three distinct adjacent controllers,
+        # and enough target HP that all three guns have useful work.
+        data['robot']['roles']=[make_role(800,'largeRobot',(14,18),health=500,targetTeam='challenger')]
+        return data
+
+    def test_night_fire_precedes_voucher_use(self):
+        data=self._night_state(bag=['WeaponUpgradeVoucher1'])
+        out=GameSession(strategy_mode='survival',origin=1).handle(data)
+        attacks=[c for c in out['roleCommandMap'].values() if c['action']=='attack']
+        self.assertEqual(len(attacks),3)
+        self.assertFalse(any(c['action']=='use' for c in out['roleCommandMap'].values()))
+
+    def test_idle_cooldown_window_still_applies_voucher(self):
+        data=self._night_state(cooldown=2,bag=['WeaponUpgradeVoucher1'])
+        out=GameSession(strategy_mode='survival',origin=1).handle(data)
+        self.assertTrue(any(c['action']=='use' for c in out['roleCommandMap'].values()))
+
+
 class SurvivalTaskTests(unittest.TestCase):
     def task_data(self,round_no=1):
         data=battle_state(round_no=round_no)

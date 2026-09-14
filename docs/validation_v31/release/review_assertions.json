@@ -1,0 +1,8 @@
+{
+  "tests": 8,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "passed": 8,
+  "scope": "Behavioral review assertions including one fixture-validity check; failures intentionally retained."
+}

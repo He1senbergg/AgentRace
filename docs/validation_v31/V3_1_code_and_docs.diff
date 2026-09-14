@@ -1,0 +1,1240 @@
+--- a/README.md
++++ b/README.md
+@@ -21,15 +21,17 @@
+ 
+ ## 4. 当前开发检查点
+ 
+-当前为 **Survival V3 + 裁判复核修复（2026-09-14）**。在 V3 candidate 之上修正三个经复现确认的调度缺陷：建墙石料不再被卖矿清算、夜晚先火力后升级券、已购升级券不再因 margin 不足被放弃卡死。真实入口默认 `survival`，环境变量 `AGENTRACE_STRATEGY=defense` 回滚，原 `defense` 代码保留。
++当前为 **Survival V3.1（2026-09-14）**，启动标识 `v3.1-reviewed-fix`。基于上传的 DeepSeek 版本，修复满背包禁售、日落交付离岗、基地救急优先级及已开火建筑交付过滤，保留此前有效修复。没有重新设计炮位或改变任务链路。
+ 
+-先读 [docs/STATUS.md](docs/STATUS.md)。修复后本机 **351 项全量测试通过**（Python 3.11.10 / Flask 3.1.3，含真实 HTTP 子进程），600 步随机观察模糊测试 0 异常 0 非法动作，1300 步×2 起点经济连续性通过。已知剩余风险见 STATUS.md（紧凑炮位可能把某型炮塞进单邻格口袋导致该炮无法升级，真实夜战火力上限与墙体堵路价值仍未平台验证）。
++Python 3.11.10 / Flask 3.1.3：**完整 383 项通过，干净覆盖副本 383 项再次通过**，含真实 HTTP/入口；32 项新增回归及原八项审查通过。四张初始地图 × 两种资金仍 8 墙/3 炮/3 炮手；加八生成地图后 24 个条件的首日关键指标与基线一致。两种起点各 1300 步经济、12 组夜战输入和 600+600 随机/重复请求通过。**这些不是官方夜战或存活满局成绩。**
+ 
+-另完成 48 次首日经济对照、2×1300 步经济连续性和 12 组密集夜战输入检查。**无官方机器人伤害模拟、真实模型评分或新对局成绩，不能称存活满 1300 回合。** 原始证据见 `docs/validation_v3/`。
++最新说明：[docs/V3_1_FIX_REPORT.md](docs/V3_1_FIX_REPORT.md)；证据：[docs/V3_1_VALIDATION.json](docs/V3_1_VALIDATION.json) 与 docs/validation_v31/；检查点：[docs/STATUS.md](docs/STATUS.md)。validation_v3/ 为旧版历史。
+ 
+-入口仍只接收端口：Linux/WSL `bash run.sh 6666`；Windows `.venv\Scripts\python.exe src\main3.py 6666`。使用原来正常工作的依赖环境和端口。部署必须带完整 `src/agentrace/`，不能只换入口。未新增第三方依赖；未 Git 提交或推送。
++入口仍只接收端口；真实入口默认 survival，`AGENTRACE_STRATEGY=defense` 可选择旧模式。必须保留完整 src；沿用原 Python/Flask 环境，不新增依赖。先看 [V3_README_FIRST.md](V3_README_FIRST.md) 应用覆盖补丁；本地完整复验命令是 `python -B tools/validate_survival_v31.py --output-dir local_validation_v31`。未 Git 提交或推送。
+ 
+ ## 5. 开发记录
++
++- V3.1：ChatGPT 本地修复 DeepSeek 版本审阅发现，交付代码/测试/原始证据。
+ 
+ - ~v2.3：OpenAI -> Codex(GPT6 Astra low)
+ - v2.4:
+--- a/V3_README_FIRST.md
++++ b/V3_README_FIRST.md
+@@ -1,13 +1,35 @@
+-# 先读这里：V3 是候选版，不是正式胜率认证
++# V3.1 使用说明：这是已修复的代码包
+ 
+-完整包建议解压到新目录，保留你的原工程。覆盖补丁则解压到原仓库根目录，覆盖 src、tests、tools、docs 和 README；两种方式二选一。
++版本：v3.1-reviewed-fix。基线：本次上传的 AgentRace-main-DeepSeek修复版.zip。
+ 
+-源码已经修改完成，不需要再让 Codex 根据说明重新实现。必须带完整 src/agentrace，不能只替换 main3.py。
++## 推荐：覆盖补丁
+ 
+-真实入口默认 survival，启动仍只接收端口；使用原本正常工作的 Python/Flask 环境：Linux/WSL `bash run.sh 6666`；Windows `.venv\Scripts\python.exe src\main3.py 6666`。端口和解释器路径沿用你现有配置。
++1. 停止正在运行的旧进程，备份当前 AgentRace 文件夹。
++2. 将覆盖补丁解压到现有仓库根目录。src/tests/tools/docs 要分别与原目录合并覆盖，不要解压到 src 里。上传后另有修改时，先保存那些改动再覆盖。
++3. 沿用原来能运行的解释器、Flask 环境、启动命令和端口重新启动。
+ 
+-需要回滚时设环境变量 AGENTRACE_STRATEGY=defense；清除该变量或设为 survival 恢复新版。
++补丁不删除 .venv、.git 或比赛日志。没有新增依赖，不需要 Codex/OpenCode 重新实现。
+ 
+-请读 docs/V3_AUDIT_AND_FIX_REPORT.md。322 项核心测试通过，另 22 项 HTTP/入口相关测试因当前容器缺真实 Flask 未获通过。白天模型对照与 1300 步经济连续性不是官方生存或胜率证明。真实模型任务和平台夜战仍待验收。
++启动日志应为：
+ 
+-新函数逐行说明：docs/V3_CODE_GUIDE.md；原始测试证据：docs/validation_v3；覆盖范围：docs/V3_VALIDATION.json；源码差异：V3_patch.diff。
++```text
++[main] strategy_mode=survival; survival policy=v3.1-reviewed-fix
++```
++
++必须确认 strategy_mode=survival。仅版本号正确但环境变量仍是 AGENTRACE_STRATEGY=defense 时，跑的是旧模式。
++
++## 完整包
++
++完整包可用于另存一份工程；不附带 .git、.venv、缓存或平台二进制。新目录里需使用你已有的 Python/Flask 解释器；不要假定新目录内自带虚拟环境。未修改 run.sh 或入口端口契约。
++
++## 已执行验证
++
++383 项完整测试及干净覆盖副本 383 项均通过，含真实 HTTP/入口；原八项审查与 32 项新增回归通过。连续建设、券交付、首夜炮手、两种起点经济及随机输入已有记录。说明见 docs/V3_1_FIX_REPORT.md，原始结果在 docs/validation_v31/。
++
++需要本机复跑全部验证时，在仓库根目录、已有环境中执行：
++
++```bash
++python -B tools/validate_survival_v31.py --output-dir local_validation_v31
++```
++
++不必为了使用补丁手工研究 JSON 或运行每个复现脚本。经济模拟没有官方机器人伤害，不能称为已存活 1300 回合；真实比赛仍需本版新日志。
+--- a/docs/DESIGN.md
++++ b/docs/DESIGN.md
+@@ -1,3 +1,16 @@
++# V3.1 调度修复（2026-09-14，当前）
++
++当前生产版本为 v3.1-reviewed-fix；详细取舍与残留风险见 V3_1_FIX_REPORT.md。
++
++- stone 预留从 job.kind 中分离，按观察库存/剩余缺口/批次上限取最小值。清包出售铜铁时不取消建墙；已携带石料的批次暂缓不转普通采矿；空包时允许保留任务的临时筹资。
++- 已购券的成本预算为实际动态去程 + 一次 use + 到指定防御位的回程，不加采购余量，不取消日落截止。动作成功才占用目标；旧目标不通/超时后继续考虑其他目标。
++- 夜间优先级：相邻且持券的基地救急、角色自救/规避、可用火力、支援、空闲角色普通维护、回位。救急 65% 阈值沿用原采购规则，是策略启发式，不是官方血量条件。
++- 交付和开火均避开本回合已修改建筑；拒绝事件不被后续位置状态覆盖。旧协议/任务/布局/伤害计算保持不变。
++
++以下设计记录属于旧版本，当前状态以 STATUS.md 为准。
++
++---
++
+ # V3 当前架构补充（2026-09-13）
+ 
+ 在原协议/观察/事务层之上新增 SurvivalPlanner，不直接重写旧 defense。真实入口通过环境变量选择默认 survival，旧库默认保持 defense。新策略使用观察驱动的持续任务、固定批量石料、资金到位后派工、全活人券库存扣减、三级资本缺口、角色/炮/位置联合分配与空闲先锋腾位。廉价非紧急墙券后置以防大额升级饥饿。Task R2 inspect 仅在 survival 使用一次只读检查包。
+--- a/docs/STATUS.md
++++ b/docs/STATUS.md
+@@ -1,103 +1,28 @@
+-# AgentRace 当前检查点：Survival V3 + 裁判复核修复
++# AgentRace 当前检查点：Survival V3.1
+ 
+-日期：2026-09-14。在 V3 candidate（commit `be44da3`）之上做了一轮独立裁判复核（judge pass），修正三个经复现确认的调度缺陷。基线仍为本地上传包，未拉远程仓库、未自动提交。
+-
+-## 裁判复核结论（2026-09-14）
+-
+-独立复核方式：通读 `AI Spec/` 与 `docs/`、全部 344 项既有测试、600 步随机观察持续会话模糊测试（无异常、无非法动作）、4 张初始地图×两种资金首日对照、1300 步×两个起点的经济连续性、Round5/6/7 日志审计。协议与动作合法性层在此范围内没有任何非法动作或异常；三个已确认并修复的行为缺陷全部在 V3 `SurvivalPlanner` 调度层：
+-
+-| 缺陷 | 复现证据 | 修复 |
+-|---|---|---|
+-| 建墙工携带的石头会被 `sell()` 清算 | `sell()` 直接把 `jobs[kind]` 改写为 `sell`，把 8 块石头批量当矿卖掉，销毁整批墙面 | `sell()` 在 `wall` 任务进行中且墙数未达标时拒绝出售石头 |
+-| 夜晚 `held_delivery` 先于开火执行，把控制者回合耗在升级券上 | 3 炮+3 控制者全 ready 且有目标时只开 1 炮、另 1 控制者去 `use` 券 | 券/修复品延迟到开火之后、仅未开火控制者执行；ready 且有效目标的炮优先开火 |
+-| 已购入的券在日间 margin 不足时被放弃，工人被 `income` 拽去卖矿，券永久卡死 | origin=0 的 1300 步经济连续性在 R1180 后卡死、986 金币滞留、最后一门炮停留 L2 | `held_delivery` 日间只要求目标可达，不再用 margin=2 的往返预算卡券 |
+-
+-另发现并记录、**未当作本轮修复范围**的深层风险：
+-
+-- 紧凑炮位布局可能把三门武器之一塞进只有 1 个空闲邻格的口袋；该格若被他人返位格占用，则该炮永久无法升级/维修（观察到的卡死根因）。完整解决需要重掷炮位布局，本轮不冒时序回归风险。
+-- 墙建工仍可能被 `income()` 指派采矿任务打断批次（未出售石头，批次不丢石头）；这是一项已记录的剩余风险。
+-
+-## 验证状态（修复后）
+-
+-- 完整测试套件 **351 项全部通过**（344 → +7 项新增回归，含本机 Flask 3.1.3 / Python 3.11.10 的 HTTP 真实子进程测试）。
+-- 600 步随机观察会话模糊测试：0 异常、0 非法动作。
+-- `simulate_survival`：4 张初始地图×2 资金，survival 均 8 墙、3 炮、3 可匹配炮手。
+-- `validate_survival_stress`：origin=0/1 各 1300 步经济连续性通过（武器 3/3/3、基地 3 级），12 个密集夜战用例通过。
+-- 计数对照：夜晚 v.s. 券场景从「1 炮 + 1 use」变为「2 炮 + 0 use」。
+-
+-## 下一重点（与修复无关的真实对战风险）
+-
+-- 真实夜战火力上限与墙体堵路价值仍未本地验证：Round6 七局都在 Night2/3 基地被打穿、常在高墙 HP 下基地先死，说明墙体并未形成有效阻挡，炮位/墙体布局仍需平台实测。
+-- 任务回合效率（首两任务 11-15 回合，对手约 3 回合）与错误码 2 仍拖低资金/积分。
+-
+----
+-
+-# 历史检查点（保留）
+-
+-# AgentRace 当前检查点：Survival V3 candidate
+-
+-日期：2026-09-13。基线为用户本次上传 `AgentRace-main(1).zip`，未拉远程仓库、未自动提交。
+-
+-## 当前实现与验收状态
+-
+-真实 `main3.py` 默认 `survival`，库直接 `GameSession()` 默认 `defense` 继续保留；可用 `AGENTRACE_STRATEGY=defense` 回滚。入口仍只接收端口，依赖和 run.sh 未改，必须部署完整 src。
+-
+-生产变更：新增 survival.py、task_inspection.py；调整 session.py、task_news.py、task_protocol.py、main3.py。核心改动是批量建墙、真实库存与三级升级、资金未到不占工、角色联合返位、空闲开拓者腾位、便宜墙升级不抢大额升级资金、任务一次检查包。
+-
+-本轮 322 项离线核心测试通过；22 项 HTTP/入口/回调/冻结子进程对照相关用例未执行通过。当前环境 Python 3.13.5 缺 Flask，完整测试入口已尝试并失败；不能把下方旧版本 Windows/WSL 成绩算到本版。
+-
+-完成 4 初始地图与 8 生成地图、两种奖励、两模式共 48 次首日对照；两个起点各 1300 步经济连续性；12 个密集输入及 1302 机器人并发核心检查。没有机器人伤害和真实任务判分，所有结果均不是官方实战胜率或满局生存认证。
+-
+-完整分析：[V3_AUDIT_AND_FIX_REPORT.md](V3_AUDIT_AND_FIX_REPORT.md)。代码说明：[V3_CODE_GUIDE.md](V3_CODE_GUIDE.md)。证据：validation_v3/ 和 V3_VALIDATION.json。
+-
+-## 下一次正式平台验收应关注
+-
+-确认 `strategy_mode=survival`，保留基地缺失前后日志，检查 R70 的墙数/炮等级/三个真实操控人，任务耗时与错误码，实际 buy→背包→use→等级变化；不能以动作合法反馈或金币增长证明答案全部正确。官方夜战、真实 HTTP 全套和任务准确率仍待验收。
+-
+----
+-
+-# 历史记录：以下是 Task R1 当时状态，不是本轮结论
+-
+-# AgentRace 当前检查点
+-
+-## 当前阶段：Task R1 复核及端口入口清理完成，Windows / WSL 完整测试通过（2026-09-12）
+-
+-已核对当前工作区未提交修改及 `LLMInvokAnalyse/`；本地 HEAD 为 `e39e71e15cb16a00501fcc9e5c874c960cfd62d0`。当前变更覆盖 LLM 任务链路及用户要求的比赛入口参数清理；默认 `defense`，原经济/防御/寻路/战斗策略参数及依赖未改。未自动 Git 提交或推送。
++日期：2026-09-14。版本：`v3.1-reviewed-fix`。基线为用户上传的 DeepSeek 修复包；没有拉远程仓库、没有自动提交或推送。
+ 
+ ## 当前实现
+ 
+-- `main3.py` 只接收位置端口并校验1–65535；四项命令行覆盖参数已删除，直接构造默认 GameSession()。内部配置保留给测试使用，run.sh 和监听设置未改。
++完成上一轮代码审阅确定的四类调度修复：只保护预留石料并释放铜/铁空间；已购券交付保留真实返防预算；普通维护不抢火力，但允许相邻持券角色救急升级低血基地；过滤已修改/开火建筑并在拒绝后尝试其他候选。
+ 
+-- `task_news.py` 接入独立探索/格式修复/提交模板；`task_protocol.py` 管理严格解析、上下文、来源、候选和重复操作记录。
+-- 格式修复保留原始错误回答（有界）和具体原因；最终阶段不再展示命令选项。
+-- 可选 stdout 答案契约，以及与完整成功工具输出绑定的候选；截止前只对有来源的候选做保底，绝不从 skill 猜答案。
+-- 本地复核修复：最终阶段拒绝命令时仍独立验证显式候选；JSON 来源比较使用精确十进制数，避免浮点舍入错误放行。
+-- 当前观察、文档、历史去重；辅助上下文有显式字符预算。候选答案与方法提示分离，经验按相关性筛选但仍标未验证。
+-- 对重复失败命令和无新成功观察的重复答案做有限门禁；保留一次瞬态失败重试和一次明确动作非法重发。
+-- 普通日志仅加元数据；`task_trace.py` 支持默认关闭、显式配置目录才能开启的本地原文审计。原文可能含内部信息或凭证，不自动脱敏，不自动上传。
++石料预留独立于临时 job.kind。施工暂缓不会把携带中的石料当收入；没石料的工人仍能临时筹资，保留墙任务。动作拒绝和延期原因进入事件记录。
+ 
+-本地结论与规格覆盖见 [TASK_R1_LOCAL_REVIEW.md](TASK_R1_LOCAL_REVIEW.md)，协议与部署见 [TASK_R1_CHANGELOG.md](TASK_R1_CHANGELOG.md)。原 V2.4 审查仍见 [OFFLINE_AUDIT.md](OFFLINE_AUDIT.md)。
++生产逻辑只改 survival.py；main3.py 只更新启动版本标识。协议、动作校验、LLM 任务、布局、伤害算法、依赖及 run.sh 不变。库直接 GameSession() 默认仍 defense；真实入口默认 survival。
+ 
+-## 本轮验证
++## 本次实际验收
+ 
+-- 入口清理后重新运行 Windows / Python 3.11.10 / Flask 3.1.3 完整套件：**304 项，303 通过，1 项 POSIX symlink 平台跳过**，38.854 秒。
+-- 入口清理后重新运行 WSL / Python 3.11.10 / Flask 3.1.3 完整套件：**304 项全部通过，无跳过**，49.894 秒。使用现有 `.venv/linux-test/bin/python`，不是缺 Flask 的系统 python3。
+-- 入口专项验证：合法端口1/9123/65535、缺失/非数值/越界端口、四项已删除选项及多余参数、默认会话与规则、实际 HTTP / run.sh 均通过。仅 main 函数体新增明确冻结例外，其余冻结项保留。
+-- 完整套件包含实际 HTTP 子进程、直接入口 / run.sh、并发缓存、异常事务、密集输入及观测回放。本次增加 6 项任务边界回归和 1 项真实 HTTP 任务全流程测试；缺陷已先复现再修复。
+-- 系统 Python 的 WSL 核心导入适配回归：282 项通过、22 项明确排除；这只是补充，完整验证以上述真实依赖环境为准。
+-- 对当前 Git HEAD 的 **387 条无任务请求**（11 组、三个策略模式、两个起点、HTTP 与故障注入），完整响应、缓存、指纹及内存全部一致；原冻结 fixture 未动。
+-- Round6 日志独立重算与报告核心统计一致：4,245 条 turn、35 段任务、198 次模型调用、24 次解析失败、28 段超时、8 段未提交、30 次最终阶段有效回复未执行动作。
+-- `TASK_R1_VALIDATION.json` / `TASK_R1_MANIFEST.json` 保留网页端原交付历史记录及哈希，不代表本次修复后的当前文件。最新验证见本地复核报告。
++- Python 3.11.10 / Flask 3.1.3，完整 383 项通过；原上传工程应用代码补丁的干净副本再跑 383 项通过；均无失败、错误或跳过，包含真实 HTTP/入口子进程。
++- 原八项审查全部通过；32 项新增回归。满铜背包 260 步场景从 0 墙恢复到 14 墙；日落送墙券反例恢复下一夜三炮开火；基地救急与冷却炮交付通过。
++- 四初始地图 × 两种奖励均 8 墙/3 炮/3 炮手；再测八生成地图 × 两种奖励。24 个同条件首日场景的墙数、炮等级、炮手、金币均与上传基线一致。
++- 两种起点各 1300 步经济连续性与 12 个密集夜战输入通过；600 随机观察 + 600 重复请求无异常/所检查冲突。
+ 
+-## 已知边界
++最新证据：`V3_1_VALIDATION.json`、`V3_1_FIX_REPORT.md`、`validation_v31/`。`V3_VALIDATION.json`、`validation_v3/` 等是历史版本，不代表当前源码。上传时的 STATUS 已原样保留为 `validation_v31/BASELINE_STATUS_DeepSeek.md`。
+ 
+-- 正式赛事模型、沙盒与计分尚未联调；本地模拟回复不能证明新 prompt 提高准确率或胜率。
+-- 候选匹配是来源检查，不是答案语义认证。任意任务的 schema 自动抽取、字段正确性判断、认证过的技能库没有实现。
+-- 无候选、未知截止时间、未观测空窗的同描述换题仍可能无法可靠保底；不会虚构答案或任务 ID。
+-- 36,000 是辅助上下文字符预算，不是模型 token 窗口。长输出可能裁去中间信息，完整任务本身也可能超出未知的模型窗口。
+-- 本地原文审计默认关闭；只有获准保存在私有目录时开启。文件写入故障隔离不是硬实时保证。
+-- 默认 defense 仍未接入新闻/寻宝执行。此前夜战、生存、资本交付、动态弹道等实机不确定性仍保留。
++## 已知边界与下一验收
+ 
+-## 下一步
++没有官方战斗引擎，没有新平台成绩，经济连续性不是存活 1300 回合。随机观察检查也不是完整动作结算模拟。没有真实 LLM 判分。紧凑炮位的唯一服务格永久被占问题未作通用布局修复，不能宣称所有阻塞已消失。
+ 
+-当前适合作为人工 Git 提交检查点。部署完整 `src/agentrace/`，保持原端口和依赖，由人工实机验收模型输出、提交率、字段得分和耗时。恢复开发先读 AGENTS.md、本文件、TASK_R1_LOCAL_REVIEW、相关 AI Spec 与实际 Git 状态。
++停止旧进程并备份，覆盖补丁到现有仓库根目录，沿用原环境和端口启动。确认 `strategy_mode=survival; survival policy=v3.1-reviewed-fix`。下次平台需保留真实回合日志、基地血量、炮手位置/开火、券交付和任务反馈。
++
++完整本地复现：`python -B tools/validate_survival_v31.py --output-dir local_validation_v31`。
+--- a/docs/TEST_PLAN.md
++++ b/docs/TEST_PLAN.md
+@@ -1,3 +1,15 @@
++# V3.1 当前验证（2026-09-14）
++
++最终 Python 3.11.10 / Flask 3.1.3 完整套件 383 通过，干净补丁覆盖副本再跑 383 通过；没有排除 HTTP、入口、并发或冻结基线测试。新增 32 项 tests/test_survival_v31.py；修正旧测试的不合法布局和铜矿禁售断言，而不是减少测试数量。
++
++`python -B tools/validate_survival_v31.py --output-dir local_validation_v31` 依次执行全套测试、八项独立审查、260 步及跨夜场景、24 组首日条件、两种起点各 1300 步经济/12 组夜战输入、600 观察 + 600 重复请求。
++
++同条件首日对照未退化；生成地图仍有低于 8 墙的样本，没有隐藏。只证明所声明的本地行为；没有官方夜战、真实 LLM 判分或存活 1300 回合成绩。最新原始记录见 validation_v31/，汇总见 V3_1_VALIDATION.json。
++
++以下测试记录均属历史版本，不覆盖本节的当前源码状态。
++
++---
++
+ # V3 当前验证补充（2026-09-13）
+ 
+ 本轮实际通过 322 项离线核心测试；22 项真实 HTTP/入口相关用例受 Flask 缺失阻塞，不视为通过。新增 tests/test_survival_v3.py 与独立状态转移模拟器 tools/simulate_survival.py，确保测试不是只重复生产校验器。
+--- a/docs/V3_1_FIX_REPORT.md
++++ b/docs/V3_1_FIX_REPORT.md
+@@ -0,0 +1,105 @@
++# AgentRace V3.1：DeepSeek 版本调度修复与验证
++
++日期：2026-09-14。版本标识：`v3.1-reviewed-fix`。
++基线是用户上传的 `AgentRace-main-DeepSeek修复版.zip`，不是远程仓库的推测版本。本次直接修改源码并执行测试；没有 Git 提交或推送。
++
++## 1. 结论与变更范围
++
++上一轮八项审查断言由 **3 通过、5 失败** 变为 **8 项全部通过**。完整套件由 351 项增加到 **383 项**，最终代码与干净覆盖副本均 **383 项通过、0 失败、0 错误、0 跳过**。
++
++生产文件仅改变 `src/agentrace/survival.py`（调度逻辑）和 `src/main3.py`（启动版本标识）。没有修改协议、动作校验器、HTTP 接口、任务 R1/R2、武器伤害预测、布局生成、依赖或 `run.sh`。测试和文档随包交付；既有测试数量没有减少。
++
++这说明本地复现的缺陷已修复，不说明已经赢得正式对局。当前包没有官方裁判引擎，没有新的平台比赛分数，也没有真实任务判分。
++
++## 2. 资源预留与满背包恢复
++
++原补丁把“不要卖建墙石头”实现成“建墙工不能卖任何矿物”。修复后只保护实际预留石料，铜、铁及超过当前批次/剩余墙需求的石头可以出售。清理背包时保留 wall 任务；只有动作被接受才更新销售状态。
++
++新增 `wall_reservations`，独立于临时 `job.kind` 保存批次需求上限，防止服务/补药等临时任务让建筑材料突然变成可出售资源。实际受保护数量取“观察背包石头、批次上限、剩余墙成本”三者最小值。人物死亡或当前墙目标完成后释放。日志中的 reservation 值是批次上限，不是额外拥有的石头。
++
++持有建筑石料、施工暂缓时，不通过 income 改写建筑任务。没有石料且暂不能采石时仍允许临时赚钱，保留原建墙任务，不把修复变成“空包工人永久站着”。本轮曾发现第一稿限制过宽，先保留失败测试再收窄；记录见 `validation_v31/empty_builder_before.log`。
++
++连续证据：从第 131 回合开始，一个没有手工预设任务、满背包 100 铜矿的工人，经真实 GameSession + 独立 DayEngine 执行 260 步。
++
++| 指标 | 上传的 DeepSeek 版 | V3.1 |
++|---|---:|---:|
++| 首次出售铜矿 | 无 | 第 131 回合 |
++| 最后仍持有的铜矿 | 100 | 0 |
++| 260 步后墙数 | 0 | 14 |
++| 独立模拟器拒绝动作 | 0 | 0 |
++
++另测了 8 石 + 92 铜的混合满包、铁矿出售、20 石保留 8 石只卖 12 石、目标已完成、人物死亡和售矿被拒等边界。
++
++实现位置：`survival.py:553`、`:573`、`:608`。
++
++## 3. 已购券交付不再使炮手日落离岗
++
++“已经付钱”不等于“可以无条件占用夜间防御时间”。交付现在检查当前动态可执行路线，并计算：移动回合 + 使用一回合 + 返回指定防御位置的回合。去掉的是采购用的额外安全余量，不是全部截止约束。
++
++第 70 回合已经就位、能原地用券的人可以使用；需要远行升级普通墙的人不能离开炮位。不可达或来不及的旧目标不会遮住其他合法候选。目标只在动作被校验接受后占用。
++
++两回合证据：第 70 回合携墙券工人保持 `(8,23)`；执行状态转移后，第 71 回合对相同高血目标从旧版的 2 炮恢复为 3 炮。另做跨夜延后场景，券保留并在后续白天实际完成升级，没有以“拒绝了这回合”冒充交付完成。
++
++实现位置：`survival.py:388`、`:401`。
++
++## 4. 夜间普通维护让位开火，保留基地救急
++
++普通武器升级/普通墙维护仍放在火力之后，只使用空闲角色。恢复一条明确的基地救急例外：基地为 1/2 级且血量低于最大血量的 65%，存在相邻、空闲、持匹配基地券的角色时，先执行一次基地升级。优先选能保留更多可开火武器的角色，不在夜间外派远处持券人。
++
++65% 沿用原来的紧急采购阈值，是策略参数而非官方规则。依据仓内 `AI Spec/未来战争_v1.0_比赛全貌_开发整合版.md` §23，建筑升级恢复满血。测试验证指令、控制者占用和剩余开火，并未模拟机器人选谁攻击或声称该场景一定免死。
++
++基地 1 HP 的反例现在是 **1 次基地升级 + 2 炮开火**；健康基地和普通双武器券场景保持 **3 炮开火，不用普通券抢角色**。另测了二级基地、错误券、冷却窗口中优先空闲角色。
++
++实现位置：`survival.py:443`、`:662`。
++
++## 5. 已开火/已升级目标过滤与失败后的替代候选
++
++持券交付排除 `v.modified` 中的建筑；开火匹配也排除已修改/已经占用的武器。候选被拒绝后继续尝试其他合法目标，而不是直接结束整个交付流程。失败动作不空占目标、不改写任务。
++
++合法冷却场景中，两门炮开火，剩余工人给第三门冷却炮升级，不再因先选中已开火炮而空闲。诊断事件保留 `action_rejected`，避免随后“已在炮位”的记录覆盖失败线索；同时增加 `delivery_deferred`、`base_rescue`、`wall_funding`。
++
++## 6. 纠正测试而非放宽验收
++
++原“建墙工卖铜也必须失败”的断言改为“铜可卖、石头与任务保留”。原夜战用例中两炮与基地重叠的问题已纠正，现在建筑和人物无重叠、三个炮手可匹配、有足够目标 HP，开火断言从至少两炮加强为三炮。原第 68 回合用券用例的人物与炮重叠也已纠正。
++
++32 项新增回归在 `tests/test_survival_v31.py`。原八项独立审查保留在 `validation_v31/reproduction/test_review_regressions.py`，最终全部通过。
++
++## 7. 最终验证矩阵
++
++环境：本地 Linux x86_64，Python 3.11.10，Flask 3.1.3，使用上传包内可运行依赖；未新增依赖。不是只做语法检查，也没有排除 HTTP 测试。
++
++| 验证 | 结果 | 原始证据（相对 docs/） |
++|---|---|---|
++| 上传基线完整套件 | 351 通过 | validation_v31/suite_baseline.log |
++| 最终完整套件 | 383 通过，无跳过 | validation_v31/release/full_suite.log |
++| 干净覆盖副本完整套件 | 383 再次通过，无跳过 | validation_v31/clean_full_suite.log |
++| 八项原审查断言 | 8 通过 | validation_v31/release/review_assertions.json |
++| 四张日志初始地图 × 两种资金 | 8 组均 8 墙、3 炮、3 炮手 | validation_v31/release/initial_maps.json |
++| 八张生成地图 × 两种资金 | 16 组；墙数 6–8，均 3 炮手 | 同上 |
++| 新旧同条件 24 组首日对照 | 墙数、炮等级、炮手、金币均与 DeepSeek 基线一致 | validation_v31/map_comparison.json |
++| origin=0 / origin=1 长周期经济 | 各 1300 步通过；三炮三级、基地三级、18 墙 | validation_v31/release/economic_and_night.json |
++| 密集夜战输入 | 12 组通过 | 同上 |
++| 随机观察与重复请求 | 600 + 600；0 异常、0 所检查冲突 | validation_v31/release/snapshot_fuzz.json |
++
++初始地图测试不等于完整历史对局重放。模拟中的 160 金币奖励是实验注入，不是模型完成任务所得。经济测试没有机器人伤害，不是存活 1300 回合的成绩。随机观察不是因果连续战斗引擎，只检查异常、重复响应、控制者冲突、移动目标与占位。
++
++## 8. 复现与部署
++
++使用正常运行比赛的 Python/Flask 环境，在仓库根目录执行：
++
++```bash
++python -B -m unittest discover -s tests -v
++python -B tools/validate_survival_v31.py --output-dir local_validation_v31
++```
++
++第一条是完整测试；第二条会再次跑完整测试及全部六阶段验证，并保存每个命令的原始输出、退出状态和源码哈希。JSON 中的 /mnt/data 路径只是本次执行环境记录，不要求用户照抄该路径。
++
++推荐将覆盖补丁解压到现有仓库根目录，使 src/tests/tools/docs 与现有目录对应，保留原 .venv 和 .git。先备份并停止旧进程，覆盖后用原命令、原环境、原端口重新启动。不要只替换入口，不要把补丁解压到 src 内。
++
++启动日志：`[main] strategy_mode=survival; survival policy=v3.1-reviewed-fix`。必须确认前半段是 survival；残留的 `AGENTRACE_STRATEGY=defense` 会启用旧模式。完整包不附带 .venv 或 .git，另开目录运行时需继续使用已有解释器。
++
++## 9. 剩余边界
++
++本轮没有重做炮位布局：最后一门炮的唯一服务邻格被队友长期占据时，通用让位/重布局仍未证明解决。新的动态候选过滤能换目标，但不等于解决所有瓶颈。墙体真实挡路价值、官方机器人行动/伤害、任务正确率及实战生存长度，仍需本版平台新日志验证。
++
++当前结论是本地已复现的四类调度问题修复完成，既有首日基准未退化；不是整场比赛策略已获胜的认证。
+--- a/src/agentrace/survival.py
++++ b/src/agentrace/survival.py
+@@ -13,6 +13,8 @@
+ 
+ class SurvivalPlanner:
+     """One mutable observation transaction, with small jobs carried in memory."""
++
++    revision = "v3.1-reviewed-fix"
+ 
+     def __init__(self, world, memory, delta, rules):
+         self.world, self.memory, self.delta, self.rules = (world, memory, delta, rules)
+@@ -25,6 +27,8 @@
+             self.state = dict(jobs={}, slots={}, samples={}, stalled={}, last_round=None, last_spend=None, last_asset_change=None, assets=None)
+             memory.survival = self.state
+         self.jobs = self.state['jobs']
++        # Material ownership survives temporary courier/medicine job changes.
++        self.wall_reservations = self.state.setdefault('wall_reservations', {})
+         self.decisions = {}
+         self.events = []
+         self.claimed = set()
+@@ -47,6 +51,9 @@
+     def observe(self):
+         """Only changes in the next observation count as progress/verification."""
+         alive = set(self.characters)
++        for actor in list(self.wall_reservations):
++            if actor not in alive or self.v.wall_count >= self.wall_target:
++                self.wall_reservations.pop(actor, None)
+         for actor in list(self.jobs):
+             if actor not in alive:
+                 del self.jobs[actor]
+@@ -113,6 +120,8 @@
+             self.note(actor, reason)
+             return True
+         self.note(actor, 'action_rejected:' + reason)
++        # A later return-home note must not erase evidence of a rejected plan.
++        self.events.append(dict(event='action_rejected', actor=actor, reason=reason, command=dict(command)))
+         return False
+ 
+     def move(self, actor, cells, reason, adjacent=True):
+@@ -306,6 +315,7 @@
+         if job.get('stage') == 'build' and have == 0:
+             job['stage'] = 'quarry'
+         quota = min(missing, job.get('quota', min(8, missing)))
++        self.wall_reservations[actor] = quota * stones
+         if have >= quota or (have and job.get('stage') == 'build'):
+             job['stage'] = 'build'
+         if job.get('stage') == 'quarry':
+@@ -326,6 +336,7 @@
+             if candidates:
+                 _, mine, amount = min(candidates)
+                 job['quota'] = min(quota, have + max(1, amount // stones))
++                self.wall_reservations[actor] = job['quota'] * stones
+                 if self.v.near(char, {mine}):
+                     return self.send(actor, dict(action='collect', targetPos=[dict(x=mine[0], y=mine[1])]), 'wall_batch_quarry')
+                 return self.move(actor, {mine}, 'wall_batch_quarry_travel')
+@@ -374,43 +385,89 @@
+                 candidates.append((55, wall, f'WallUpgradeVoucher{level}'))
+         return sorted(candidates, key=lambda x: (x[0], x[1]['id'], x[2]))
+ 
++    def delivery_fits(self, actor: str, route: list) -> bool:
++        """Budget the executable route, one use action, and the assigned return.
++
++        Paid goods do not need the extra margin used for speculative purchases.
++        An adjacent use still costs a turn; it is not permission to miss dusk.
++        """
++        if not route or self.phase is None:
++            return False
++        if not self.phase.is_day:
++            return len(route) == 1
++        back = self.return_cost(actor, route[-1])
++        return back is not None and len(route) + back <= 71 - self.phase.round_in_day
++
+     def held_delivery(self, actor):
+-        bag = inventory(self.characters[actor]) or Counter()
++        if actor in self.v.busy or self.phase is None:
++            return False
++        char = self.characters[actor]
++        bag = inventory(char) or Counter()
+         old = self.jobs.get(actor, {})
+         candidates = []
+-        for name in sorted(UPGRADES):
+-            if not bag[name]:
+-                continue
+-            kinds, required = UPGRADES[name]
++        items = [(name, kinds, required) for name, (kinds, required) in sorted(UPGRADES.items()) if bag[name]]
++        if bag['WallFixer']:
++            items.append(('WallFixer', {'wall'}, None))
++        for name, kinds, required in items:
+             for target in self.world.roles.values():
+-                if target.get('roleType') in kinds and level_of(target) == required and (target['id'] not in self.claimed):
+-                    route = self.route(actor, {target['cell']}, static=True)
+-                    if route:
+-                        candidates.append((target['id'] != old.get('target'), len(route), name, target))
+-        if bag['WallFixer']:
+-            for wall in self.walls:
+-                if wall['id'] not in self.claimed and wall['health'] < max_health(wall):
+-                    route = self.route(actor, {wall['cell']}, static=True)
+-                    if route:
+-                        candidates.append((wall['id'] != old.get('target'), len(route), 'WallFixer', wall))
+-        if not candidates:
+-            return False
+-        _, _, name, target = min(candidates, key=lambda x: x[:3])
+-        # A carried voucher/fixer is already paid for. Do not abandon the
+-        # delivery just because a margined round-trip to the base no longer fits
+-        # before dusk: ending adjacent to the upgraded building is itself a
+-        # valid controller slot for the coming night, and abandoning it strands
+-        # sunk capital (the audit's stuck-capital pattern). Reachability was
+-        # already required to enter the candidate list above.
+-        if self.phase.is_day and (not self.route(actor, {target['cell']}, static=True)):
+-            return False
+-        if not self.phase.is_day and (not self.v.near(self.characters[actor], {target['cell']})):
+-            return False
+-        self.jobs[actor] = dict(kind='service', target=target['id'], item=name, stage='deliver')
+-        self.claimed.add(target['id'])
+-        if self.v.near(self.characters[actor], {target['cell']}):
+-            return self.send(actor, dict(action='use', name=name, targetPos=[dict(x=target['cell'][0], y=target['cell'][1])]), 'apply_observed_item')
+-        return self.move(actor, {target['cell']}, 'deliver_observed_item')
++                if (target.get('roleType') not in kinds or not positive_health(target.get('health'))
++                        or target['id'] in self.claimed or target['cell'] in self.v.modified):
++                    continue
++                if required is not None and level_of(target) != required:
++                    continue
++                if name == 'WallFixer' and (max_health(target) is None or target['health'] >= max_health(target)):
++                    continue
++                # Dynamic routing prevents a blocked old target from hiding a
++                # different, actually executable delivery. No claim before send.
++                route = self.route(actor, {target['cell']})
++                if not route:
++                    continue
++                if not self.delivery_fits(actor, route):
++                    self.events.append(dict(event='delivery_deferred', actor=actor, target=target['id'],
++                                            item=name, reason='return_deadline'))
++                    continue
++                candidates.append((target['id'] != old.get('target'), len(route), name, target['id'], target, route))
++        for _, _, name, _, target, route in sorted(candidates, key=lambda x: x[:4]):
++            if len(route) == 1:
++                command = dict(action='use', name=name, targetPos=[dict(x=target['cell'][0], y=target['cell'][1])])
++                reason = 'apply_observed_item'
++            else:
++                command = dict(action='move', targetPos=[dict(x=route[1][0], y=route[1][1])])
++                reason = 'deliver_observed_item'
++            if self.send(actor, command, reason):
++                self.jobs[actor] = dict(kind='service', target=target['id'], item=name, stage='deliver')
++                self.claimed.add(target['id'])
++                return True
++        return False
++
++    def rescue_base(self) -> bool:
++        """Immediate, already-owned base upgrade; ordinary maintenance stays last.
++
++        65% is the existing procurement emergency threshold, not a game rule.
++        Never send a controller travelling during the night for this exception.
++        """
++        if (self.base is None or level_of(self.base) not in (1, 2)
++                or self.base['health'] >= 0.65 * max_health(self.base)
++                or self.base['cell'] in self.v.modified or self.base['id'] in self.claimed):
++            return False
++        name = f"StationUpgradeVoucher{level_of(self.base)}"
++        available = [a for a in self.characters if a not in self.v.busy]
++        ready = [w for w in self.weapons if w.get('cooldown', 0) == 0
++                 and w['cell'] not in self.v.modified and self.defense.attack_plan(w)[2] > 0]
++        carriers = [a for a in available if (inventory(self.characters[a]) or Counter())[name]
++                    and self.v.near(self.characters[a], {self.base['cell']})]
++        # Prefer a spare controller, retaining as many fireable guns as possible.
++        carriers.sort(key=lambda a: (-len(self.matching(ready, [b for b in available if b != a])),
++                                     -self.characters[a]['health'], a))
++        for actor in carriers:
++            command = dict(action='use', name=name, targetPos=[dict(x=self.base['cell'][0], y=self.base['cell'][1])])
++            if self.send(actor, command, 'rescue_base_upgrade'):
++                self.claimed.add(self.base['id'])
++                self.jobs[actor] = dict(kind='service', target=self.base['id'], item=name, stage='deliver')
++                self.events.append(dict(event='base_rescue', actor=actor, target=self.base['id'],
++                                        observed_health=self.base['health'], item=name))
++                return True
++        return False
+ 
+     def procure(self, actor, emergency_only=False):
+         char = self.characters[actor]
+@@ -493,18 +550,36 @@
+         self.jobs[actor] = dict(kind='medicine')
+         return self.move(actor, self.world.zones['weaponShop'], 'medicine_travel')
+ 
++    def reserved_wall_stone(self, actor: str) -> int:
++        """Return owned stone reserved for an unfinished batch, not all minerals.
++
++        Keep the reservation separate from job.kind: a temporary service trip
++        must not silently turn building materials into saleable income.
++        """
++        missing = max(0, self.wall_target - self.v.wall_count)
++        cost = self.rules.wall_stone_cost
++        if not missing or not nonnegative_int(cost) or cost == 0:
++            self.wall_reservations.pop(actor, None)
++            return 0
++        job = self.jobs.get(actor, {})
++        if job.get('kind') == 'wall':
++            quota = job.get('quota', min(8, missing))
++            if not nonnegative_int(quota):
++                quota = min(8, missing)
++            self.wall_reservations[actor] = min(missing, quota) * cost
++        wanted = min(self.wall_reservations.get(actor, 0), missing * cost)
++        return min((inventory(self.characters[actor]) or Counter())['stone'], wanted)
++
+     def sell(self, actor, force=False):
+         char = self.characters[actor]
+         bag = inventory(char) or Counter()
+-        minerals = [m for m in MINERALS if bag[m] and self.v.vendor.get(m, 0) > 0]
++        reserved = self.reserved_wall_stone(actor)
++        amounts = {m: bag[m] - (reserved if m == 'stone' else 0)
++                   for m in MINERALS if self.v.vendor.get(m, 0) > 0}
++        minerals = [m for m in amounts if amounts[m] > 0]
+         if not minerals:
+-            return False
+-        # A quarry worker's stones are committed to the in-flight wall batch;
+-        # liquidating them would invalidate a whole batch for a few coins.
+-        # The protection drops once the current wall target is met, so a
+-        # completed builder is free to resume normal selling/income work.
+-        if self.jobs.get(actor, {}).get('kind') == 'wall' and self.v.wall_count < self.wall_target:
+-            self.note(actor, 'wall_stone_not_sold')
++            if reserved:
++                self.note(actor, 'wall_stone_reserved')
+             return False
+         if not self.fits(actor, [(self.world.zones['vendor'], len(minerals))], margin=3):
+             return False
+@@ -512,13 +587,23 @@
+         old = self.jobs.get(actor, {})
+         back = self.return_cost(actor)
+         due = back is not None and 71 - self.phase.round_in_day < back + 20
+-        if not (force or near or old.get('kind') == 'sell' or (sum((bag[m] for m in minerals)) >= 10) or due):
+-            return False
+-        self.jobs[actor] = dict(kind='sell')
+-        name = max(sorted(minerals), key=lambda m: bag[m] * self.v.vendor[m])
++        capacity = char.get('backPackCapability', 100 if char['roleType'] == 'worker' else 40)
++        full = nonnegative_int(capacity) and sum(bag.values()) >= capacity
++        if not (force or near or full or old.get('kind') == 'sell'
++                or old.get('cleanup') == 'sell' or sum(amounts[m] for m in minerals) >= 10 or due):
++            return False
++        name = max(sorted(minerals), key=lambda m: amounts[m] * self.v.vendor[m])
+         if near:
+-            return self.send(actor, dict(action='sell', name=name, num=bag[name]), 'liquidate_inventory')
+-        return self.move(actor, self.world.zones['vendor'], 'persistent_sale_trip')
++            sent = self.send(actor, dict(action='sell', name=name, num=amounts[name]), 'liquidate_inventory')
++        else:
++            sent = self.move(actor, self.world.zones['vendor'], 'persistent_sale_trip')
++        if sent:
++            if old.get('kind') == 'wall' and self.v.wall_count < self.wall_target:
++                # Liquidating copper/iron frees quarry space without deleting the batch.
++                old['cleanup'] = 'sell'
++            else:
++                self.jobs[actor] = dict(kind='sell')
++        return sent
+ 
+     def income(self, actor):
+         char = self.characters[actor]
+@@ -526,6 +611,11 @@
+             return self.sell(actor, force=True)
+         if self.sell(actor):
+             return True
++        wall_job = self.jobs.get(actor, {}).get('kind') == 'wall' and self.v.wall_count < self.wall_target
++        if wall_job and self.reserved_wall_stone(actor):
++            # Keep a carried batch intact while its construction is deferred.
++            self.note(actor, 'wall_batch_waiting')
++            return False
+         bag = inventory(char)
+         capacity = char.get('backPackCapability', 100)
+         if bag is None or not nonnegative_int(capacity) or sum(bag.values()) >= capacity:
+@@ -559,12 +649,18 @@
+             return self.sell(actor, force=True)
+         _, mineral, mine, route = max(options, key=lambda x: x[:3])
+         self.memory.worker_mines[actor] = (mineral, mine)
+-        self.jobs[actor] = dict(kind='income', mineral=mineral, cell=mine)
++        if wall_job:
++            # With no building material to deliver, temporary funding is useful;
++            # it must not erase the quarry assignment or its material ownership.
++            self.events.append(dict(event='wall_funding', actor=actor, mineral=mineral))
++        else:
++            self.jobs[actor] = dict(kind='income', mineral=mineral, cell=mine)
+         if len(route) == 1:
+             return self.send(actor, dict(action='collect', targetPos=[dict(x=mine[0], y=mine[1])]), 'mine_income')
+         return self.move(actor, {mine}, 'mine_income_travel')
+ 
+     def night(self):
++        self.rescue_base()
+         for actor, char in sorted(self.characters.items()):
+             if actor in self.v.busy:
+                 continue
+@@ -581,7 +677,7 @@
+         available = [a for a in self.characters if a not in self.v.busy]
+         choices = []
+         for w in self.weapons:
+-            if w.get('cooldown', 0) != 0:
++            if w.get('cooldown', 0) != 0 or w['cell'] in self.v.modified or w['id'] in self.v.busy:
+                 continue
+             targets, after, score = self.defense.attack_plan(w)
+             if score <= 0:
+@@ -602,9 +698,8 @@
+                 self.defense.remaining = after
+                 self.note(actor, 'control_weapon:' + w['id'])
+         self.defense.support()
+-        # Only controllers that did not fire this round apply carried upgrades.
+-        # Firing has priority: never spend a controller's single action on an
+-        # upgrade while its ready weapon still has an in-range target.
++        # Only unused controllers apply ordinary upgrades/repairs. The bounded
++        # base-rescue exception above has already removed its carrier from fire.
+         for actor in sorted(self.characters):
+             if actor in self.v.busy:
+                 continue
+@@ -684,4 +779,4 @@
+ 
+     def report(self):
+         metrics = dict(round=self.delta.round_no, gold=self.delta.gold, station_hp=[b['health'] for b in self.defense.stations], actors_alive=len(self.characters), weapons_alive=len(self.weapons), weapon_levels=sorted((level_of(w) or 0 for w in self.weapons), reverse=True), walls=len(self.walls), wall_count=len(self.walls), wall_hp=[w['health'] for w in self.walls], wall_total_hp=sum((w['health'] for w in self.walls)), wall_max_hp_total=sum((max_health(w) or 0 for w in self.walls)), actors_hp={a: c['health'] for a, c in self.characters.items()}, controllers_available=len(self.matching()), actual_fire_commands=sum((c['action'] == 'attack' for c in self.v.commands.values())))
+-        return dict(round=self.delta.round_no, scope='survival_v3', strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
++        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
+--- a/src/main3.py
++++ b/src/main3.py
+@@ -167,7 +167,7 @@
+             stream.reconfigure(encoding="utf-8", line_buffering=True)
+     logging.basicConfig(level=logging.INFO)
+     LOG.info("[main] 回合起点自动识别：开局0或1")
+-    LOG.info("[main] strategy_mode=%s; survival policy=v3-candidate", SESSION.strategy_mode)
++    LOG.info("[main] strategy_mode=%s; survival policy=%s", SESSION.strategy_mode, _session.SurvivalPlanner.revision)
+     # Keep the SDK positional port; accept judger traffic on all IPv4 interfaces (§43.2).
+     app.run(host="0.0.0.0", port=args.port, debug=False, use_reloader=False)
+ 
+--- a/tests/test_survival_v3.py
++++ b/tests/test_survival_v3.py
+@@ -270,17 +270,22 @@
+         data=battle_state();actor(data,2)['backpack']=['stone']*8
+         p=planner(data);p.jobs['2']=dict(kind='wall',stage='quarry',cell=(12,24),quota=8)
+         p.income('2')
+-        self.assertEqual((inventory(actor(data,2)) or Counter())['stone'],8)
++        self.assertEqual(p.jobs['2']['kind'],'wall')
+         self.assertFalse(any(c.get('action')=='sell' for c in p.v.commands.values()))
++        # Execute the response before checking inventory; the input is immutable.
++        engine=DayEngine(data)
++        engine.apply(dict(roleCommandMap=p.v.commands,prompt='',executeCmd=''))
++        self.assertEqual((inventory(actor(engine.data,2)) or Counter())['stone'],8)
+ 
+     def test_liquidating_copper_keeps_the_wall_job(self):
+         data=battle_state();actor(data,2)['pos']=dict(x=13,y=20);actor(data,2)['backpack']=['copper']*10
+         p=planner(data);p.jobs['2']=dict(kind='wall',stage='quarry',cell=(12,24),quota=8)
+-        self.assertFalse(p.sell('2',force=True))
++        self.assertTrue(p.sell('2',force=True))
++        self.assertEqual(p.v.commands['2'],dict(action='sell',name='copper',num=10))
+         self.assertEqual(p.jobs['2']['kind'],'wall')
+ 
+     def test_held_voucher_is_delivered_even_when_roundtrip_is_tight(self):
+-        data=battle_state(round_no=68,levels=(2,2,2));actor(data,4)['pos']=dict(x=10,y=23)
++        data=battle_state(round_no=68,levels=(2,2,2));actor(data,4)['pos']=dict(x=11,y=23)
+         actor(data,4)['backpack']=['WeaponUpgradeVoucher2']
+         # A strict margined round-trip no longer fits at R68, but the paid
+         # voucher must still be applied rather than abandoned (stuck capital).
+@@ -306,28 +311,21 @@
+ 
+     @staticmethod
+     def _night_state(cooldown=0,bag=None):
+-        roles=[make_role(1,'station',(9,22)),
+-               make_role(2,'worker',(8,23),backpack=bag or []),
+-               make_role(3,'worker',(9,23)),make_role(4,'pioneer',(9,24)),
+-               make_role(5,'rocket',(8,22),cooldown=cooldown),
+-               make_role(6,'rocket',(10,22),cooldown=cooldown),
+-               make_role(7,'railgun',(9,21),cooldown=cooldown)]
+-        data=generated_observation()
+-        data['roundNo']=71;data['teamOur']['goldNum']=100
+-        data['teamOur']['roles']=roles
+-        data['mapInfo']['zones']=[dict(neutralType=k,pos=dict(x=x,y=y)) for k,x,y in
+-            [('stone',5,23),('copper',5,20),('vendor',14,20),('weaponShop',14,22)]]
+-        data['robot']['roles']=[make_role(800,'smallRobot',(14,18),health=40,targetTeam='challenger'),
+-            make_role(801,'smallRobot',(15,18),health=40,targetTeam='challenger'),
+-            make_role(802,'smallRobot',(14,17),health=40,targetTeam='challenger'),
+-            make_role(803,'smallRobot',(13,18),health=40,targetTeam='challenger')]
++        data=battle_state(round_no=71,gold=100)
++        actor(data,2)['backpack']=list(bag or [])
++        for role in data['teamOur']['roles']:
++            if role['roleType'] in {'rocket','railgun'}:
++                role['cooldown']=cooldown
++        # Valid non-overlapping footprints, three distinct adjacent controllers,
++        # and enough target HP that all three guns have useful work.
++        data['robot']['roles']=[make_role(800,'largeRobot',(14,18),health=500,targetTeam='challenger')]
+         return data
+ 
+     def test_night_fire_precedes_voucher_use(self):
+         data=self._night_state(bag=['WeaponUpgradeVoucher1'])
+         out=GameSession(strategy_mode='survival',origin=1).handle(data)
+         attacks=[c for c in out['roleCommandMap'].values() if c['action']=='attack']
+-        self.assertGreaterEqual(len(attacks),2)
++        self.assertEqual(len(attacks),3)
+         self.assertFalse(any(c['action']=='use' for c in out['roleCommandMap'].values()))
+ 
+     def test_idle_cooldown_window_still_applies_voucher(self):
+--- a/tests/test_survival_v31.py
++++ b/tests/test_survival_v31.py
+@@ -0,0 +1,354 @@
++"""V3.1 scheduler regressions, including independent multi-turn transitions.
++
++These are behavioural checks, not proof of official combat survival.
++"""
++from collections import Counter
++from copy import deepcopy
++import logging
++import unittest
++from unittest.mock import patch
++
++from src.agentrace.session import GameSession
++from src.agentrace.model import inventory
++from tests.test_survival_v3 import actor, battle_state, planner
++from tests import test_survival_v3 as original_fixtures
++from tools.simulate_survival import DayEngine, footprint, make_role
++
++
++def with_target(data):
++    data['robot']['roles'] = [make_role(800, 'largeRobot', (14, 18), health=500, targetTeam='challenger')]
++    return data
++
++
++def attack_count(response):
++    return sum(c['action'] == 'attack' for c in response['roleCommandMap'].values())
++
++
++class QuietCase(unittest.TestCase):
++    def setUp(self):
++        self.old_disable = logging.root.manager.disable
++        logging.disable(logging.CRITICAL)
++
++    def tearDown(self):
++        logging.disable(self.old_disable)
++
++
++class WallReservationTests(QuietCase):
++    def builder(self, bag):
++        data = battle_state()
++        actor(data, 2).update(pos={'x': 13, 'y': 20}, backpack=list(bag))
++        p = planner(data)
++        p.jobs['2'] = dict(kind='wall', stage='quarry', quota=8, cell=(12, 24))
++        return data, p
++
++    def test_mixed_full_bag_sells_only_copper_and_preserves_batch(self):
++        data, p = self.builder(['stone'] * 8 + ['copper'] * 92)
++        self.assertTrue(p.sell('2', force=True))
++        self.assertEqual(p.v.commands['2'], {'action': 'sell', 'name': 'copper', 'num': 92})
++        self.assertEqual(p.jobs['2']['kind'], 'wall')
++        engine = DayEngine(data)
++        engine.apply(dict(roleCommandMap=p.v.commands, prompt='', executeCmd=''))
++        self.assertEqual(Counter(actor(engine.data, 2)['backpack']), Counter(stone=8))
++
++    def test_iron_is_not_blocked_by_wall_reservation(self):
++        _, p = self.builder(['stone'] * 8 + ['iron'] * 4)
++        self.assertTrue(p.sell('2'))
++        self.assertEqual(p.v.commands['2'], {'action': 'sell', 'name': 'iron', 'num': 4})
++        self.assertEqual(p.jobs['2']['kind'], 'wall')
++
++    def test_surplus_stone_above_batch_is_saleable(self):
++        data, p = self.builder(['stone'] * 20)
++        self.assertTrue(p.sell('2', force=True))
++        self.assertEqual(p.v.commands['2'], {'action': 'sell', 'name': 'stone', 'num': 12})
++        engine = DayEngine(data)
++        engine.apply(dict(roleCommandMap=p.v.commands, prompt='', executeCmd=''))
++        self.assertEqual(Counter(actor(engine.data, 2)['backpack']), Counter(stone=8))
++
++    def test_income_cannot_erase_pending_wall_batch(self):
++        data, p = self.builder(['stone'] * 8)
++        before = deepcopy(p.jobs['2'])
++        self.assertFalse(p.income('2'))
++        self.assertEqual(p.jobs['2'], before)
++        self.assertFalse(p.sell('2', force=True))
++        self.assertEqual(p.v.commands, {})
++        engine = DayEngine(data)
++        engine.apply(dict(roleCommandMap=p.v.commands, prompt='', executeCmd=''))
++        self.assertEqual(Counter(actor(engine.data, 2)['backpack']), Counter(stone=8))
++
++    def test_material_reservation_survives_service_job_switch(self):
++        _, p = self.builder(['stone'] * 8)
++        self.assertEqual(p.reserved_wall_stone('2'), 8)
++        p.jobs['2'] = dict(kind='service', target='5', item='WeaponUpgradeVoucher1')
++        self.assertFalse(p.sell('2', force=True))
++        self.assertEqual(p.wall_reservations['2'], 8)
++
++    def test_finished_target_releases_stone_reservation(self):
++        _, p = self.builder(['stone'] * 8)
++        p.reserved_wall_stone('2')
++        p.v.wall_count = p.wall_target
++        self.assertTrue(p.sell('2', force=True))
++        self.assertEqual(p.v.commands['2']['num'], 8)
++        self.assertNotIn('2', p.wall_reservations)
++        self.assertEqual(p.jobs['2']['kind'], 'sell')
++
++    def test_last_three_missing_walls_do_not_reserve_twenty_stones(self):
++        _, p = self.builder(['stone'] * 20)
++        p.v.wall_count = p.wall_target - 3
++        self.assertTrue(p.sell('2', force=True))
++        self.assertEqual(p.v.commands['2']['num'], 17)
++
++    def test_owner_death_releases_reservation(self):
++        data, p = self.builder(['stone'] * 8)
++        p.reserved_wall_stone('2')
++        data['roundNo'] = 2
++        actor(data, 2)['health'] = 0
++        q = planner(data, p.memory)
++        self.assertNotIn('2', q.wall_reservations)
++
++    def test_rejected_sale_neither_erases_job_nor_reserves_action(self):
++        _, p = self.builder(['copper'] * 100)
++        before = deepcopy(p.jobs['2'])
++        with patch.object(p.v, 'add', return_value=False):
++            self.assertFalse(p.sell('2', force=True))
++        self.assertEqual(p.jobs['2'], before)
++        self.assertNotIn('2', p.v.busy)
++        self.assertTrue(any(e['event'] == 'action_rejected' for e in p.events))
++
++    def test_nonbuilder_can_still_sell_all_stone(self):
++        data = battle_state()
++        actor(data, 2).update(pos={'x': 13, 'y': 20}, backpack=['stone'] * 20)
++        p = planner(data)
++        self.assertTrue(p.sell('2', force=True))
++        self.assertEqual(p.v.commands['2']['num'], 20)
++
++    def test_empty_builder_can_fund_while_stone_is_unavailable(self):
++        data, p = self.builder([])
++        data['mapInfo']['zones'] = [z for z in data['mapInfo']['zones'] if z['neutralType'] != 'stone']
++        p = planner(data)
++        p.jobs['2'] = dict(kind='wall', stage='quarry', quota=8, cell=(12, 24))
++        self.assertTrue(p.income('2'))
++        self.assertIn(p.v.commands['2']['action'], {'move', 'collect'})
++        self.assertEqual(p.jobs['2']['kind'], 'wall')
++        self.assertTrue(any(e['event'] == 'wall_funding' for e in p.events))
++
++    def test_full_copper_bag_resumes_construction_over_260_transitions(self):
++        data = battle_state(round_no=131)
++        actor(data, 2).update(pos={'x': 13, 'y': 20}, backpack=['copper'] * 100)
++        engine = DayEngine(data, respawn=True)
++        session = GameSession(strategy_mode='survival', origin=1)
++        first = session.handle(deepcopy(data))
++        self.assertEqual(first['roleCommandMap']['2'], {'action': 'sell', 'name': 'copper', 'num': 100})
++        engine.apply(first)
++        for _ in range(259):
++            engine.apply(session.handle(deepcopy(engine.data)))
++        self.assertFalse(engine.rejected)
++        self.assertEqual(Counter(actor(engine.data, 2)['backpack'])['copper'], 0)
++        self.assertGreaterEqual(sum(r['roleType'] == 'wall' for r in engine.data['teamOur']['roles']), 12)
++
++
++class PaidDeliveryTests(QuietCase):
++    def test_adjacent_voucher_on_last_daylight_tick_is_used(self):
++        data = battle_state(round_no=70, levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WeaponUpgradeVoucher2']
++        p = planner(data)
++        self.assertEqual(p.return_cost('2'), 0)
++        self.assertTrue(p.held_delivery('2'))
++        self.assertEqual(p.v.commands['2']['action'], 'use')
++
++    def test_wall_errand_cannot_reduce_next_night_fire(self):
++        data = battle_state(round_no=70, levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WallUpgradeVoucher1']
++        data['teamOur']['roles'].append(make_role(100, 'wall', (12, 24)))
++        engine = DayEngine(data)
++        session = GameSession(strategy_mode='survival', origin=1)
++        engine.apply(session.handle(deepcopy(data)))
++        self.assertEqual(actor(engine.data, 2)['pos'], {'x': 8, 'y': 23})
++        self.assertEqual(attack_count(session.handle(with_target(deepcopy(engine.data)))), 3)
++
++    def test_far_old_target_does_not_hide_legal_adjacent_wall(self):
++        data = battle_state(round_no=70)
++        actor(data, 2)['backpack'] = ['WallUpgradeVoucher1']
++        data['teamOur']['roles'] += [make_role(100, 'wall', (12, 24)), make_role(101, 'wall', (8, 24))]
++        p = planner(data)
++        p.jobs['2'] = dict(kind='service', target='100', item='WallUpgradeVoucher1')
++        self.assertTrue(p.held_delivery('2'))
++        self.assertEqual(p.jobs['2']['target'], '101')
++        self.assertEqual(p.v.commands['2']['targetPos'], [{'x': 8, 'y': 24}])
++
++    def test_failed_deadline_does_not_claim_target_or_replace_job(self):
++        data = battle_state(round_no=70)
++        actor(data, 2)['backpack'] = ['WallUpgradeVoucher1']
++        data['teamOur']['roles'].append(make_role(100, 'wall', (12, 24)))
++        p = planner(data)
++        p.jobs['2'] = dict(kind='wall', stage='build', quota=8)
++        before = deepcopy(p.jobs['2'])
++        self.assertFalse(p.held_delivery('2'))
++        self.assertEqual(p.jobs['2'], before)
++        self.assertFalse(p.claimed)
++        self.assertTrue(any(e['event'] == 'delivery_deferred' for e in p.events))
++
++    def test_deadline_counts_use_and_return_but_no_purchase_margin(self):
++        data = battle_state(round_no=69)
++        p = planner(data)
++        route = [(8, 23), (7, 23)]
++        # Move, use, then one move back needs three ticks, not two.
++        self.assertFalse(p.delivery_fits('2', route))
++        p = planner(battle_state(round_no=68))
++        self.assertTrue(p.delivery_fits('2', route))
++
++    def test_day70_deferral_is_delivered_after_day_boundary(self):
++        data = battle_state(round_no=70, levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WallUpgradeVoucher1']
++        data['teamOur']['roles'].append(make_role(100, 'wall', (12, 24)))
++        engine = DayEngine(data)
++        session = GameSession(strategy_mode='survival', origin=1)
++        for _ in range(76):
++            engine.apply(session.handle(deepcopy(engine.data)))
++        self.assertEqual(engine.stats['use:WallUpgradeVoucher1'], 1)
++        self.assertEqual(actor(engine.data, 100)['level'], 2)
++        self.assertFalse(engine.rejected)
++
++    def test_retry_another_target_after_validator_rejection(self):
++        data = battle_state(levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WeaponUpgradeVoucher2']
++        p = planner(data)
++        p.jobs['2'] = dict(kind='service', target='5', item='WeaponUpgradeVoucher2')
++        original = p.v.add
++
++        def reject_first(actor_id, command):
++            if command.get('targetPos') == [{'x': 8, 'y': 22}]:
++                return False
++            return original(actor_id, command)
++
++        with patch.object(p.v, 'add', side_effect=reject_first):
++            self.assertTrue(p.held_delivery('2'))
++        self.assertEqual(p.jobs['2']['target'], '6')
++        self.assertEqual(p.claimed, {'6'})
++        self.assertTrue(any(e['event'] == 'action_rejected' for e in p.events))
++
++    def test_dynamic_blocked_target_does_not_hide_available_cannon(self):
++        data = battle_state(levels=(2, 2, 2))
++        actor(data, 2).update(pos={'x': 10, 'y': 24}, backpack=['WeaponUpgradeVoucher2'])
++        actor(data, 3)['pos'] = {'x': 8, 'y': 23}
++        actor(data, 4)['pos'] = {'x': 11, 'y': 24}
++        for cell in [(7, 21), (7, 22), (7, 23), (8, 21)]:
++            data['mapInfo']['zones'].append(dict(neutralType='obstacle', pos=dict(x=cell[0], y=cell[1])))
++        p = planner(data)
++        p.jobs['2'] = dict(kind='service', target='5', item='WeaponUpgradeVoucher2')
++        self.assertIsNotNone(p.route('2', {(8, 22)}, static=True))
++        self.assertIsNone(p.route('2', {(8, 22)}))
++        self.assertTrue(p.held_delivery('2'))
++        self.assertEqual(p.jobs['2']['target'], '6')
++
++    def test_two_couriers_do_not_modify_same_gun(self):
++        data = battle_state(levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WeaponUpgradeVoucher2']
++        actor(data, 3)['backpack'] = ['WeaponUpgradeVoucher2']
++        p = planner(data)
++        self.assertTrue(p.held_delivery('2'))
++        self.assertTrue(p.held_delivery('3'))
++        cells = [tuple(c['targetPos'][0].values()) for c in p.v.commands.values()]
++        self.assertEqual(len(cells), len(set(cells)))
++
++    def test_busy_actor_cannot_overwrite_existing_job_or_claim(self):
++        data = battle_state(levels=(2, 2, 2))
++        actor(data, 2)['backpack'] = ['WeaponUpgradeVoucher2']
++        p = planner(data)
++        p.v.busy.add('2')
++        self.assertFalse(p.held_delivery('2'))
++        self.assertEqual(p.claimed, set())
++        self.assertNotIn('2', p.jobs)
++
++
++class NightPriorityTests(QuietCase):
++    def test_two_normal_vouchers_leave_all_three_guns_firing(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        for a in (2, 3):
++            actor(data, a)['backpack'] = ['WeaponUpgradeVoucher2']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(attack_count(out), 3)
++        self.assertFalse(any(c['action'] == 'use' for c in out['roleCommandMap'].values()))
++
++    def test_critical_base_uses_voucher_and_remaining_two_guns_fire(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 1)['health'] = 1
++        actor(data, 2)['backpack'] = ['StationUpgradeVoucher1']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(out['roleCommandMap']['2'], dict(action='use', name='StationUpgradeVoucher1', targetPos=[dict(x=9, y=22)]))
++        self.assertEqual(attack_count(out), 2)
++        self.assertFalse(any(c.get('controllerId') == '2' for c in out['roleCommandMap'].values()))
++
++    def test_level_two_base_rescue_uses_level_two_voucher(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 1).update(level=2, health=1)
++        actor(data, 2)['backpack'] = ['StationUpgradeVoucher2']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(out['roleCommandMap']['2']['name'], 'StationUpgradeVoucher2')
++        self.assertEqual(attack_count(out), 2)
++
++    def test_full_health_base_upgrade_does_not_steal_fire(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 2)['backpack'] = ['StationUpgradeVoucher1']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(attack_count(out), 3)
++        self.assertFalse(any(c['action'] == 'use' for c in out['roleCommandMap'].values()))
++
++    def test_wrong_voucher_does_not_trigger_fake_rescue(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 1).update(level=2, health=1)
++        actor(data, 2)['backpack'] = ['StationUpgradeVoucher1']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(attack_count(out), 3)
++        self.assertFalse(any(c['action'] == 'use' for c in out['roleCommandMap'].values()))
++
++    def test_rescue_prefers_spare_controller_in_cooldown_window(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 1)['health'] = 1
++        actor(data, 3)['pos'] = {'x': 8, 'y': 21}
++        actor(data, 5)['cooldown'] = 2
++        for a in (2, 3):
++            actor(data, a)['backpack'] = ['StationUpgradeVoucher1']
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(out['roleCommandMap']['3']['name'], 'StationUpgradeVoucher1')
++        self.assertEqual(attack_count(out), 2)
++        self.assertEqual(sum(c.get('name') == 'StationUpgradeVoucher1' for c in out['roleCommandMap'].values()), 1)
++
++    def test_fire_matching_excludes_already_upgraded_gun(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 2)['backpack'] = ['WeaponUpgradeVoucher2']
++        p = planner(data)
++        self.assertTrue(p.held_delivery('2'))
++        self.assertEqual(p.v.commands['2']['targetPos'], [dict(x=8, y=22)])
++        p.night()
++        self.assertEqual(sum(c['action'] == 'attack' for c in p.v.commands.values()), 2)
++        self.assertNotIn('5', p.v.commands)
++        self.assertFalse(any(e['event'] == 'action_rejected' for e in p.events))
++
++    def test_idle_carrier_skips_fired_gun_and_upgrades_cooling_gun(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 3)))
++        actor(data, 2)['pos'] = dict(x=7, y=22)
++        actor(data, 3).update(pos=dict(x=8, y=23), backpack=['WeaponUpgradeVoucher2'])
++        actor(data, 6)['cooldown'] = 2
++        out = GameSession(strategy_mode='survival', origin=1).handle(data)
++        self.assertEqual(out['roleCommandMap']['3'], dict(action='use', name='WeaponUpgradeVoucher2', targetPos=[dict(x=9, y=23)]))
++        self.assertEqual(attack_count(out), 2)
++
++    def test_night_rescue_never_sends_distant_carrier_travelling(self):
++        data = with_target(battle_state(round_no=71, levels=(2, 2, 2)))
++        actor(data, 1)['health'] = 1
++        actor(data, 4)['backpack'] = ['StationUpgradeVoucher1']
++        p = planner(data)
++        self.assertFalse(p.rescue_base())
++        self.assertEqual(p.v.commands, {})
++
++    def test_night_fixture_is_nonoverlapping_and_has_three_controllers(self):
++        data = original_fixtures.SurvivalNightFirePriorityTests._night_state(bag=['WeaponUpgradeVoucher1'])
++        occupied = set()
++        for role in data['teamOur']['roles']:
++            self.assertFalse(occupied & footprint(role), role['id'])
++            occupied.update(footprint(role))
++        self.assertEqual(len(planner(data).matching()), 3)
++
++
++if __name__ == '__main__':
++    unittest.main()
+--- a/tools/fuzz_survival_v31.py
++++ b/tools/fuzz_survival_v31.py
+@@ -0,0 +1,66 @@
++"""Seeded snapshots through one session; robustness, NOT combat simulation.
++
++Usage: python -B tools/fuzz_survival_v31.py --output results.json
++"""
++from __future__ import annotations
++import argparse,json,logging,random,sys,time
++from pathlib import Path
++from copy import deepcopy
++
++
++def main() -> int:
++    ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1]);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--seed',type=int,default=20260914);ap.add_argument('--steps',type=int,default=600);args=ap.parse_args()
++    if not 1 <= args.steps <= 1300:ap.error('--steps must be in 1..1300')
++    sys.path.insert(0,str(args.root.resolve()))
++    from tests.test_survival_v3 import battle_state,make_role
++    from src.agentrace.session import GameSession
++    from src.agentrace.model import building_ring
++    from tools.simulate_survival import footprint,maxhp
++    logging.disable(logging.CRITICAL)
++    rng=random.Random(args.seed);s=GameSession(strategy_mode='survival',origin=1)
++    errors=[];counts={};start=time.monotonic();previous={};examples=[]
++    for r in range(1,args.steps+1):
++        data=battle_state(round_no=r,gold=rng.randrange(2001),levels=tuple(rng.randint(1,3) for _ in range(3)))
++        roles=data['teamOur']['roles'];taken=set().union(*(footprint(x) for x in roles))
++        taken.update((z['pos']['x'],z['pos']['y']) for z in data['mapInfo']['zones'])
++        for idx,cell in enumerate(sorted(building_ring((9,22),2))):
++            if cell not in taken and rng.random()<0.35:
++                wall=make_role(100+idx,'wall',cell,level=rng.randint(1,3));wall['health']=rng.randint(1,maxhp(wall))
++                roles.append(wall);taken.add(cell)
++        for role in roles:
++            if role['roleType'] in {'worker','pioneer'}:
++                items=['stone','copper','iron','Medicine','WeaponUpgradeVoucher1','WeaponUpgradeVoucher2','WallUpgradeVoucher1','StationUpgradeVoucher1','StationUpgradeVoucher2','WallFixer']
++                n=rng.choice([0,1,2,8,10,role['backPackCapability']])
++                role['backpack']=[rng.choice(items) for _ in range(n)]
++                role['health']=rng.randint(1,maxhp(role))
++            elif role['roleType']=='rocket':role['cooldown']=rng.randrange(4)
++        roles[0]['health']=rng.randint(1,maxhp(roles[0]))
++        if (r-1)%130>=70:
++            for j in range(rng.randrange(21)):
++                free=[(x,y) for x in range(5,18) for y in range(14,29) if (x,y) not in taken]
++                cell=rng.choice(free);taken.add(cell)
++                kind,health=rng.choice([('smallRobot',40),('middleRobot',60),('largeRobot',500),('bossRobot',800)])
++                data['robot']['roles'].append(make_role(1000+j,kind,cell,health=rng.randint(1,health),targetTeam='challenger'))
++        data['lastRoundRoleActionResults']={a:rng.choice([True,True,True,False]) for a in previous}
++        try:
++            out=s.handle(deepcopy(data));assert out==s.handle(deepcopy(data)),'duplicate_changed'
++            commands=out['roleCommandMap'];controlled=[];destinations=[]
++            for a,c in commands.items():
++                counts[c['action']]=counts.get(c['action'],0)+1
++                if c['action']=='attack':controlled.append(c['controllerId'])
++                if c['action']=='move':destinations.append((c['targetPos'][0]['x'],c['targetPos'][0]['y']))
++            assert len(controlled)==len(set(controlled)),'controller_conflict'
++            assert not(set(controlled)&commands.keys()),'controller_has_second_action'
++            assert len(destinations)==len(set(destinations)),'move_target_conflict'
++            assert not(set(destinations)&taken),'move_into_occupied'
++            previous=commands
++        except Exception as exc:
++            errors.append(dict(round=r,type=type(exc).__name__,message=str(exc)));examples.append(dict(input=data))
++    result=dict(seed=args.seed,steps=args.steps,same_session=True,duplicate_calls=args.steps,exceptions_or_check_failures=errors,actions=counts,
++       seconds=time.monotonic()-start,scope='Random valid-shaped snapshots, NOT state transitions or official legality/combat proof. GameSession gate plus independent controller/destination checks.',failure_inputs=examples)
++    args.output.parent.mkdir(parents=True,exist_ok=True)
++    args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
++    print('[main]',json.dumps({k:v for k,v in result.items() if k!='failure_inputs'},ensure_ascii=False))
++    return bool(errors)
++
++if __name__=='__main__':raise SystemExit(main())
+--- a/tools/validate_survival_v31.py
++++ b/tools/validate_survival_v31.py
+@@ -0,0 +1,86 @@
++"""Run the V3.1 local acceptance matrix and retain raw output for every command.
++
++Run from any directory with the same Python/Flask environment as the player:
++    python -B tools/validate_survival_v31.py --output-dir local_validation_v31
++No official robot damage, LLM grading, or 1300-turn survival claim is implied.
++"""
++from __future__ import annotations
++import argparse
++import hashlib
++from importlib.metadata import PackageNotFoundError, version
++import json
++import os
++from pathlib import Path
++import platform
++import subprocess
++import sys
++import time
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def run_check(name: str, arguments: list[str], output: Path, timeout: int) -> dict:
++    """Execute in the repo, preserve logs, and distinguish errors from passes."""
++    command = [sys.executable, '-B', *arguments]
++    started = time.monotonic()
++    record = dict(name=name, command=command, cwd=str(ROOT), log=name + '.log', passed=False)
++    try:
++        with (output / record['log']).open('w', encoding='utf-8') as log:
++            process = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
++                                     env=dict(os.environ, PYTHONHASHSEED='0', PYTHONDONTWRITEBYTECODE='1'),
++                                     timeout=timeout, check=False)
++        record.update(returncode=process.returncode, passed=process.returncode == 0)
++    except (OSError, subprocess.TimeoutExpired) as exc:
++        record['error'] = f'{type(exc).__name__}: {exc}'
++    record['seconds'] = round(time.monotonic() - started, 3)
++    (output / (name + '.exit.json')).write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding='utf-8')
++    print(f"[run_check] {name}: {'PASS' if record['passed'] else 'FAIL'}; log={output / record['log']}", flush=True)
++    return record
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--output-dir', type=Path, default=ROOT / 'local_validation_v31')
++    parser.add_argument('--timeout', type=int, default=600, help='Per-check timeout in seconds.')
++    args = parser.parse_args()
++    if args.timeout < 1:
++        parser.error('--timeout must be positive')
++    output = args.output_dir.resolve()
++    output.mkdir(parents=True, exist_ok=True)
++    # Each output directory is an actual run. Never confuse packaged history with a rerun.
++    try:
++        flask_version = version('Flask')
++    except PackageNotFoundError:
++        flask_version = None
++    summary = dict(complete=False, passed=False, python=sys.version, executable=sys.executable,
++                   platform=platform.platform(), flask=flask_version, checks=[],
++                   scope='Local regression/HTTP, daytime transitions, economic continuity, and snapshot robustness only; not official survival.',
++                   source_sha256={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
++                                  for p in sorted((ROOT / 'src').rglob('*.py'))})
++    summary_path = output / 'validation_summary.json'
++
++    def save() -> None:
++        summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
++
++    reproduction = 'docs/validation_v31/reproduction'
++    checks = [
++        ('full_suite', ['-m', 'unittest', 'discover', '-s', 'tests', '-v']),
++        ('review_assertions', [f'{reproduction}/test_review_regressions.py', str(ROOT), '--json', str(output / 'review_assertions.json')]),
++        ('continuous_cases', [f'{reproduction}/review_cases.py', str(ROOT), '--output', str(output / 'continuous_cases.json')]),
++        ('initial_maps', ['tools/simulate_survival.py', '--modes', 'survival', '--generated', '8', '--output', str(output / 'initial_maps.json')]),
++        ('economic_and_night', ['tools/validate_survival_stress.py', '--output', str(output / 'economic_and_night.json')]),
++        ('snapshot_fuzz', ['tools/fuzz_survival_v31.py', '--output', str(output / 'snapshot_fuzz.json')]),
++    ]
++    save()
++    for name, arguments in checks:
++        summary['checks'].append(run_check(name, arguments, output, args.timeout))
++        save()
++    summary['complete'] = True
++    summary['passed'] = all(check['passed'] for check in summary['checks'])
++    save()
++    print(f'[main] Validation summary: {summary_path}', flush=True)
++    return 0 if summary['passed'] else 1
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())

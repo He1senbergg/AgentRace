@@ -167,7 +167,7 @@ def main():
             stream.reconfigure(encoding="utf-8", line_buffering=True)
     logging.basicConfig(level=logging.INFO)
     LOG.info("[main] 回合起点自动识别：开局0或1")
-    LOG.info("[main] strategy_mode=%s; survival policy=v3-candidate", SESSION.strategy_mode)
+    LOG.info("[main] strategy_mode=%s; survival policy=%s", SESSION.strategy_mode, _session.SurvivalPlanner.revision)
     # Keep the SDK positional port; accept judger traffic on all IPv4 interfaces (§43.2).
     app.run(host="0.0.0.0", port=args.port, debug=False, use_reloader=False)
 

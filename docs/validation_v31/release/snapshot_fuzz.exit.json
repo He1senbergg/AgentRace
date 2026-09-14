@@ -1,0 +1,15 @@
+{
+  "name": "snapshot_fuzz",
+  "command": [
+    "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+    "-B",
+    "tools/fuzz_survival_v31.py",
+    "--output",
+    "/mnt/data/work_fix/evidence/release/snapshot_fuzz.json"
+  ],
+  "cwd": "/mnt/data/work_fix/AgentRace",
+  "log": "snapshot_fuzz.log",
+  "passed": true,
+  "returncode": 0,
+  "seconds": 3.174
+}

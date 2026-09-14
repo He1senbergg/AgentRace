@@ -1,0 +1,15 @@
+{
+  "seed": 20260914,
+  "steps": 600,
+  "same_session": true,
+  "duplicate_calls": 600,
+  "exceptions_or_check_failures": [],
+  "actions": {
+    "use": 904,
+    "move": 498,
+    "attack": 243
+  },
+  "seconds": 2.988422068000091,
+  "scope": "Random valid-shaped snapshots, NOT state transitions or official legality/combat proof. GameSession gate plus independent controller/destination checks.",
+  "failure_inputs": []
+}

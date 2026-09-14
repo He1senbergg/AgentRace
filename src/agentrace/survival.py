@@ -14,6 +14,8 @@ from .task_news import TaskPlanner, task_options
 class SurvivalPlanner:
     """One mutable observation transaction, with small jobs carried in memory."""
 
+    revision = "v3.1-reviewed-fix"
+
     def __init__(self, world, memory, delta, rules):
         self.world, self.memory, self.delta, self.rules = (world, memory, delta, rules)
         self.characters = {a: c for a, c in world.characters.items() if positive_health(c.get('health'))}
@@ -25,6 +27,8 @@ class SurvivalPlanner:
             self.state = dict(jobs={}, slots={}, samples={}, stalled={}, last_round=None, last_spend=None, last_asset_change=None, assets=None)
             memory.survival = self.state
         self.jobs = self.state['jobs']
+        # Material ownership survives temporary courier/medicine job changes.
+        self.wall_reservations = self.state.setdefault('wall_reservations', {})
         self.decisions = {}
         self.events = []
         self.claimed = set()
@@ -47,6 +51,9 @@ class SurvivalPlanner:
     def observe(self):
         """Only changes in the next observation count as progress/verification."""
         alive = set(self.characters)
+        for actor in list(self.wall_reservations):
+            if actor not in alive or self.v.wall_count >= self.wall_target:
+                self.wall_reservations.pop(actor, None)
         for actor in list(self.jobs):
             if actor not in alive:
                 del self.jobs[actor]
@@ -113,6 +120,8 @@ class SurvivalPlanner:
             self.note(actor, reason)
             return True
         self.note(actor, 'action_rejected:' + reason)
+        # A later return-home note must not erase evidence of a rejected plan.
+        self.events.append(dict(event='action_rejected', actor=actor, reason=reason, command=dict(command)))
         return False
 
     def move(self, actor, cells, reason, adjacent=True):
@@ -306,6 +315,7 @@ class SurvivalPlanner:
         if job.get('stage') == 'build' and have == 0:
             job['stage'] = 'quarry'
         quota = min(missing, job.get('quota', min(8, missing)))
+        self.wall_reservations[actor] = quota * stones
         if have >= quota or (have and job.get('stage') == 'build'):
             job['stage'] = 'build'
         if job.get('stage') == 'quarry':
@@ -326,6 +336,7 @@ class SurvivalPlanner:
             if candidates:
                 _, mine, amount = min(candidates)
                 job['quota'] = min(quota, have + max(1, amount // stones))
+                self.wall_reservations[actor] = job['quota'] * stones
                 if self.v.near(char, {mine}):
                     return self.send(actor, dict(action='collect', targetPos=[dict(x=mine[0], y=mine[1])]), 'wall_batch_quarry')
                 return self.move(actor, {mine}, 'wall_batch_quarry_travel')
@@ -374,37 +385,89 @@ class SurvivalPlanner:
                 candidates.append((55, wall, f'WallUpgradeVoucher{level}'))
         return sorted(candidates, key=lambda x: (x[0], x[1]['id'], x[2]))
 
+    def delivery_fits(self, actor: str, route: list) -> bool:
+        """Budget the executable route, one use action, and the assigned return.
+
+        Paid goods do not need the extra margin used for speculative purchases.
+        An adjacent use still costs a turn; it is not permission to miss dusk.
+        """
+        if not route or self.phase is None:
+            return False
+        if not self.phase.is_day:
+            return len(route) == 1
+        back = self.return_cost(actor, route[-1])
+        return back is not None and len(route) + back <= 71 - self.phase.round_in_day
+
     def held_delivery(self, actor):
-        bag = inventory(self.characters[actor]) or Counter()
+        if actor in self.v.busy or self.phase is None:
+            return False
+        char = self.characters[actor]
+        bag = inventory(char) or Counter()
         old = self.jobs.get(actor, {})
         candidates = []
-        for name in sorted(UPGRADES):
-            if not bag[name]:
-                continue
-            kinds, required = UPGRADES[name]
-            for target in self.world.roles.values():
-                if target.get('roleType') in kinds and level_of(target) == required and (target['id'] not in self.claimed):
-                    route = self.route(actor, {target['cell']}, static=True)
-                    if route:
-                        candidates.append((target['id'] != old.get('target'), len(route), name, target))
+        items = [(name, kinds, required) for name, (kinds, required) in sorted(UPGRADES.items()) if bag[name]]
         if bag['WallFixer']:
-            for wall in self.walls:
-                if wall['id'] not in self.claimed and wall['health'] < max_health(wall):
-                    route = self.route(actor, {wall['cell']}, static=True)
-                    if route:
-                        candidates.append((wall['id'] != old.get('target'), len(route), 'WallFixer', wall))
-        if not candidates:
+            items.append(('WallFixer', {'wall'}, None))
+        for name, kinds, required in items:
+            for target in self.world.roles.values():
+                if (target.get('roleType') not in kinds or not positive_health(target.get('health'))
+                        or target['id'] in self.claimed or target['cell'] in self.v.modified):
+                    continue
+                if required is not None and level_of(target) != required:
+                    continue
+                if name == 'WallFixer' and (max_health(target) is None or target['health'] >= max_health(target)):
+                    continue
+                # Dynamic routing prevents a blocked old target from hiding a
+                # different, actually executable delivery. No claim before send.
+                route = self.route(actor, {target['cell']})
+                if not route:
+                    continue
+                if not self.delivery_fits(actor, route):
+                    self.events.append(dict(event='delivery_deferred', actor=actor, target=target['id'],
+                                            item=name, reason='return_deadline'))
+                    continue
+                candidates.append((target['id'] != old.get('target'), len(route), name, target['id'], target, route))
+        for _, _, name, _, target, route in sorted(candidates, key=lambda x: x[:4]):
+            if len(route) == 1:
+                command = dict(action='use', name=name, targetPos=[dict(x=target['cell'][0], y=target['cell'][1])])
+                reason = 'apply_observed_item'
+            else:
+                command = dict(action='move', targetPos=[dict(x=route[1][0], y=route[1][1])])
+                reason = 'deliver_observed_item'
+            if self.send(actor, command, reason):
+                self.jobs[actor] = dict(kind='service', target=target['id'], item=name, stage='deliver')
+                self.claimed.add(target['id'])
+                return True
+        return False
+
+    def rescue_base(self) -> bool:
+        """Immediate, already-owned base upgrade; ordinary maintenance stays last.
+
+        65% is the existing procurement emergency threshold, not a game rule.
+        Never send a controller travelling during the night for this exception.
+        """
+        if (self.base is None or level_of(self.base) not in (1, 2)
+                or self.base['health'] >= 0.65 * max_health(self.base)
+                or self.base['cell'] in self.v.modified or self.base['id'] in self.claimed):
             return False
-        _, _, name, target = min(candidates, key=lambda x: x[:3])
-        if self.phase.is_day and (not self.fits(actor, [({target['cell']}, 1)], margin=2)):
-            return False
-        if not self.phase.is_day and (not self.v.near(self.characters[actor], {target['cell']})):
-            return False
-        self.jobs[actor] = dict(kind='service', target=target['id'], item=name, stage='deliver')
-        self.claimed.add(target['id'])
-        if self.v.near(self.characters[actor], {target['cell']}):
-            return self.send(actor, dict(action='use', name=name, targetPos=[dict(x=target['cell'][0], y=target['cell'][1])]), 'apply_observed_item')
-        return self.move(actor, {target['cell']}, 'deliver_observed_item')
+        name = f"StationUpgradeVoucher{level_of(self.base)}"
+        available = [a for a in self.characters if a not in self.v.busy]
+        ready = [w for w in self.weapons if w.get('cooldown', 0) == 0
+                 and w['cell'] not in self.v.modified and self.defense.attack_plan(w)[2] > 0]
+        carriers = [a for a in available if (inventory(self.characters[a]) or Counter())[name]
+                    and self.v.near(self.characters[a], {self.base['cell']})]
+        # Prefer a spare controller, retaining as many fireable guns as possible.
+        carriers.sort(key=lambda a: (-len(self.matching(ready, [b for b in available if b != a])),
+                                     -self.characters[a]['health'], a))
+        for actor in carriers:
+            command = dict(action='use', name=name, targetPos=[dict(x=self.base['cell'][0], y=self.base['cell'][1])])
+            if self.send(actor, command, 'rescue_base_upgrade'):
+                self.claimed.add(self.base['id'])
+                self.jobs[actor] = dict(kind='service', target=self.base['id'], item=name, stage='deliver')
+                self.events.append(dict(event='base_rescue', actor=actor, target=self.base['id'],
+                                        observed_health=self.base['health'], item=name))
+                return True
+        return False
 
     def procure(self, actor, emergency_only=False):
         char = self.characters[actor]
@@ -487,11 +550,36 @@ class SurvivalPlanner:
         self.jobs[actor] = dict(kind='medicine')
         return self.move(actor, self.world.zones['weaponShop'], 'medicine_travel')
 
+    def reserved_wall_stone(self, actor: str) -> int:
+        """Return owned stone reserved for an unfinished batch, not all minerals.
+
+        Keep the reservation separate from job.kind: a temporary service trip
+        must not silently turn building materials into saleable income.
+        """
+        missing = max(0, self.wall_target - self.v.wall_count)
+        cost = self.rules.wall_stone_cost
+        if not missing or not nonnegative_int(cost) or cost == 0:
+            self.wall_reservations.pop(actor, None)
+            return 0
+        job = self.jobs.get(actor, {})
+        if job.get('kind') == 'wall':
+            quota = job.get('quota', min(8, missing))
+            if not nonnegative_int(quota):
+                quota = min(8, missing)
+            self.wall_reservations[actor] = min(missing, quota) * cost
+        wanted = min(self.wall_reservations.get(actor, 0), missing * cost)
+        return min((inventory(self.characters[actor]) or Counter())['stone'], wanted)
+
     def sell(self, actor, force=False):
         char = self.characters[actor]
         bag = inventory(char) or Counter()
-        minerals = [m for m in MINERALS if bag[m] and self.v.vendor.get(m, 0) > 0]
+        reserved = self.reserved_wall_stone(actor)
+        amounts = {m: bag[m] - (reserved if m == 'stone' else 0)
+                   for m in MINERALS if self.v.vendor.get(m, 0) > 0}
+        minerals = [m for m in amounts if amounts[m] > 0]
         if not minerals:
+            if reserved:
+                self.note(actor, 'wall_stone_reserved')
             return False
         if not self.fits(actor, [(self.world.zones['vendor'], len(minerals))], margin=3):
             return False
@@ -499,13 +587,23 @@ class SurvivalPlanner:
         old = self.jobs.get(actor, {})
         back = self.return_cost(actor)
         due = back is not None and 71 - self.phase.round_in_day < back + 20
-        if not (force or near or old.get('kind') == 'sell' or (sum((bag[m] for m in minerals)) >= 10) or due):
+        capacity = char.get('backPackCapability', 100 if char['roleType'] == 'worker' else 40)
+        full = nonnegative_int(capacity) and sum(bag.values()) >= capacity
+        if not (force or near or full or old.get('kind') == 'sell'
+                or old.get('cleanup') == 'sell' or sum(amounts[m] for m in minerals) >= 10 or due):
             return False
-        self.jobs[actor] = dict(kind='sell')
-        name = max(sorted(minerals), key=lambda m: bag[m] * self.v.vendor[m])
+        name = max(sorted(minerals), key=lambda m: amounts[m] * self.v.vendor[m])
         if near:
-            return self.send(actor, dict(action='sell', name=name, num=bag[name]), 'liquidate_inventory')
-        return self.move(actor, self.world.zones['vendor'], 'persistent_sale_trip')
+            sent = self.send(actor, dict(action='sell', name=name, num=amounts[name]), 'liquidate_inventory')
+        else:
+            sent = self.move(actor, self.world.zones['vendor'], 'persistent_sale_trip')
+        if sent:
+            if old.get('kind') == 'wall' and self.v.wall_count < self.wall_target:
+                # Liquidating copper/iron frees quarry space without deleting the batch.
+                old['cleanup'] = 'sell'
+            else:
+                self.jobs[actor] = dict(kind='sell')
+        return sent
 
     def income(self, actor):
         char = self.characters[actor]
@@ -513,6 +611,11 @@ class SurvivalPlanner:
             return self.sell(actor, force=True)
         if self.sell(actor):
             return True
+        wall_job = self.jobs.get(actor, {}).get('kind') == 'wall' and self.v.wall_count < self.wall_target
+        if wall_job and self.reserved_wall_stone(actor):
+            # Keep a carried batch intact while its construction is deferred.
+            self.note(actor, 'wall_batch_waiting')
+            return False
         bag = inventory(char)
         capacity = char.get('backPackCapability', 100)
         if bag is None or not nonnegative_int(capacity) or sum(bag.values()) >= capacity:
@@ -546,19 +649,22 @@ class SurvivalPlanner:
             return self.sell(actor, force=True)
         _, mineral, mine, route = max(options, key=lambda x: x[:3])
         self.memory.worker_mines[actor] = (mineral, mine)
-        self.jobs[actor] = dict(kind='income', mineral=mineral, cell=mine)
+        if wall_job:
+            # With no building material to deliver, temporary funding is useful;
+            # it must not erase the quarry assignment or its material ownership.
+            self.events.append(dict(event='wall_funding', actor=actor, mineral=mineral))
+        else:
+            self.jobs[actor] = dict(kind='income', mineral=mineral, cell=mine)
         if len(route) == 1:
             return self.send(actor, dict(action='collect', targetPos=[dict(x=mine[0], y=mine[1])]), 'mine_income')
         return self.move(actor, {mine}, 'mine_income_travel')
 
     def night(self):
+        self.rescue_base()
         for actor, char in sorted(self.characters.items()):
             if actor in self.v.busy:
                 continue
             if self.medicine(actor):
-                continue
-            # Upgrade-to-full-health can save a base at night using an already delivered coupon.
-            if self.held_delivery(actor):
                 continue
             threat = self.defense.exposure(char['cell'])
             if threat and char['health'] <= max(threat * 3, max_health(char) * 0.35):
@@ -571,7 +677,7 @@ class SurvivalPlanner:
         available = [a for a in self.characters if a not in self.v.busy]
         choices = []
         for w in self.weapons:
-            if w.get('cooldown', 0) != 0:
+            if w.get('cooldown', 0) != 0 or w['cell'] in self.v.modified or w['id'] in self.v.busy:
                 continue
             targets, after, score = self.defense.attack_plan(w)
             if score <= 0:
@@ -592,6 +698,13 @@ class SurvivalPlanner:
                 self.defense.remaining = after
                 self.note(actor, 'control_weapon:' + w['id'])
         self.defense.support()
+        # Only unused controllers apply ordinary upgrades/repairs. The bounded
+        # base-rescue exception above has already removed its carrier from fire.
+        for actor in sorted(self.characters):
+            if actor in self.v.busy:
+                continue
+            if self.held_delivery(actor):
+                continue
         for actor in sorted(self.characters):
             if actor not in self.v.busy:
                 self.return_home(actor)
@@ -666,4 +779,4 @@ class SurvivalPlanner:
 
     def report(self):
         metrics = dict(round=self.delta.round_no, gold=self.delta.gold, station_hp=[b['health'] for b in self.defense.stations], actors_alive=len(self.characters), weapons_alive=len(self.weapons), weapon_levels=sorted((level_of(w) or 0 for w in self.weapons), reverse=True), walls=len(self.walls), wall_count=len(self.walls), wall_hp=[w['health'] for w in self.walls], wall_total_hp=sum((w['health'] for w in self.walls)), wall_max_hp_total=sum((max_health(w) or 0 for w in self.walls)), actors_hp={a: c['health'] for a, c in self.characters.items()}, controllers_available=len(self.matching()), actual_fire_commands=sum((c['action'] == 'attack' for c in self.v.commands.values())))
-        return dict(round=self.delta.round_no, scope='survival_v3', strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
+        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))

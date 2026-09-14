@@ -6,3 +6,6 @@ __pycache__/
 .private_task_traces/
 *.tasktrace.jsonl*
 _core_validation_*/
+
+# Local V3.1 acceptance runs (packaged release evidence lives in docs/).
+local_validation_v31/

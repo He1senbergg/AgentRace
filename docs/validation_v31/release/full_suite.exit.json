@@ -1,0 +1,18 @@
+{
+  "name": "full_suite",
+  "command": [
+    "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "cwd": "/mnt/data/work_fix/AgentRace",
+  "log": "full_suite.log",
+  "passed": true,
+  "returncode": 0,
+  "seconds": 72.015
+}

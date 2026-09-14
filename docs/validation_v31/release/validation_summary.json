@@ -1,0 +1,126 @@
+{
+  "complete": true,
+  "passed": true,
+  "python": "3.11.10 (main, Oct 16 2024, 04:38:48) [Clang 18.1.8 ]",
+  "executable": "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "flask": "3.1.3",
+  "checks": [
+    {
+      "name": "full_suite",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "full_suite.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 72.015
+    },
+    {
+      "name": "review_assertions",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "docs/validation_v31/reproduction/test_review_regressions.py",
+        "/mnt/data/work_fix/AgentRace",
+        "--json",
+        "/mnt/data/work_fix/evidence/release/review_assertions.json"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "review_assertions.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 0.215
+    },
+    {
+      "name": "continuous_cases",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "docs/validation_v31/reproduction/review_cases.py",
+        "/mnt/data/work_fix/AgentRace",
+        "--output",
+        "/mnt/data/work_fix/evidence/release/continuous_cases.json"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "continuous_cases.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 3.223
+    },
+    {
+      "name": "initial_maps",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "tools/simulate_survival.py",
+        "--modes",
+        "survival",
+        "--generated",
+        "8",
+        "--output",
+        "/mnt/data/work_fix/evidence/release/initial_maps.json"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "initial_maps.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 71.004
+    },
+    {
+      "name": "economic_and_night",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "tools/validate_survival_stress.py",
+        "--output",
+        "/mnt/data/work_fix/evidence/release/economic_and_night.json"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "economic_and_night.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 71.492
+    },
+    {
+      "name": "snapshot_fuzz",
+      "command": [
+        "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+        "-B",
+        "tools/fuzz_survival_v31.py",
+        "--output",
+        "/mnt/data/work_fix/evidence/release/snapshot_fuzz.json"
+      ],
+      "cwd": "/mnt/data/work_fix/AgentRace",
+      "log": "snapshot_fuzz.log",
+      "passed": true,
+      "returncode": 0,
+      "seconds": 3.174
+    }
+  ],
+  "scope": "Local regression/HTTP, daytime transitions, economic continuity, and snapshot robustness only; not official survival.",
+  "source_sha256": {
+    "src/agentrace/__init__.py": "9cd370f5f74dd285ddd9e0bff3fb4625b34a2141c4a24723e23087370a488e62",
+    "src/agentrace/actions.py": "af4dbf5cdaa0180f82b937a4a5780e7f832b4eed858bc8f38ebfa539e74c6734",
+    "src/agentrace/defense.py": "4248b404cd09f738bb8db8d9e9a563c63de922b036e5fd30896e0b73ef8b5159",
+    "src/agentrace/economy.py": "c3861d5987d8236f36547969223428bca57aabd9e34fa3581653bd176c231675",
+    "src/agentrace/memory.py": "d6ffcd66e81574fc91cbe1db51ea98c663de46a87a9d52ce412f193c54bb371f",
+    "src/agentrace/model.py": "0f69d145e13f66cc0151a3817ae844e805d87134ae55414ab3fc7af49bfa6e77",
+    "src/agentrace/session.py": "d410863982a618640414d13eee9994b6014b67c97c306037742ba21d2ff397d3",
+    "src/agentrace/strategy.py": "bcc2cee67b06be6728b78bf02ef91628dd0062f3b24f221d165513b71186cecc",
+    "src/agentrace/survival.py": "8688a35215b04d3d8fe783533b9fe1c15bd66a6e5731bd99c11419b2e956190f",
+    "src/agentrace/task_inspection.py": "0b757e46cea9705b5136312be91f6ba9b34d53f089d41561c90a8ba4556bf47e",
+    "src/agentrace/task_news.py": "07f522b56f4d9a913845646076137569894c27ccbf9bcb9e9ab2e7aa2dbb18c9",
+    "src/agentrace/task_protocol.py": "6e87a0a0f7b74eded079cc0e8fd22d1dd9223bba64e4165d61e781cd760c76fa",
+    "src/agentrace/task_trace.py": "4f098141dce0543751564c681442a1a21bc486d35a5c570dc02c973e2ba1c584",
+    "src/main3.py": "a23579679d7d668ce0f377ed99ba9f5a84ed5233bd606bd9bd4f84c4ff80485a"
+  }
+}

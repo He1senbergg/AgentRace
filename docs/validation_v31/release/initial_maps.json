@@ -1,0 +1,870 @@
+{
+  "model": "daytime_rule_subset_NOT_official_engine",
+  "assumptions": [
+    "No tasks, robot damage or official scoring.",
+    "Reward, if set, arrives exogenously at round 20.",
+    "Mines have 10 harvests, then respawn uniformly on an unoccupied cell.",
+    "Initial task-point symbols remain obstacles, not reconstructed task metadata."
+  ],
+  "results": [
+    {
+      "mode": "survival",
+      "seed": 25,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 55,
+      "stats": {
+        "move": 90,
+        "mineral_revenue": 55,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 19,
+        "build:wall": 8,
+        "sell": 2,
+        "sell:copper": 11
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 40.00902395715035,
+        "max": 65.04938799992033,
+        "p95": 62.90831100000105
+      },
+      "case": "game25_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 25,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 75,
+      "stats": {
+        "move": 105,
+        "mineral_revenue": 35,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 15,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "build:wall": 8,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell": 1,
+        "sell:copper": 7
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 35.709608814279036,
+        "max": 73.30609300004198,
+        "p95": 70.93316599991795
+      },
+      "case": "game25_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 26,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 57,
+      "stats": {
+        "move": 87,
+        "mineral_revenue": 57,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 21,
+        "build:wall": 8,
+        "sell": 4,
+        "sell:copper": 11,
+        "sell:stone": 2
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 30.75775715714631,
+        "max": 62.60675700002594,
+        "p95": 57.22361400000864
+      },
+      "case": "game26_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 26,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 96,
+      "stats": {
+        "move": 111,
+        "mineral_revenue": 56,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 20,
+        "build:wall": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "sell": 3,
+        "sell:copper": 11,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell:stone": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 34.47150415713947,
+        "max": 62.90664499999821,
+        "p95": 61.615649000032136
+      },
+      "case": "game26_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 27,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 55,
+      "stats": {
+        "move": 68,
+        "mineral_revenue": 55,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 19,
+        "build:wall": 8,
+        "sell": 2,
+        "sell:copper": 11
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 49.99504675714498,
+        "max": 89.07535200000893,
+        "p95": 71.44333000007919
+      },
+      "case": "game27_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 27,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 70,
+      "stats": {
+        "move": 101,
+        "mineral_revenue": 50,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 18,
+        "build:wall": 8,
+        "buy": 3,
+        "buy:Medicine": 4,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell": 1,
+        "sell:copper": 10
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 44.35329288571178,
+        "max": 72.42985999994289,
+        "p95": 66.70909899992239
+      },
+      "case": "game27_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 28,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 80,
+      "stats": {
+        "move": 78,
+        "mineral_revenue": 80,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 28,
+        "build:wall": 8,
+        "sell": 4,
+        "sell:copper": 10,
+        "sell:iron": 10
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 46.95612947143185,
+        "max": 81.64164200002233,
+        "p95": 74.55256899993401
+      },
+      "case": "game28_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 28,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 113,
+      "stats": {
+        "move": 112,
+        "mineral_revenue": 73,
+        "build": 11,
+        "build:rocket": 2,
+        "build:railgun": 1,
+        "collect": 27,
+        "build:wall": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "sell": 12,
+        "sell:copper": 8,
+        "sell:iron": 11,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 51.58541388571101,
+        "max": 106.87124200001108,
+        "p95": 84.18206999999711
+      },
+      "case": "game28_initial_map"
+    },
+    {
+      "mode": "survival",
+      "seed": 0,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 55,
+      "stats": {
+        "move": 76,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 55,
+        "build:railgun": 1,
+        "collect": 19,
+        "build:wall": 8,
+        "sell": 2,
+        "sell:copper": 11
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 40.890476514279534,
+        "max": 66.13330099992254,
+        "p95": 59.31684500001211
+      },
+      "case": "generated_0"
+    },
+    {
+      "mode": "survival",
+      "seed": 0,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 92,
+      "stats": {
+        "move": 105,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 52,
+        "build:railgun": 1,
+        "collect": 20,
+        "build:wall": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "sell": 3,
+        "sell:copper": 10,
+        "sell:stone": 2,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 45.79961275714887,
+        "max": 81.23212899999999,
+        "p95": 65.04865199997312
+      },
+      "case": "generated_0"
+    },
+    {
+      "mode": "survival",
+      "seed": 1,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 7,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 55,
+      "stats": {
+        "move": 96,
+        "build": 10,
+        "build:rocket": 2,
+        "mineral_revenue": 55,
+        "build:railgun": 1,
+        "collect": 18,
+        "sell": 2,
+        "sell:copper": 11,
+        "build:wall": 7
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 53.25834351428966,
+        "max": 87.58817099999305,
+        "p95": 79.82522899999367
+      },
+      "case": "generated_1"
+    },
+    {
+      "mode": "survival",
+      "seed": 1,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 7,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 40,
+      "stats": {
+        "move": 102,
+        "build": 10,
+        "build:rocket": 2,
+        "mineral_revenue": 0,
+        "build:railgun": 1,
+        "collect": 11,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "build:wall": 7,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 45.968453871423016,
+        "max": 90.74566999993294,
+        "p95": 81.80862200003958
+      },
+      "case": "generated_1"
+    },
+    {
+      "mode": "survival",
+      "seed": 2,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 62,
+      "stats": {
+        "move": 92,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 62,
+        "build:railgun": 1,
+        "collect": 22,
+        "build:wall": 8,
+        "sell": 5,
+        "sell:copper": 12,
+        "sell:stone": 2
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 45.89302268570269,
+        "max": 83.64533000008123,
+        "p95": 75.06120400000782
+      },
+      "case": "generated_2"
+    },
+    {
+      "mode": "survival",
+      "seed": 2,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 45,
+      "stats": {
+        "move": 89,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 5,
+        "build:railgun": 1,
+        "collect": 17,
+        "build:wall": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell": 1,
+        "sell:copper": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 39.91634877143205,
+        "max": 65.14465700001892,
+        "p95": 60.052702999996654
+      },
+      "case": "generated_2"
+    },
+    {
+      "mode": "survival",
+      "seed": 3,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 6,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 35,
+      "stats": {
+        "move": 98,
+        "build": 9,
+        "build:rocket": 2,
+        "mineral_revenue": 35,
+        "build:railgun": 1,
+        "collect": 15,
+        "build:wall": 6,
+        "sell": 1,
+        "sell:copper": 7
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 47.987229585714886,
+        "max": 79.5810539999593,
+        "p95": 77.06802600000628
+      },
+      "case": "generated_3"
+    },
+    {
+      "mode": "survival",
+      "seed": 3,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 7,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 40,
+      "stats": {
+        "move": 114,
+        "build": 10,
+        "build:rocket": 2,
+        "mineral_revenue": 0,
+        "build:railgun": 1,
+        "collect": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "build:wall": 7,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 39.54717164286389,
+        "max": 80.64448600009655,
+        "p95": 73.70763199992325
+      },
+      "case": "generated_3"
+    },
+    {
+      "mode": "survival",
+      "seed": 4,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 5,
+      "stats": {
+        "move": 82,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 105,
+        "build:railgun": 1,
+        "collect": 29,
+        "build:wall": 8,
+        "sell": 3,
+        "sell:copper": 21,
+        "buy": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 32.42355604285357,
+        "max": 63.29275300004156,
+        "p95": 50.1834650000319
+      },
+      "case": "generated_4"
+    },
+    {
+      "mode": "survival",
+      "seed": 4,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 50,
+      "stats": {
+        "move": 94,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 10,
+        "build:railgun": 1,
+        "collect": 19,
+        "build:wall": 8,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell": 2,
+        "sell:copper": 2
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 33.78412515713925,
+        "max": 57.0284969999193,
+        "p95": 53.280063999977756
+      },
+      "case": "generated_4"
+    },
+    {
+      "mode": "survival",
+      "seed": 5,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 0,
+      "stats": {
+        "move": 71,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 100,
+        "build:railgun": 1,
+        "collect": 28,
+        "sell": 2,
+        "sell:copper": 20,
+        "build:wall": 8,
+        "buy": 1,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 41.977320728579215,
+        "max": 66.58749000007447,
+        "p95": 62.27292799997031
+      },
+      "case": "generated_5"
+    },
+    {
+      "mode": "survival",
+      "seed": 5,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 40,
+      "stats": {
+        "move": 90,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 0,
+        "build:railgun": 1,
+        "collect": 18,
+        "buy": 2,
+        "buy:Medicine": 2,
+        "build:wall": 8,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 40.356180714281564,
+        "max": 63.509985999985474,
+        "p95": 61.70067699997617
+      },
+      "case": "generated_5"
+    },
+    {
+      "mode": "survival",
+      "seed": 6,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 60,
+      "stats": {
+        "move": 71,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 60,
+        "build:railgun": 1,
+        "collect": 20,
+        "build:wall": 8,
+        "sell": 3,
+        "sell:copper": 12
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 41.134468028570026,
+        "max": 72.23137400001178,
+        "p95": 65.58107099999688
+      },
+      "case": "generated_6"
+    },
+    {
+      "mode": "survival",
+      "seed": 6,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 20,
+      "stats": {
+        "move": 94,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 0,
+        "build:railgun": 1,
+        "collect": 18,
+        "build:wall": 8,
+        "buy": 3,
+        "buy:Medicine": 4,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 41.788799428570655,
+        "max": 67.47421900001882,
+        "p95": 63.343264000081945
+      },
+      "case": "generated_6"
+    },
+    {
+      "mode": "survival",
+      "seed": 7,
+      "exogenous_reward": 0,
+      "turns": 70,
+      "walls": 8,
+      "weapons": 3,
+      "weapon_levels": [
+        1,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 51,
+      "stats": {
+        "move": 97,
+        "build": 11,
+        "build:rocket": 2,
+        "mineral_revenue": 51,
+        "build:railgun": 1,
+        "collect": 19,
+        "build:wall": 8,
+        "sell": 2,
+        "sell:copper": 10,
+        "sell:stone": 1
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 39.42897644285657,
+        "max": 65.47041499993611,
+        "p95": 61.051128000030985
+      },
+      "case": "generated_7"
+    },
+    {
+      "mode": "survival",
+      "seed": 7,
+      "exogenous_reward": 160,
+      "turns": 70,
+      "walls": 7,
+      "weapons": 3,
+      "weapon_levels": [
+        2,
+        1,
+        1
+      ],
+      "controllers_ready": 3,
+      "gold": 50,
+      "stats": {
+        "move": 127,
+        "build": 10,
+        "build:rocket": 2,
+        "mineral_revenue": 30,
+        "build:railgun": 1,
+        "collect": 14,
+        "build:wall": 7,
+        "buy": 3,
+        "buy:Medicine": 4,
+        "buy:WeaponUpgradeVoucher1": 1,
+        "use": 1,
+        "use:WeaponUpgradeVoucher1": 1,
+        "sell": 1,
+        "sell:copper": 6
+      },
+      "rejected": [],
+      "timing_ms": {
+        "mean": 40.577423057141004,
+        "max": 76.29206000001432,
+        "p95": 61.33526700000402
+      },
+      "case": "generated_7"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+test_empty_builder_can_fund_while_stone_is_unavailable (tests.test_survival_v31.WallReservationTests.test_empty_builder_can_fund_while_stone_is_unavailable) ... FAIL
+
+======================================================================
+FAIL: test_empty_builder_can_fund_while_stone_is_unavailable (tests.test_survival_v31.WallReservationTests.test_empty_builder_can_fund_while_stone_is_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/work_fix/AgentRace/tests/test_survival_v31.py", line 129, in test_empty_builder_can_fund_while_stone_is_unavailable
+    self.assertTrue(p.income('2'))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

@@ -1,0 +1,13 @@
+test_01_reserved_wall_stone_not_sold (__main__.main.<locals>.ReviewChecks.test_01_reserved_wall_stone_not_sold) ... ok
+test_02_dual_weapon_vouchers_do_not_steal_three_ready_guns (__main__.main.<locals>.ReviewChecks.test_02_dual_weapon_vouchers_do_not_steal_three_ready_guns) ... ok
+test_03_adjacent_paid_voucher_may_be_used_on_day70 (__main__.main.<locals>.ReviewChecks.test_03_adjacent_paid_voucher_may_be_used_on_day70) ... ok
+test_04_full_nonstone_bag_can_be_sold_before_quarrying (__main__.main.<locals>.ReviewChecks.test_04_full_nonstone_bag_can_be_sold_before_quarrying) ... ok
+test_05_day70_nonurgent_wall_errand_preserves_three_controllers (__main__.main.<locals>.ReviewChecks.test_05_day70_nonurgent_wall_errand_preserves_three_controllers) ... ok
+test_06_critical_base_retains_legal_rescue_upgrade (__main__.main.<locals>.ReviewChecks.test_06_critical_base_retains_legal_rescue_upgrade) ... ok
+test_07_idle_courier_skips_fired_gun_and_upgrades_cooling_gun (__main__.main.<locals>.ReviewChecks.test_07_idle_courier_skips_fired_gun_and_upgrades_cooling_gun) ... ok
+test_08_added_night_fixture_has_valid_building_footprints (__main__.main.<locals>.ReviewChecks.test_08_added_night_fixture_has_valid_building_footprints) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.030s
+
+OK

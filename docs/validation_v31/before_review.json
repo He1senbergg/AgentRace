@@ -1,0 +1,29 @@
+{
+  "tests": 8,
+  "failures": [
+    {
+      "test": "test_04_full_nonstone_bag_can_be_sold_before_quarrying (__main__.main.<locals>.ReviewChecks.test_04_full_nonstone_bag_can_be_sold_before_quarrying)",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work_fix/review/AgentRace_DeepSeek审阅/test_review_regressions.py\", line 41, in test_04_full_nonstone_bag_can_be_sold_before_quarrying\n    self.assertEqual(out['roleCommandMap'].get('2'),{'action':'sell','name':'copper','num':100},\nAssertionError: {'action': 'move', 'targetPos': [{'x': 12, 'y': 21}]} != {'action': 'sell', 'name': 'copper', 'num': 100}\n- {'action': 'move', 'targetPos': [{'x': 12, 'y': 21}]}\n+ {'action': 'sell', 'name': 'copper', 'num': 100} : Builder must not lock a full bag of unreserved copper behind a wall job.\n"
+    },
+    {
+      "test": "test_05_day70_nonurgent_wall_errand_preserves_three_controllers (__main__.main.<locals>.ReviewChecks.test_05_day70_nonurgent_wall_errand_preserves_three_controllers)",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work_fix/review/AgentRace_DeepSeek审阅/test_review_regressions.py\", line 50, in test_05_day70_nonurgent_wall_errand_preserves_three_controllers\n    self.assertEqual(len(planner(deepcopy(engine.data)).matching()),3,\nAssertionError: 2 != 3 : Nonurgent wall upgrade must not sacrifice a ready opening-night controller.\n"
+    },
+    {
+      "test": "test_06_critical_base_retains_legal_rescue_upgrade (__main__.main.<locals>.ReviewChecks.test_06_critical_base_retains_legal_rescue_upgrade)",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work_fix/review/AgentRace_DeepSeek审阅/test_review_regressions.py\", line 58, in test_06_critical_base_retains_legal_rescue_upgrade\n    self.assertTrue(any(c['action']=='use' and c.get('name')=='StationUpgradeVoucher1' for c in out['roleCommandMap'].values()),\nAssertionError: False is not true : The old legal base rescue is no longer attempted; damage/target selection not simulated.\n"
+    },
+    {
+      "test": "test_07_idle_courier_skips_fired_gun_and_upgrades_cooling_gun (__main__.main.<locals>.ReviewChecks.test_07_idle_courier_skips_fired_gun_and_upgrades_cooling_gun)",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work_fix/review/AgentRace_DeepSeek审阅/test_review_regressions.py\", line 67, in test_07_idle_courier_skips_fired_gun_and_upgrades_cooling_gun\n    self.assertEqual(out['roleCommandMap'].get('3'),{'action':'use','name':'WeaponUpgradeVoucher2','targetPos':[{'x':9,'y':23}]},\nAssertionError: None != {'action': 'use', 'name': 'WeaponUpgradeV[38 chars]23}]} : An already-fired target must not hide another legal cooling-weapon upgrade.\n"
+    },
+    {
+      "test": "test_08_added_night_fixture_has_valid_building_footprints (__main__.main.<locals>.ReviewChecks.test_08_added_night_fixture_has_valid_building_footprints)",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work_fix/review/AgentRace_DeepSeek审阅/test_review_regressions.py\", line 74, in test_08_added_night_fixture_has_valid_building_footprints\n    self.assertEqual(conflicts,[],'Two test weapons occupy the station footprint.')\nAssertionError: Lists differ: [6, 7] != []\n\nFirst list contains 2 additional elements.\nFirst extra element 0:\n6\n\n- [6, 7]\n+ [] : Two test weapons occupy the station footprint.\n"
+    }
+  ],
+  "errors": [],
+  "skipped": [],
+  "passed": 3,
+  "scope": "Behavioral review assertions including one fixture-validity check; failures intentionally retained."
+}

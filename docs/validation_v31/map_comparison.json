@@ -1,0 +1,605 @@
+{
+  "cases": [
+    {
+      "case": "game25_initial_map",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "changes": {}
+    },
+    {
+      "case": "game25_initial_map",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 75
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 75
+      },
+      "changes": {}
+    },
+    {
+      "case": "game26_initial_map",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 57
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 57
+      },
+      "changes": {}
+    },
+    {
+      "case": "game26_initial_map",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 96
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 96
+      },
+      "changes": {}
+    },
+    {
+      "case": "game27_initial_map",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "changes": {}
+    },
+    {
+      "case": "game27_initial_map",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 70
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 70
+      },
+      "changes": {}
+    },
+    {
+      "case": "game28_initial_map",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 80
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 80
+      },
+      "changes": {}
+    },
+    {
+      "case": "game28_initial_map",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 113
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 113
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_0",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_0",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 92
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 92
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_1",
+      "reward": 0,
+      "before": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "after": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 55
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_1",
+      "reward": 160,
+      "before": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "after": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_2",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 62
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 62
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_2",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 45
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 45
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_3",
+      "reward": 0,
+      "before": {
+        "walls": 6,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 35
+      },
+      "after": {
+        "walls": 6,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 35
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_3",
+      "reward": 160,
+      "before": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "after": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_4",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 5
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 5
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_4",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 50
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 50
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_5",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 0
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 0
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_5",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 40
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_6",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 60
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 60
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_6",
+      "reward": 160,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 20
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 20
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_7",
+      "reward": 0,
+      "before": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 51
+      },
+      "after": {
+        "walls": 8,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          1,
+          1,
+          1
+        ],
+        "gold": 51
+      },
+      "changes": {}
+    },
+    {
+      "case": "generated_7",
+      "reward": 160,
+      "before": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 50
+      },
+      "after": {
+        "walls": 7,
+        "controllers_ready": 3,
+        "weapon_levels": [
+          2,
+          1,
+          1
+        ],
+        "gold": 50
+      },
+      "changes": {}
+    }
+  ],
+  "no_wall_or_controller_regression": true
+}

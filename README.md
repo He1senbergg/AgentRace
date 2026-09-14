@@ -21,15 +21,17 @@
 
 ## 4. 当前开发检查点
 
-当前为 **Survival V3 candidate（2026-09-13）**。真实入口默认 `survival`，可用环境变量 `AGENTRACE_STRATEGY=defense` 回滚；原 `defense` 代码保留。新策略包含批量采石建墙、真实券库存/运输/三级升级、角色站位与返防、维护预算优先级及任务首次检查包。
+当前为 **Survival V3.1（2026-09-14）**，启动标识 `v3.1-reviewed-fix`。基于上传的 DeepSeek 版本，修复满背包禁售、日落交付离岗、基地救急优先级及已开火建筑交付过滤，保留此前有效修复。没有重新设计炮位或改变任务链路。
 
-先读 [docs/V3_AUDIT_AND_FIX_REPORT.md](docs/V3_AUDIT_AND_FIX_REPORT.md) 和 [docs/STATUS.md](docs/STATUS.md)。**本轮 322 项核心测试通过；22 项 HTTP/入口相关测试未获通过，当前容器缺 Flask，完整套件尝试失败。** 当前环境 Python 3.13.5，不是赛事 Python 3.11。
+Python 3.11.10 / Flask 3.1.3：**完整 383 项通过，干净覆盖副本 383 项再次通过**，含真实 HTTP/入口；32 项新增回归及原八项审查通过。四张初始地图 × 两种资金仍 8 墙/3 炮/3 炮手；加八生成地图后 24 个条件的首日关键指标与基线一致。两种起点各 1300 步经济、12 组夜战输入和 600+600 随机/重复请求通过。**这些不是官方夜战或存活满局成绩。**
 
-另完成 48 次首日经济对照、2×1300 步经济连续性和 12 组密集夜战输入检查。**无官方机器人伤害模拟、真实模型评分或新对局成绩，不能称存活满 1300 回合。** 原始证据见 `docs/validation_v3/`。
+最新说明：[docs/V3_1_FIX_REPORT.md](docs/V3_1_FIX_REPORT.md)；证据：[docs/V3_1_VALIDATION.json](docs/V3_1_VALIDATION.json) 与 docs/validation_v31/；检查点：[docs/STATUS.md](docs/STATUS.md)。validation_v3/ 为旧版历史。
 
-入口仍只接收端口：Linux/WSL `bash run.sh 6666`；Windows `.venv\Scripts\python.exe src\main3.py 6666`。使用原来正常工作的依赖环境和端口。部署必须带完整 `src/agentrace/`，不能只换入口。未新增第三方依赖；未 Git 提交或推送。
+入口仍只接收端口；真实入口默认 survival，`AGENTRACE_STRATEGY=defense` 可选择旧模式。必须保留完整 src；沿用原 Python/Flask 环境，不新增依赖。先看 [V3_README_FIRST.md](V3_README_FIRST.md) 应用覆盖补丁；本地完整复验命令是 `python -B tools/validate_survival_v31.py --output-dir local_validation_v31`。未 Git 提交或推送。
 
 ## 5. 开发记录
+
+- V3.1：ChatGPT 本地修复 DeepSeek 版本审阅发现，交付代码/测试/原始证据。
 
 - ~v2.3：OpenAI -> Codex(GPT6 Astra low)
 - v2.4:

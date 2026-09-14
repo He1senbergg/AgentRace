@@ -1,0 +1,2044 @@
+{
+  "python": "3.11.10 (main, Oct 16 2024, 04:38:48) [Clang 18.1.8 ]",
+  "source_sha256": "8688a35215b04d3d8fe783533b9fe1c15bd66a6e5731bd99c11419b2e956190f",
+  "cases": {
+    "full_copper_bag_first_turn": {
+      "input": {
+        "roundNo": 131,
+        "teamOur": {
+          "teamId": 7,
+          "type": "challenger",
+          "goldNum": 0,
+          "roles": [
+            {
+              "id": 1,
+              "roleType": "station",
+              "pos": {
+                "x": 9,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 2,
+              "roleType": "worker",
+              "pos": {
+                "x": 13,
+                "y": 20
+              },
+              "level": 1,
+              "backpack": [
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper"
+              ],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 3,
+              "roleType": "worker",
+              "pos": {
+                "x": 9,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 4,
+              "roleType": "pioneer",
+              "pos": {
+                "x": 10,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 40,
+              "cooldown": 0,
+              "health": 200
+            },
+            {
+              "id": 5,
+              "roleType": "rocket",
+              "pos": {
+                "x": 8,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 6,
+              "roleType": "rocket",
+              "pos": {
+                "x": 9,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 7,
+              "roleType": "railgun",
+              "pos": {
+                "x": 10,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            }
+          ]
+        },
+        "teamEnemy": {
+          "roles": []
+        },
+        "mapInfo": {
+          "zones": [
+            {
+              "neutralType": "stone",
+              "pos": {
+                "x": 5,
+                "y": 23
+              }
+            },
+            {
+              "neutralType": "copper",
+              "pos": {
+                "x": 5,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "vendor",
+              "pos": {
+                "x": 14,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "weaponShop",
+              "pos": {
+                "x": 14,
+                "y": 22
+              }
+            }
+          ]
+        },
+        "robot": {
+          "roles": []
+        },
+        "vendorShopList": [
+          {
+            "name": "stone",
+            "price": 1
+          },
+          {
+            "name": "iron",
+            "price": 3
+          },
+          {
+            "name": "copper",
+            "price": 5
+          }
+        ],
+        "weaponShopList": [
+          {
+            "name": "Medicine",
+            "price": 10
+          },
+          {
+            "name": "WallFixer",
+            "price": 10
+          },
+          {
+            "name": "WeaponUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "WeaponUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "StationUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "StationUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "WallUpgradeVoucher1",
+            "price": 20
+          },
+          {
+            "name": "WallUpgradeVoucher2",
+            "price": 30
+          }
+        ],
+        "lastRoundRoleActionResults": {},
+        "phaseTask": "",
+        "llmResp": "",
+        "errors": []
+      },
+      "response": {
+        "roleCommandMap": {
+          "2": {
+            "action": "sell",
+            "name": "copper",
+            "num": 100
+          },
+          "3": {
+            "action": "move",
+            "targetPos": [
+              {
+                "x": 8,
+                "y": 23
+              }
+            ]
+          }
+        },
+        "prompt": "",
+        "executeCmd": ""
+      },
+      "report": {
+        "round": 131,
+        "scope": "survival_v3",
+        "policy_revision": "v3.1-reviewed-fix",
+        "strategy_mode": "survival",
+        "mode": "DAY",
+        "metrics": {
+          "round": 131,
+          "gold": 0,
+          "station_hp": [
+            1500
+          ],
+          "actors_alive": 3,
+          "weapons_alive": 3,
+          "weapon_levels": [
+            1,
+            1,
+            1
+          ],
+          "walls": 0,
+          "wall_count": 0,
+          "wall_hp": [],
+          "wall_total_hp": 0,
+          "wall_max_hp_total": 0,
+          "actors_hp": {
+            "2": 220,
+            "3": 220,
+            "4": 200
+          },
+          "controllers_available": 2,
+          "actual_fire_commands": 0
+        },
+        "jobs": {
+          "2": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              19
+            ],
+            "cleanup": "sell"
+          },
+          "3": {
+            "kind": "income",
+            "mineral": "copper",
+            "cell": [
+              5,
+              20
+            ]
+          }
+        },
+        "wall_reservations": {
+          "2": 8
+        },
+        "decisions": {
+          "4": "at_destination:return_to_battery",
+          "2": "liquidate_inventory",
+          "3": "mine_income_travel"
+        },
+        "controllers": {
+          "3": [
+            8,
+            23
+          ],
+          "4": [
+            10,
+            24
+          ],
+          "2": [
+            11,
+            22
+          ]
+        },
+        "events": [],
+        "defense_target": {
+          "wall_target": 12,
+          "weapon_target": 3,
+          "weapon_ceiling": 3
+        },
+        "observed_gold": 0,
+        "unspent_after_commands": 0,
+        "last_confirmed_spend": null,
+        "last_observed_asset_change": 131
+      }
+    },
+    "full_copper_bag_260_steps": {
+      "steps": 260,
+      "initial": {
+        "roundNo": 131,
+        "teamOur": {
+          "teamId": 7,
+          "type": "challenger",
+          "goldNum": 0,
+          "roles": [
+            {
+              "id": 1,
+              "roleType": "station",
+              "pos": {
+                "x": 9,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 2,
+              "roleType": "worker",
+              "pos": {
+                "x": 13,
+                "y": 20
+              },
+              "level": 1,
+              "backpack": [
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper",
+                "copper"
+              ],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 3,
+              "roleType": "worker",
+              "pos": {
+                "x": 9,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 4,
+              "roleType": "pioneer",
+              "pos": {
+                "x": 10,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 40,
+              "cooldown": 0,
+              "health": 200
+            },
+            {
+              "id": 5,
+              "roleType": "rocket",
+              "pos": {
+                "x": 8,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 6,
+              "roleType": "rocket",
+              "pos": {
+                "x": 9,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 7,
+              "roleType": "railgun",
+              "pos": {
+                "x": 10,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            }
+          ]
+        },
+        "teamEnemy": {
+          "roles": []
+        },
+        "mapInfo": {
+          "zones": [
+            {
+              "neutralType": "stone",
+              "pos": {
+                "x": 5,
+                "y": 23
+              }
+            },
+            {
+              "neutralType": "copper",
+              "pos": {
+                "x": 5,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "vendor",
+              "pos": {
+                "x": 14,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "weaponShop",
+              "pos": {
+                "x": 14,
+                "y": 22
+              }
+            }
+          ]
+        },
+        "robot": {
+          "roles": []
+        },
+        "vendorShopList": [
+          {
+            "name": "stone",
+            "price": 1
+          },
+          {
+            "name": "iron",
+            "price": 3
+          },
+          {
+            "name": "copper",
+            "price": 5
+          }
+        ],
+        "weaponShopList": [
+          {
+            "name": "Medicine",
+            "price": 10
+          },
+          {
+            "name": "WallFixer",
+            "price": 10
+          },
+          {
+            "name": "WeaponUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "WeaponUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "StationUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "StationUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "WallUpgradeVoucher1",
+            "price": 20
+          },
+          {
+            "name": "WallUpgradeVoucher2",
+            "price": 30
+          }
+        ],
+        "lastRoundRoleActionResults": {},
+        "phaseTask": "",
+        "llmResp": "",
+        "errors": []
+      },
+      "snapshots": [
+        {
+          "round": 131,
+          "commands": {
+            "2": {
+              "action": "sell",
+              "name": "copper",
+              "num": 100
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 8,
+                  "y": 23
+                }
+              ]
+            }
+          },
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 13,
+            "y": 20
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              19
+            ],
+            "cleanup": "sell"
+          },
+          "wall_count": 0
+        },
+        {
+          "round": 132,
+          "commands": {
+            "4": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 11,
+                  "y": 23
+                }
+              ]
+            },
+            "2": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 12,
+                  "y": 19
+                }
+              ]
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 24
+                }
+              ]
+            }
+          },
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 12,
+            "y": 19
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              19
+            ],
+            "cleanup": "sell",
+            "quota": 8
+          },
+          "wall_count": 0
+        },
+        {
+          "round": 140,
+          "commands": {
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 11,
+                  "y": 20
+                }
+              ]
+            },
+            "4": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 20
+                }
+              ]
+            },
+            "2": {
+              "action": "collect",
+              "targetPos": [
+                {
+                  "x": 5,
+                  "y": 23
+                }
+              ]
+            }
+          },
+          "worker2_bag": {
+            "stone": 2
+          },
+          "worker2_pos": {
+            "x": 6,
+            "y": 22
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              19
+            ],
+            "cleanup": "sell",
+            "quota": 8
+          },
+          "wall_count": 0
+        },
+        {
+          "round": 160,
+          "commands": {
+            "2": {
+              "action": "build",
+              "name": "wall",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 19
+                }
+              ]
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 16
+                }
+              ]
+            }
+          },
+          "worker2_bag": {
+            "stone": 2
+          },
+          "worker2_pos": {
+            "x": 10,
+            "y": 20
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "build",
+            "cell": [
+              9,
+              19
+            ],
+            "cleanup": "sell",
+            "quota": 8
+          },
+          "wall_count": 6
+        },
+        {
+          "round": 180,
+          "commands": {
+            "2": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 20
+                }
+              ]
+            }
+          },
+          "worker2_bag": {
+            "stone": 1
+          },
+          "worker2_pos": {
+            "x": 9,
+            "y": 20
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "build",
+            "cell": [
+              7,
+              19
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 9
+        },
+        {
+          "round": 195,
+          "commands": {},
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 8,
+            "y": 21
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 200,
+          "commands": {},
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 8,
+            "y": 21
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 201,
+          "commands": {},
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 8,
+            "y": 21
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 260,
+          "commands": {},
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 8,
+            "y": 21
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 261,
+          "commands": {
+            "2": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 9,
+                  "y": 20
+                }
+              ]
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 7,
+                  "y": 22
+                }
+              ]
+            }
+          },
+          "worker2_bag": {},
+          "worker2_pos": {
+            "x": 9,
+            "y": 20
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              12,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 280,
+          "commands": {
+            "2": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 25,
+                  "y": 16
+                }
+              ]
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 22,
+                  "y": 3
+                }
+              ]
+            }
+          },
+          "worker2_bag": {
+            "Medicine": 2
+          },
+          "worker2_pos": {
+            "x": 25,
+            "y": 16
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              7,
+              20
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 10
+        },
+        {
+          "round": 310,
+          "commands": {
+            "2": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 7,
+                  "y": 23
+                }
+              ]
+            },
+            "3": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 13,
+                  "y": 22
+                }
+              ]
+            }
+          },
+          "worker2_bag": {
+            "Medicine": 2,
+            "stone": 3
+          },
+          "worker2_pos": {
+            "x": 7,
+            "y": 23
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "build",
+            "cell": [
+              11,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 11
+        },
+        {
+          "round": 330,
+          "commands": {},
+          "worker2_bag": {
+            "Medicine": 2
+          },
+          "worker2_pos": {
+            "x": 8,
+            "y": 24
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              7,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 14
+        },
+        {
+          "round": 390,
+          "commands": {},
+          "worker2_bag": {
+            "Medicine": 2
+          },
+          "worker2_pos": {
+            "x": 8,
+            "y": 24
+          },
+          "worker2_job": {
+            "kind": "wall",
+            "stage": "quarry",
+            "cell": [
+              7,
+              24
+            ],
+            "cleanup": "sell",
+            "quota": 4
+          },
+          "wall_count": 14
+        }
+      ],
+      "worker2_sales": [
+        131
+      ],
+      "worker2_final_bag": {
+        "Medicine": 2
+      },
+      "final_wall_count": 14,
+      "rejected": [],
+      "stats": {
+        "sell": 3,
+        "sell:copper": 119,
+        "move": 173,
+        "mineral_revenue": 595,
+        "buy": 5,
+        "buy:Medicine": 6,
+        "buy:WeaponUpgradeVoucher1": 3,
+        "buy:StationUpgradeVoucher1": 1,
+        "collect": 33,
+        "use": 4,
+        "use:WeaponUpgradeVoucher1": 3,
+        "use:StationUpgradeVoucher1": 1,
+        "build": 14,
+        "build:wall": 14
+      }
+    },
+    "wall_protection_lost_after_income": {
+      "input": {
+        "roundNo": 1,
+        "teamOur": {
+          "teamId": 7,
+          "type": "challenger",
+          "goldNum": 0,
+          "roles": [
+            {
+              "id": 1,
+              "roleType": "station",
+              "pos": {
+                "x": 9,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 2,
+              "roleType": "worker",
+              "pos": {
+                "x": 13,
+                "y": 20
+              },
+              "level": 1,
+              "backpack": [
+                "stone",
+                "stone",
+                "stone",
+                "stone",
+                "stone",
+                "stone",
+                "stone",
+                "stone"
+              ],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 3,
+              "roleType": "worker",
+              "pos": {
+                "x": 9,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 4,
+              "roleType": "pioneer",
+              "pos": {
+                "x": 10,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 40,
+              "cooldown": 0,
+              "health": 200
+            },
+            {
+              "id": 5,
+              "roleType": "rocket",
+              "pos": {
+                "x": 8,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 6,
+              "roleType": "rocket",
+              "pos": {
+                "x": 9,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            },
+            {
+              "id": 7,
+              "roleType": "railgun",
+              "pos": {
+                "x": 10,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            }
+          ]
+        },
+        "teamEnemy": {
+          "roles": []
+        },
+        "mapInfo": {
+          "zones": [
+            {
+              "neutralType": "stone",
+              "pos": {
+                "x": 5,
+                "y": 23
+              }
+            },
+            {
+              "neutralType": "copper",
+              "pos": {
+                "x": 5,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "vendor",
+              "pos": {
+                "x": 14,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "weaponShop",
+              "pos": {
+                "x": 14,
+                "y": 22
+              }
+            }
+          ]
+        },
+        "robot": {
+          "roles": []
+        },
+        "vendorShopList": [
+          {
+            "name": "stone",
+            "price": 1
+          },
+          {
+            "name": "iron",
+            "price": 3
+          },
+          {
+            "name": "copper",
+            "price": 5
+          }
+        ],
+        "weaponShopList": [
+          {
+            "name": "Medicine",
+            "price": 10
+          },
+          {
+            "name": "WallFixer",
+            "price": 10
+          },
+          {
+            "name": "WeaponUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "WeaponUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "StationUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "StationUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "WallUpgradeVoucher1",
+            "price": 20
+          },
+          {
+            "name": "WallUpgradeVoucher2",
+            "price": 30
+          }
+        ],
+        "lastRoundRoleActionResults": {},
+        "phaseTask": "",
+        "llmResp": "",
+        "errors": []
+      },
+      "before_jobs": {
+        "2": {
+          "kind": "wall",
+          "stage": "build",
+          "quota": 8,
+          "cell": [
+            12,
+            19
+          ]
+        }
+      },
+      "after_income": {
+        "jobs": {
+          "2": {
+            "kind": "wall",
+            "stage": "build",
+            "quota": 8,
+            "cell": [
+              12,
+              19
+            ]
+          }
+        },
+        "commands": {}
+      },
+      "next_forced_sell": false,
+      "next_commands": {},
+      "scope": "helper composition, not a full GameSession replay"
+    },
+    "station_health_1_rescue": {
+      "input": {
+        "roundNo": 71,
+        "teamOur": {
+          "teamId": 7,
+          "type": "challenger",
+          "goldNum": 0,
+          "roles": [
+            {
+              "id": 1,
+              "roleType": "station",
+              "pos": {
+                "x": 9,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1
+            },
+            {
+              "id": 2,
+              "roleType": "worker",
+              "pos": {
+                "x": 8,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [
+                "StationUpgradeVoucher1"
+              ],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 3,
+              "roleType": "worker",
+              "pos": {
+                "x": 9,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 4,
+              "roleType": "pioneer",
+              "pos": {
+                "x": 10,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 40,
+              "cooldown": 0,
+              "health": 200
+            },
+            {
+              "id": 5,
+              "roleType": "rocket",
+              "pos": {
+                "x": 8,
+                "y": 22
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 6,
+              "roleType": "rocket",
+              "pos": {
+                "x": 9,
+                "y": 23
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 7,
+              "roleType": "railgun",
+              "pos": {
+                "x": 10,
+                "y": 23
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            }
+          ]
+        },
+        "teamEnemy": {
+          "roles": []
+        },
+        "mapInfo": {
+          "zones": [
+            {
+              "neutralType": "stone",
+              "pos": {
+                "x": 5,
+                "y": 23
+              }
+            },
+            {
+              "neutralType": "copper",
+              "pos": {
+                "x": 5,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "vendor",
+              "pos": {
+                "x": 14,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "weaponShop",
+              "pos": {
+                "x": 14,
+                "y": 22
+              }
+            }
+          ]
+        },
+        "robot": {
+          "roles": [
+            {
+              "id": 800,
+              "roleType": "largeRobot",
+              "pos": {
+                "x": 12,
+                "y": 20
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 500,
+              "targetTeam": "challenger"
+            }
+          ]
+        },
+        "vendorShopList": [
+          {
+            "name": "stone",
+            "price": 1
+          },
+          {
+            "name": "iron",
+            "price": 3
+          },
+          {
+            "name": "copper",
+            "price": 5
+          }
+        ],
+        "weaponShopList": [
+          {
+            "name": "Medicine",
+            "price": 10
+          },
+          {
+            "name": "WallFixer",
+            "price": 10
+          },
+          {
+            "name": "WeaponUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "WeaponUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "StationUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "StationUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "WallUpgradeVoucher1",
+            "price": 20
+          },
+          {
+            "name": "WallUpgradeVoucher2",
+            "price": 30
+          }
+        ],
+        "lastRoundRoleActionResults": {},
+        "phaseTask": "",
+        "llmResp": "",
+        "errors": []
+      },
+      "rescue_command_is_legal": true,
+      "response": {
+        "roleCommandMap": {
+          "2": {
+            "action": "use",
+            "name": "StationUpgradeVoucher1",
+            "targetPos": [
+              {
+                "x": 9,
+                "y": 22
+              }
+            ]
+          },
+          "6": {
+            "action": "attack",
+            "controllerId": "3",
+            "targetPos": [
+              {
+                "x": 12,
+                "y": 20
+              },
+              {
+                "x": 12,
+                "y": 20
+              }
+            ]
+          },
+          "7": {
+            "action": "attack",
+            "controllerId": "4",
+            "targetPos": [
+              {
+                "x": 12,
+                "y": 20
+              }
+            ]
+          }
+        },
+        "prompt": "",
+        "executeCmd": ""
+      },
+      "report": {
+        "round": 71,
+        "scope": "survival_v3",
+        "policy_revision": "v3.1-reviewed-fix",
+        "strategy_mode": "survival",
+        "mode": "NIGHT",
+        "metrics": {
+          "round": 71,
+          "gold": 0,
+          "station_hp": [
+            1
+          ],
+          "actors_alive": 3,
+          "weapons_alive": 3,
+          "weapon_levels": [
+            2,
+            2,
+            2
+          ],
+          "walls": 0,
+          "wall_count": 0,
+          "wall_hp": [],
+          "wall_total_hp": 0,
+          "wall_max_hp_total": 0,
+          "actors_hp": {
+            "2": 220,
+            "3": 220,
+            "4": 200
+          },
+          "controllers_available": 3,
+          "actual_fire_commands": 2
+        },
+        "jobs": {
+          "2": {
+            "kind": "service",
+            "target": "1",
+            "item": "StationUpgradeVoucher1",
+            "stage": "deliver"
+          }
+        },
+        "wall_reservations": {},
+        "decisions": {
+          "2": "rescue_base_upgrade",
+          "6": "fire_with_matching",
+          "3": "control_weapon:6",
+          "7": "fire_with_matching",
+          "4": "control_weapon:7"
+        },
+        "controllers": {
+          "2": [
+            8,
+            23
+          ],
+          "3": [
+            9,
+            24
+          ],
+          "4": [
+            10,
+            24
+          ]
+        },
+        "events": [
+          {
+            "event": "base_rescue",
+            "actor": "2",
+            "target": "1",
+            "observed_health": 1,
+            "item": "StationUpgradeVoucher1"
+          }
+        ],
+        "defense_target": {
+          "wall_target": 8,
+          "weapon_target": 3,
+          "weapon_ceiling": 3
+        },
+        "observed_gold": 0,
+        "unspent_after_commands": 0,
+        "last_confirmed_spend": null,
+        "last_observed_asset_change": 71
+      },
+      "attack_count": 2,
+      "station_upgrade_used": true
+    },
+    "day70_wall_trip_vs_return": {
+      "input": {
+        "roundNo": 70,
+        "teamOur": {
+          "teamId": 7,
+          "type": "challenger",
+          "goldNum": 0,
+          "roles": [
+            {
+              "id": 1,
+              "roleType": "station",
+              "pos": {
+                "x": 9,
+                "y": 22
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 2,
+              "roleType": "worker",
+              "pos": {
+                "x": 8,
+                "y": 23
+              },
+              "level": 1,
+              "backpack": [
+                "WallUpgradeVoucher1"
+              ],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 3,
+              "roleType": "worker",
+              "pos": {
+                "x": 9,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 100,
+              "cooldown": 0,
+              "health": 220
+            },
+            {
+              "id": 4,
+              "roleType": "pioneer",
+              "pos": {
+                "x": 10,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 40,
+              "cooldown": 0,
+              "health": 200
+            },
+            {
+              "id": 5,
+              "roleType": "rocket",
+              "pos": {
+                "x": 8,
+                "y": 22
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 6,
+              "roleType": "rocket",
+              "pos": {
+                "x": 9,
+                "y": 23
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 7,
+              "roleType": "railgun",
+              "pos": {
+                "x": 10,
+                "y": 23
+              },
+              "level": 2,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1500
+            },
+            {
+              "id": 100,
+              "roleType": "wall",
+              "pos": {
+                "x": 12,
+                "y": 24
+              },
+              "level": 1,
+              "backpack": [],
+              "backPackCapability": 0,
+              "cooldown": 0,
+              "health": 1000
+            }
+          ]
+        },
+        "teamEnemy": {
+          "roles": []
+        },
+        "mapInfo": {
+          "zones": [
+            {
+              "neutralType": "stone",
+              "pos": {
+                "x": 5,
+                "y": 23
+              }
+            },
+            {
+              "neutralType": "copper",
+              "pos": {
+                "x": 5,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "vendor",
+              "pos": {
+                "x": 14,
+                "y": 20
+              }
+            },
+            {
+              "neutralType": "weaponShop",
+              "pos": {
+                "x": 14,
+                "y": 22
+              }
+            }
+          ]
+        },
+        "robot": {
+          "roles": []
+        },
+        "vendorShopList": [
+          {
+            "name": "stone",
+            "price": 1
+          },
+          {
+            "name": "iron",
+            "price": 3
+          },
+          {
+            "name": "copper",
+            "price": 5
+          }
+        ],
+        "weaponShopList": [
+          {
+            "name": "Medicine",
+            "price": 10
+          },
+          {
+            "name": "WallFixer",
+            "price": 10
+          },
+          {
+            "name": "WeaponUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "WeaponUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "StationUpgradeVoucher1",
+            "price": 100
+          },
+          {
+            "name": "StationUpgradeVoucher2",
+            "price": 150
+          },
+          {
+            "name": "WallUpgradeVoucher1",
+            "price": 20
+          },
+          {
+            "name": "WallUpgradeVoucher2",
+            "price": 30
+          }
+        ],
+        "lastRoundRoleActionResults": {},
+        "phaseTask": "",
+        "llmResp": "",
+        "errors": []
+      },
+      "before": {
+        "matching": {
+          "5": "2",
+          "7": "3",
+          "6": "4"
+        },
+        "slots": {
+          "2": [
+            8,
+            23
+          ],
+          "3": [
+            9,
+            24
+          ],
+          "4": [
+            10,
+            24
+          ]
+        },
+        "return_due": true,
+        "return_cost": 0
+      },
+      "day_response": {
+        "roleCommandMap": {},
+        "prompt": "",
+        "executeCmd": ""
+      },
+      "after": {
+        "matching": {
+          "5": "2",
+          "7": "3",
+          "6": "4"
+        },
+        "positions": {
+          "2": [
+            8,
+            23
+          ],
+          "3": [
+            9,
+            24
+          ],
+          "4": [
+            10,
+            24
+          ]
+        }
+      },
+      "night_response": {
+        "roleCommandMap": {
+          "5": {
+            "action": "attack",
+            "controllerId": "2",
+            "targetPos": [
+              {
+                "x": 14,
+                "y": 18
+              },
+              {
+                "x": 14,
+                "y": 18
+              }
+            ]
+          },
+          "6": {
+            "action": "attack",
+            "controllerId": "3",
+            "targetPos": [
+              {
+                "x": 14,
+                "y": 18
+              },
+              {
+                "x": 14,
+                "y": 18
+              }
+            ]
+          },
+          "7": {
+            "action": "attack",
+            "controllerId": "4",
+            "targetPos": [
+              {
+                "x": 14,
+                "y": 18
+              }
+            ]
+          }
+        },
+        "prompt": "",
+        "executeCmd": ""
+      },
+      "night_attack_count": 3,
+      "scope": "day movement simulated; next-night decision only, no damage simulation"
+    }
+  }
+}

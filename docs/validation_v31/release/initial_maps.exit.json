@@ -1,0 +1,19 @@
+{
+  "name": "initial_maps",
+  "command": [
+    "/mnt/data/work_fix/base/AgentRace/.venv/linux-runtime/cpython-3.11.10-linux-x86_64-gnu/bin/python3.11",
+    "-B",
+    "tools/simulate_survival.py",
+    "--modes",
+    "survival",
+    "--generated",
+    "8",
+    "--output",
+    "/mnt/data/work_fix/evidence/release/initial_maps.json"
+  ],
+  "cwd": "/mnt/data/work_fix/AgentRace",
+  "log": "initial_maps.log",
+  "passed": true,
+  "returncode": 0,
+  "seconds": 71.004
+}
