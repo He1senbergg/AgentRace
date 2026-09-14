@@ -1,0 +1,19 @@
+{
+  "build": "v3.4-cursor-frontline",
+  "policy": "v3.4-task-frontline-firepower",
+  "input": "AgentRace-main(5).zip",
+  "entry_sha256": "d24db8a6654822c1720424dbaebd4533a714439c7fdf4ba81ee7df1f28b43ee9",
+  "runtime_bytes": 200791,
+  "runtime_lines": 3754,
+  "stdlib_only": true,
+  "port": "platform positional argument",
+  "trace": "print-only REPLAY3",
+  "offline_test_groups": {
+    "selected_core_and_frontline": 50,
+    "executed_task_commands": 81,
+    "protocol_with_injected_correct_answers": 72,
+    "actual_TCP_HTTP": 22,
+    "historical_replay_frames": 8337
+  },
+  "official_live_validation": false
+}

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""AgentRace V3.3 — complete, ordinary single-file platform submission.
+"""AgentRace V3.4 — complete, ordinary single-file platform submission.
 
 Python 3.11+. No project-package imports, third-party libraries, environment
 variables, companion files, runtime downloads, or diagnostic output files.
 Platform invocation remains: python main3.py <platform-provided-port>.
 HTTP remains POST / with roleCommandMap, prompt, executeCmd in the JSON response.
 
-The baseline is the supplied CoreGeek/main3.py V3.2.2 runtime, not the older repository src/.
-This candidate fixes live task failures (CRLF checker invocation, API contract),
-inner-answer validation, defense layout and capital priorities.
+The baseline is AgentRace-main(5).zip/src/main3.py V3.3, verified against Round10 logs.
+Round10 candidate: evidence-driven offset pagination, task cooldown scheduling,
+14-cell frontal C-wall, three rocket batteries, and batch maintenance logistics.
 Local replay/tests are NOT an official score or a 1300-round survival validation.
 
 Important: file paths INSIDE executeCmd strings refer to task files generated
@@ -701,8 +701,12 @@ def run_heritage():
    if type(val) is int and val>=0:return val
    if isinstance(val,str) and val.isascii() and val.isdigit():return int(val)
   return None
+ cursor=0;mode=None
  for page in range(1,41):
-  query['page']=page
+  if mode=='offset':
+   query.pop('page',None);query.pop('page_size',None)
+   query.update(offset=cursor,limit=100)
+  else:query['page']=page
   payload=fetch(query)
   container=payload.get('data',payload) if isinstance(payload,dict) else payload
   metadata={}
@@ -721,6 +725,15 @@ def run_heritage():
   if total is not None:
    if expected_total is not None and total!=expected_total:raise ValueError('total changed during pagination')
    expected_total=total
+  offset=number(metadata,('offset',));reported_page=number(metadata,('page','page_number','current_page'))
+  if offset is not None:
+   if mode not in (None,'offset'):raise ValueError('pagination mode changed')
+   mode='offset'
+   if offset!=cursor:raise ValueError('server ignored the requested offset')
+  elif mode=='offset':raise ValueError('offset metadata disappeared')
+  else:
+   mode='page'
+   if reported_page is not None and reported_page!=page:raise ValueError('server ignored the requested page')
   if pages is not None:expected_pages=pages
   signature=json.dumps(batch,ensure_ascii=False,sort_keys=True)
   if batch and signature in requested_pages:raise NeedReasoning('Pagination repeated a page. Metadata: '+json.dumps(metadata,ensure_ascii=False))
@@ -728,7 +741,7 @@ def run_heritage():
   added=0
   for rec in batch:
    identity=str(rec.get('id')) if 'id' in rec else json.dumps(rec,ensure_ascii=False,sort_keys=True)
-   if identity in seen:continue
+   if identity in seen:raise ValueError('overlapping pages; refusing incomplete aggregate')
    seen.add(identity);records.append(rec);added+=1
   if expected_total is not None and len(records)>expected_total:raise ValueError('records exceed declared total')
   if expected_total is not None and len(records)==expected_total:break
@@ -736,10 +749,13 @@ def run_heritage():
    if expected_total is not None and len(records)!=expected_total:raise ValueError('empty page before total reached')
    break
   if not added:raise ValueError('pagination made no progress')
-  if expected_pages is not None and page>=expected_pages:
+  if mode=='offset':
+   # Advance by the number ACTUALLY returned, not requested limit/page_size.
+   # Round10's server caps to 10 and reports {total_count, offset, limit}.
+   cursor=offset+len(batch)
+  elif expected_pages is not None and page>=expected_pages:
    if expected_total is not None and len(records)!=expected_total:raise ValueError('page count and total disagree')
    break
-  # Do not stop because a server-capped page is smaller than requested page_size.
  else:raise ValueError('pagination exceeded bounded pages')
  if not records:raise NeedReasoning('A nonempty heritage task returned no records; inspect API semantics, do not fabricate zero statistics')
  required={'name','type','era'}
@@ -854,7 +870,7 @@ import threading
 import time
 import zlib
 
-PRINT_BUILD = "v3.3-live-rootfix"
+PRINT_BUILD = "v3.4-cursor-frontline"
 TRACE_PREFIX = "[write_task_trace] REPLAY3 "
 OMIT_PREFIX = "[write_task_trace] OMIT "
 TASK_TRACE_RECORD_LIMIT = 2 * 1024 * 1024
@@ -1417,6 +1433,7 @@ class GameMemory:
     task_diagnostics: dict = field(default_factory=dict)
     observed_task_active: object = None
     observed_gold: object = None
+    fast_task_points: dict = field(default_factory=dict)
 
     def finish_task(self):
         """Retire a task on observed completion, without inferring answer validity."""
@@ -1456,6 +1473,18 @@ class GameMemory:
         # the last request seen by this process. Never associate across a gap.
         continuous = self.last_round is not None and round_no == self.last_round + 1
         active = isinstance(world.data.get('phaseTask'), str) and bool(world.data['phaseTask'])
+        if not active and continuous and self.task and (self.task.get("pending") or (None,))[0] == "submit":
+            errors = object_list(world.data.get("errors"))
+            actor = self.task.get("actor")
+            previous = self.previous_actions.get(actor, {})
+            raw_results = world.data.get("lastRoundRoleActionResults")
+            legal = isinstance(raw_results, dict) and raw_results.get(actor) is True
+            if (legal and previous.get("action") == "submitAnswer"
+                    and not any(e.get("errorCode") in (1, 2) for e in errors)
+                    and self.task.get("skill_used") and self.task.get("cells")):
+                key = tuple(sorted(tuple(p) for p in self.task["cells"]))
+                self.fast_task_points[key] = {"duration": round_no - self.task["started_round"],
+                                             "skill": self.task["skill_used"], "confirmed_round": round_no}
         if not active:
             # Defense may assign LOGISTICS/RETURN instead of running TaskPlanner
             # after completion. Pending operations must still end with the task.
@@ -1813,7 +1842,7 @@ def render_task_prompt(task: dict, observation, experience: list, remaining) -> 
                'or use historical/city knowledge as API data. In the observed heritage API, authenticate with '
                'Authorization: Bearer <CURRENT documented key>, query location with URL encoding, and read '
                'data.records plus data.pagination. Count protected_level, not a guessed field; continue until '
-               'the reported total is collected, even when a page is smaller than the requested page_size. '
+               'the reported total is collected. If metadata reports offset/limit, send offset and advance by the actual received count; page/page_size will repeat offset zero. '
                'Compare eras chronologically, not lexicographically. A checker may have CRLF: invoke its '
                'known interpreter on an in-memory LF copy without modifying the checker or bypassing checks. '
                'Never submit placeholders, raw check logs, error output, or an outer command object as the answer. ')
@@ -1987,19 +2016,36 @@ class TaskPlanner:
     def __init__(self, validator):
         self.v, self.world, self.memory = validator, validator.world, validator.memory
 
-    def can_finish(self, role, route):
+    def can_finish(self, role, route, offer=None, cells=None, wait=0):
+        """Admit a task with travel, solve, submission and a real return path.
+
+        Only a feedback-confirmed same-point deterministic skill can use a shorter
+        budget. Unknown points retain the full platform timeout, not a 3-turn guess.
+        """
         phase = self.memory.phase
-        if phase is None or not phase.is_day:
+        if phase is None or not phase.is_day or not route:
             return False
-        # acceptTask has no target selector; budget every eligible point adjacent
-        # to the arrival cell, including overlapping task point footprints.
-        nearby = [task for task, cells in task_options(self.v)
-                  if any(distance(route[-1], cell) <= 1 for cell in cells)]
-        if not nearby or any(type(t.get("timeoutRounds")) is not int or t["timeoutRounds"] <= 0 for t in nearby):
+        nearby = [(offer, cells)] if offer is not None else [
+            (task, zone) for task, zone in task_options(self.v)
+            if any(distance(route[-1], p) <= 1 for p in zone)]
+        if not nearby:
             return False
-        back = TaskTravel(self.v).return_steps(route[-1])
-        return (back is not None and len(route) - 1 + max(t["timeoutRounds"] for t in nearby)
-                + back + 3 < 71 - phase.round_in_day)
+        budgets=[]
+        for task, zone in nearby:
+            timeout=task.get('timeoutRounds')
+            key=tuple(sorted(tuple(p) for p in zone))
+            verified=self.memory.fast_task_points.get(key, {})
+            # Cooling offers explicitly hide their next timeout as zero. Only
+            # a previously completed fast family can justify waiting nearby.
+            if verified.get('duration', 1000) <= 3:
+                budgets.append(min(timeout, 5) if type(timeout) is int and timeout > 0 else 5)
+            elif type(timeout) is int and timeout > 0:
+                budgets.append(timeout)
+            else:
+                return False
+        back=TaskTravel(self.v).return_steps(route[-1])
+        return (back is not None and max(len(route)-1, wait) + max(budgets) + back + 3
+                < 71-phase.round_in_day)
 
     def prompt(self, response, task, observation):
         remaining = task["deadline"] - self.memory.last_round if task["deadline"] is not None else None
@@ -2030,6 +2076,40 @@ class TaskPlanner:
             return False
         return self.submit(task, candidate["answer"], "evidence_fallback")
 
+
+    def plan_next_task(self):
+        """Stay near the next opening instead of beginning a cross-map supply trip."""
+        world,memory=self.world,self.memory
+        role=next((c for c in world.characters.values() if c['roleType']=='pioneer'),None)
+        if role is None or role['id'] in self.v.busy:return False
+        actor=role['id']; choices=[]
+        for offer in object_list(world.our.get('playerTasks')):
+            cooldown=offer.get('coldDownRounds');cell=position(offer.get('taskPosition'))
+            if type(cooldown) is not int or cooldown < 0 or cell is None:continue
+            # false + zero means exhausted, NOT a task that will appear tomorrow.
+            if not offer.get('isValid') and cooldown==0:continue
+            zones=[world.zones[world.our.get('type','')+suffix] for suffix in ('TaskPoint1','TaskPoint2')]
+            cells=next((zone for zone in zones if cell in zone),set())
+            if not cells:continue
+            route=world.path(role['cell'],world.adjacent_goals(cells,role['cell']),self.v.targets)
+            if not route or not self.can_finish(role,route,offer,cells,cooldown):continue
+            arrival=max(len(route)-1,cooldown)
+            choices.append((arrival, len(route), sorted(cells), offer, route))
+        if not choices:return False
+        _,_,cells,offer,route=min(choices,key=lambda x:x[:3])
+        if len(route)>1:
+            target=route[1]
+            return self.v.add(actor,{'action':'move','targetPos':[{'x':target[0],'y':target[1]}]})
+        if offer.get('isValid') and offer['coldDownRounds']==0:
+            if not self.v.add(actor,{'action':'acceptTask'}):return False
+            nearby=[(t,z) for t,z in task_options(self.v) if self.v.near(role,z)]
+            memory.accepted_task=({'cells':sorted(nearby[0][1]),'round':memory.last_round,
+                                  'timeout':nearby[0][0]['timeoutRounds']} if len(nearby)==1 else None)
+            return True
+        # Deliberate no-op: this reservation belongs to the task planner only.
+        self.v.busy.add(actor)
+        return True
+
     def run(self, response):
         memory, world = self.memory, self.world
         text = world.data.get("phaseTask")
@@ -2046,26 +2126,9 @@ class TaskPlanner:
             memory.finish_task()
             if actor in self.v.busy:
                 return
-            choices = []
-            for task, cells in task_options(self.v):
-                route = world.path(role["cell"], world.adjacent_goals(cells, role["cell"]), self.v.targets)
-                if route and self.can_finish(role, route):
-                    choices.append((len(route), sorted(cells), task))
-            if choices:
-                _, cells, task = min(choices, key=lambda option: (option[0], option[1]))
-                if self.can_finish(role, [role["cell"]]) and self.v.add(actor, {"action": "acceptTask"}):
-                    nearby = [(candidate, candidate_cells) for candidate, candidate_cells in task_options(self.v)
-                              if self.v.near(role, candidate_cells)]
-                    # acceptTask has no target field: overlapping eligible points
-                    # do not identify which task the platform will choose.
-                    memory.accepted_task = ({"cells": sorted(nearby[0][1]), "round": memory.last_round,
-                                             "timeout": nearby[0][0].get("timeoutRounds")}
-                                            if len(nearby) == 1 else None)
-                else:
-                    TaskTravel(self.v).travel(actor, set(cells))
-            else:
+            if not self.plan_next_task():
                 weapons = {r["cell"] for r in world.roles.values()
-                           if isinstance(r.get("roleType"), str) and r["roleType"] in WEAPONS}
+                           if r.get("roleType") in WEAPONS}
                 if weapons:
                     TaskTravel(self.v).travel(actor, weapons)
             return
@@ -2147,10 +2210,10 @@ class TaskPlanner:
                     # A fully recognized public spec becomes one patch+check
                     # command. Unknown tasks retain the ordinary model workflow.
                     command = deployment_repair_command(result, text) if hasattr(memory, "survival") else None
-                    skill = "deployment_crlf_v33" if command else None
+                    skill = "deployment_crlf_v34" if command else None
                     if command is None and hasattr(memory, "survival"):
                         command = heritage_query_command(result, text)
-                        if command: skill = "heritage_contract_v33"
+                        if command: skill = "heritage_cursor_v34"
                     if command and (remaining is None or remaining >= 2):
                         response["executeCmd"] = command
                         task["command"] = command
@@ -2159,6 +2222,14 @@ class TaskPlanner:
                         task["command_answer_from_stdout"] = True
                         task["pending"] = ("command", memory.last_round)
                         task["skill_used"] = skill
+                        if skill == "heritage_cursor_v34":
+                            task["skill"] = (
+                                "API procedure: Authorization Bearer with the CURRENT document key; "
+                                "location query; data.records; read ACTUAL pagination metadata. "
+                                "For offset/limit, advance offset by the received record count. "
+                                "page/page_size must not be substituted for offset/limit. "
+                                "protected_level is the observed field. Never invent records or totals. "
+                                "HTTP errors and pagination errors must exit nonzero, not emit zero statistics.")
                         return
                     # The actual result is in task_documents exactly once. Neither
                     # the current observation nor history repeats the whole file.
@@ -2232,7 +2303,7 @@ from itertools import product
 class SurvivalPlanner:
     """One mutable observation transaction, with small jobs carried in memory."""
 
-    revision = "v3.3-task-capital-defense"
+    revision = "v3.4-task-frontline-firepower"
 
     def __init__(self, world, memory, delta, rules):
         self.world, self.memory, self.delta, self.rules = (world, memory, delta, rules)
@@ -2251,14 +2322,16 @@ class SurvivalPlanner:
         self.events = []
         self.claimed = set()
         self.return_slots = {}
+        self.maintenance_reserved = 0
         bases = [b for b in self.defense.stations if positive_health(b.get('health')) and level_of(b)]
         self.base = bases[0] if len(bases) == 1 else None
         self.walls = [r for r in world.roles.values() if r.get('roleType') == 'wall' and positive_health(r.get('health')) and level_of(r)]
         self.weapons = self.defense.weapons
-        self.wall_target = min(18, (8, 12, 16, 18)[min(self.phase.day, 4) - 1]) if self.phase else 8
+        self.wall_target = (10 if self.phase.day == 1 else 14) if self.phase else 10
         self.static = object.__new__(World)
         self.static.occupied = set(world.static_occupied)
         self._paths = {}
+        self._route_trees = {}
         self._connected = {}
         self.weapon_slots, self.wall_slots = self.layout()
         self.observe()
@@ -2288,6 +2361,40 @@ class SurvivalPlanner:
                 self.jobs.pop(actor, None)
                 self.state['slots'].pop(actor, None)
                 self.events.append(dict(event='stalled_trip_released', actor=actor))
+        manifests=self.state.setdefault('delivery_orders',{})
+        for actor in list(manifests):
+            if actor not in self.characters:
+                del manifests[actor];continue
+            inv=inventory(self.characters[actor]) or Counter();kept=[];used=Counter()
+            previous=self.delta.feedback.get('actions',{}).get(actor,{})
+            successful=self.delta.continuous and self.delta.feedback.get('results',{}).get(actor) is True
+            consumed=False
+            for entry in manifests[actor]:
+                if (not consumed and successful and previous.get('action')=='use' and
+                    previous.get('name')==entry['item']):
+                    oldcell=previous.get('targetPos',[{}])[0]
+                    target=self.world.roles.get(entry['target'])
+                    if target and target['cell']==position(oldcell):consumed=True;continue
+                if used[entry['item']]<inv[entry['item']]:
+                    kept.append(entry);used[entry['item']]+=1
+            manifests[actor]=kept[:8]
+        previous_walls=self.state.get('wall_samples', {})
+        damage=self.state.setdefault('wall_damage', {})
+        for wall in self.walls:
+            cell=wall['cell'];before=previous_walls.get(wall['id'])
+            if before and self.delta.continuous and before[1]==level_of(wall):
+                lost=max(0,before[0]-wall['health'])
+                damage[cell]=damage.get(cell,0)+lost
+        self.state['wall_samples']={w['id']:(w['health'],level_of(w)) for w in self.walls}
+        if self.state.get('maintenance_day') != (self.phase.day if self.phase else None):
+            self.state['maintenance_day']=self.phase.day if self.phase else None
+            self.state['maintenance_spent']=0
+        if self.delta.continuous:
+            for actor,command in self.delta.feedback.get('actions',{}).items():
+                if (command.get('action')=='buy' and command.get('name') in
+                    ('WallFixer','WallUpgradeVoucher1','WallUpgradeVoucher2') and
+                    self.delta.feedback.get('results',{}).get(actor) is True):
+                    self.state['maintenance_spent']+=self.v.prices.get(command['name'],0)*command.get('num',1)
         self.state['samples'] = {a: s for a, s in self.state['samples'].items() if a in alive}
         self.state['slots'] = {a: s for a, s in self.state['slots'].items() if a in alive}
         assets = tuple(sorted(((r['id'], level_of(r), r.get('health')) for r in self.world.roles.values() if r.get('roleType') in WEAPONS | {'wall', 'station'})))
@@ -2302,33 +2409,54 @@ class SurvivalPlanner:
         self.state['last_round'] = self.delta.round_no
 
     def layout(self):
-        if not self.base:
-            return ((), ())
-        anchor = self.base['cell']
-        center = (2 * anchor[0] + 1, 2 * anchor[1] - 1)
-        sign = 1 if center[0] < 40 else -1
-
-        def transform(offset):
-            return ((center[0] + sign * offset[0]) // 2, (center[1] + sign * offset[1]) // 2)
-        ring = building_ring(anchor, 1)
-        # Rear, compact battery. Left/right deployment is an exact 180-degree mirror.
-        primary = [transform(p) for p in ((-3, 1), (-1, 3), (1, 3))]
-        weapons = tuple((p for p in primary if p in ring)) + tuple(sorted(ring - set(primary)))
-        walls = building_ring(anchor, 2)
-        # Two rear exits stay open permanently; transit cells are never sold as wall capacity.
-        gates = {transform((-5, 1)), transform((-1, 5))}
-        ranked = sorted(walls - gates, key=lambda p: (-sign * (2 * p[0] - center[0] - (2 * p[1] - center[1])), abs(2 * p[0] - center[0]) + abs(2 * p[1] - center[1]), p))
-        return (weapons, tuple(ranked))
+        if not self.base:return ((), ())
+        anchor=self.base['cell'];cx,cy=2*anchor[0]+1,2*anchor[1]-1
+        sign=1 if cx<40 else -1
+        def transform(dx,dy):return ((cx+sign*dx)//2,(cy+sign*dy)//2)
+        ring=building_ring(anchor,1)
+        primary=[transform(-3,1),transform(-3,-1),transform(3,1)]
+        weapons=tuple(p for p in primary if p in ring)+tuple(sorted(ring-set(primary)))
+        # Frontal column first, then both flanks. Side is inferred from own base,
+        # never from red/blue filenames. A 180-degree mirror preserves both sides.
+        front=[transform(5,dy) for dy in (-1,1,3,-3,5,-5)]
+        arms=[transform(dx,dy) for dx in (3,1,-1,-3) for dy in (5,-5)]
+        allowed=building_ring(anchor,2)
+        walls=tuple(p for p in front+arms if p in allowed)
+        return weapons,walls
 
     def path(self, start, cells, adjacent=True, static=False):
-        cells = frozenset(cells)
-        geometry = self.static if static else self.world
-        reserved = frozenset() if static else frozenset(self.v.targets)
-        key = (start, cells, adjacent, static, reserved)
-        if key not in self._paths:
-            goals = geometry.adjacent_goals(cells, start) if adjacent else set(cells)
-            self._paths[key] = geometry.path(start, goals, reserved)
-        return self._paths[key]
+        """Reuse one BFS tree per start/occupancy snapshot, not one BFS per gun slot."""
+        cells=frozenset(cells);geometry=self.static if static else self.world
+        reserved=frozenset() if static else frozenset(self.v.targets)
+        key=(start,cells,adjacent,static,reserved)
+        if key in self._paths:return self._paths[key]
+        blocked=geometry.occupied|set(reserved)
+        goals=geometry.adjacent_goals(cells,start) if adjacent else set(cells)
+        goals={p for p in goals if in_bounds(p) and (p not in blocked or p==start)}
+        if not goals or not in_bounds(start):route=None
+        elif start in goals:route=[start]
+        else:
+            one_step=next((p for p in neighbors(start) if p in goals and p not in blocked),None)
+            if one_step is not None:route=[start,one_step]
+            else:
+                tree_key=(start,static,reserved)
+                if tree_key not in self._route_trees:
+                    queue=deque([start]);parent={start:None};order={start:0}
+                    while queue:
+                        cell=queue.popleft()
+                        for nxt in neighbors(cell):
+                            if nxt not in blocked and nxt not in parent:
+                                parent[nxt]=cell;order[nxt]=len(order);queue.append(nxt)
+                    self._route_trees[tree_key]=(parent,order)
+                parent,order=self._route_trees[tree_key]
+                end=min((g for g in goals if g in order),key=lambda g:order[g],default=None)
+                route=None
+                if end is not None:
+                    route=[]
+                    while end is not None:route.append(end);end=parent[end]
+                    route.reverse()
+        self._paths[key]=route
+        return route
 
     def route(self, actor, cells, adjacent=True, static=False):
         return self.path(self.characters[actor]['cell'], cells, adjacent, static)
@@ -2374,6 +2502,14 @@ class SurvivalPlanner:
         chars = sorted(self.characters)
         active = self.delta.task_active
         chars = [a for a in chars if not (active and self.characters[a]['roleType'] == 'pioneer')]
+        delivery_home={}
+        for actor in chars:
+            bag=inventory(self.characters[actor]) or Counter()
+            for order in self.state.get('delivery_orders',{}).get(actor,[]):
+                target=self.world.roles.get(order['target']);item=order['item']
+                if (bag[item] and target and target.get('roleType') in WEAPONS
+                        and item in UPGRADES and level_of(target)==UPGRADES[item][1]):
+                    delivery_home[actor]=target['id'];break
         choices = []
         forecast = bool(self.phase and self.phase.is_day)
         for w in sorted(self.weapons, key=lambda w: w['id']):
@@ -2405,7 +2541,7 @@ class SurvivalPlanner:
             selected = [x for x in combo if x]
             if len({x[0] for x in selected}) != len(selected) or len({x[1] for x in selected}) != len(selected):
                 continue
-            key = (-len(selected), sum((x[3] for x in selected)), max((x[2] for x in selected), default=0), sum((x[2] for x in selected)), sum((x[4] for x in selected)), sum((x[5] for x in selected)))
+            key = (-len(selected), sum((x[3] for x in selected)), sum(int(x[0] in delivery_home and delivery_home[x[0]]!=x[6]) for x in selected) if forecast else 0, max((x[2] for x in selected), default=0), sum((x[2] for x in selected)), sum((x[4] for x in selected)), sum((x[5] for x in selected)))
             if not forecast:
                 # Do not break three already staffed guns merely to reduce
                 # theoretical exposure at another, currently blocked position.
@@ -2493,7 +2629,7 @@ class SurvivalPlanner:
         counts=Counter(w['roleType'] for w in self.weapons)
         for c in self.v.commands.values():
             if c['action']=='build':counts[dict(self.rules.weapon_build_names).get(c['name'])]+=1
-        kind='rocket' if counts['rocket']<2 else 'railgun'
+        kind='rocket'  # Round10 dense waves favor splash; three real controllers still required.
         wire=names.get(kind) or names.get('rocket') or next(iter(names.values()),None)
         if wire is None:return False
         # The first three are the actual compact plan. Zones cannot spawn inside
@@ -2594,36 +2730,63 @@ class SurvivalPlanner:
         return self.move(actor, {target}, 'wall_batch_deliver')
 
     def service_candidates(self):
-        """Milestones compete by survival value, never by the cheapest available item."""
+        """Build global-range firepower and fund only pressure-facing maintenance."""
         candidates=[]
         rockets=sorted((w for w in self.weapons if w['roleType']=='rocket'),
                        key=lambda w:(-(level_of(w) or 0),w['id']))
         lead=rockets[0]['id'] if rockets else None
         lead_level=level_of(rockets[0]) if rockets else 0
         if self.base and level_of(self.base) in (1,2):
-            level=level_of(self.base)
-            damaged=self.base['health']<0.50*max_health(self.base)
-            if damaged or (level==1 and self.phase.day>=2) or (level==2 and self.phase.day>=3):
-                candidates.append((0 if damaged else 15 if level==1 else 25,
-                                   self.base,f'StationUpgradeVoucher{level}'))
-        for w in self.weapons:
+            level=level_of(self.base);ratio=self.base['health']/max_health(self.base)
+            if ratio<0.60:
+                candidates.append((0,self.base,f'StationUpgradeVoucher{level}'))
+            elif level==1 and (self.phase.day>=2 or lead_level==3):
+                candidates.append((20,self.base,'StationUpgradeVoucher1'))
+            elif level==2 and self.phase.day>=3:
+                # A second global battery is cheaper than repeated nights tanking damage.
+                candidates.append((45,self.base,'StationUpgradeVoucher2'))
+        for index,w in enumerate(rockets):
             level=level_of(w)
-            if level not in (1,2):continue
-            if w['roleType']=='rocket':
-                if w['id']==lead and level==1:priority=10
-                elif w['id']==lead and level==2:priority=20
-                elif level==1:priority=30
-                else:priority=40
-            else:priority=50 if level==1 else 60
-            candidates.append((priority,w,f'WeaponUpgradeVoucher{level}'))
+            if level in (1,2):
+                priority=(10 if level==1 else 12) if w['id']==lead else ((24 if level==1 else 22) if index==1 else (28 if level==1 else 30))
+                candidates.append((priority,w,f'WeaponUpgradeVoucher{level}'))
+        for w in self.weapons:
+            if w['roleType']!='rocket' and level_of(w) in (1,2):
+                candidates.append((28,w,f'WeaponUpgradeVoucher{level_of(w)}'))
+        ceiling=40 if self.phase.day==1 else 80 if self.phase.day==2 else 120
+        spent=self.state.get('maintenance_spent',0)+self.maintenance_reserved
+        # Held stock is subtracted too: a courier's unspent fixer is not absent stock.
+        stock=sum((inventory(c) or Counter())['WallFixer'] for c in self.characters.values())
         for wall in self.walls:
+            if wall['cell'] not in self.wall_slots:continue
             level=level_of(wall);maximum=max_health(wall)
-            if level not in (1,2,3) or not maximum:continue
-            if wall['health']<maximum*0.55:
-                candidates.append((70,wall,'WallFixer'))
-            elif self.v.wall_count>=min(self.wall_target,12) and level<3 and lead_level==3 and level_of(self.base)==3:
-                candidates.append((80,wall,f'WallUpgradeVoucher{level}'))
-        return sorted(candidates,key=lambda x:(x[0],x[1]['id'],x[2]))
+            lost=self.state.get('wall_damage',{}).get(wall['cell'],0)
+            frontal=wall['cell'] in self.wall_slots[:6]
+            if lost<=0 and not (frontal and self.phase.day>=3):continue
+            # Do not upgrade the untouched back simply because other goals are blocked.
+            hot=frontal and (lost>=250 or wall['health']<0.7*maximum)
+            urgent=wall['health']<0.45*maximum
+            if level<3 and (hot or urgent):
+                name=f'WallUpgradeVoucher{level}';cost=self.v.prices.get(name,10**9)
+                if spent+cost<=ceiling:
+                    priority=14 if urgent and lead_level>=2 else 18 if lead_level==3 else 34
+                    candidates.append((priority,wall,name))
+            elif wall['health']<0.65*maximum and stock<3:
+                cost=self.v.prices.get('WallFixer',10**9)
+                if spent+cost<=ceiling:
+                    candidates.append((16 if urgent and lead_level==3 else 32,wall,'WallFixer'))
+        # Pre-stock a small reserve after the first wave. Otherwise a full
+        # wall at dusk means no fixer in anyone's bag when it becomes critical.
+        if self.phase.day>=2 and lead_level>=2 and stock<2:
+            cost=self.v.prices.get('WallFixer',10**9)
+            if spent+cost<=ceiling:
+                fronts=[w for w in self.walls if w['cell'] in self.wall_slots[:6]]
+                for wall in sorted(fronts,key=lambda w:(-self.state.get('wall_damage',{}).get(w['cell'],0),w['id']))[:2]:
+                    if not any(t['id']==wall['id'] and n=='WallFixer' for _,t,n in candidates):
+                        candidates.append((17,wall,'WallFixer'))
+        return sorted(candidates,key=lambda x:(x[0],x[1].get('health',0)/max_health(x[1]),
+                                              -self.state.get('wall_damage',{}).get(x[1]['cell'],0),
+                                              x[1]['id'],x[2]))
 
     def delivery_fits(self, actor: str, route: list) -> bool:
         """Budget the executable route, one use action, and the assigned return.
@@ -2638,13 +2801,46 @@ class SurvivalPlanner:
         back = self.return_cost(actor, route[-1])
         return back is not None and len(route) + back <= 71 - self.phase.round_in_day
 
+    def remember_delivery(self, actor, target, item):
+        orders=self.state.setdefault('delivery_orders',{}).setdefault(actor,[])
+        orders.append({'target':target['id'],'item':item})
+        self.state['delivery_orders'][actor]=orders[-8:]
+
     def held_delivery(self, actor):
         if actor in self.v.busy or self.phase is None:
             return False
         char = self.characters[actor]
         bag = inventory(char) or Counter()
+        # A carried level-1 voucher authorizes planning the NEXT level, even
+        # though the observed turret has not been upgraded yet. Do not wait for
+        # a round-trip just to discover the level-2 voucher is needed.
+        old_order=self.state.setdefault('capital_targets', {}).get(actor,{})
+        target=self.world.roles.get(old_order.get('target'))
+        next_price=self.v.prices.get('WeaponUpgradeVoucher2')
+        next_owned=sum((inventory(c) or Counter())['WeaponUpgradeVoucher2'] for c in self.characters.values())
+        if (self.phase.is_day and self.v.near(char,self.world.zones['weaponShop'])
+                and target and target.get('roleType')=='rocket' and level_of(target)==1
+                and old_order.get('item')=='WeaponUpgradeVoucher1' and bag['WeaponUpgradeVoucher1']
+                and sum(bag[n] for n in UPGRADES)+bag['WallFixer']<3
+                and not next_owned and next_price is not None and next_price<=self.v.gold-max(0,3-self.v.weapon_count)*25
+                and self.fits(actor,[({target['cell']},3)])):
+            if self.send(actor,dict(action='buy',name='WeaponUpgradeVoucher2',num=1),'batch_weapon_upgrade_chain'):
+                self.claimed.add(target['id'])
+                self.remember_delivery(actor,target,'WeaponUpgradeVoucher2')
+                return True
+        goods=sum(bag[name] for name in UPGRADES)+bag['WallFixer']
+        protect_chain=bool(target and target.get('roleType')=='rocket' and level_of(target)==1
+                           and old_order.get('item')=='WeaponUpgradeVoucher1' and bag['WeaponUpgradeVoucher1']
+                           and not next_owned and next_price is not None and next_price>self.v.gold)
+        if (not protect_chain and self.phase.is_day and 0 < goods < 3 and
+                self.v.near(char,self.world.zones['weaponShop']) and
+                self.procure(actor)):
+            self.note(actor,'batch_supply_before_return')
+            return True
         old = self.state.setdefault('capital_targets', {}).get(actor) or self.jobs.get(actor, {})
         priorities = {(t['id'], n): p for p, t, n in self.service_candidates()}
+        orders=self.state.setdefault('delivery_orders',{}).get(actor,[])
+        order_index={(e['target'],e['item']):i for i,e in reversed(list(enumerate(orders)))}
         candidates = []
         items = [(name, kinds, required) for name, (kinds, required) in sorted(UPGRADES.items()) if bag[name]]
         if bag['WallFixer']:
@@ -2656,7 +2852,7 @@ class SurvivalPlanner:
                     continue
                 if required is not None and level_of(target) != required:
                     continue
-                if name == 'WallFixer' and (max_health(target) is None or target['health'] >= max_health(target)):
+                if name == 'WallFixer' and (max_health(target) is None or target['health'] >= (0.80 if self.phase.is_day else 0.55)*max_health(target)):
                     continue
                 # Dynamic routing prevents a blocked old target from hiding a
                 # different, actually executable delivery. No claim before send.
@@ -2667,7 +2863,7 @@ class SurvivalPlanner:
                     self.events.append(dict(event='delivery_deferred', actor=actor, target=target['id'],
                                             item=name, reason='return_deadline'))
                     continue
-                candidates.append((target['id'] != old.get('target'), priorities.get((target['id'], name), 90), len(route), name, target['id'], target, route))
+                candidates.append((order_index.get((target['id'],name), 100 + int(target['id'] != old.get('target'))), priorities.get((target['id'], name), 90), len(route), name, target['id'], target, route))
         for _, _, _, name, _, target, route in sorted(candidates, key=lambda x: x[:5]):
             if len(route) == 1:
                 command = dict(action='use', name=name, targetPos=[dict(x=target['cell'][0], y=target['cell'][1])])
@@ -2685,7 +2881,7 @@ class SurvivalPlanner:
     def rescue_base(self) -> bool:
         """Immediate, already-owned base upgrade; ordinary maintenance stays last.
 
-        65% is the existing procurement emergency threshold, not a game rule.
+        65% is this immediate-use threshold, not a game rule.
         Never send a controller travelling during the night for this exception.
         """
         if (self.base is None or level_of(self.base) not in (1, 2)
@@ -2743,14 +2939,41 @@ class SurvivalPlanner:
         if price is None or price>funds:
             self.note(actor,'capital_saving:'+name)
             return False
-        if not self.fits(actor,[(self.world.zones['weaponShop'],1),({target['cell']},1)]):return False
+        if not self.fits(actor,[(self.world.zones['weaponShop'],1),({target['cell']},1)]):
+            if (target.get('roleType') not in WEAPONS or
+                    not self.fits(actor,[(self.world.zones['weaponShop'],1)],margin=4)):
+                return False
         if self.v.near(char,self.world.zones['weaponShop']):
             sent=self.send(actor,dict(action='buy',name=name,num=1),'buy_priority_capital')
         else:sent=self.move(actor,self.world.zones['weaponShop'],'procure_priority_capital')
         if sent:
+            if self.v.near(char,self.world.zones['weaponShop']):
+                self.remember_delivery(actor,target,name)
+            if self.v.near(char,self.world.zones['weaponShop']) and name.startswith(('WallUpgrade','WallFixer')):
+                # The observation path counts the actual expense next turn.
+                self.maintenance_reserved+=price
             order=dict(kind='service',target=target['id'],item=name,stage='procure')
             self.jobs[actor]=order;intended[actor]=dict(order);self.claimed.add(target['id'])
         return sent
+
+    def stage_courier(self, actor):
+        """Travel is not a purchase: wait at the shop for observed mine-sale cash.
+
+        Only the otherwise-idle pioneer stages here, after task admission was
+        tried. A speculative future income NEVER authorizes a buy command.
+        """
+        char=self.characters[actor]
+        if char['roleType']!='pioneer' or not self.phase or not self.phase.is_day:return False
+        goal=self.state.get('capital_goal') or {}
+        current={(target['id'],name) for _,target,name in self.service_candidates()}
+        if (goal.get('target'),goal.get('item')) not in current:return False
+        price=goal.get('price')
+        if price is None or price<=0 or self.v.gold>=price:return False
+        shop=self.world.zones['weaponShop']
+        if not shop or not self.fits(actor,[(shop,1)],margin=5):return False
+        if self.v.near(char,shop):
+            self.v.busy.add(actor);self.note(actor,'cash_courier_waiting_at_shop');return True
+        return self.move(actor,shop,'cash_courier_preposition')
 
     def medicine(self, actor, urgent=False):
         char = self.characters[actor]
@@ -2895,8 +3118,44 @@ class SurvivalPlanner:
             return self.send(actor, dict(action='collect', targetPos=[dict(x=mine[0], y=mine[1])]), 'mine_income')
         return self.move(actor, {mine}, 'mine_income_travel')
 
+
+    def repair_critical_front(self):
+        """Use carried repairs; allow a short, safe step from a nearby battery."""
+        choices=[]
+        available=[a for a in self.characters if a not in self.v.busy]
+        ready=[w for w in self.weapons if w.get('cooldown',0)==0 and self.defense.attack_plan(w)[2]>0]
+        for wall in self.walls:
+            if wall['cell'] not in self.wall_slots or wall['cell'] in self.v.modified:continue
+            threat=self.defense.exposure(wall['cell'])
+            if threat<=0 or wall['health']>max(250,3*threat):continue
+            name=f'WallUpgradeVoucher{level_of(wall)}' if level_of(wall)<3 else None
+            for actor in available:
+                char=self.characters[actor];bag=inventory(char) or Counter()
+                item=name if name and bag[name] else 'WallFixer' if bag['WallFixer'] else None
+                if item is None:continue
+                route=self.route(actor,{wall['cell']})
+                if not route or len(route)>4:continue
+                if len(route)>1:
+                    if wall['health']<=threat*(len(route)-1):continue
+                    if char['health']<=2*self.defense.exposure(route[1]):continue
+                retained=len(self.matching(ready,[a for a in available if a!=actor]))
+                choices.append((len(route),-retained,wall['health']/max_health(wall),actor,wall['id'],item,route))
+        if not choices:return False
+        _,_,_,actor,target,item,route=min(choices,key=lambda x:x[:5])
+        wall=self.world.roles[target]
+        if len(route)==1:
+            cmd=dict(action='use',name=item,targetPos=[dict(x=wall['cell'][0],y=wall['cell'][1])])
+            reason='frontline_emergency_repair'
+        else:
+            cmd=dict(action='move',targetPos=[dict(x=route[1][0],y=route[1][1])]);reason='frontline_short_repair_trip'
+        if self.send(actor,cmd,reason):
+            self.claimed.add(target)
+            return True
+        return False
+
     def night(self):
         self.rescue_base()
+        self.repair_critical_front()
         for actor, char in sorted(self.characters.items()):
             if actor in self.v.busy:
                 continue
@@ -2992,24 +3251,16 @@ class SurvivalPlanner:
             for actor in workers:
                 if actor not in self.v.busy and (not self.return_due(actor)):
                     self.build_weapon(actor)
-            # Idle pioneer is the preferred courier. Active tasks remain exclusively owned by TaskPlanner.
-            for actor, char in sorted(self.characters.items()):
-                if char['roleType'] != 'pioneer' or actor in self.v.busy or self.return_due(actor):
+            # Daytime pioneer is a task specialist while any feasible opening remains.
+            for actor,char in sorted(self.characters.items()):
+                if char['roleType']!='pioneer' or actor in self.v.busy or self.return_due(actor):continue
+                if self.procure(actor,emergency_only=True):continue
+                if TaskPlanner(self.v).plan_next_task():
+                    self.note(actor,'task_priority_or_cooldown_wait')
                     continue
-                if self.procure(actor, emergency_only=True):
-                    continue
-                # A begun affordable supply trip is not discarded for another task halfway through.
-                if self.jobs.get(actor, {}).get('kind') == 'service' and self.procure(actor):
-                    continue
-                task_planner = TaskPlanner(self.v)
-                feasible = any((route and task_planner.can_finish(char, route) for _, cells in task_options(self.v) for route in [self.route(actor, cells)]))
-                if feasible:
-                    task_planner.run(response)
-                if actor not in self.v.busy:
-                    if not self.procure(actor) and not self.sell(actor, force=True):
-                        # An idle courier must vacate another controller's assigned slot now,
-                        # not wait until its own much shorter return deadline.
-                        self.return_home(actor)
+                if (not self.procure(actor) and not self.sell(actor,force=True)
+                        and not self.stage_courier(actor)):
+                    self.return_home(actor)
             # One dedicated batch builder; the other worker maintains a cash-producing pipeline.
             available = [a for a in workers if a not in self.v.busy and (not self.return_due(a))]
             builder = None
@@ -3019,6 +3270,8 @@ class SurvivalPlanner:
                 if self.procure(actor, emergency_only=True):
                     continue
                 if self.medicine(actor, urgent=True):
+                    continue
+                if self.jobs.get(actor,{}).get('kind')=='service' and self.procure(actor):
                     continue
                 if actor == builder and self.build_walls(actor):
                     continue
@@ -3031,8 +3284,8 @@ class SurvivalPlanner:
         return (response, self.report())
 
     def report(self):
-        metrics = dict(round=self.delta.round_no, gold=self.delta.gold, station_hp=[b['health'] for b in self.defense.stations], actors_alive=len(self.characters), weapons_alive=len(self.weapons), weapon_levels=sorted((level_of(w) or 0 for w in self.weapons), reverse=True), walls=len(self.walls), wall_count=len(self.walls), wall_hp=[w['health'] for w in self.walls], wall_total_hp=sum((w['health'] for w in self.walls)), wall_max_hp_total=sum((max_health(w) or 0 for w in self.walls)), actors_hp={a: c['health'] for a, c in self.characters.items()}, controllers_available=len(self.matching()), actual_fire_commands=sum((c['action'] == 'attack' for c in self.v.commands.values())))
-        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, capital_goal=self.state.get('capital_goal'), wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
+        metrics = dict(round=self.delta.round_no, gold=self.delta.gold, station_hp=[b['health'] for b in self.defense.stations], actors_alive=len(self.characters), weapons_alive=len(self.weapons), weapon_levels=sorted((level_of(w) or 0 for w in self.weapons), reverse=True), walls=len(self.walls), wall_count=len(self.walls), wall_levels=[level_of(w) for w in self.walls], wall_hp=[w['health'] for w in self.walls], wall_total_hp=sum((w['health'] for w in self.walls)), wall_max_hp_total=sum((max_health(w) or 0 for w in self.walls)), actors_hp={a: c['health'] for a, c in self.characters.items()}, controllers_available=len(self.matching()), actual_fire_commands=sum((c['action'] == 'attack' for c in self.v.commands.values())))
+        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, capital_goal=self.state.get('capital_goal'), wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3, wall_shape='front_C14', wall_plan=list(self.wall_slots)), maintenance_spent=self.state.get('maintenance_spent',0), delivery_orders=self.state.get('delivery_orders',{}), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
 
 
 # ===========================================================================
