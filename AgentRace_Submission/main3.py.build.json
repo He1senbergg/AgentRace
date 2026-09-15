@@ -1,0 +1,15 @@
+{
+  "format": "agentrace-build-report-v1",
+  "key_id": "3a87e18fdab265c1832f94234ab71457",
+  "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+  "output_sha256": "a68f4f4102981f656561d5a2405b17dd1bd0afaf1209cd422ad03b773773a30a",
+  "rewritten_print_calls": {
+    "print_log": 1,
+    "write_task_trace": 1
+  },
+  "business_ast_unchanged_except_sinks": true,
+  "task_script_string_constants_unchanged": true,
+  "runtime_third_party_imports": [],
+  "official_platform_tested": false,
+  "static_audit_is_not_complete_dynamic_leak_proof": true
+}

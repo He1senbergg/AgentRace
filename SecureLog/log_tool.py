@@ -368,7 +368,7 @@ def build_source(source: str, n: int, e: int, runtime_source: str):
     return output, report
 
 
-def build(source_path: Path, public_path: Path, output_path: Path) -> dict:
+def build(source_path: Path, public_path: Path, output_path: Path, force: bool = False) -> dict:
     source_path, output_path = source_path.expanduser(), output_path.expanduser()
     if source_path.resolve() == output_path.resolve():
         raise ValueError('输出必须使用新路径，不能覆盖源代码')
@@ -376,8 +376,13 @@ def build(source_path: Path, public_path: Path, output_path: Path) -> dict:
     source = source_path.read_text(encoding='utf-8-sig')
     output, report = build_source(source, n, e, (BASE / 'securelog_runtime.py').read_text(encoding='utf-8'))
     report_path = Path(str(output_path) + '.build.json')
+    # 目标文件已经存在
     if output_path.exists() or report_path.exists():
-        raise FileExistsError('输出或构建报告已存在，拒绝覆盖')
+        if not force:
+            raise FileExistsError('输出或构建报告已存在，拒绝覆盖；如需覆盖请使用 --force')
+        # --force：删除旧的构建产物
+        output_path.unlink(missing_ok=True)
+        report_path.unlink(missing_ok=True)
     write_new(output_path, output.encode(), 0o644)
     write_new(report_path, (json.dumps(report, ensure_ascii=False, indent=2) + '\n').encode())
     return report
@@ -543,6 +548,7 @@ def main(argv=None) -> int:
     p.add_argument('--source', type=Path, required=True)
     p.add_argument('--public', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--force', action='store_true', help='允许覆盖已存在的构建产物')
     p = sub.add_parser('decrypt', help='在本地把下载日志还原为原诊断文本')
     p.add_argument('--private', type=Path, required=True)
     p.add_argument('--input', type=Path, required=True)
@@ -558,7 +564,7 @@ def main(argv=None) -> int:
                 print('[keygen] Windows 的文件模式不等同于 ACL；需自行限制目录访问权限。', flush=True)
             return 0
         if args.command == 'build':
-            report = build(args.source, args.public, args.out)
+            report = build(args.source, args.public, args.out, force=args.force)
             print('[build] ' + json.dumps(report, ensure_ascii=False), flush=True)
             return 0
         report, status = decrypt_file(args.private, args.input, args.out, args.backend)
