@@ -48,3 +48,22 @@ python tools/compare_economy_v36.py
 ## 5. 实机下一轮
 
 保持对手和设置不变，先红蓝各一半场。以胜负、两侧基地最后可见/首次缺失、入夜前正面HP/等级、前炮死亡、炮升级落地回合为主要验收项。平台输出仍保留REPLAY3。内部任务与日志不得直接公开。
+
+## 6. 拉取对战日志
+
+`auto_log_downloader.py` 通过浏览器下载双方日志，需要 Python 3.8+、Playwright 和 Microsoft Edge；首次运行时在打开的浏览器中完成内网登录，登录状态保存在脚本旁的 `.browser-profile/`。
+
+在仓库根目录运行：
+
+```bash
+python -m pip install playwright
+python auto_log_downloader.py                  # 练习赛第 1 页，默认队伍 OpenAI
+python auto_log_downloader.py --pages 2-3       # 指定页码，也支持 1,3-5 或 all
+python auto_log_downloader.py --round 14        # 补下载已有 round14，校验并跳过完整文件
+```
+
+默认保存到**当前工作目录**的 `log/`，可用 `--output 路径` 修改。每次普通运行创建 `roundN`（已有最大轮次 +1，首次为 round1）；该轮从上一轮最大 `gameN` +1 开始编号，首次为 game1。补下载用 `--round N`，复用已有场次目录，新场次继续编号。目录示例：`log/round14/game101/`，包含双方 `.log` 和 `match.json`；本轮结果见 `round14/summary.json`。普通运行不会跨轮去重，同一页重复运行仍会新建一轮。
+
+文件名包含己方/对方、红蓝方、分数和胜负，如 `ally_BlueSide_1214_lose.log`。`--team 队伍名`、`--phase 海选` 可切换队伍和阶段；`--dry-run` 仅预览，不创建日志目录。网站未提供的日志会记入汇总的 `unavailable`。
+
+默认使用运行环境中的 Edge。若在 WSL 中没有 Linux 版 Edge，可从 Windows 进入此仓库目录后运行 Windows Python；或安装 Chromium（`python -m playwright install chromium`）并加 `--channel chromium`。`--profile 路径` 可复用已有的专用登录目录。日志与浏览器登录目录仅供内部使用，不要公开。
