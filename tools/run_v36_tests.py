@@ -2,7 +2,7 @@
 from pathlib import Path
 import unittest,sys,json
 ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT))
+sys.path.insert(0,str(ROOT));sys.path.insert(0,str(ROOT/"tests"))
 REPLACED={
  'test_hot_wall_upgrade_does_not_wait_for_all_guns_level_three':
   'Replaced: capped walls after two global rockets; capital clearwave tests enforce the new ordering.',

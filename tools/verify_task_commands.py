@@ -8,8 +8,8 @@ def load(name,path):
  sp=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(sp);sys.modules[name]=m;sp.loader.exec_module(m);return m
 new=load('candidate_skill',W/'src/main3.py')
 old=load('old_page_runner_only',W/'src/main3.py')
-old._HERITAGE_RUNNER=(W/'tests_v34/fixtures/v33_page_runner.txt').read_text(encoding='utf-8')
-packets=json.loads((W/'tests_v34/fixtures/task_packets.json').read_text(encoding='utf-8'))
+old._HERITAGE_RUNNER=(W/'tests/tests_v34/fixtures/v33_page_runner.txt').read_text(encoding='utf-8')
+packets=json.loads((W/'tests/tests_v34/fixtures/task_packets.json').read_text(encoding='utf-8'))
 results=[]
 def record(**d):
  results.append(d);assert d['passed'],d

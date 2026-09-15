@@ -19,31 +19,43 @@
 
 ---
 
-## 4. 当前开发检查点：V3.6
+## 4. 当前开发检查点：V3.7
 
-规则优先级：本次原始 `Official/任务书.md` 高于旧AI解读和旧复盘。半场两基地先后被毁时，先毁者负；不能以最高分替代胜负。上下半场各胜一场才比较总分。
+当前入口：`src/main3.py`；平台产物：`CoreGeek/main3.py`、`CoreGeek.tar.gz`。
 
-唯一生产源 `src/main3.py`，标准库普通单文件；提交 `CoreGeek.tar.gz`，其中只含 `CoreGeek/main3.py`。平台传端口、仅print诊断，不要求环境变量或下载运行目录文件。
+### 平台提交
 
-启动：`build=v3.6-frontline-survival`，策略：`v3.6-firepower-with-frontline-floor`。
+保留旧V3.6作为回滚，沿用已验证的上传流程直接替换 `CoreGeek.tar.gz`。包内只有 `CoreGeek/main3.py`；不用安装依赖、设置环境变量或人工指定端口。平台按原方式注入位置参数端口。所有诊断仍由print输出，无需取回平台文件系统中的文件。
 
-本轮保留14格C形、炮位/炮型/伤害/任务执行器及NIGHT_WORK。C12缩边和开局排他正面优先因经济退化未采用。新增正面二级墙条件目标、维护总额/日额双预算、完整武器升级链资金保护、原地维修不抢当前可开炮角色。低HP已有药品优先保角色。
+启动应出现：
 
-回归105项、已有任务命令81项、真实HTTP22项通过；Round12 8936帧兼容重放，不是新对局；受控无伤害经济模型12/12保留任务及炮升级时点，9图有部分二级前墙。没有官方实机新成绩，不能宣称1300回合已通过。
-
-详细依据：`docs/V3.6_审计报告.md`、`docs/V3.6_证据与验证.json`。
-
-### 维护者离线命令（不是平台部署前置步骤）
-
-```bash
-python tools/run_v36_tests.py
-python tools/verify_task_commands.py
-python tools/build_single_file.py
-python tools/verify_platform.py
-python tools/compare_economy_v36.py
+```text
+build=v3.7-sustainment-recovery
+survival policy=v3.7-repair-retreat-rebuild
 ```
 
-旧tests和旧报告保留作为历史，不要无条件重新启用已退役策略断言；当前测试入口只使用 `run_v36_tests.py`。补丁带齐当前测试夹具，包括Round12经济输入与冻结的V3.5比较源；这些仅用于本地验证，不会打入平台单文件。
+仍出现 `_v34` 的任务技能名正常：本次任务执行器没有改写。保留原始REPLAY3打印行。
+
+### 修复范围
+
+满血不耗药、按个人持有量补给、真正离炮撤退、解除跨天维护断供、短程移动维修、优先及时卖矿重建、基地券可持有等待受伤再用。保留14格C形、炮位、任务和攻击计算。候选版未得到新的官方成绩，不保证1300回合。
+
+### 文件与覆盖
+
+本补丁只覆盖同名源码、入口、工具及现行测试，不删除旧日志、环境和其他文件。不要把整个新目录再次套进仓库内部。`docs/V3.7_修复与验证报告.md` 与 `docs/V3.7_验证结果.json` 给出实际测试结果、废止的旧策略断言和限制。
+
+维护后使用 `python -B tools/build_single_file.py` 重新生成入口包；不要再使用其他旧模块打包方式。当前交付已生成，参赛前不需重新构建。
+
+### 可选本地测试
+
+```bash
+python -B tools/run_v37_tests.py
+python -B tools/verify_task_commands.py
+python -B tools/verify_platform.py
+python -B tools/check_v37_invariants.py
+```
+
+这些是维护者的本地验证，不是平台启动命令，不要求用户从平台取回runs目录。测试目录有历史冻结源码/实际输入夹具，仅供比较，均不会被平台入口导入。
 
 ## 5. 实机下一轮
 

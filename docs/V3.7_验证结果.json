@@ -1,0 +1,5618 @@
+{
+  "version": "V3.7 candidate",
+  "build": "v3.7-sustainment-recovery",
+  "policy": "v3.7-repair-retreat-rebuild",
+  "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+  "baseline_source_sha256": "bb96498a3976ec37763742a37af3fe76a5cff82a635c5ff839e5aee91a8a037a",
+  "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform_entry": "CoreGeek/main3.py",
+  "summary": {
+    "unit_tests": 179,
+    "unit_passed": true,
+    "new_tests": 84,
+    "retained_tests": 95,
+    "baseline_exact_responses": 6442,
+    "real_full_health_cases": 14,
+    "closed_loop_tests": 7,
+    "mutated_snapshots": 400,
+    "mutated_passed": 400,
+    "historical_frames": 9773,
+    "active_task_frames_unchanged": 216,
+    "task_command_checks": 81,
+    "task_command_passed": 81,
+    "http_checks": 22,
+    "http_passed": 22,
+    "unchanged_ast_kernels": 15,
+    "replay_max_ms_local_four_processes": 1076.6373040000872
+  },
+  "scope_limitations": [
+    "Official simulator/container not available; no new official score, win-rate, base survival or 1300-turn success has been measured.",
+    "Python 3.13.5 actual runtime; 3.11 syntax/stdlib checks are not an actual Python 3.11.10 runtime test.",
+    "Historical replay is off-policy: later inputs remain original observations, not outcomes of the new actions.",
+    "Actual regression snapshots use prefix-reconstructed old memory; new damage/breach fields are derived only from preceding observations.",
+    "Closed-loop recovery applies commands to a small independent economic model with synthetic mineral relocation and no robot AI.",
+    "12-turn repair stress applies a fixed synthetic damage sequence and fixed targets, not official robot behavior.",
+    "81 task command checks reuse Round10 public-document fixtures and independent local HTTP/checker data, not current official judging.",
+    "Retired policy expectations are enumerated, not counted as passing unchanged tests."
+  ],
+  "baseline_reproduction": {
+    "scope": "Executed during fixture capture: V3.6 reprocessed every request from round1 to the last required snapshot; full responses compared.",
+    "baseline_sha256": "bb96498a3976ec37763742a37af3fe76a5cff82a635c5ff839e5aee91a8a037a",
+    "checked": 6442,
+    "passed": true,
+    "games": [
+      {
+        "game": "game82",
+        "checked": 342,
+        "mismatches": []
+      },
+      {
+        "game": "game83",
+        "checked": 472,
+        "mismatches": []
+      },
+      {
+        "game": "game79",
+        "checked": 700,
+        "mismatches": []
+      },
+      {
+        "game": "game81",
+        "checked": 472,
+        "mismatches": []
+      },
+      {
+        "game": "game85",
+        "checked": 471,
+        "mismatches": []
+      },
+      {
+        "game": "game86",
+        "checked": 615,
+        "mismatches": []
+      },
+      {
+        "game": "game84",
+        "checked": 733,
+        "mismatches": []
+      },
+      {
+        "game": "game88",
+        "checked": 602,
+        "mismatches": []
+      },
+      {
+        "game": "game89",
+        "checked": 572,
+        "mismatches": []
+      },
+      {
+        "game": "game87",
+        "checked": 731,
+        "mismatches": []
+      },
+      {
+        "game": "game90",
+        "checked": 732,
+        "mismatches": []
+      }
+    ]
+  },
+  "unit_validation": {
+    "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+    "run": 179,
+    "passed": true,
+    "selected": [
+      "tests_v34.test_actions.ActionTests.test_attack_cone_controller_cooldown_and_runtime_range",
+      "tests_v34.test_actions.ActionTests.test_build_regions_counts_budget_and_unknown_rules",
+      "tests_v34.test_actions.ActionTests.test_capacity_multiset_and_no_sale_credit",
+      "tests_v34.test_actions.ActionTests.test_collect_same_mine_night_and_wrong_actor",
+      "tests_v34.test_actions.ActionTests.test_consumables_and_summon_daily_limit",
+      "tests_v34.test_actions.ActionTests.test_default_weapon_build_names_use_role_types",
+      "tests_v34.test_actions.ActionTests.test_health_numeric_boundaries_do_not_raise",
+      "tests_v34.test_actions.ActionTests.test_malformed_inventory_prices_and_level",
+      "tests_v34.test_actions.ActionTests.test_move_conflicts_and_active_task_lock",
+      "tests_v34.test_actions.ActionTests.test_official_wall_cost_one_stone_default",
+      "tests_v34.test_actions.ActionTests.test_shared_gold_and_rejection_is_atomic",
+      "tests_v34.test_actions.ActionTests.test_task_own_side_multicell_and_submission",
+      "tests_v34.test_actions.ActionTests.test_treasure_inventory_and_drop",
+      "tests_v34.test_actions.ActionTests.test_untargeted_consumables_reject_coordinates_without_reserving",
+      "tests_v34.test_actions.ActionTests.test_upgrade_and_remove_do_not_double_modify_building",
+      "tests_v34.test_actions.ActionTests.test_wall_limit_and_replacement_count",
+      "tests_v34.test_actions.ActionTests.test_weapon_target_counts_all_levels_and_full_level_upgrade_rejection",
+      "tests_v34.test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+      "tests_v34.test_memory.MemoryTests.test_feedback_does_not_infer_success_or_associate_across_gap",
+      "tests_v34.test_memory.MemoryTests.test_history_is_not_current_obstacle_and_news_deduplicates",
+      "tests_v34.test_memory.MemoryTests.test_identity_change_and_round_regression_reset_history",
+      "tests_v34.test_memory.MemoryTests.test_missing_invalid_input_and_origin",
+      "tests_v34.test_memory.MemoryTests.test_parallel_duplicates_run_planner_once",
+      "tests_v34.test_memory.MemoryTests.test_transaction_rolls_back_planner_and_validation_failures",
+      "tests_v34.test_memory.MemoryTests.test_unserializable_response_does_not_commit",
+      "tests_v34.test_world.WorldTests.test_malformed_and_duplicate_roles",
+      "tests_v34.test_world.WorldTests.test_move_conflicts",
+      "tests_v34.test_world.WorldTests.test_multicell_dynamic_obstacles",
+      "tests_v34.test_world.WorldTests.test_phase_boundaries",
+      "tests_v34.test_world.WorldTests.test_shortest_path_and_corner_cut",
+      "tests_v34.test_world.WorldTests.test_station_and_rings",
+      "tests_v34.test_frontline.FrontlineTests.test_c_layout_all_initial_maps_and_free_service",
+      "tests_v34.test_frontline.FrontlineTests.test_cached_paths_equal_original_bfs_with_dynamic_reservations",
+      "tests_v34.test_frontline.FrontlineTests.test_cooling_offer_reordered_does_not_change_task_choice",
+      "tests_v34.test_frontline.FrontlineTests.test_cooling_zero_timeout_waits_only_after_success",
+      "tests_v34.test_frontline.FrontlineTests.test_courier_goes_home_to_its_paid_upgrade_target",
+      "tests_v34.test_frontline.FrontlineTests.test_exhausted_point_not_waited_or_accepted",
+      "tests_v34.test_frontline.FrontlineTests.test_failed_purchase_does_not_create_phantom_owned_item",
+      "tests_v34.test_frontline.FrontlineTests.test_maintenance_spending_bound",
+      "tests_v34.test_frontline.FrontlineTests.test_manifest_preserves_first_goal_across_batch",
+      "tests_v34.test_frontline.FrontlineTests.test_missile_levels_have_real_aoe_benefit",
+      "tests_v34.test_frontline.FrontlineTests.test_no_repairs_faked_without_inventory",
+      "tests_v34.test_frontline.FrontlineTests.test_no_success_learning_from_errors_or_discontinuous_or_bad_feedback",
+      "tests_v34.test_frontline.FrontlineTests.test_pioneer_prepositions_without_spending_future_gold",
+      "tests_v34.test_frontline.FrontlineTests.test_second_global_rocket_before_third_half_upgrade",
+      "tests_v34.test_frontline.FrontlineTests.test_success_learning_requires_ended_after_valid_submit",
+      "tests_v34.test_frontline.FrontlineTests.test_untouched_rear_never_upgraded",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_actual_day_boundary_and_zero_origin",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_batch_purchase_cannot_spend_another_courier_reservation",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_broken_base_rescue_is_not_suppressed_by_firepower",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clear_night_courier_can_apply_owned_voucher_after_travel",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clear_night_releases_without_making_it_day",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clearance_revoked_when_enemy_reappears",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_different_uncovered_target_after_first_claim",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_final_night_budget_does_not_go_beyond_1300",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_foreign_robot_near_base_blocks_release",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_held_stock_does_not_double_cover_two_weapons",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_maintenance_previous_night_is_not_charged_to_next_day",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_malformed_robot_does_not_imply_empty_field",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_night_build_gate_still_rejects",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_no_fix_before_owned_upgrade_for_same_wall",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_no_pre_stock_goal_can_hide_unaffordable_gun",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_other_side_robots_block_corridors_not_all_work",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_own_robot_anywhere_keeps_defense",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_print_report_contains_live_economy_and_budget",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_quarry_resets_yesterdays_single_stone_quota",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_shared_inflight_cash_not_spent_on_healthy_medicine",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_spawn_round_not_clear_even_with_empty_array",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_two_global_guns_allow_only_front_level_two",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unfinished_tasks_admitted_on_safe_night",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unfinished_tasks_not_admitted_into_live_wave",
+      "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unknown_robot_target_keeps_defense",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_adjacent_repair_can_use_cooldown",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_base_observation_not_score_based",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_boundary_purchase_counts_in_total_not_new_day_budget",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_c14_preserves_opening_front_corners_and_flanks",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_carried_capital_does_not_batch_wall",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_daily_cap_after_battery_complete",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_destroyed_front_target_not_redirected_to_side_upgrade",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_diagnostic_contains_survival_and_floor",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_established_core_survives_losing_front_gun_level",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_existing_extra_walls_do_not_mask_front_hole",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_first_two_global_rockets_are_protected",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_fourteen_target_after_day_one",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_front_floor_schedule_and_flank_cap",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_front_hole_preempts_old_side_job",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_full_front_replacement_is_floor_goal_when_battery_complete",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_front_cannot_fallback_while_saving_for_weapon",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_wall_can_use_true_surplus_after_whole_weapon_chain",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_wall_reserves_next_unobserved_weapon_level",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_maintenance_phase_cap_resets_only_after_actual_complete_battery",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_missing_enemy_envelope_does_not_record_death",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_new_layout_never_requests_demolition",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_other_courier_reservation_protected",
+      "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_urgent_owned_medicine_precedes_wall_repair",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_diagnostics_include_actual_holder_and_recovery",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_early_four_copper_sale_with_missing_turret",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_escape_can_leave_all_turrets",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_full_battery_does_not_trigger_recovery",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_full_health_does_not_panic_on_pressure_alone",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_insufficient_backpack_value_does_not_pretend_financed",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_no_rebuild_at_night",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_rebuild_priority_does_not_liquidate_reserved_stone",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_rebuild_uses_25_not_275_cash",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_retreat_cleared_when_wave_cleared",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_sell_does_not_spend_same_turn_proceeds",
+      "tests_v37.test_sustainment.EscapeRecoveryTests.test_sticky_retreat_not_pulled_back",
+      "tests_v37.test_sustainment.FundingTests.test_c14_and_guns_not_repositioned",
+      "tests_v37.test_sustainment.FundingTests.test_critical_front_can_precede_funded_third_gun",
+      "tests_v37.test_sustainment.FundingTests.test_daily_budget_resets_after_spent_yesterday",
+      "tests_v37.test_sustainment.FundingTests.test_daily_spend_and_reservations_still_bounded",
+      "tests_v37.test_sustainment.FundingTests.test_damaged_base_uses_preowned_voucher",
+      "tests_v37.test_sustainment.FundingTests.test_failed_purchase_not_charged",
+      "tests_v37.test_sustainment.FundingTests.test_funded_emergency_base_still_first",
+      "tests_v37.test_sustainment.FundingTests.test_funded_second_gun_keeps_priority",
+      "tests_v37.test_sustainment.FundingTests.test_healthy_front_does_not_drain_gun_savings",
+      "tests_v37.test_sustainment.FundingTests.test_keep_healthy_base_level_two_voucher",
+      "tests_v37.test_sustainment.FundingTests.test_nearly_funded_third_gun_does_not_forbid_saving_front",
+      "tests_v37.test_sustainment.FundingTests.test_no_buying_kits_in_full_backpack",
+      "tests_v37.test_sustainment.FundingTests.test_no_lifetime_40_gold_starvation",
+      "tests_v37.test_sustainment.FundingTests.test_no_negative_cash_with_reservations",
+      "tests_v37.test_sustainment.FundingTests.test_stock_ceiling_three_counts_pending_purchases",
+      "tests_v37.test_sustainment.FundingTests.test_stock_purchase_uses_real_holder_not_teleport",
+      "tests_v37.test_sustainment.FundingTests.test_unfunded_emergency_base_allows_affordable_alternative",
+      "tests_v37.test_sustainment.MedicineTests.test_active_night_does_not_buy",
+      "tests_v37.test_sustainment.MedicineTests.test_actual_injury_heals",
+      "tests_v37.test_sustainment.MedicineTests.test_full_pioneer_never_heals",
+      "tests_v37.test_sustainment.MedicineTests.test_full_worker_never_heals_under_any_pressure",
+      "tests_v37.test_sustainment.MedicineTests.test_no_inventory_no_heal",
+      "tests_v37.test_sustainment.MedicineTests.test_observed_damage_allows_early_emergency_heal",
+      "tests_v37.test_sustainment.MedicineTests.test_personal_inventory_cannot_be_borrowed",
+      "tests_v37.test_sustainment.MedicineTests.test_personal_stock_no_more_than_two",
+      "tests_v37.test_sustainment.MedicineTests.test_real_damage_only_across_consecutive_observations",
+      "tests_v37.test_sustainment.MedicineTests.test_shared_funds_not_spent_by_medicine",
+      "tests_v37.test_sustainment.MedicineTests.test_slight_injury_without_incoming_damage_does_not_waste_drug",
+      "tests_v37.test_sustainment.RepairTests.test_adjacent_cooldown_repair",
+      "tests_v37.test_sustainment.RepairTests.test_blocked_route_is_not_treated_as_arrival",
+      "tests_v37.test_sustainment.RepairTests.test_cannot_cost_two_volleys",
+      "tests_v37.test_sustainment.RepairTests.test_critical_wall_may_cost_one_volley",
+      "tests_v37.test_sustainment.RepairTests.test_damage_rate_reset_on_gap",
+      "tests_v37.test_sustainment.RepairTests.test_dying_carrier_does_not_charge_front",
+      "tests_v37.test_sustainment.RepairTests.test_expired_target_cancelled",
+      "tests_v37.test_sustainment.RepairTests.test_healing_not_recorded_as_negative_damage",
+      "tests_v37.test_sustainment.RepairTests.test_medicine_before_repair",
+      "tests_v37.test_sustainment.RepairTests.test_new_wall_id_retains_breach_priority",
+      "tests_v37.test_sustainment.RepairTests.test_no_repair_without_owned_item",
+      "tests_v37.test_sustainment.RepairTests.test_noncritical_ready_gun_must_fire",
+      "tests_v37.test_sustainment.RepairTests.test_one_step_then_repair_is_admissible",
+      "tests_v37.test_sustainment.RepairTests.test_two_step_outside_gun_coverage_has_bounded_loss",
+      "tests_v37.test_sustainment.RepairTests.test_upgrade_instead_of_fix_same_wall",
+      "tests_v37.test_sustainment.RepairTests.test_wall_will_die_before_arrival_is_not_chased",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game81_round472_10010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game82_round342_10010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game83_round472_10010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game84_round472_10011",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game84_round733_10010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game85_round343_20012",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game85_round471_20010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game86_round615_20011",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game87_round601_20011",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game87_round731_20010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game88_round602_20010",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game89_round341_20011",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game90_round610_20011",
+      "tests_v37.test_real_cases.RealCases.test_full_hp_game90_round732_20010",
+      "tests_v37.test_real_cases.RealCases.test_game79_488_exit_is_actual_legal_lower_pressure",
+      "tests_v37.test_real_cases.RealCases.test_game79_675_shop_buys_support",
+      "tests_v37.test_real_cases.RealCases.test_game79_690_shop_not_idle",
+      "tests_v37.test_real_cases.RealCases.test_game79_700_no_overdue_shop_detour",
+      "tests_v37.test_real_cases.RealCases.test_game89_521_copper_sale_trip_is_started",
+      "tests_v37.test_real_cases.RealCases.test_game89_540_cash_counterfactual_rebuilds_when_adjacent",
+      "tests_v37.test_real_cases.RealCases.test_game89_572_late_cash_not_teleported_to_build_pad",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_correct_medicine_consumption_follows_applied_injury",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_dead_carrier_does_not_leave_stale_job",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_game89_early_sale_closes_rebuild_chain",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_purchase_then_travel_then_apply_base_insurance",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_repair_move_then_real_use_and_inventory_decrement",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_repairs_abort_after_wall_destruction_between_move_and_use",
+      "tests_v37.test_closed_loop.ClosedLoopTests.test_same_scripted_pressure_comparison_records_actual_applied_results"
+    ],
+    "failures": [],
+    "errors": [],
+    "replaced_policy_tests": [
+      {
+        "test": "tests_v34.test_frontline.FrontlineTests.test_adjacent_emergency_repair_uses_owned_item",
+        "reason": "V3.6 requires preserving current ready-gun coverage; replaced by ready/cooldown cases."
+      },
+      {
+        "test": "tests_v34.test_frontline.FrontlineTests.test_hot_wall_upgrade_does_not_wait_for_all_guns_level_three",
+        "reason": "Replaced: capped walls after two global rockets; capital clearwave tests enforce the new ordering."
+      },
+      {
+        "test": "tests_v34.test_frontline.FrontlineTests.test_preemptive_stock_two_fixers_bound",
+        "reason": "Replaced: one pre-completion fixer, two only for a complete level-three battery."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_medicine_not_overstocked_on_healthy_courier",
+        "reason": "Frontline/previously hit carriers may now hold two, not exactly one; new personal stock ceiling test."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_stock_deficit_count_not_repeated_per_wall",
+        "reason": "Three-kit team ceiling replaces two; pending purchases explicitly counted in new tests."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_stock_deficit_not_subtracted_twice_in_purchase_coverage",
+        "reason": "Three-kit team ceiling replaces two; new stock accounting tests."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_daily_cash_cap_respected",
+        "reason": "Day4+ cap60 plus cap40 per incomplete-battery phase; tested explicitly."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_level_caps_depend_on_guns_and_day",
+        "reason": "Flanks remain level1; front readiness gated by established two-gun core."
+      },
+      {
+        "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_weapon_goal_beats_even_critical_wall_purchase",
+        "reason": "Funded weapons still first; bounded unfunded-gap rescue added and tested."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_adjacent_repair_cannot_steal_ready_gunner",
+        "reason": "An imminent critical breach may cost ONE volley; noncritical and two-volley denial tested separately."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_almost_funded_weapon_not_reset_by_maintenance",
+        "reason": "Third-gun savings no longer forbid urgent frontline maintenance; second-gun core still protected."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_critical_front_can_use_bounded_fallback",
+        "reason": "Critical front can be a direct priority, not only the previous named fallback event."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_funded_weapon_precedes_critical_wall",
+        "reason": "Critical readiness can precede gun #3; funded core and urgent base explicitly protected."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_hidden_next_weapon_voucher_still_protected_when_nearly_funded",
+        "reason": "Critical front maintenance can precede the third gun; healthy walls still use surplus."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_no_travelling_repair_during_live_wave",
+        "reason": "Bounded cooldown-aware move/use/return replaces unconditional travel prohibition."
+      },
+      {
+        "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_wall_budget_caps_successful_and_reserved_cash",
+        "reason": "Remove lifetime 40-gold cap, retain real daily spend/reservation limit."
+      }
+    ]
+  },
+  "invariants": {
+    "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+    "unchanged_kernels": [
+      "parse_deployment_spec",
+      "deployment_repair_command",
+      "heritage_query_command",
+      "canonical_task_answer",
+      "ActionValidator",
+      "CombatPlanner",
+      "GameMemory",
+      "decode_task_reply",
+      "make_task_context",
+      "render_task_prompt",
+      "save_task_candidate",
+      "observe_task_command",
+      "TaskPlanner",
+      "GameSession",
+      "AgentHTTPHandler"
+    ],
+    "mutation_cases": 400,
+    "passed": 400,
+    "failures": [],
+    "max_ms": 168.52133399993363,
+    "scope": "Fixed-seed mutated actual snapshots, clean memory per case. Cash/legality/idempotency/health guards, not win-rate."
+  },
+  "replay": {
+    "scope": "Off-policy historical-input replay. Future world states are original observations, not effects of new actions. No new score/survival inference.",
+    "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+    "games": [
+      {
+        "game": "game79",
+        "frames": 874,
+        "actions": 1381,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 130.36263499998313,
+        "max_ms": 1076.6373040000872,
+        "total_ms": 50118.53280300511,
+        "commands": {
+          "move:": 1045,
+          "build:rocket": 3,
+          "acceptTask:": 6,
+          "collect:": 72,
+          "submitAnswer:": 6,
+          "build:wall": 20,
+          "buy:Medicine": 27,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 155,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 2,
+          "sell:copper": 8,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "buy:WallFixer": 22,
+          "use:WallUpgradeVoucher1": 2,
+          "sell:iron": 2,
+          "sell:stone": 1
+        }
+      },
+      {
+        "game": "game80",
+        "frames": 1019,
+        "actions": 1139,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 77.7649389999624,
+        "max_ms": 385.512614000163,
+        "total_ms": 27576.061880998623,
+        "commands": {
+          "move:": 822,
+          "build:rocket": 3,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "collect:": 84,
+          "build:wall": 19,
+          "buy:Medicine": 18,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 128,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "sell:iron": 4,
+          "use:WeaponUpgradeVoucher2": 2,
+          "sell:copper": 6,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:stone": 1,
+          "buy:WallFixer": 30
+        }
+      },
+      {
+        "game": "game81",
+        "frames": 901,
+        "actions": 1392,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 134.6072930000446,
+        "max_ms": 884.1510589998052,
+        "total_ms": 56938.53981799884,
+        "commands": {
+          "move:": 1005,
+          "build:rocket": 3,
+          "collect:": 108,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 17,
+          "buy:Medicine": 54,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 169,
+          "buy:WeaponUpgradeVoucher2": 1,
+          "sell:copper": 10,
+          "sell:iron": 1,
+          "use:WeaponUpgradeVoucher2": 2,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "use:WallUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher2": 1
+        }
+      },
+      {
+        "game": "game82",
+        "frames": 902,
+        "actions": 1136,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 76.37109999996028,
+        "max_ms": 679.8042440000245,
+        "total_ms": 25929.723530999356,
+        "commands": {
+          "move:": 805,
+          "build:rocket": 3,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "collect:": 82,
+          "buy:Medicine": 56,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "build:wall": 17,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 110,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "sell:copper": 11,
+          "use:WeaponUpgradeVoucher2": 2,
+          "buy:StationUpgradeVoucher1": 1,
+          "sell:iron": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:stone": 2,
+          "use:Medicine": 1,
+          "buy:WallFixer": 23,
+          "buy:WallUpgradeVoucher1": 1
+        }
+      },
+      {
+        "game": "game83",
+        "frames": 643,
+        "actions": 1145,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 77.58376299989322,
+        "max_ms": 124.5013810000728,
+        "total_ms": 25188.82899699838,
+        "commands": {
+          "move:": 814,
+          "build:rocket": 3,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "collect:": 84,
+          "build:wall": 16,
+          "buy:Medicine": 33,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 124,
+          "buy:WeaponUpgradeVoucher2": 1,
+          "use:WeaponUpgradeVoucher2": 2,
+          "sell:copper": 8,
+          "buy:StationUpgradeVoucher1": 1,
+          "sell:iron": 3,
+          "sell:stone": 4,
+          "use:StationUpgradeVoucher1": 1,
+          "use:WallUpgradeVoucher1": 2,
+          "buy:WallFixer": 31
+        }
+      },
+      {
+        "game": "game84",
+        "frames": 745,
+        "actions": 1421,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 86.82915299982596,
+        "max_ms": 147.61059500006013,
+        "total_ms": 32674.772190999873,
+        "commands": {
+          "move:": 1029,
+          "build:rocket": 3,
+          "collect:": 94,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 18,
+          "buy:Medicine": 79,
+          "buy:WeaponUpgradeVoucher1": 3,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 160,
+          "buy:WeaponUpgradeVoucher2": 1,
+          "sell:copper": 13,
+          "use:WeaponUpgradeVoucher2": 2,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:stone": 2
+        }
+      },
+      {
+        "game": "game85",
+        "frames": 764,
+        "actions": 1432,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 137.69643900013762,
+        "max_ms": 258.5793940002077,
+        "total_ms": 53987.811855002066,
+        "commands": {
+          "move:": 1016,
+          "build:rocket": 4,
+          "collect:": 132,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 17,
+          "buy:Medicine": 63,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 151,
+          "sell:copper": 10,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 3,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:stone": 4,
+          "use:WallUpgradeVoucher1": 3,
+          "buy:WallFixer": 3,
+          "use:WallFixer": 4,
+          "buy:WallUpgradeVoucher1": 1
+        }
+      },
+      {
+        "game": "game86",
+        "frames": 767,
+        "actions": 1479,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 78.91752199998336,
+        "max_ms": 312.63240799989944,
+        "total_ms": 33683.90135700384,
+        "commands": {
+          "move:": 1027,
+          "build:rocket": 4,
+          "collect:": 104,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 18,
+          "buy:Medicine": 28,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "sell:copper": 25,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 3,
+          "attack:": 154,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "buy:WallFixer": 88,
+          "use:WallUpgradeVoucher1": 6,
+          "use:WallFixer": 1
+        }
+      },
+      {
+        "game": "game87",
+        "frames": 887,
+        "actions": 1447,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 125.319614999853,
+        "max_ms": 224.43653499999527,
+        "total_ms": 51760.28379199897,
+        "commands": {
+          "move:": 1061,
+          "build:rocket": 4,
+          "collect:": 82,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 14,
+          "buy:Medicine": 57,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 148,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 3,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:copper": 8,
+          "sell:iron": 1,
+          "use:WallUpgradeVoucher1": 2,
+          "sell:stone": 1,
+          "buy:WallFixer": 45
+        }
+      },
+      {
+        "game": "game88",
+        "frames": 770,
+        "actions": 1516,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 73.7717279998833,
+        "max_ms": 143.4021750001193,
+        "total_ms": 32608.67521299974,
+        "commands": {
+          "move:": 1070,
+          "build:rocket": 4,
+          "collect:": 109,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 16,
+          "buy:Medicine": 11,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "sell:copper": 10,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 3,
+          "attack:": 148,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "sell:iron": 10,
+          "buy:WallFixer": 104,
+          "use:WallUpgradeVoucher1": 5,
+          "sell:stone": 1,
+          "buy:WallUpgradeVoucher1": 2,
+          "use:Medicine": 1,
+          "use:WallFixer": 1
+        }
+      },
+      {
+        "game": "game89",
+        "frames": 750,
+        "actions": 1147,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 86.30442499998026,
+        "max_ms": 165.64884799981883,
+        "total_ms": 26330.3280540008,
+        "commands": {
+          "move:": 830,
+          "build:rocket": 3,
+          "collect:": 64,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 15,
+          "buy:Medicine": 80,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "attack:": 119,
+          "buy:WeaponUpgradeVoucher2": 1,
+          "use:WeaponUpgradeVoucher2": 2,
+          "buy:StationUpgradeVoucher1": 1,
+          "sell:copper": 7,
+          "sell:iron": 5,
+          "use:StationUpgradeVoucher1": 1,
+          "use:WallUpgradeVoucher1": 2
+        }
+      },
+      {
+        "game": "game90",
+        "frames": 751,
+        "actions": 1474,
+        "active_task_frames": 18,
+        "task_mismatches": [],
+        "failures": [],
+        "full_health_medicine": [],
+        "p95_ms": 79.31304699991415,
+        "max_ms": 251.16821899996467,
+        "total_ms": 31130.352740996612,
+        "commands": {
+          "move:": 1036,
+          "build:rocket": 4,
+          "collect:": 89,
+          "acceptTask:": 6,
+          "submitAnswer:": 6,
+          "build:wall": 16,
+          "buy:Medicine": 79,
+          "buy:WeaponUpgradeVoucher1": 2,
+          "use:WeaponUpgradeVoucher1": 3,
+          "sell:copper": 8,
+          "attack:": 151,
+          "buy:WeaponUpgradeVoucher2": 2,
+          "use:WeaponUpgradeVoucher2": 3,
+          "buy:StationUpgradeVoucher1": 1,
+          "use:StationUpgradeVoucher1": 1,
+          "buy:WallFixer": 59,
+          "use:WallUpgradeVoucher1": 2,
+          "sell:stone": 1,
+          "sell:iron": 5
+        }
+      }
+    ]
+  },
+  "closed_loop": [
+    {
+      "case": "medicine_applied_injuries",
+      "history": [
+        {
+          "age": 0,
+          "command": {},
+          "bag": [
+            "Medicine",
+            "Medicine"
+          ]
+        },
+        {
+          "age": 1,
+          "command": {
+            "4": {
+              "action": "use",
+              "name": "Medicine"
+            }
+          },
+          "bag": [
+            "Medicine"
+          ]
+        },
+        {
+          "age": 2,
+          "command": {},
+          "bag": [
+            "Medicine"
+          ]
+        },
+        {
+          "age": 3,
+          "command": {},
+          "bag": [
+            "Medicine"
+          ]
+        },
+        {
+          "age": 4,
+          "command": {
+            "4": {
+              "action": "use",
+              "name": "Medicine"
+            }
+          },
+          "bag": []
+        },
+        {
+          "age": 5,
+          "command": {},
+          "bag": []
+        }
+      ]
+    },
+    {
+      "case": "game89_recovery",
+      "old": {
+        "build_rounds": [],
+        "sales": [
+          [
+            563,
+            "20012",
+            "copper",
+            10
+          ]
+        ],
+        "remaining_gold": 63,
+        "rejected": [],
+        "scope": "Start at actual game89 round521; apply own actions for50 rounds. No robot damage, no new task rewards; mineral relocation is seeded synthetic."
+      },
+      "new": {
+        "build_rounds": [
+          536
+        ],
+        "sales": [
+          [
+            535,
+            "20012",
+            "copper",
+            4
+          ],
+          [
+            566,
+            "20010",
+            "iron",
+            9
+          ],
+          [
+            567,
+            "20010",
+            "copper",
+            1
+          ]
+        ],
+        "remaining_gold": 40,
+        "rejected": [],
+        "scope": "Start at actual game89 round521; apply own actions for50 rounds. No robot damage, no new task rewards; mineral relocation is seeded synthetic."
+      }
+    },
+    {
+      "case": "base_insurance",
+      "commands": [
+        {
+          "action": "buy",
+          "name": "StationUpgradeVoucher2",
+          "num": 1
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 23,
+              "y": 18
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 22,
+              "y": 18
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 21,
+              "y": 17
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 20,
+              "y": 17
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 19,
+              "y": 16
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 18,
+              "y": 17
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 17,
+              "y": 18
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 16,
+              "y": 18
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 15,
+              "y": 19
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 14,
+              "y": 20
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 13,
+              "y": 21
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 12,
+              "y": 22
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 11,
+              "y": 23
+            }
+          ]
+        },
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 10,
+              "y": 23
+            }
+          ]
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {
+          "action": "use",
+          "name": "StationUpgradeVoucher2",
+          "targetPos": [
+            {
+              "x": 9,
+              "y": 22
+            }
+          ]
+        },
+        {},
+        {},
+        {}
+      ],
+      "injury_injected_at_age": 24
+    },
+    {
+      "case": "move_use_inventory",
+      "steps": [
+        {
+          "action": "move",
+          "targetPos": [
+            {
+              "x": 11,
+              "y": 21
+            }
+          ]
+        },
+        {
+          "action": "use",
+          "name": "WallFixer",
+          "targetPos": [
+            {
+              "x": 12,
+              "y": 22
+            }
+          ]
+        },
+        {}
+      ],
+      "net_repair": 1080
+    },
+    {
+      "case": "12_turn_scripted_80_damage",
+      "results": [
+        {
+          "version": "V3.6",
+          "wall_hp": 0,
+          "repair_net": 0,
+          "volleys": 9
+        },
+        {
+          "version": "V3.7",
+          "wall_hp": 620,
+          "repair_net": 1080,
+          "volleys": 9
+        }
+      ],
+      "scope": "Fixed synthetic target selection; not official night outcome."
+    }
+  ],
+  "task_commands": [
+    {
+      "case": "game43:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game43:139",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game43:176",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game44:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game44:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game44:273",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game45:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game45:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game45:281",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game46:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game46:140",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game46:279",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game47:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game47:140",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game47:275",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game48:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game48:155",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game48:277",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game49:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game49:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game49:272",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game50:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game50:154",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game50:306",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game51:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game51:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game51:271",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game52:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game52:138",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game52:270",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game53:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game53:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game53:270",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game54:10",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game54:156",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game54:403",
+      "kind": "CRLF_deployment_actual_command",
+      "passed": true,
+      "error": ""
+    },
+    {
+      "case": "game43:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game43:146",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game43:288",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game44:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game44:142",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game44:405",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game45:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game45:142",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game45:274",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game46:16",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game46:148",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game46:272",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game47:16",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game47:167",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game47:268",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game48:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game48:140",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game48:270",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game49:16",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game49:141",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game49:304",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game50:16",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game50:139",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game50:270",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game51:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game51:142",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game51:278",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game52:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game52:145",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game52:277",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game53:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game53:142",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game53:404",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game54:17",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "北京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "北京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "2"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game54:142",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 1,
+      "baseline_correct": false,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "南京"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "南京"
+          ],
+          "offset": [
+            "10"
+          ],
+          "limit": [
+            "100"
+          ]
+        },
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "game54:273",
+      "kind": "current_docs_actual_offset_contract",
+      "passed": true,
+      "baseline_returncode": 0,
+      "baseline_correct": true,
+      "new_returncode": 0,
+      "requests": [
+        {
+          "location": [
+            "成都"
+          ],
+          "page": [
+            "1"
+          ],
+          "page_size": [
+            "100"
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "case": "401",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: HTTP 401 Authentication failed: Missing 'Authorization' header. Expected format: 'Authorization: Bearer <api_key>'\n"
+    },
+    {
+      "case": "fail_page2",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: HTTP 500 page unavailable\n"
+    },
+    {
+      "case": "repeat",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+    },
+    {
+      "case": "unknown_era",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] NeedReasoning: {\"reason\": \"unrecognized era\", \"partial_answer\": {\"city\": \"成都\", \"total_count\": 15, \"world_heritage_count\": 5, \"types\": [\"建筑\", \"遗址\"]}, \"records\": [{\"id\": \"NEW0\", \"name\": \"独立测试记录0\", \"type\": \"遗址\", \"era\": \"元\", \"protected_level\": \"世界遗产\"}, {\"id\": \"NEW1\", \"name\": \"独立测试记录1\", \"t"
+    },
+    {
+      "case": "changed_total",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: total changed during pagination\n"
+    },
+    {
+      "case": "bad_offset",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+    },
+    {
+      "case": "empty_page2",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: empty page before total reached\n"
+    },
+    {
+      "case": "overlap",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 1,
+      "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+    },
+    {
+      "case": "page",
+      "kind": "API_compatibility_or_negative",
+      "passed": true,
+      "returncode": 0,
+      "error": ""
+    }
+  ],
+  "http": {
+    "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "checks": [
+      {
+        "case": "Python_3_11_syntax",
+        "passed": true
+      },
+      {
+        "case": "only_stdlib_imports",
+        "passed": true
+      },
+      {
+        "case": "starts_in_clean_single_file_directory",
+        "passed": true
+      },
+      {
+        "case": "platform_positional_port",
+        "passed": true
+      },
+      {
+        "case": "real_initial_HTTP_has_actions",
+        "passed": true
+      },
+      {
+        "case": "duplicate_HTTP_idempotent",
+        "passed": true
+      },
+      {
+        "case": "conflicting_same_round_safely_rejected",
+        "passed": true
+      },
+      {
+        "case": "malformed_JSON_safe_empty",
+        "passed": true
+      },
+      {
+        "case": "wrong_content_type_safe_empty",
+        "passed": true
+      },
+      {
+        "case": "wrong_route_404",
+        "passed": true
+      },
+      {
+        "case": "GET_rejected_405",
+        "passed": true
+      },
+      {
+        "case": "next_turn_after_bad_requests_recovers",
+        "passed": true
+      },
+      {
+        "case": "chunked_HTTP_request",
+        "passed": true
+      },
+      {
+        "case": "no_companion_files_created",
+        "passed": true
+      },
+      {
+        "case": "print_frame_parts_complete",
+        "passed": true
+      },
+      {
+        "case": "print_frame_SHA256",
+        "passed": true
+      },
+      {
+        "case": "print_frame_parts_complete",
+        "passed": true
+      },
+      {
+        "case": "print_frame_SHA256",
+        "passed": true
+      },
+      {
+        "case": "print_frames_not_duplicated",
+        "passed": true
+      },
+      {
+        "case": "bad_port_0",
+        "passed": true
+      },
+      {
+        "case": "bad_port_65536",
+        "passed": true
+      },
+      {
+        "case": "bad_port_not-a-port",
+        "passed": true
+      }
+    ],
+    "scope": "Real TCP localhost, directory containing only release main3.py; not official container."
+  },
+  "print_log_integrity": [
+    {
+      "game": "game79",
+      "path": "log/round13/game79/ally_BlueSide_1214_lose.log",
+      "frames": 874,
+      "issues": [],
+      "sha256": "0a7305dc2a11851271395d0dec72c7a3902f9f67a6d9df1c9af29bd5b5730cca"
+    },
+    {
+      "game": "game80",
+      "path": "log/round13/game80/ally_BlueSide_1077_lose.log",
+      "frames": 1019,
+      "issues": [],
+      "sha256": "46d5a993e4e7bd87377cdc9e9f7a96d344b907f6d147aaed4b484fb48292a832"
+    },
+    {
+      "game": "game81",
+      "path": "log/round13/game81/ally_BlueSide_1243_lose.log",
+      "frames": 901,
+      "issues": [],
+      "sha256": "8036c9c77dd41390f9ee3e2cf65e9c3a02e97caa59d2899ac4079f9a1d8e7d11"
+    },
+    {
+      "game": "game82",
+      "path": "log/round13/game82/ally_BlueSide_1042_lose.log",
+      "frames": 902,
+      "issues": [],
+      "sha256": "357c612fca04fc1007f71de6c0922d5c4c59a87dc600957776bdf8d5692c839b"
+    },
+    {
+      "game": "game83",
+      "path": "log/round13/game83/ally_BlueSide_1082_win.log",
+      "frames": 643,
+      "issues": [],
+      "sha256": "fe35a1a882ceaca89bd8b25233d43426c408260b0df30bc346846d3a86e7689d"
+    },
+    {
+      "game": "game84",
+      "path": "log/round13/game84/ally_BlueSide_1216_win.log",
+      "frames": 745,
+      "issues": [],
+      "sha256": "dbabd36d545711c773d3eda87e15c9612695088ac370f17b3588c61b61593d6b"
+    },
+    {
+      "game": "game85",
+      "path": "log/round13/game85/ally_RedSide_1227_win.log",
+      "frames": 764,
+      "issues": [],
+      "sha256": "694ecfa1468f5cd869f85a0c405f2d03bcc8c495552e19d3aede17ef5a7c4908"
+    },
+    {
+      "game": "game86",
+      "path": "log/round13/game86/ally_RedSide_1235_win.log",
+      "frames": 767,
+      "issues": [],
+      "sha256": "a2384a41c26e31c7f13a3ab2bab4d4bd80be66a70310790a03a7402a4ccfa7cd"
+    },
+    {
+      "game": "game87",
+      "path": "log/round13/game87/ally_RedSide_1228_lose.log",
+      "frames": 887,
+      "issues": [],
+      "sha256": "207aa96c900db25f019c60ab4e7fd853811e696959f1be5fe864098dca2f8877"
+    },
+    {
+      "game": "game88",
+      "path": "log/round13/game88/ally_RedSide_1241_win.log",
+      "frames": 770,
+      "issues": [],
+      "sha256": "fdbde406ed93a9c7ecac7a02b797863f5c590c2936f1ea482724e072ab7c31ad"
+    },
+    {
+      "game": "game89",
+      "path": "log/round13/game89/ally_RedSide_1042_lose.log",
+      "frames": 750,
+      "issues": [],
+      "sha256": "1ec7ccabe7d83589080637aa3111027c6d087af358eb30fd4e232e966b956932"
+    },
+    {
+      "game": "game90",
+      "path": "log/round13/game90/ally_RedSide_1210_win.log",
+      "frames": 751,
+      "issues": [],
+      "sha256": "088ae1da512e5be0ddb7703abefbb429a630cb27ce7c9e7ac4bfd0fb3d7838eb"
+    }
+  ],
+  "clean_package_validation": {
+    "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+    "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "checks": [
+      {
+        "tool": "build_single_file.py",
+        "returncode": 0
+      },
+      {
+        "tool": "run_v37_tests.py",
+        "returncode": 0
+      },
+      {
+        "tool": "verify_task_commands.py",
+        "returncode": 0
+      },
+      {
+        "tool": "verify_platform.py",
+        "returncode": 0
+      },
+      {
+        "tool": "check_v37_invariants.py",
+        "returncode": 0
+      }
+    ],
+    "passed": true,
+    "unit": {
+      "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+      "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+      "run": 179,
+      "passed": true,
+      "selected": [
+        "tests_v34.test_actions.ActionTests.test_attack_cone_controller_cooldown_and_runtime_range",
+        "tests_v34.test_actions.ActionTests.test_build_regions_counts_budget_and_unknown_rules",
+        "tests_v34.test_actions.ActionTests.test_capacity_multiset_and_no_sale_credit",
+        "tests_v34.test_actions.ActionTests.test_collect_same_mine_night_and_wrong_actor",
+        "tests_v34.test_actions.ActionTests.test_consumables_and_summon_daily_limit",
+        "tests_v34.test_actions.ActionTests.test_default_weapon_build_names_use_role_types",
+        "tests_v34.test_actions.ActionTests.test_health_numeric_boundaries_do_not_raise",
+        "tests_v34.test_actions.ActionTests.test_malformed_inventory_prices_and_level",
+        "tests_v34.test_actions.ActionTests.test_move_conflicts_and_active_task_lock",
+        "tests_v34.test_actions.ActionTests.test_official_wall_cost_one_stone_default",
+        "tests_v34.test_actions.ActionTests.test_shared_gold_and_rejection_is_atomic",
+        "tests_v34.test_actions.ActionTests.test_task_own_side_multicell_and_submission",
+        "tests_v34.test_actions.ActionTests.test_treasure_inventory_and_drop",
+        "tests_v34.test_actions.ActionTests.test_untargeted_consumables_reject_coordinates_without_reserving",
+        "tests_v34.test_actions.ActionTests.test_upgrade_and_remove_do_not_double_modify_building",
+        "tests_v34.test_actions.ActionTests.test_wall_limit_and_replacement_count",
+        "tests_v34.test_actions.ActionTests.test_weapon_target_counts_all_levels_and_full_level_upgrade_rejection",
+        "tests_v34.test_memory.MemoryTests.test_callback_integration_and_duplicate_isolation",
+        "tests_v34.test_memory.MemoryTests.test_feedback_does_not_infer_success_or_associate_across_gap",
+        "tests_v34.test_memory.MemoryTests.test_history_is_not_current_obstacle_and_news_deduplicates",
+        "tests_v34.test_memory.MemoryTests.test_identity_change_and_round_regression_reset_history",
+        "tests_v34.test_memory.MemoryTests.test_missing_invalid_input_and_origin",
+        "tests_v34.test_memory.MemoryTests.test_parallel_duplicates_run_planner_once",
+        "tests_v34.test_memory.MemoryTests.test_transaction_rolls_back_planner_and_validation_failures",
+        "tests_v34.test_memory.MemoryTests.test_unserializable_response_does_not_commit",
+        "tests_v34.test_world.WorldTests.test_malformed_and_duplicate_roles",
+        "tests_v34.test_world.WorldTests.test_move_conflicts",
+        "tests_v34.test_world.WorldTests.test_multicell_dynamic_obstacles",
+        "tests_v34.test_world.WorldTests.test_phase_boundaries",
+        "tests_v34.test_world.WorldTests.test_shortest_path_and_corner_cut",
+        "tests_v34.test_world.WorldTests.test_station_and_rings",
+        "tests_v34.test_frontline.FrontlineTests.test_c_layout_all_initial_maps_and_free_service",
+        "tests_v34.test_frontline.FrontlineTests.test_cached_paths_equal_original_bfs_with_dynamic_reservations",
+        "tests_v34.test_frontline.FrontlineTests.test_cooling_offer_reordered_does_not_change_task_choice",
+        "tests_v34.test_frontline.FrontlineTests.test_cooling_zero_timeout_waits_only_after_success",
+        "tests_v34.test_frontline.FrontlineTests.test_courier_goes_home_to_its_paid_upgrade_target",
+        "tests_v34.test_frontline.FrontlineTests.test_exhausted_point_not_waited_or_accepted",
+        "tests_v34.test_frontline.FrontlineTests.test_failed_purchase_does_not_create_phantom_owned_item",
+        "tests_v34.test_frontline.FrontlineTests.test_maintenance_spending_bound",
+        "tests_v34.test_frontline.FrontlineTests.test_manifest_preserves_first_goal_across_batch",
+        "tests_v34.test_frontline.FrontlineTests.test_missile_levels_have_real_aoe_benefit",
+        "tests_v34.test_frontline.FrontlineTests.test_no_repairs_faked_without_inventory",
+        "tests_v34.test_frontline.FrontlineTests.test_no_success_learning_from_errors_or_discontinuous_or_bad_feedback",
+        "tests_v34.test_frontline.FrontlineTests.test_pioneer_prepositions_without_spending_future_gold",
+        "tests_v34.test_frontline.FrontlineTests.test_second_global_rocket_before_third_half_upgrade",
+        "tests_v34.test_frontline.FrontlineTests.test_success_learning_requires_ended_after_valid_submit",
+        "tests_v34.test_frontline.FrontlineTests.test_untouched_rear_never_upgraded",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_actual_day_boundary_and_zero_origin",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_batch_purchase_cannot_spend_another_courier_reservation",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_broken_base_rescue_is_not_suppressed_by_firepower",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clear_night_courier_can_apply_owned_voucher_after_travel",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clear_night_releases_without_making_it_day",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_clearance_revoked_when_enemy_reappears",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_different_uncovered_target_after_first_claim",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_final_night_budget_does_not_go_beyond_1300",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_foreign_robot_near_base_blocks_release",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_held_stock_does_not_double_cover_two_weapons",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_maintenance_previous_night_is_not_charged_to_next_day",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_malformed_robot_does_not_imply_empty_field",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_night_build_gate_still_rejects",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_no_fix_before_owned_upgrade_for_same_wall",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_no_pre_stock_goal_can_hide_unaffordable_gun",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_other_side_robots_block_corridors_not_all_work",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_own_robot_anywhere_keeps_defense",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_print_report_contains_live_economy_and_budget",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_quarry_resets_yesterdays_single_stone_quota",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_shared_inflight_cash_not_spent_on_healthy_medicine",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_spawn_round_not_clear_even_with_empty_array",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_two_global_guns_allow_only_front_level_two",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unfinished_tasks_admitted_on_safe_night",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unfinished_tasks_not_admitted_into_live_wave",
+        "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_unknown_robot_target_keeps_defense",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_adjacent_repair_can_use_cooldown",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_base_observation_not_score_based",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_boundary_purchase_counts_in_total_not_new_day_budget",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_c14_preserves_opening_front_corners_and_flanks",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_carried_capital_does_not_batch_wall",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_daily_cap_after_battery_complete",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_destroyed_front_target_not_redirected_to_side_upgrade",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_diagnostic_contains_survival_and_floor",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_established_core_survives_losing_front_gun_level",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_existing_extra_walls_do_not_mask_front_hole",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_first_two_global_rockets_are_protected",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_fourteen_target_after_day_one",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_front_floor_schedule_and_flank_cap",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_front_hole_preempts_old_side_job",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_full_front_replacement_is_floor_goal_when_battery_complete",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_front_cannot_fallback_while_saving_for_weapon",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_wall_can_use_true_surplus_after_whole_weapon_chain",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_healthy_wall_reserves_next_unobserved_weapon_level",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_maintenance_phase_cap_resets_only_after_actual_complete_battery",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_missing_enemy_envelope_does_not_record_death",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_new_layout_never_requests_demolition",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_other_courier_reservation_protected",
+        "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_urgent_owned_medicine_precedes_wall_repair",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_diagnostics_include_actual_holder_and_recovery",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_early_four_copper_sale_with_missing_turret",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_escape_can_leave_all_turrets",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_full_battery_does_not_trigger_recovery",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_full_health_does_not_panic_on_pressure_alone",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_insufficient_backpack_value_does_not_pretend_financed",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_no_rebuild_at_night",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_rebuild_priority_does_not_liquidate_reserved_stone",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_rebuild_uses_25_not_275_cash",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_retreat_cleared_when_wave_cleared",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_sell_does_not_spend_same_turn_proceeds",
+        "tests_v37.test_sustainment.EscapeRecoveryTests.test_sticky_retreat_not_pulled_back",
+        "tests_v37.test_sustainment.FundingTests.test_c14_and_guns_not_repositioned",
+        "tests_v37.test_sustainment.FundingTests.test_critical_front_can_precede_funded_third_gun",
+        "tests_v37.test_sustainment.FundingTests.test_daily_budget_resets_after_spent_yesterday",
+        "tests_v37.test_sustainment.FundingTests.test_daily_spend_and_reservations_still_bounded",
+        "tests_v37.test_sustainment.FundingTests.test_damaged_base_uses_preowned_voucher",
+        "tests_v37.test_sustainment.FundingTests.test_failed_purchase_not_charged",
+        "tests_v37.test_sustainment.FundingTests.test_funded_emergency_base_still_first",
+        "tests_v37.test_sustainment.FundingTests.test_funded_second_gun_keeps_priority",
+        "tests_v37.test_sustainment.FundingTests.test_healthy_front_does_not_drain_gun_savings",
+        "tests_v37.test_sustainment.FundingTests.test_keep_healthy_base_level_two_voucher",
+        "tests_v37.test_sustainment.FundingTests.test_nearly_funded_third_gun_does_not_forbid_saving_front",
+        "tests_v37.test_sustainment.FundingTests.test_no_buying_kits_in_full_backpack",
+        "tests_v37.test_sustainment.FundingTests.test_no_lifetime_40_gold_starvation",
+        "tests_v37.test_sustainment.FundingTests.test_no_negative_cash_with_reservations",
+        "tests_v37.test_sustainment.FundingTests.test_stock_ceiling_three_counts_pending_purchases",
+        "tests_v37.test_sustainment.FundingTests.test_stock_purchase_uses_real_holder_not_teleport",
+        "tests_v37.test_sustainment.FundingTests.test_unfunded_emergency_base_allows_affordable_alternative",
+        "tests_v37.test_sustainment.MedicineTests.test_active_night_does_not_buy",
+        "tests_v37.test_sustainment.MedicineTests.test_actual_injury_heals",
+        "tests_v37.test_sustainment.MedicineTests.test_full_pioneer_never_heals",
+        "tests_v37.test_sustainment.MedicineTests.test_full_worker_never_heals_under_any_pressure",
+        "tests_v37.test_sustainment.MedicineTests.test_no_inventory_no_heal",
+        "tests_v37.test_sustainment.MedicineTests.test_observed_damage_allows_early_emergency_heal",
+        "tests_v37.test_sustainment.MedicineTests.test_personal_inventory_cannot_be_borrowed",
+        "tests_v37.test_sustainment.MedicineTests.test_personal_stock_no_more_than_two",
+        "tests_v37.test_sustainment.MedicineTests.test_real_damage_only_across_consecutive_observations",
+        "tests_v37.test_sustainment.MedicineTests.test_shared_funds_not_spent_by_medicine",
+        "tests_v37.test_sustainment.MedicineTests.test_slight_injury_without_incoming_damage_does_not_waste_drug",
+        "tests_v37.test_sustainment.RepairTests.test_adjacent_cooldown_repair",
+        "tests_v37.test_sustainment.RepairTests.test_blocked_route_is_not_treated_as_arrival",
+        "tests_v37.test_sustainment.RepairTests.test_cannot_cost_two_volleys",
+        "tests_v37.test_sustainment.RepairTests.test_critical_wall_may_cost_one_volley",
+        "tests_v37.test_sustainment.RepairTests.test_damage_rate_reset_on_gap",
+        "tests_v37.test_sustainment.RepairTests.test_dying_carrier_does_not_charge_front",
+        "tests_v37.test_sustainment.RepairTests.test_expired_target_cancelled",
+        "tests_v37.test_sustainment.RepairTests.test_healing_not_recorded_as_negative_damage",
+        "tests_v37.test_sustainment.RepairTests.test_medicine_before_repair",
+        "tests_v37.test_sustainment.RepairTests.test_new_wall_id_retains_breach_priority",
+        "tests_v37.test_sustainment.RepairTests.test_no_repair_without_owned_item",
+        "tests_v37.test_sustainment.RepairTests.test_noncritical_ready_gun_must_fire",
+        "tests_v37.test_sustainment.RepairTests.test_one_step_then_repair_is_admissible",
+        "tests_v37.test_sustainment.RepairTests.test_two_step_outside_gun_coverage_has_bounded_loss",
+        "tests_v37.test_sustainment.RepairTests.test_upgrade_instead_of_fix_same_wall",
+        "tests_v37.test_sustainment.RepairTests.test_wall_will_die_before_arrival_is_not_chased",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game81_round472_10010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game82_round342_10010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game83_round472_10010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game84_round472_10011",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game84_round733_10010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game85_round343_20012",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game85_round471_20010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game86_round615_20011",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game87_round601_20011",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game87_round731_20010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game88_round602_20010",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game89_round341_20011",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game90_round610_20011",
+        "tests_v37.test_real_cases.RealCases.test_full_hp_game90_round732_20010",
+        "tests_v37.test_real_cases.RealCases.test_game79_488_exit_is_actual_legal_lower_pressure",
+        "tests_v37.test_real_cases.RealCases.test_game79_675_shop_buys_support",
+        "tests_v37.test_real_cases.RealCases.test_game79_690_shop_not_idle",
+        "tests_v37.test_real_cases.RealCases.test_game79_700_no_overdue_shop_detour",
+        "tests_v37.test_real_cases.RealCases.test_game89_521_copper_sale_trip_is_started",
+        "tests_v37.test_real_cases.RealCases.test_game89_540_cash_counterfactual_rebuilds_when_adjacent",
+        "tests_v37.test_real_cases.RealCases.test_game89_572_late_cash_not_teleported_to_build_pad",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_correct_medicine_consumption_follows_applied_injury",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_dead_carrier_does_not_leave_stale_job",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_game89_early_sale_closes_rebuild_chain",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_purchase_then_travel_then_apply_base_insurance",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_repair_move_then_real_use_and_inventory_decrement",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_repairs_abort_after_wall_destruction_between_move_and_use",
+        "tests_v37.test_closed_loop.ClosedLoopTests.test_same_scripted_pressure_comparison_records_actual_applied_results"
+      ],
+      "failures": [],
+      "errors": [],
+      "replaced_policy_tests": [
+        {
+          "test": "tests_v34.test_frontline.FrontlineTests.test_adjacent_emergency_repair_uses_owned_item",
+          "reason": "V3.6 requires preserving current ready-gun coverage; replaced by ready/cooldown cases."
+        },
+        {
+          "test": "tests_v34.test_frontline.FrontlineTests.test_hot_wall_upgrade_does_not_wait_for_all_guns_level_three",
+          "reason": "Replaced: capped walls after two global rockets; capital clearwave tests enforce the new ordering."
+        },
+        {
+          "test": "tests_v34.test_frontline.FrontlineTests.test_preemptive_stock_two_fixers_bound",
+          "reason": "Replaced: one pre-completion fixer, two only for a complete level-three battery."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_medicine_not_overstocked_on_healthy_courier",
+          "reason": "Frontline/previously hit carriers may now hold two, not exactly one; new personal stock ceiling test."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_stock_deficit_count_not_repeated_per_wall",
+          "reason": "Three-kit team ceiling replaces two; pending purchases explicitly counted in new tests."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_stock_deficit_not_subtracted_twice_in_purchase_coverage",
+          "reason": "Three-kit team ceiling replaces two; new stock accounting tests."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_daily_cash_cap_respected",
+          "reason": "Day4+ cap60 plus cap40 per incomplete-battery phase; tested explicitly."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_level_caps_depend_on_guns_and_day",
+          "reason": "Flanks remain level1; front readiness gated by established two-gun core."
+        },
+        {
+          "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_weapon_goal_beats_even_critical_wall_purchase",
+          "reason": "Funded weapons still first; bounded unfunded-gap rescue added and tested."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_adjacent_repair_cannot_steal_ready_gunner",
+          "reason": "An imminent critical breach may cost ONE volley; noncritical and two-volley denial tested separately."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_almost_funded_weapon_not_reset_by_maintenance",
+          "reason": "Third-gun savings no longer forbid urgent frontline maintenance; second-gun core still protected."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_critical_front_can_use_bounded_fallback",
+          "reason": "Critical front can be a direct priority, not only the previous named fallback event."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_funded_weapon_precedes_critical_wall",
+          "reason": "Critical readiness can precede gun #3; funded core and urgent base explicitly protected."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_hidden_next_weapon_voucher_still_protected_when_nearly_funded",
+          "reason": "Critical front maintenance can precede the third gun; healthy walls still use surplus."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_no_travelling_repair_during_live_wave",
+          "reason": "Bounded cooldown-aware move/use/return replaces unconditional travel prohibition."
+        },
+        {
+          "test": "tests_v36.test_frontline_survival.FrontlineSurvivalTests.test_wall_budget_caps_successful_and_reserved_cash",
+          "reason": "Remove lifetime 40-gold cap, retain real daily spend/reservation limit."
+        }
+      ]
+    },
+    "tasks": [
+      {
+        "case": "game43:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game43:139",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game43:176",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game44:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game44:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game44:273",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game45:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game45:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game45:281",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game46:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game46:140",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game46:279",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game47:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game47:140",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game47:275",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game48:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game48:155",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game48:277",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game49:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game49:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game49:272",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game50:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game50:154",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game50:306",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game51:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game51:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game51:271",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game52:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game52:138",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game52:270",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game53:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game53:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game53:270",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game54:10",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game54:156",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game54:403",
+        "kind": "CRLF_deployment_actual_command",
+        "passed": true,
+        "error": ""
+      },
+      {
+        "case": "game43:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game43:146",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game43:288",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game44:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game44:142",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game44:405",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game45:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game45:142",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game45:274",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game46:16",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game46:148",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game46:272",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game47:16",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game47:167",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game47:268",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game48:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game48:140",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game48:270",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game49:16",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game49:141",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game49:304",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game50:16",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game50:139",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game50:270",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game51:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game51:142",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game51:278",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game52:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game52:145",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game52:277",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game53:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game53:142",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game53:404",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game54:17",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "北京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "北京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "2"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game54:142",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 1,
+        "baseline_correct": false,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "南京"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "南京"
+            ],
+            "offset": [
+              "10"
+            ],
+            "limit": [
+              "100"
+            ]
+          },
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "game54:273",
+        "kind": "current_docs_actual_offset_contract",
+        "passed": true,
+        "baseline_returncode": 0,
+        "baseline_correct": true,
+        "new_returncode": 0,
+        "requests": [
+          {
+            "location": [
+              "成都"
+            ],
+            "page": [
+              "1"
+            ],
+            "page_size": [
+              "100"
+            ]
+          }
+        ],
+        "error": ""
+      },
+      {
+        "case": "401",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: HTTP 401 Authentication failed: Missing 'Authorization' header. Expected format: 'Authorization: Bearer <api_key>'\n"
+      },
+      {
+        "case": "fail_page2",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: HTTP 500 page unavailable\n"
+      },
+      {
+        "case": "repeat",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+      },
+      {
+        "case": "unknown_era",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] NeedReasoning: {\"reason\": \"unrecognized era\", \"partial_answer\": {\"city\": \"成都\", \"total_count\": 15, \"world_heritage_count\": 5, \"types\": [\"建筑\", \"遗址\"]}, \"records\": [{\"id\": \"NEW0\", \"name\": \"独立测试记录0\", \"type\": \"遗址\", \"era\": \"元\", \"protected_level\": \"世界遗产\"}, {\"id\": \"NEW1\", \"name\": \"独立测试记录1\", \"t"
+      },
+      {
+        "case": "changed_total",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: total changed during pagination\n"
+      },
+      {
+        "case": "bad_offset",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+      },
+      {
+        "case": "empty_page2",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: empty page before total reached\n"
+      },
+      {
+        "case": "overlap",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 1,
+        "error": "[run_heritage] ValueError: server ignored the requested offset\n"
+      },
+      {
+        "case": "page",
+        "kind": "API_compatibility_or_negative",
+        "passed": true,
+        "returncode": 0,
+        "error": ""
+      }
+    ],
+    "http": {
+      "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+      "checks": [
+        {
+          "case": "Python_3_11_syntax",
+          "passed": true
+        },
+        {
+          "case": "only_stdlib_imports",
+          "passed": true
+        },
+        {
+          "case": "starts_in_clean_single_file_directory",
+          "passed": true
+        },
+        {
+          "case": "platform_positional_port",
+          "passed": true
+        },
+        {
+          "case": "real_initial_HTTP_has_actions",
+          "passed": true
+        },
+        {
+          "case": "duplicate_HTTP_idempotent",
+          "passed": true
+        },
+        {
+          "case": "conflicting_same_round_safely_rejected",
+          "passed": true
+        },
+        {
+          "case": "malformed_JSON_safe_empty",
+          "passed": true
+        },
+        {
+          "case": "wrong_content_type_safe_empty",
+          "passed": true
+        },
+        {
+          "case": "wrong_route_404",
+          "passed": true
+        },
+        {
+          "case": "GET_rejected_405",
+          "passed": true
+        },
+        {
+          "case": "next_turn_after_bad_requests_recovers",
+          "passed": true
+        },
+        {
+          "case": "chunked_HTTP_request",
+          "passed": true
+        },
+        {
+          "case": "no_companion_files_created",
+          "passed": true
+        },
+        {
+          "case": "print_frame_parts_complete",
+          "passed": true
+        },
+        {
+          "case": "print_frame_SHA256",
+          "passed": true
+        },
+        {
+          "case": "print_frame_parts_complete",
+          "passed": true
+        },
+        {
+          "case": "print_frame_SHA256",
+          "passed": true
+        },
+        {
+          "case": "print_frames_not_duplicated",
+          "passed": true
+        },
+        {
+          "case": "bad_port_0",
+          "passed": true
+        },
+        {
+          "case": "bad_port_65536",
+          "passed": true
+        },
+        {
+          "case": "bad_port_not-a-port",
+          "passed": true
+        }
+      ],
+      "scope": "Real TCP localhost, directory containing only release main3.py; not official container."
+    },
+    "invariants": {
+      "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+      "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
+      "unchanged_kernels": [
+        "parse_deployment_spec",
+        "deployment_repair_command",
+        "heritage_query_command",
+        "canonical_task_answer",
+        "ActionValidator",
+        "CombatPlanner",
+        "GameMemory",
+        "decode_task_reply",
+        "make_task_context",
+        "render_task_prompt",
+        "save_task_candidate",
+        "observe_task_command",
+        "TaskPlanner",
+        "GameSession",
+        "AgentHTTPHandler"
+      ],
+      "mutation_cases": 400,
+      "passed": 400,
+      "failures": [],
+      "max_ms": 98.35402299995621,
+      "scope": "Fixed-seed mutated actual snapshots, clean memory per case. Cash/legality/idempotency/health guards, not win-rate."
+    }
+  }
+}

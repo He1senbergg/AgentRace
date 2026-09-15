@@ -1,11 +1,11 @@
 """Behavior regressions for Round11, not assertions of official match scores."""
 import sys,importlib.util,unittest,copy,json
 from pathlib import Path
-W=Path(__file__).resolve().parents[1]
+W=Path(__file__).resolve().parents[2]
 sp=importlib.util.spec_from_file_location('v35_tests_module',W/'src/main3.py')
 m=importlib.util.module_from_spec(sp);sys.modules[sp.name]=m;sp.loader.exec_module(m)
 m.print_log=lambda *a,**k:None;m.GameSession.trace_turn=lambda *a,**k:None
-initial=json.loads((W/'tests_v34/fixtures/states.json').read_text())['game43']['0']['request']
+initial=json.loads((W/'tests/tests_v34/fixtures/states.json').read_text())['game43']['0']['request']
 def role(i,kind,cell,level=1,hp=None,bag=()):
  return dict(id=i,roleType=kind,pos=dict(zip(('x','y'),cell)),level=level,
   health=(220 if kind=='worker' else 200 if kind=='pioneer' else 1500*level if kind=='station' else 500+500*level) if hp is None else hp,

@@ -25,7 +25,7 @@ with tempfile.TemporaryDirectory() as tmp:
   def req(data,method='POST',path='/',ctype='application/json'):
    body=json.dumps(data,ensure_ascii=False).encode() if not isinstance(data,bytes) else data
    c=http.client.HTTPConnection('127.0.0.1',port,timeout=10);c.request(method,path,body,{'Content-Type':ctype});r=c.getresponse();status=r.status;out=json.loads(r.read());c.close();return status,out
-  data=json.loads((W/'tests_v34/fixtures/states.json').read_text(encoding='utf-8'))['game43']['0']['request']
+  data=json.loads((W/'tests/tests_v34/fixtures/states.json').read_text(encoding='utf-8'))['game43']['0']['request']
   status,out=req(data);record('real_initial_HTTP_has_actions',status==200 and bool(out['roleCommandMap']) and set(out)=={'roleCommandMap','prompt','executeCmd'})
   record('duplicate_HTTP_idempotent',req(data)==(status,out))
   bad=dict(data);bad['teamOur']=dict(data['teamOur'],goldNum=76)

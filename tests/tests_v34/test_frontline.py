@@ -1,8 +1,8 @@
 import sys,importlib.util,unittest,pickle,copy,random,json,types
 from pathlib import Path
-W=Path(__file__).resolve().parents[1];sp=importlib.util.spec_from_file_location('frontline_release',W/'src/main3.py');m=importlib.util.module_from_spec(sp);sys.modules[sp.name]=m;sp.loader.exec_module(m)
+W=Path(__file__).resolve().parents[2];sp=importlib.util.spec_from_file_location('frontline_release',W/'src/main3.py');m=importlib.util.module_from_spec(sp);sys.modules[sp.name]=m;sp.loader.exec_module(m)
 m.print_log=lambda *a,**k:None;m.GameSession.trace_turn=lambda *a,**k:None
-rows={g:{int(k):v for k,v in states.items()} for g,states in json.loads((W/'tests_v34/fixtures/states.json').read_text(encoding='utf-8')).items()}
+rows={g:{int(k):v for k,v in states.items()} for g,states in json.loads((W/'tests/tests_v34/fixtures/states.json').read_text(encoding='utf-8')).items()}
 def role(a,k,p,level=1,hp=None,bag=()):
  return dict(id=a,roleType=k,pos=dict(x=p[0],y=p[1]),level=level,health=hp or (220 if k=='worker' else 200 if k=='pioneer' else 1500*level if k=='station' else 500+500*level),backpack=list(bag),backPackCapability=100 if k=='worker' else 40 if k=='pioneer' else 0,cooldown=0)
 def data(r=131,extra=None):
