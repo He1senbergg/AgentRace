@@ -1,0 +1,33 @@
+{
+  "phase": "练习赛",
+  "team": "OpenAI",
+  "dry_run": false,
+  "downloaded": 30,
+  "existing": 0,
+  "matched": 18,
+  "errors": [],
+  "pages": 2,
+  "completed": false,
+  "unavailable": [
+    {
+      "match": "2026-09-15 17_40_37_bd0b9285a9a44606",
+      "reason": "网站禁用日志下载"
+    },
+    {
+      "match": "2026-09-15 17_35_06_1e5e1ced23f070d4",
+      "reason": "网站禁用日志下载"
+    },
+    {
+      "match": "2026-09-15 17_32_56_6d38a0403c743041",
+      "reason": "网站禁用日志下载"
+    }
+  ],
+  "requested_pages": [
+    1,
+    2
+  ],
+  "processed_pages": [
+    1,
+    2
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "record": {
+    "队伍A": "Agentic麻辣烫",
+    "A积分": "0",
+    "A分数": "1067",
+    "队伍B": "OpenAI",
+    "B积分": "3",
+    "B分数": "1214",
+    "地图": "attack_map",
+    "完成时间": "2026-09-15 18:06:22",
+    "状态": "successful"
+  },
+  "logs": [
+    {
+      "label": "队伍A日志",
+      "team": "Agentic麻辣烫",
+      "filename": "enemy_BlueSide_1067_lose.log",
+      "side": "BlueSide",
+      "score": "1067",
+      "points": "0",
+      "result": "lose"
+    },
+    {
+      "label": "队伍B日志",
+      "team": "OpenAI",
+      "filename": "ally_RedSide_1214_win.log",
+      "side": "RedSide",
+      "score": "1214",
+      "points": "3",
+      "result": "win"
+    }
+  ],
+  "phase": "练习赛",
+  "downloads": {
+    "enemy_BlueSide_1067_lose.log": {
+      "bytes": 77845,
+      "sha256": "d44f453746b6affaffb2cdfc22fcb82835dbe2821158e8a86d383f2cc040a29e",
+      "original_filename": "teamA.log",
+      "decryption": {
+        "status": "plaintext"
+      }
+    },
+    "ally_RedSide_1214_win.log": {
+      "bytes": 7768232,
+      "sha256": "81a548491a528b28845a39348fabbfac43989158f9165558be6a1e288d60a122",
+      "original_filename": "teamB.log",
+      "decryption": {
+        "status": "ok",
+        "input_sha256": "81a548491a528b28845a39348fabbfac43989158f9165558be6a1e288d60a122",
+        "output": {
+          "filename": "ally_RedSide_1214_win_decrypted.log",
+          "bytes": 6505060,
+          "sha256": "2447500dc8cd3290c850d9643ca9647da5fb782e882b74fa7c74ce34cf56fcb3"
+        },
+        "report": {
+          "filename": "ally_RedSide_1214_win_decrypted.log.report.json",
+          "bytes": 350,
+          "sha256": "a61a4afd8f6297b9d785b1ccce56b2e7e160fd32ffe44565ab7b71947611aac9"
+        }
+      }
+    }
+  }
+}

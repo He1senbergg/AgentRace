@@ -1,0 +1,63 @@
+{
+  "record": {
+    "队伍A": "谢谢",
+    "A积分": "3",
+    "A分数": "1978",
+    "队伍B": "OpenAI",
+    "B积分": "0",
+    "B分数": "1015",
+    "地图": "attack_map",
+    "完成时间": "2026-09-15 18:07:58",
+    "状态": "successful"
+  },
+  "logs": [
+    {
+      "label": "队伍A日志",
+      "team": "谢谢",
+      "filename": "enemy_BlueSide_1978_win.log",
+      "side": "BlueSide",
+      "score": "1978",
+      "points": "3",
+      "result": "win"
+    },
+    {
+      "label": "队伍B日志",
+      "team": "OpenAI",
+      "filename": "ally_RedSide_1015_lose.log",
+      "side": "RedSide",
+      "score": "1015",
+      "points": "0",
+      "result": "lose"
+    }
+  ],
+  "phase": "练习赛",
+  "downloads": {
+    "enemy_BlueSide_1978_win.log": {
+      "bytes": 867414,
+      "sha256": "541b8fa0164cd26bd0a4f98cc209197f8c7ff96529eb0076fca25f75b480b6b1",
+      "original_filename": "teamA.log",
+      "decryption": {
+        "status": "plaintext"
+      }
+    },
+    "ally_RedSide_1015_lose.log": {
+      "bytes": 11135134,
+      "sha256": "2c7da3f6719304ba62848cbd73fdabfdc2feece773fdd53ceec68e6ded33654e",
+      "original_filename": "teamB.log",
+      "decryption": {
+        "status": "ok",
+        "input_sha256": "2c7da3f6719304ba62848cbd73fdabfdc2feece773fdd53ceec68e6ded33654e",
+        "output": {
+          "filename": "ally_RedSide_1015_lose_decrypted.log",
+          "bytes": 8658256,
+          "sha256": "23c3e5b600cf7fc2fc3f2fee8e65614fd542d19896a8541f5e8ff03cc626786d"
+        },
+        "report": {
+          "filename": "ally_RedSide_1015_lose_decrypted.log.report.json",
+          "bytes": 350,
+          "sha256": "dc27817a0c59e738f984044a8119060455eb8636d6a50b04d9323723162bf6e4"
+        }
+      }
+    }
+  }
+}
