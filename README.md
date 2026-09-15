@@ -79,3 +79,17 @@ python auto_log_downloader.py --round 14        # 补下载已有 round14，校�
 文件名包含己方/对方、红蓝方、分数和胜负，如 `ally_BlueSide_1214_lose.log`。`--team 队伍名`、`--phase 海选` 可切换队伍和阶段；`--dry-run` 仅预览，不创建日志目录。网站未提供的日志会记入汇总的 `unavailable`。
 
 默认使用运行环境中的 Edge。若在 WSL 中没有 Linux 版 Edge，可从 Windows 进入此仓库目录后运行 Windows Python；或安装 Chromium（`python -m playwright install chromium`）并加 `--channel chromium`。`--profile 路径` 可复用已有的专用登录目录。日志与浏览器登录目录仅供内部使用，不要公开。
+
+### 下载后自动解密
+
+下载器会保留按分数/胜负命名的原始 `.log`，识别到 ASL1 加密日志后自动调用仓库内 `SecureLog/log_tool.py`，使用 `AgentRace_LogKeys/private.pem` 和固定的 `--backend rsa`。这两个路径相对于下载脚本所在目录，不受 `--output` 或运行目录影响；解密使用运行下载器的同一个 Python，请在该环境安装 `python -m pip install rsa==4.9`。
+
+每份加密日志在同一个 game 目录下产生三份文件，例如：
+
+```text
+ally_RedSide_1234_win.log                            # 下载原文件（密文）
+ally_RedSide_1234_win_decrypted.log                  # 解密后的日志
+ally_RedSide_1234_win_decrypted.log.report.json      # 解密报告
+```
+
+旧明文日志不执行解密。`--round N` 补下载也会补做解密，并校验已有解密日志与报告；完整产物跳过，缺失或损坏的产物重新生成。解密退出码 2 时保留部分恢复结果和报告，并计入本轮错误；致命失败保留原始下载，不会将其当作解密成功。解密状态与文件校验值记入 `match.json` 的 `downloads.*.decryption`，本轮错误见 `summary.json`。`--dry-run` 不执行解密。

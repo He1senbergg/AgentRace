@@ -4,6 +4,8 @@ import hashlib
 import json
 import re
 import sys
+import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -12,6 +14,9 @@ PHASES = ["练习赛", "海选", "64进32", "32进16", "16进8", "8进4", "决�
 FIELDS = ["队伍A", "A积分", "A分数", "队伍B", "B积分", "B分数", "地图", "完成时间", "状态"]
 RESULTS = {"3": "win", "0": "lose", "1": "draw"}
 DEFAULT_OUTPUT = Path("log")
+REPO_ROOT = Path(__file__).resolve().parent
+DECRYPT_TOOL = REPO_ROOT / "SecureLog" / "log_tool.py"
+PRIVATE_KEY = REPO_ROOT / "AgentRace_LogKeys" / "private.pem"
 
 
 def numbered_dirs(root, prefix):
@@ -109,6 +114,46 @@ def verified_existing(path, saved):
     return bool(saved and path.is_file() and path.stat().st_size > 0
                 and path.stat().st_size == saved.get("bytes")
                 and checksum(path) == saved.get("sha256"))
+
+
+def decrypt_download(destination, saved):
+    """Keep the raw download; publish restored text and report beside it."""
+    with destination.open("rb") as stream:
+        encrypted = any(b"ASL1 " in line or b"SECURE_LOG_DROPPED" in line
+                        for line in stream)
+    if not encrypted:
+        return {"status": "plaintext"}
+    output = destination.with_name(destination.stem + "_decrypted.log")
+    report_path = Path(str(output) + ".report.json")
+    previous = saved.get("decryption", {})
+    if (previous.get("input_sha256") == saved["sha256"]
+            and previous.get("status") in ("ok", "partial")
+            and verified_existing(output, previous.get("output"))
+            and verified_existing(report_path, previous.get("report"))):
+        return previous
+    # The tool refuses existing outputs. Stage both files before replacing them.
+    with tempfile.TemporaryDirectory(prefix=".decrypt-", dir=destination.parent) as temp:
+        staged = Path(temp) / output.name
+        result = subprocess.run(
+            [sys.executable, str(DECRYPT_TOOL), "decrypt", "--private", str(PRIVATE_KEY),
+             "--input", str(destination.resolve()), "--out", str(staged.resolve()),
+             "--backend", "rsa"], capture_output=True, text=True,
+            encoding="utf-8", errors="replace")
+        if result.returncode not in (0, 2):
+            raise RuntimeError("解密失败（退出码 {}）：{}".format(
+                result.returncode, (result.stderr or result.stdout).strip()))
+        staged_report = Path(str(staged) + ".report.json")
+        report = json.loads(staged_report.read_text(encoding="utf-8"))
+        staged.replace(output)
+        staged_report.replace(report_path)
+    status = "ok" if result.returncode == 0 else "partial"
+    print("[decrypt_download] {}：{}，恢复 {} 条记录".format(
+        output.name, status, report.get("decoded_records", 0)), flush=True)
+    return {"status": status, "input_sha256": saved["sha256"],
+            "output": {"filename": output.name, "bytes": output.stat().st_size,
+                       "sha256": checksum(output)},
+            "report": {"filename": report_path.name, "bytes": report_path.stat().st_size,
+                       "sha256": checksum(report_path)}}
 
 
 def enter_records(page, phase, login_timeout):
@@ -247,14 +292,18 @@ def run(page, args):
                     for log in entry["logs"]:
                         name = log["filename"]
                         destination = target / name
-                        if verified_existing(destination, saved.get(name)):
-                            summary["existing"] += 1
-                            continue
                         try:
-                            saved[name] = save_download(page, rows.nth(i), log["label"], destination, args.retries)
-                            summary["downloaded"] += 1
+                            if verified_existing(destination, saved.get(name)):
+                                summary["existing"] += 1
+                            else:
+                                saved[name] = save_download(page, rows.nth(i), log["label"], destination, args.retries)
+                                summary["downloaded"] += 1
+                                write_json(info_path, entry)
+                                print("  已保存 " + target.name + "/" + name, flush=True)
+                            saved[name]["decryption"] = decrypt_download(destination, saved[name])
                             write_json(info_path, entry)
-                            print("  已保存 " + target.name + "/" + name, flush=True)
+                            if saved[name]["decryption"]["status"] == "partial":
+                                raise RuntimeError("日志仅部分解密或无可解密记录，详见同级解密报告")
                         except Exception as exc:
                             summary["errors"].append({"match": folder, "file": name, "error": str(exc)})
                 except Exception as exc:

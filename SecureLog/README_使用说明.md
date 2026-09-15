@@ -8,12 +8,12 @@
 
 ## 1. 先明确运行在哪里
 
-| 步骤 | 在哪里运行 | 需要什么 |
-| --- | --- | --- |
-| 生成公钥、私钥 | 你自己的受控电脑 | `rsa==4.9` 和其 `pyasn1` 依赖，或者本地已有的 `cryptography` |
-| 生成加密日志版单文件 | 你的电脑 | 本工具包、原始源码、`public.json`；构建步骤本身只用标准库 |
-| 比赛运行 | 平台容器 | **生成的单个 Python 文件；日志组件只依赖标准库** |
-| 下载日志后解密 | 你的电脑 | 本工具包、自己的 `private.pem`、下载日志、本地密钥后端 |
+| 步骤                 | 在哪里运行       | 需要什么                                                           |
+| -------------------- | ---------------- | ------------------------------------------------------------------ |
+| 生成公钥、私钥       | 你自己的受控电脑 | `rsa==4.9` 和其 `pyasn1` 依赖，或者本地已有的 `cryptography` |
+| 生成加密日志版单文件 | 你的电脑         | 本工具包、原始源码、`public.json`；构建步骤本身只用标准库        |
+| 比赛运行             | 平台容器         | **生成的单个 Python 文件；日志组件只依赖标准库**             |
+| 下载日志后解密       | 你的电脑         | 本工具包、自己的`private.pem`、下载日志、本地密钥后端            |
 
 不要到比赛端生成密钥：你无法取回容器文件，且私钥不应进入对手可下载的日志。
 
@@ -42,7 +42,7 @@
 在解压后的工具目录执行：
 
 ```bash
-python log_tool.py keygen --out ../AgentRace_LogKeys --bits 3072 --backend rsa
+python log_tool.py keygen --out AgentRace_LogKeys --bits 3072 --backend rsa
 ```
 
 `keygen` 是生成密钥命令；`--out` 是一个尚不存在的保存目录；`--bits 3072` 指 RSA 模数长度为 3072 位；`--backend rsa` 指定使用你本地的 `rsa` 包。
@@ -73,7 +73,7 @@ python -m pip install "rsa==4.9"
 ### 第二步：生成一个新的参赛单文件
 
 ```bash
-python log_tool.py build --source ../AgentRace/main3.py --public ../AgentRace_LogKeys/public.json --out ../AgentRace_Submission/main3.py
+python log_tool.py build --source AgentRace/main3.py --public AgentRace_LogKeys/public.json --out AgentRace_Submission/main3.py
 ```
 
 参数含义：`--source` 为本地原始源码；`--public` 必须是第一步的 `public.json`；`--out` 为新的参赛文件路径。构建不需要私钥。
@@ -160,11 +160,11 @@ private_pem = private_key.save_pkcs1("PEM")
 
 本机微基准（RSA-3072，内存计数输出，不含平台 `print/flush`）：
 
-| 输入 | 稳态中位耗时 | 密文输出 |
-| --- | ---: | ---: |
-| 1500 字符随机 Base64 文本 | 约 1.8 ms | 约 2431 字符、2 行 |
-| 16 KiB 不可压缩数据 | 约 22.5 ms | 约 23.9 千字符、17 行 |
-| 64 KiB 不可压缩数据 | 约 90.9 ms | 约 92.4 千字符、64 行 |
+| 输入                      | 稳态中位耗时 |              密文输出 |
+| ------------------------- | -----------: | --------------------: |
+| 1500 字符随机 Base64 文本 |    约 1.8 ms |    约 2431 字符、2 行 |
+| 16 KiB 不可压缩数据       |   约 22.5 ms | 约 23.9 千字符、17 行 |
+| 64 KiB 不可压缩数据       |   约 90.9 ms | 约 92.4 千字符、64 行 |
 
 **不可把这些时间当成平台耗时承诺。**每条原有 `print` 单独加密会产生公钥密钥包与填充开销；大量短日志会膨胀，原 `REPLAY3` 分片也会再分片。必须关注平台日志额度、截断和回合耗时。同步输出遇到阻塞时不能靠异常处理强制限时。
 
