@@ -9,3 +9,6 @@ _core_validation_*/
 
 # Local V3.1 acceptance runs (packaged release evidence lives in docs/).
 local_validation_v31/
+
+# Local wsl chromium downloads (packaged release evidence lives in docs/).
+.browser-profile

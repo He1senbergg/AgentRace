@@ -93,3 +93,21 @@ ally_RedSide_1234_win_decrypted.log.report.json      # 解密报告
 ```
 
 旧明文日志不执行解密。`--round N` 补下载也会补做解密，并校验已有解密日志与报告；完整产物跳过，缺失或损坏的产物重新生成。解密退出码 2 时保留部分恢复结果和报告，并计入本轮错误；致命失败保留原始下载，不会将其当作解密成功。解密状态与文件校验值记入 `match.json` 的 `downloads.*.decryption`，本轮错误见 `summary.json`。`--dry-run` 不执行解密。
+
+### WSL 浏览器环境
+
+在虚拟环境中首次安装：
+
+```bash
+python -m pip install playwright
+python -m playwright install chromium
+python -m playwright install-deps chromium
+python auto_log_downloader.py --channel chromium --pages 1-2
+```
+
+下载器始终忽略浏览器会话的 HTTPS 证书错误（包括登录跳转页），无需额外参数。旧的 `--ignore-https-errors` 参数仍兼容。运行：
+
+```bash
+python auto_log_downloader.py --channel chromium --pages 1-2
+```
+状态为 `failure` 或 `stopped` 的对局在解析分数前直接跳过，不下载、不分配 game 编号，也不计入错误。

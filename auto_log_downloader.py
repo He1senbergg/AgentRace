@@ -77,6 +77,8 @@ def parse_record(headers, values, team="OpenAI"):
         raise ValueError("页面缺少所需表头")
     if team not in (data["队伍A"], data["队伍B"]):
         return None
+    if data["状态"].strip().lower() in {"failure", "stopped"}:
+        return None
     logs = []
     for letter, side in (("A", "BlueSide"), ("B", "RedSide")):
         score = data[letter + "分数"].strip()
@@ -347,6 +349,7 @@ def main():
     parser.add_argument("--team", default="OpenAI")
     parser.add_argument("--phase", choices=PHASES, default="练习赛")
     parser.add_argument("--channel", choices=["msedge", "chrome", "chromium"], default="msedge")
+    parser.add_argument("--ignore-https-errors", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--login-timeout", type=int, default=300)
     parser.add_argument("--retries", type=int, default=2)
     selection = parser.add_mutually_exclusive_group()
@@ -368,7 +371,7 @@ def main():
     with sync_playwright() as playwright:
         context = playwright.chromium.launch_persistent_context(
             str(args.profile.resolve()), channel=None if args.channel == "chromium" else args.channel,
-            headless=False, accept_downloads=True)
+            headless=False, accept_downloads=True, ignore_https_errors=True)
         context.set_default_timeout(15000)
         page = context.pages[0] if context.pages else context.new_page()
         try:
