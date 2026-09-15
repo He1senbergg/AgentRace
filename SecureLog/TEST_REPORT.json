@@ -1,0 +1,244 @@
+{
+  "package": "AgentRace_SecureLog_B",
+  "date": "2026-09-15",
+  "tested_python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cryptography_version": "46.0.4",
+  "rsa_available": false,
+  "tests_run": 41,
+  "passed": 40,
+  "skipped": 1,
+  "failed": 0,
+  "errors": 0,
+  "elapsed_seconds": 5.688,
+  "cases": [
+    {
+      "test": "test_securelog.ActualRSABackend.test_actual_rsa_keygen_load_blinded_decrypt_and_full_log",
+      "status": "skipped",
+      "reason": "rsa package not available in this test environment"
+    },
+    {
+      "test": "test_securelog.Integration.test_actual_fork_rotates_key_and_replaces_lock",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_all_records_independently_decodable",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_broken_stdout_does_not_raise",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_refuses_namespace_and_builtin_shadowing",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_refuses_old_bundle_missing_top_level_sinks",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_refuses_repeat_insertion",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_refuses_unknown_print_alias_and_dynamic_exec",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_task_strings_and_business_response_preserved",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_builder_unicode_offset",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_ciphertext_tampering_is_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_complete_record_duplicates",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_conflicting_incomplete_fragment_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_decode_limits_and_plaintext_mixed_file_reporting",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_differential_aead_120_cases",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_encryption_failure_drops_without_plaintext",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_fragment_reordering",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_full_unicode_empty_and_large_roundtrip",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_header_tampering_is_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_keygen_selfcheck_exclusive_files_and_build_cli_workflow",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_missing_fragment_preserves_following_record",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_oaep_independent_library_to_rfc_decoder",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_oaep_runtime_to_independent_library",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_oaep_wrong_label_and_modified_ciphertext",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_outer_sequence_mismatch_is_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_record_limit_drops_and_never_falls_back",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_restarted_and_reset_session_keys_differ",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_rsa4096_roundtrip",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_sequence_exhaustion_rekeys",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_single_file_under_isolated_no_site_packages",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_thread_sequences_are_unique",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.Integration.test_wrong_private_key_cannot_decrypt",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_authenticate_before_plaintext_decryption",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_bad_public_keys_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_decompression_bomb_size_mismatch_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_nonzero_padding_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_padding_and_compression_roundtrip",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_rfc8439_aead",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_rfc8439_block",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_rfc8439_poly1305",
+      "status": "passed"
+    },
+    {
+      "test": "test_securelog.RFCVectors.test_rfc8439_quarter_round",
+      "status": "passed"
+    }
+  ],
+  "benchmark": {
+    "rsa_bits": 3072,
+    "results": {
+      "strategy_2KiB_compressible": {
+        "raw_bytes": 2160,
+        "repetitions": 30,
+        "first_record_ms_including_key_wrap": 0.895,
+        "steady_median_ms": 0.443,
+        "steady_p95_ms": 0.502,
+        "steady_max_ms": 0.518,
+        "mean_output_lines": 1.0,
+        "mean_output_chars": 1005.7096774193549
+      },
+      "replay_fragment_1500_random_ascii": {
+        "raw_bytes": 1500,
+        "repetitions": 30,
+        "first_record_ms_including_key_wrap": 2.31,
+        "steady_median_ms": 1.823,
+        "steady_p95_ms": 1.895,
+        "steady_max_ms": 2.112,
+        "mean_output_lines": 2.0,
+        "mean_output_chars": 2431.4193548387098
+      },
+      "random_16KiB": {
+        "raw_bytes": 16384,
+        "repetitions": 30,
+        "first_record_ms_including_key_wrap": 22.711,
+        "steady_median_ms": 22.505,
+        "steady_p95_ms": 23.202,
+        "steady_max_ms": 25.104,
+        "mean_output_lines": 17.0,
+        "mean_output_chars": 23862.064516129034
+      },
+      "random_64KiB": {
+        "raw_bytes": 65536,
+        "repetitions": 30,
+        "first_record_ms_including_key_wrap": 92.056,
+        "steady_median_ms": 90.942,
+        "steady_p95_ms": 110.845,
+        "steady_max_ms": 130.567,
+        "mean_output_lines": 64.0,
+        "mean_output_chars": 92392.41935483871
+      }
+    },
+    "sink": "in-memory counting function; NOT platform print/flush",
+    "official_platform_measured": false
+  },
+  "assurance_limits": {
+    "independent_security_audit": false,
+    "complete_user_game_code_tested": false,
+    "official_competition_container_tested": false,
+    "syntax_checked_as_Python_3_11": true,
+    "isolated_no_site_packages_subprocess_tested": true,
+    "rsa_4_9_interfaces_reviewed_in_official_source": true,
+    "rsa_backend_executed": false,
+    "production_private_key_generated_or_packaged": false
+  },
+  "file_sha256": {
+    "securelog_runtime.py": "42c77852a52c2e401ebe3c0956c05f096de379e830d15b8f16c48ccc3fe4095b",
+    "log_tool.py": "10460be6f8f3ab8e0a2923b22c8cb373b95433039e0b18317ac7bbd96b0bb915",
+    "tests/benchmark_securelog.py": "512c07d61a2ab3378caf4740223a3f18de977c370872ebb522deee891670c71a",
+    "tests/test_securelog.py": "485a9fe4d9aaa080f134e837f40d624bcd8c45de82f1d3f7802546c6de571e96"
+  }
+}

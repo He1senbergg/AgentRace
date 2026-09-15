@@ -1,0 +1,46 @@
+test_actual_rsa_keygen_load_blinded_decrypt_and_full_log (test_securelog.ActualRSABackend.test_actual_rsa_keygen_load_blinded_decrypt_and_full_log) ... skipped 'rsa package not available in this test environment'
+test_actual_fork_rotates_key_and_replaces_lock (test_securelog.Integration.test_actual_fork_rotates_key_and_replaces_lock) ... ok
+test_all_records_independently_decodable (test_securelog.Integration.test_all_records_independently_decodable) ... ok
+test_broken_stdout_does_not_raise (test_securelog.Integration.test_broken_stdout_does_not_raise) ... ok
+test_builder_refuses_namespace_and_builtin_shadowing (test_securelog.Integration.test_builder_refuses_namespace_and_builtin_shadowing) ... ok
+test_builder_refuses_old_bundle_missing_top_level_sinks (test_securelog.Integration.test_builder_refuses_old_bundle_missing_top_level_sinks) ... ok
+test_builder_refuses_repeat_insertion (test_securelog.Integration.test_builder_refuses_repeat_insertion) ... ok
+test_builder_refuses_unknown_print_alias_and_dynamic_exec (test_securelog.Integration.test_builder_refuses_unknown_print_alias_and_dynamic_exec) ... ok
+test_builder_task_strings_and_business_response_preserved (test_securelog.Integration.test_builder_task_strings_and_business_response_preserved) ... ok
+test_builder_unicode_offset (test_securelog.Integration.test_builder_unicode_offset) ... ok
+test_ciphertext_tampering_is_rejected (test_securelog.Integration.test_ciphertext_tampering_is_rejected) ... ok
+test_complete_record_duplicates (test_securelog.Integration.test_complete_record_duplicates) ... ok
+test_conflicting_incomplete_fragment_rejected (test_securelog.Integration.test_conflicting_incomplete_fragment_rejected) ... ok
+test_decode_limits_and_plaintext_mixed_file_reporting (test_securelog.Integration.test_decode_limits_and_plaintext_mixed_file_reporting) ... ok
+test_differential_aead_120_cases (test_securelog.Integration.test_differential_aead_120_cases) ... ok
+test_encryption_failure_drops_without_plaintext (test_securelog.Integration.test_encryption_failure_drops_without_plaintext) ... ok
+test_fragment_reordering (test_securelog.Integration.test_fragment_reordering) ... ok
+test_full_unicode_empty_and_large_roundtrip (test_securelog.Integration.test_full_unicode_empty_and_large_roundtrip) ... ok
+test_header_tampering_is_rejected (test_securelog.Integration.test_header_tampering_is_rejected) ... ok
+test_keygen_selfcheck_exclusive_files_and_build_cli_workflow (test_securelog.Integration.test_keygen_selfcheck_exclusive_files_and_build_cli_workflow) ... ok
+test_missing_fragment_preserves_following_record (test_securelog.Integration.test_missing_fragment_preserves_following_record) ... ok
+test_oaep_independent_library_to_rfc_decoder (test_securelog.Integration.test_oaep_independent_library_to_rfc_decoder) ... ok
+test_oaep_runtime_to_independent_library (test_securelog.Integration.test_oaep_runtime_to_independent_library) ... ok
+test_oaep_wrong_label_and_modified_ciphertext (test_securelog.Integration.test_oaep_wrong_label_and_modified_ciphertext) ... ok
+test_outer_sequence_mismatch_is_rejected (test_securelog.Integration.test_outer_sequence_mismatch_is_rejected) ... ok
+test_record_limit_drops_and_never_falls_back (test_securelog.Integration.test_record_limit_drops_and_never_falls_back) ... ok
+test_restarted_and_reset_session_keys_differ (test_securelog.Integration.test_restarted_and_reset_session_keys_differ) ... ok
+test_rsa4096_roundtrip (test_securelog.Integration.test_rsa4096_roundtrip) ... ok
+test_sequence_exhaustion_rekeys (test_securelog.Integration.test_sequence_exhaustion_rekeys) ... ok
+test_single_file_under_isolated_no_site_packages (test_securelog.Integration.test_single_file_under_isolated_no_site_packages) ... ok
+test_thread_sequences_are_unique (test_securelog.Integration.test_thread_sequences_are_unique) ... ok
+test_wrong_private_key_cannot_decrypt (test_securelog.Integration.test_wrong_private_key_cannot_decrypt) ... ok
+test_authenticate_before_plaintext_decryption (test_securelog.RFCVectors.test_authenticate_before_plaintext_decryption) ... ok
+test_bad_public_keys_rejected (test_securelog.RFCVectors.test_bad_public_keys_rejected) ... ok
+test_decompression_bomb_size_mismatch_rejected (test_securelog.RFCVectors.test_decompression_bomb_size_mismatch_rejected) ... ok
+test_nonzero_padding_rejected (test_securelog.RFCVectors.test_nonzero_padding_rejected) ... ok
+test_padding_and_compression_roundtrip (test_securelog.RFCVectors.test_padding_and_compression_roundtrip) ... ok
+test_rfc8439_aead (test_securelog.RFCVectors.test_rfc8439_aead) ... ok
+test_rfc8439_block (test_securelog.RFCVectors.test_rfc8439_block) ... ok
+test_rfc8439_poly1305 (test_securelog.RFCVectors.test_rfc8439_poly1305) ... ok
+test_rfc8439_quarter_round (test_securelog.RFCVectors.test_rfc8439_quarter_round) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 5.688s
+
+OK (skipped=1)
