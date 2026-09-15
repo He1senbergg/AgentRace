@@ -1,0 +1,101 @@
+{
+  "version": "V3.8",
+  "status": "LOCAL_VALIDATED_AWAITING_OFFICIAL_MATCH",
+  "source_sha256": "b3cb670b6654942964b7a6edb5ff8c75661bfcd61dafea244d57a4ae5d5e585c",
+  "encrypted_entry_sha256": "f7f7698273beddbe48e3ff4cd3ff16d1ce0b98544be3c656cc282e2023c77ad5",
+  "public_key_id": "3a87e18fdab265c1832f94234ab71457",
+  "production_private_key_accessed": false,
+  "tests": {
+    "current_suite": 242,
+    "current_suite_passed": true,
+    "preserved_previous_contracts": 165,
+    "new_contracts": 77,
+    "replaced_previous_policy_contracts": 14,
+    "mutation_cases": 800,
+    "mutation_failures": [],
+    "unchanged_core_AST": [
+      "parse_deployment_spec",
+      "deployment_repair_command",
+      "heritage_query_command",
+      "canonical_task_answer",
+      "ActionValidator",
+      "CombatPlanner",
+      "GameMemory",
+      "decode_task_reply",
+      "make_task_context",
+      "render_task_prompt",
+      "save_task_candidate",
+      "observe_task_command",
+      "TaskPlanner",
+      "GameSession",
+      "AgentHTTPHandler"
+    ],
+    "actual_task_commands": 81,
+    "plaintext_HTTP_checks": 22,
+    "encrypted_HTTP_checks": 22,
+    "securelog_unit_total": 41,
+    "securelog_unit_passed": 40,
+    "securelog_unit_skipped": 1,
+    "securelog_skip_reason": "Optional rsa backend absent locally; independent cryptography backend tested."
+  },
+  "historical_replay": {
+    "games": 12,
+    "frames": 10432,
+    "active_task_frames": 216,
+    "task_output_mismatches": 0,
+    "errors": 0,
+    "max_ms": 795.7273429999532,
+    "scope": "Off-policy historical-input replay. Future world states are original observations, not effects of new actions. No new score/survival inference."
+  },
+  "independent_models": {
+    "economy_cases": 32,
+    "economy_rejections": 0,
+    "v38_cases": 16,
+    "v38_three_actual_operators_at_night": 16,
+    "base_damage_cases": 12,
+    "gated18": {
+      "final_walls": 18,
+      "gate": [
+        7,
+        22
+      ],
+      "gate_built": false,
+      "distinct_current_controllers": 3,
+      "build_rounds": [
+        [
+          391,
+          15
+        ],
+        [
+          392,
+          16
+        ],
+        [
+          395,
+          17
+        ],
+        [
+          399,
+          18
+        ]
+      ],
+      "rejected": []
+    },
+    "scope": "Economic placement plus fixed exogenous base damage. No official robot AI, PvP settlement order or match scores modeled."
+  },
+  "not_proven": [
+    "No new official wins/survival score",
+    "Extreme resource skew not repaired or income improved",
+    "PvP damage attribution not proven",
+    "No complete official robot AI/settlement engine"
+  ],
+  "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "evidence_files": [
+    "runs/v38/unit_validation.json",
+    "runs/v38/invariants.json",
+    "runs/v38/replay_validation.json",
+    "runs/v38/economy_probe.json",
+    "runs/v38/mechanics_simulation.json",
+    "runs/v38/secure_platform_validation.json"
+  ]
+}

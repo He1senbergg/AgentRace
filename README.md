@@ -19,43 +19,37 @@
 
 ---
 
-## 4. 当前开发检查点：V3.7
+## 4. 当前开发检查点：V3.8
 
-当前入口：`src/main3.py`；平台产物：`CoreGeek/main3.py`、`CoreGeek.tar.gz`。
+参赛入口：`AgentRace_Submission/main3.py`（加密日志）；同目录 `CoreGeek.tar.gz` 内容相同。源码：`src/main3.py`。
 
-### 平台提交
+后排错位三炮；第三天3堵/第四天6堵二级前墙工程；两级基地券50%基础血线保险；清场后远程压力试探；偏矿降级；富裕时18墙双通道。尚无V3.8官方成绩，不保证1300回合。
 
-保留旧V3.6作为回滚，沿用已验证的上传流程直接替换 `CoreGeek.tar.gz`。包内只有 `CoreGeek/main3.py`；不用安装依赖、设置环境变量或人工指定端口。平台按原方式注入位置参数端口。所有诊断仍由print输出，无需取回平台文件系统中的文件。
+直接使用已生成参赛入口，不必再运行Codex、安装平台依赖或生成密钥。普通 `CoreGeek/main3.py` 和根目录 `CoreGeek.tar.gz` 是未加密调试产物，不要和默认加密提交混用。
 
-启动应出现：
-
-```text
-build=v3.7-sustainment-recovery
-survival policy=v3.7-repair-retreat-rebuild
-```
-
-仍出现 `_v34` 的任务技能名正常：本次任务执行器没有改写。保留原始REPLAY3打印行。
-
-### 修复范围
-
-满血不耗药、按个人持有量补给、真正离炮撤退、解除跨天维护断供、短程移动维修、优先及时卖矿重建、基地券可持有等待受伤再用。保留14格C形、炮位、任务和攻击计算。候选版未得到新的官方成绩，不保证1300回合。
-
-### 文件与覆盖
-
-本补丁只覆盖同名源码、入口、工具及现行测试，不删除旧日志、环境和其他文件。不要把整个新目录再次套进仓库内部。`docs/V3.7_修复与验证报告.md` 与 `docs/V3.7_验证结果.json` 给出实际测试结果、废止的旧策略断言和限制。
-
-维护后使用 `python -B tools/build_single_file.py` 重新生成入口包；不要再使用其他旧模块打包方式。当前交付已生成，参赛前不需重新构建。
-
-### 可选本地测试
+今后修改后重新打包加密版：
 
 ```bash
-python -B tools/run_v37_tests.py
-python -B tools/verify_task_commands.py
-python -B tools/verify_platform.py
-python -B tools/check_v37_invariants.py
+python -B tools/build_v38_submission.py
 ```
 
-这些是维护者的本地验证，不是平台启动命令，不要求用户从平台取回runs目录。测试目录有历史冻结源码/实际输入夹具，仅供比较，均不会被平台入口导入。
+默认读取已有 `AgentRace_LogKeys/public.json`，保留原私钥解密。本包不会覆盖密钥目录。普通调试构建仍为 `python -B tools/build_single_file.py`。
+
+完整取舍、实证、失败案例和下一轮验收：`docs/V3.8_复盘与验证报告.md`。实际测试结果：`docs/V3.8_验证结果.json`。
+
+可选维护验证：
+
+```bash
+python -B tools/run_v38_tests.py
+python -B tools/check_v38_invariants.py
+python -B tools/probe_v38_economy.py
+python -B tools/simulate_v38_mechanics.py
+python -B tools/verify_task_commands.py
+python -B tools/verify_platform.py
+python -B tools/verify_v38_secure_platform.py
+```
+
+这些是维护者本地命令，不是平台启动命令。历史重放还需已有 `log/round14`，源码包不会重复携带所有原始对局日志。平台依旧按原方式注入端口，诊断只走print。
 
 ## 5. 实机下一轮
 

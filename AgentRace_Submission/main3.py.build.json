@@ -1,8 +1,8 @@
 {
   "format": "agentrace-build-report-v1",
   "key_id": "3a87e18fdab265c1832f94234ab71457",
-  "source_sha256": "76e7007720de4540b72a8d79897e2006cbeb772181fccefd7390d9fee84714ea",
-  "output_sha256": "a68f4f4102981f656561d5a2405b17dd1bd0afaf1209cd422ad03b773773a30a",
+  "source_sha256": "b3cb670b6654942964b7a6edb5ff8c75661bfcd61dafea244d57a4ae5d5e585c",
+  "output_sha256": "f7f7698273beddbe48e3ff4cd3ff16d1ce0b98544be3c656cc282e2023c77ad5",
   "rewritten_print_calls": {
     "print_log": 1,
     "write_task_trace": 1
