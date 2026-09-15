@@ -1,0 +1,139 @@
+{
+  "scope": "Off-policy compatibility replay. Actual subsequent observations are not recomputed. No score or survival inference.",
+  "runtime": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "source_sha256": "bb96498a3976ec37763742a37af3fe76a5cff82a635c5ff839e5aee91a8a037a",
+  "games": [
+    {
+      "game": "game67",
+      "frames": 748,
+      "actions": 1186,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 1723.618000999977,
+      "p95_ms": 102.00236799983031,
+      "elapsed_ms": 37286.71569899825
+    },
+    {
+      "game": "game68",
+      "frames": 901,
+      "actions": 1086,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 3793.3806529999856,
+      "p95_ms": 200.49963499968726,
+      "elapsed_ms": 71358.97225500594
+    },
+    {
+      "game": "game69",
+      "frames": 647,
+      "actions": 1094,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 3773.2852310000453,
+      "p95_ms": 222.33070699985547,
+      "elapsed_ms": 72585.10608800044
+    },
+    {
+      "game": "game70",
+      "frames": 898,
+      "actions": 1115,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 3768.291715000032,
+      "p95_ms": 190.80872400036242,
+      "elapsed_ms": 71001.2424099973
+    },
+    {
+      "game": "game71",
+      "frames": 908,
+      "actions": 1133,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 1269.398506000016,
+      "p95_ms": 101.44403800040891,
+      "elapsed_ms": 35847.387106005495
+    },
+    {
+      "game": "game72",
+      "frames": 759,
+      "actions": 1477,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 2507.9052520000005,
+      "p95_ms": 198.00415999998222,
+      "elapsed_ms": 76456.43756700338
+    },
+    {
+      "game": "game73",
+      "frames": 742,
+      "actions": 1028,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 2406.2647119999383,
+      "p95_ms": 192.35093099996448,
+      "elapsed_ms": 69601.988309008
+    },
+    {
+      "game": "game74",
+      "frames": 780,
+      "actions": 1438,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 1174.370588000329,
+      "p95_ms": 196.91170499982036,
+      "elapsed_ms": 75482.21719299864
+    },
+    {
+      "game": "game75",
+      "frames": 636,
+      "actions": 1181,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 201.75695299985819,
+      "p95_ms": 99.79050499987352,
+      "elapsed_ms": 35335.19968499195
+    },
+    {
+      "game": "game76",
+      "frames": 629,
+      "actions": 1109,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 1235.2829310002562,
+      "p95_ms": 96.57301699962773,
+      "elapsed_ms": 33473.62492200227
+    },
+    {
+      "game": "game77",
+      "frames": 642,
+      "actions": 1196,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 211.6035950002697,
+      "p95_ms": 95.32627399994453,
+      "elapsed_ms": 30853.43737899848
+    },
+    {
+      "game": "game78",
+      "frames": 646,
+      "actions": 1253,
+      "active_task_frames": 18,
+      "task_mismatches": [],
+      "errors": [],
+      "max_ms": 127.33514799992918,
+      "p95_ms": 86.24549800015302,
+      "elapsed_ms": 27932.701814007032
+    }
+  ]
+}

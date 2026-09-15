@@ -1,0 +1,527 @@
+{
+  "scope": "Fresh actual snapshots plus historical peak battery count. Responses only, not executions or future survival.",
+  "probes": [
+    {
+      "game": "game71",
+      "round": 430,
+      "gold": 23,
+      "lines": [
+        2655,
+        2656
+      ],
+      "versions": {
+        "old": {
+          "commands": {
+            "20011": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 32,
+                  "y": 11
+                }
+              ]
+            },
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 19,
+                  "y": 13
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 17,
+                  "y": 14
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "cash_courier_preposition",
+            "20010": "return_to_battery",
+            "20012": "persistent_sale_trip"
+          },
+          "events": [],
+          "budget": {
+            "day": 4,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "daily_gold_cap": 40,
+            "gold_left": 40,
+            "global_batteries": 2,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 23,
+            "priority": 26
+          }
+        },
+        "new": {
+          "commands": {
+            "20011": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 32,
+                  "y": 11
+                }
+              ]
+            },
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 19,
+                  "y": 13
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 17,
+                  "y": 14
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "cash_courier_preposition",
+            "20010": "return_to_battery",
+            "20012": "persistent_sale_trip"
+          },
+          "events": [
+            {
+              "event": "bounded_frontline_fallback",
+              "actor": "20011",
+              "preserved_primary": {
+                "target": "20042",
+                "item": "WeaponUpgradeVoucher2",
+                "price": 150,
+                "funds": 23,
+                "priority": 26
+              },
+              "wall": "41000",
+              "item": "WallUpgradeVoucher1",
+              "cost": 20
+            }
+          ],
+          "budget": {
+            "day": 4,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "front_floor_level": 2,
+            "front_floor_cells": 4,
+            "daily_gold_cap": 60,
+            "before_complete_gold_cap": 40,
+            "gold_left": 40,
+            "global_batteries": 2,
+            "core_battery_established": true,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 23,
+            "priority": 26
+          }
+        }
+      }
+    },
+    {
+      "game": "game71",
+      "round": 550,
+      "gold": 49,
+      "lines": [
+        3449,
+        3450
+      ],
+      "versions": {
+        "old": {
+          "commands": {
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 33,
+                  "y": 7
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 26,
+                  "y": 7
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "cash_courier_waiting_at_shop",
+            "20010": "mine_income_travel",
+            "20012": "mine_income_travel"
+          },
+          "events": [],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 1,
+            "flank_level_cap": 1,
+            "daily_gold_cap": 60,
+            "gold_left": 60,
+            "global_batteries": 1,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 49,
+            "priority": 22
+          }
+        },
+        "new": {
+          "commands": {
+            "20011": {
+              "action": "buy",
+              "name": "WallUpgradeVoucher1",
+              "num": 1
+            },
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 33,
+                  "y": 7
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 26,
+                  "y": 7
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "buy_priority_capital",
+            "20010": "mine_income_travel",
+            "20012": "mine_income_travel"
+          },
+          "events": [
+            {
+              "event": "bounded_frontline_fallback",
+              "actor": "20011",
+              "preserved_primary": {
+                "target": "20042",
+                "item": "WeaponUpgradeVoucher2",
+                "price": 150,
+                "funds": 49,
+                "priority": 22
+              },
+              "wall": "41002",
+              "item": "WallUpgradeVoucher1",
+              "cost": 20
+            }
+          ],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "front_floor_level": 2,
+            "front_floor_cells": 6,
+            "daily_gold_cap": 20,
+            "before_complete_gold_cap": 40,
+            "gold_left": 0,
+            "global_batteries": 1,
+            "core_battery_established": true,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 29,
+            "priority": 22
+          }
+        }
+      }
+    },
+    {
+      "game": "game71",
+      "round": 570,
+      "gold": 109,
+      "lines": [
+        3531,
+        3532
+      ],
+      "versions": {
+        "old": {
+          "commands": {
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 21,
+                  "y": 14
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 21,
+                  "y": 13
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "cash_courier_waiting_at_shop",
+            "20010": "return_to_battery",
+            "20012": "return_to_battery"
+          },
+          "events": [],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 1,
+            "flank_level_cap": 1,
+            "daily_gold_cap": 60,
+            "gold_left": 60,
+            "global_batteries": 1,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 109,
+            "priority": 22
+          }
+        },
+        "new": {
+          "commands": {
+            "20010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 21,
+                  "y": 14
+                }
+              ]
+            },
+            "20012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 21,
+                  "y": 13
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "20011": "cash_courier_waiting_at_shop",
+            "20010": "return_to_battery",
+            "20012": "return_to_battery"
+          },
+          "events": [
+            {
+              "event": "bounded_frontline_fallback",
+              "actor": "20011",
+              "preserved_primary": {
+                "target": "20042",
+                "item": "WeaponUpgradeVoucher2",
+                "price": 150,
+                "funds": 109,
+                "priority": 22
+              },
+              "wall": "41002",
+              "item": "WallUpgradeVoucher1",
+              "cost": 20
+            }
+          ],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "front_floor_level": 2,
+            "front_floor_cells": 6,
+            "daily_gold_cap": 20,
+            "before_complete_gold_cap": 40,
+            "gold_left": 20,
+            "global_batteries": 1,
+            "core_battery_established": true,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "20042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 109,
+            "priority": 22
+          }
+        }
+      }
+    },
+    {
+      "game": "game69",
+      "round": 521,
+      "gold": 68,
+      "lines": [
+        3287,
+        3288,
+        3289
+      ],
+      "versions": {
+        "old": {
+          "commands": {
+            "10011": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 14,
+                  "y": 22
+                }
+              ]
+            },
+            "10010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 2,
+                  "y": 19
+                }
+              ]
+            },
+            "10012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 0,
+                  "y": 12
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "10011": "cash_courier_preposition",
+            "10010": "wall_batch_quarry_travel",
+            "10012": "mine_income_travel"
+          },
+          "events": [],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "daily_gold_cap": 60,
+            "gold_left": 60,
+            "global_batteries": 2,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "10042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 68,
+            "priority": 26
+          }
+        },
+        "new": {
+          "commands": {
+            "10011": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 14,
+                  "y": 22
+                }
+              ]
+            },
+            "10010": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 2,
+                  "y": 19
+                }
+              ]
+            },
+            "10012": {
+              "action": "move",
+              "targetPos": [
+                {
+                  "x": 0,
+                  "y": 12
+                }
+              ]
+            }
+          },
+          "decisions": {
+            "10011": "procure_priority_capital",
+            "10010": "wall_batch_quarry_travel",
+            "10012": "mine_income_travel"
+          },
+          "events": [
+            {
+              "event": "bounded_frontline_fallback",
+              "actor": "10011",
+              "preserved_primary": {
+                "target": "10042",
+                "item": "WeaponUpgradeVoucher2",
+                "price": 150,
+                "funds": 68,
+                "priority": 26
+              },
+              "wall": "40015",
+              "item": "WallUpgradeVoucher1",
+              "cost": 20
+            }
+          ],
+          "budget": {
+            "day": 5,
+            "front_level_cap": 2,
+            "flank_level_cap": 1,
+            "front_floor_level": 2,
+            "front_floor_cells": 6,
+            "daily_gold_cap": 60,
+            "before_complete_gold_cap": 40,
+            "gold_left": 20,
+            "global_batteries": 2,
+            "core_battery_established": true,
+            "complete_battery": false,
+            "stock_fixers": 1
+          },
+          "goal": {
+            "target": "10042",
+            "item": "WeaponUpgradeVoucher2",
+            "price": 150,
+            "funds": 48,
+            "priority": 26
+          }
+        }
+      }
+    }
+  ]
+}

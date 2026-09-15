@@ -19,81 +19,32 @@
 
 ---
 
-## 4. 当前开发检查点：V3.5
+## 4. 当前开发检查点：V3.6
 
-当前生产源为 `src/main3.py`，完整平铺单文件、仅 Python 标准库。
-启动标识 `build=v3.5-clearwave-capital`；策略 `v3.5-firepower-before-maintenance`。
-本版本根据上传仓库 Round11/game55～66 修订；官方实机新分数及1300回合生存尚未验收。
+规则优先级：本次原始 `Official/任务书.md` 高于旧AI解读和旧复盘。半场两基地先后被毁时，先毁者负；不能以最高分替代胜负。上下半场各胜一场才比较总分。
 
-### 实际平台提交
+唯一生产源 `src/main3.py`，标准库普通单文件；提交 `CoreGeek.tar.gz`，其中只含 `CoreGeek/main3.py`。平台传端口、仅print诊断，不要求环境变量或下载运行目录文件。
 
-平台上传使用 `CoreGeek.tar.gz`，包内唯一文件 `CoreGeek/main3.py`。
-平台传入端口并执行，无须另行安装 Flask、上传项目模块或设置环境变量。
-诊断默认通过 `print(..., flush=True)` 输出，保留 `REPLAY3` 行；不依赖取回平台文件。
+启动：`build=v3.6-frontline-survival`，策略：`v3.6-firepower-with-frontline-floor`。
 
-### 当前修改
+本轮保留14格C形、炮位/炮型/伤害/任务执行器及NIGHT_WORK。C12缩边和开局排他正面优先因经济退化未采用。新增正面二级墙条件目标、维护总额/日额双预算、完整武器升级链资金保护、原地维修不抢当前可开炮角色。低HP已有药品优先保角色。
 
-清场后夜间继续任务、采购、采矿和交易；保持夜间禁止建造。
-三座火箭炮的升级优先于非紧急墙维护；墙按天数和当前实际火力设等级/采购金额上限。
-修复维修备货抢占升级、未购券被重复预留/资金被挤占、先修再升级、单石头批次遗留。
-不增加抢对手机器人得分的路线；保留已经完成72/72任务的执行器。
+回归105项、已有任务命令81项、真实HTTP22项通过；Round12 8936帧兼容重放，不是新对局；受控无伤害经济模型12/12保留任务及炮升级时点，9图有部分二级前墙。没有官方实机新成绩，不能宣称1300回合已通过。
 
-### 当前本地验证入口（不是参赛操作）
+详细依据：`docs/V3.6_审计报告.md`、`docs/V3.6_证据与验证.json`。
 
-`python -B tools/build_single_file.py`：把当前平铺源码复制为平台包。
-`python -B tools/run_v35_tests.py`：79项现行规则与策略回归；两项V3.4旧策略断言已明确替换。
-`python -B tools/verify_platform.py`：22项真实本机TCP/HTTP检查。
-`python -B tools/verify_task_commands.py`：81项本地合成沙盒/API验证。
+### 维护者离线命令（不是平台部署前置步骤）
 
-这批工具所需的 `tests_v34/`、`tests_v35/` 与fixture都随本次仓库覆盖补丁提供；参赛包仍只有main3.py。
-历史 `tests/`、V2/V3旧检查器不作为现行策略验收入口，不能用旧工具重建/替换当前产物。
-参见 `docs/V3.5_README.md`、`docs/V3.5_审计报告.md` 与 `docs/V3.5_证据与验证.json`。
+```bash
+python tools/run_v36_tests.py
+python tools/verify_task_commands.py
+python tools/build_single_file.py
+python tools/verify_platform.py
+python tools/compare_economy_v36.py
+```
 
-## 5. 开发记录
+旧tests和旧报告保留作为历史，不要无条件重新启用已退役策略断言；当前测试入口只使用 `run_v36_tests.py`。补丁带齐当前测试夹具，包括Round12经济输入与冻结的V3.5比较源；这些仅用于本地验证，不会打入平台单文件。
 
-- V3.1：ChatGPT 本地修复 DeepSeek 版本审阅发现，交付代码/测试/原始证据。
+## 5. 实机下一轮
 
-- ~v2.3：OpenAI -> Codex(GPT6 Astra low)
-- v2.4:
-    + default
-        - OpenAI -> Codex(GPT6 Astra high)
-        - Claude -> Claude(Sonnet5 Medium)
-    + v2.4.1:
-        - OpenAI -> Codex(GPT6 Astra Ultra)
-    + v2.4.2:
-        - OpenAI -> ChatGPT Web(GPT6 Pro)
-        - OpenAI -> Codex(GPT6 Astra Ultra) 任务链路复核、边界修复与 Windows / WSL 完整验证。
-- v3:
-    + v3.1:
-        - OpenAI -> ChatGPT Web(GPT6 Pro)
-    + v3.2:
-        - DeepSeek -> OpenCode(DeepSeek V4 Flash 0731)
-        - OpenAI -> ChatGPT Web(GPT6 Pro)
-    + v3.3 ~ v3.5:
-        - OpenAI -> ChatGPT Web(GPT6 Pro)
-
-## 历史检查点：Task R1（不代表 V3 验证）
-
-
-当前为 **V2.4 + Task R1（2026-09-12，本地复核完成）**，默认 `defense`。本轮实现 LLM 任务链路修复：分阶段提示词、定向格式修复、有工具来源的候选保底、重复操作限制、上下文去重和可选私有原文审计。本地复核额外修复最终阶段候选丢失与 JSON 来源数字精度。按用户要求，比赛主入口已收敛为只接收端口，删除四项命令行覆盖选项；经济/防御策略默认值及第三方依赖未改。
-
-先读 [docs/STATUS.md](docs/STATUS.md)，本地复核见 [docs/TASK_R1_LOCAL_REVIEW.md](docs/TASK_R1_LOCAL_REVIEW.md)，部署见 [docs/TASK_R1_CHANGELOG.md](docs/TASK_R1_CHANGELOG.md)。Python 3.11.10 / Flask 3.1.3：Windows 完整测试 303 通过、1 项平台跳过；WSL 304 项全部通过，包含真实 HTTP 和入口测试。真实模型与比赛收益仍需实机验收。此前 V2.4 审查见 [docs/OFFLINE_AUDIT.md](docs/OFFLINE_AUDIT.md)。
-
-Windows启动：`.venv\Scripts\python.exe src\main3.py 8080`；全测试：`.venv\Scripts\python.exe -B -m unittest discover -s tests -q`。Linux启动仍为 `bash run.sh 8080`，可用 `AGENTRACE_PYTHON` 指定解释器。部署须同时复制完整 `src/agentrace/`，不能只换 `main3.py`。项目依赖见 `requirements-dev.txt`。
-
-准确的Windows/WSL启动、参数和人工接管检查见[docs/RUNBOOK.md](docs/RUNBOOK.md)。当前WSL须显式选择`.venv/linux-test/bin/python`，不能假定系统python3已安装依赖。
-
-
-
-## 历史归档：V3.1检查点（不适用于当前部署）
-
-### 当时的检查点
-
-当前为 **Survival V3.1（2026-09-14）**，启动标识 `v3.1-reviewed-fix`。基于上传的 DeepSeek 版本，修复满背包禁售、日落交付离岗、基地救急优先级及已开火建筑交付过滤，保留此前有效修复。没有重新设计炮位或改变任务链路。
-
-Python 3.11.10 / Flask 3.1.3：**完整 383 项通过，干净覆盖副本 383 项再次通过**，含真实 HTTP/入口；32 项新增回归及原八项审查通过。四张初始地图 × 两种资金仍 8 墙/3 炮/3 炮手；加八生成地图后 24 个条件的首日关键指标与基线一致。两种起点各 1300 步经济、12 组夜战输入和 600+600 随机/重复请求通过。**这些不是官方夜战或存活满局成绩。**
-
-最新说明：[docs/V3_1_FIX_REPORT.md](docs/V3_1_FIX_REPORT.md)；证据：[docs/V3_1_VALIDATION.json](docs/V3_1_VALIDATION.json) 与 docs/validation_v31/；检查点：[docs/STATUS.md](docs/STATUS.md)。validation_v3/ 为旧版历史。
-
-入口仍只接收端口；真实入口默认 survival，`AGENTRACE_STRATEGY=defense` 可选择旧模式。必须保留完整 src；沿用原 Python/Flask 环境，不新增依赖。先看 [V3_README_FIRST.md](V3_README_FIRST.md) 应用覆盖补丁；本地完整复验命令是 `python -B tools/validate_survival_v31.py --output-dir local_validation_v31`。未 Git 提交或推送。
-
+保持对手和设置不变，先红蓝各一半场。以胜负、两侧基地最后可见/首次缺失、入夜前正面HP/等级、前炮死亡、炮升级落地回合为主要验收项。平台输出仍保留REPLAY3。内部任务与日志不得直接公开。

@@ -1,0 +1,458 @@
+--- V3.5/src/main3.py
++++ V3.6/src/main3.py
+@@ -1,15 +1,15 @@
+ # -*- coding: utf-8 -*-
+-"""AgentRace V3.5 — complete, ordinary single-file platform submission.
++"""AgentRace V3.6 — complete, ordinary single-file platform submission.
+ 
+ Python 3.11+. No project-package imports, third-party libraries, environment
+ variables, companion files, runtime downloads, or diagnostic output files.
+ Platform invocation remains: python main3.py <platform-provided-port>.
+ HTTP remains POST / with roleCommandMap, prompt, executeCmd in the JSON response.
+ 
+-Baseline: uploaded AgentRace-main(6).zip/src/main3.py V3.4, audited on Round11.
+-Round11 candidate: observed clear-wave night work, permanent firepower before
+-bounded wall maintenance, shared courier cash reservations, refreshed quarry batches.
+-Task executors, damage calculation and C14 layout are retained from V3.4.
++Baseline: uploaded AgentRace(2).zip/src/main3.py V3.5, audited on Round12.
++Round12 candidate: base survival before score, existing C14 footprint with intact front/corners,
++proactive front-level floor, bounded affordable maintenance without seizing a
++funded weapon order, and cooldown-safe repair. Task/combat kernels are unchanged.
+ Local replay/tests are NOT an official score or a 1300-round survival validation.
+ 
+ Important: file paths INSIDE executeCmd strings refer to task files generated
+@@ -925,7 +925,7 @@
+ import time
+ import zlib
+ 
+-PRINT_BUILD = "v3.5-clearwave-capital"
++PRINT_BUILD = "v3.6-frontline-survival"
+ TRACE_PREFIX = "[write_task_trace] REPLAY3 "
+ OMIT_PREFIX = "[write_task_trace] OMIT "
+ TASK_TRACE_RECORD_LIMIT = 2 * 1024 * 1024
+@@ -2361,7 +2361,7 @@
+ class SurvivalPlanner:
+     """One mutable observation transaction, with small jobs carried in memory."""
+ 
+-    revision = "v3.5-firepower-before-maintenance"
++    revision = "v3.6-firepower-with-frontline-floor"
+ 
+     def __init__(self, world, memory, delta, rules):
+         self.world, self.memory, self.delta, self.rules = (world, memory, delta, rules)
+@@ -2404,7 +2404,7 @@
+         """Only changes in the next observation count as progress/verification."""
+         alive = set(self.characters)
+         for actor in list(self.wall_reservations):
+-            if actor not in alive or self.v.wall_count >= self.wall_target:
++            if actor not in alive or self.wall_missing_count() == 0:
+                 self.wall_reservations.pop(actor, None)
+         for actor in list(self.jobs):
+             if actor not in alive:
+@@ -2452,11 +2452,15 @@
+             self.state['maintenance_spent']=0
+         if self.delta.continuous:
+             for actor,command in self.delta.feedback.get('actions',{}).items():
+-                if (self.phase is not None and self.phase.round_in_day > 1 and
++                if (self.phase is not None and
+                     command.get('action')=='buy' and command.get('name') in
+                     ('WallFixer','WallUpgradeVoucher1','WallUpgradeVoucher2') and
+                     self.delta.feedback.get('results',{}).get(actor) is True):
+-                    self.state['maintenance_spent']+=self.v.prices.get(command['name'],0)*command.get('num',1)
++                    cost = self.v.prices.get(command['name'],0)*command.get('num',1)
++                    if self.phase.round_in_day > 1:
++                        self.state['maintenance_spent'] += cost
++                    if self.state.get('previous_complete_battery') is not True:
++                        self.state['maintenance_before_battery'] = self.state.get('maintenance_before_battery',0) + cost
+         self.state['samples'] = {a: s for a, s in self.state['samples'].items() if a in alive}
+         self.state['slots'] = {a: s for a, s in self.state['slots'].items() if a in alive}
+         assets = tuple(sorted(((r['id'], level_of(r), r.get('health')) for r in self.world.roles.values() if r.get('roleType') in WEAPONS | {'wall', 'station'})))
+@@ -2468,6 +2472,27 @@
+                 if c.get('action') == 'buy' or (c.get('action') == 'build' and c.get('name') != 'wall'):
+                     if self.delta.feedback.get('results', {}).get(actor) is True:
+                         self.state['last_spend'] = self.delta.round_no - 1
++        self.state['previous_complete_battery'] = len(self.weapons) == 3 and all(level_of(w) == 3 for w in self.weapons)
++        if self.state['previous_complete_battery']:
++            self.state['maintenance_before_battery'] = 0  # reset only after an actually complete battery
++        occupied_front = {w['cell'] for w in self.walls}
++        self.state['front_ever_completed'] = (self.state.get('front_ever_completed',False) or
++                                              bool(self.wall_slots) and set(self.wall_slots[:6]) <= occupied_front)
++        self.state['peak_global_batteries'] = max(self.state.get('peak_global_batteries', 0),
++                                                 sum(level_of(w) == 3 for w in self.weapons))
++        survival = self.state.setdefault('base_observations', {})
++        for side, roles in (('our', self.world.roles), ('enemy', self.world.enemies)):
++            envelope = self.world.data.get('teamOur' if side == 'our' else 'teamEnemy')
++            if not isinstance(envelope,dict) or not isinstance(envelope.get('roles'),list):
++                continue
++            alive_base = any(r.get('roleType') == 'station' for r in roles.values())
++            status = survival.setdefault(side, {})
++            if alive_base:
++                status['last_seen_alive'] = self.delta.round_no
++            elif (status.get('last_seen_alive') is not None and 'first_seen_missing' not in status):
++                status['first_seen_missing'] = self.delta.round_no
++                status['consecutive_boundary'] = (status['last_seen_alive'] == self.delta.round_no-1)
++            status['alive_now'] = alive_base
+         self.state['last_round'] = self.delta.round_no
+ 
+     def layout(self):
+@@ -2481,6 +2506,9 @@
+         # Frontal column first, then both flanks. Side is inferred from own base,
+         # never from red/blue filenames. A 180-degree mirror preserves both sides.
+         front=[transform(5,dy) for dy in (-1,1,3,-3,5,-5)]
++        # Keep the existing C14 footprint in the release. The C12 experiment
++        # changed mining paths and delayed a third gun on one seed; do not
++        # combine that unvalidated geometry change with the front-funding fix.
+         arms=[transform(dx,dy) for dx in (3,1,-1,-3) for dy in (5,-5)]
+         allowed=building_ring(anchor,2)
+         walls=tuple(p for p in front+arms if p in allowed)
+@@ -2715,14 +2743,25 @@
+             return self.move(actor,{cell},'build_compact_weapon_travel')
+         return False
+ 
++    def wall_missing_count(self):
++        """Count planned holes, not unrelated historical side/rear walls."""
++        occupied = {w['cell'] for w in self.walls}
++        occupied.update(position(c['targetPos'][0]) for c in self.v.commands.values()
++                        if c.get('action') == 'build' and c.get('name') == 'wall')
++        return sum(cell not in occupied for cell in self.wall_slots[:self.wall_target])
++
+     def wall_candidate(self, actor):
++        slots = list(self.wall_slots[:self.wall_target])
++        front_missing = [c for c in slots[:6] if not any(w['cell'] == c for w in self.walls)]
++        if front_missing and self.state.get('front_ever_completed'):
++            slots = front_missing  # A side-wall job cannot postpone a frontal hole.
+         old = self.jobs.get(actor, {})
+-        slots = list(self.wall_slots)
+         target = old.get('cell')
+         if old.get('kind') == 'wall' and target in slots:
+             slots.remove(target)
+             slots.insert(0, target)
+-        reserved = {j.get('cell') for a, j in self.jobs.items() if a != actor and j.get('kind') == 'wall'}
++        reserved = {j.get('cell') for a, j in self.jobs.items()
++                    if a != actor and j.get('kind') == 'wall'}
+         for cell in slots:
+             if cell in self.world.occupied or cell in self.v.targets or cell in reserved:
+                 continue
+@@ -2731,7 +2770,7 @@
+         return None
+ 
+     def build_walls(self, actor):
+-        missing = self.wall_target - self.v.wall_count
++        missing = self.wall_missing_count()
+         stones = self.rules.wall_stone_cost
+         if missing <= 0 or not nonnegative_int(stones) or stones == 0:
+             return False
+@@ -2794,25 +2833,38 @@
+         return self.move(actor, {target}, 'wall_batch_deliver')
+ 
+     def wall_budget(self):
+-        """Experimental daily caps, NOT sufficient-health guarantees.
+-
+-        No paid level-three wall until all three guns are level three. Side arms
+-        stay level one until the battery is complete; damaged front cells only.
++        """A small front-readiness floor, not a quota to upgrade the entire ring.
++
++        Level upgrades require vouchers bought with gold; stone only builds walls.
++        These are candidate policy thresholds, not official wave survivability.
+         """
+         day = self.phase.day if self.phase else 1
+         levels = [level_of(w) or 0 for w in self.weapons]
+-        globals_ready = sum(level == 3 for level in levels)
++        globals_ready = levels.count(3)
+         complete = len(levels) == 3 and globals_ready == 3
+-        front = 1 if day <= 2 or globals_ready < 2 else 2
+-        if day >= 6 and complete:
+-            front = 3
+-        flank = 2 if day >= 5 and complete else 1
+-        limit = 0 if day == 1 else 20 if day == 2 else 40 if day <= 4 else 60
++        core_ready = max(globals_ready, self.state.get('peak_global_batteries', 0)) >= 2
++        active_floor = day >= 3 and len(levels) == 3 and core_ready
++        floor_cells = 2 if day == 3 else 4 if day == 4 else 6 if day >= 5 else 0
++        limit = 0 if day == 1 else 20 if day == 2 else 40 if day == 3 else 60
++        # Before the second global-range rocket, only one 20-gold intervention/day.
++        if globals_ready < 2:
++            limit = min(limit, 20)
+         spent = self.state.get('maintenance_spent', 0) + self.maintenance_reserved
+-        return dict(day=day, front_level_cap=front, flank_level_cap=flank,
+-                    daily_gold_cap=limit, gold_left=max(0, limit-spent),
+-                    global_batteries=globals_ready, complete_battery=complete,
++        before_complete_left = (40 - self.state.get('maintenance_before_battery', 0)
++                                - self.maintenance_reserved) if not complete else limit
++        return dict(day=day, front_level_cap=3 if day >= 6 and complete else 2 if active_floor else 1,
++                    flank_level_cap=1, front_floor_level=2 if active_floor else 1,
++                    front_floor_cells=floor_cells if active_floor else 0,
++                    daily_gold_cap=limit, before_complete_gold_cap=40,
++                    gold_left=max(0, min(limit-spent, before_complete_left)),
++                    global_batteries=globals_ready, core_battery_established=core_ready, complete_battery=complete,
+                     stock_fixers=1 if not complete else 2)
++
++    def front_floor(self, wall):
++        policy = self.wall_budget()
++        if wall['cell'] in self.wall_slots[:policy['front_floor_cells']]:
++            return policy['front_floor_level']
++        return 1
+ 
+     def uncovered_capital(self):
+         """Allocate observed inventory once; an absent prerequisite is not coverage."""
+@@ -2869,21 +2921,23 @@
+             level, maximum = level_of(wall), max_health(wall)
+             frontal = wall['cell'] in self.wall_slots[:6]
+             lost = self.state.get('wall_damage', {}).get(wall['cell'], 0)
+-            # Do not repeatedly upgrade every wall that was scratched last week.
+-            hot = lost >= 250 or wall['health'] < 0.50 * maximum
+-            cap = policy['front_level_cap'] if frontal else policy['flank_level_cap']
++            floor = self.front_floor(wall)
++            cap = policy['front_level_cap'] if frontal else 1
++            hot = lost >= 250 or wall['health'] < 0.65 * maximum
++            # The front floor applies even to a full-health NEW replacement wall.
++            # Otherwise destruction/rebuilding resets the old damage trigger.
++            needs_floor = level < floor
+             upgrade = f'WallUpgradeVoucher{level}'
+-            if level < cap and hot and wall['health'] < 0.80 * maximum:
++            if level < cap and (needs_floor or hot and wall['health'] < 0.80 * maximum):
+                 if self.v.prices.get(upgrade, 10**9) <= policy['gold_left']:
+-                    candidates.append((60, wall, upgrade))
+-                    continue  # upgrading heals too; never queue a fixer first
+-            if hot and wall['health'] < 0.50 * maximum:
++                    candidates.append((30 if needs_floor else 60, wall, upgrade))
++                    continue  # upgrades heal; do not schedule a preceding fixer
++            if (frontal and wall['health'] < 0.65 * maximum or
++                    not frontal and hot and wall['health'] < 0.25 * maximum):
+                 repairs.append(wall)
+-        # A consumable stock target is a COUNT, not one independent goal per wall.
+-        # The old per-wall goals persisted despite owned stock and blocked guns.
+         if stock < policy['stock_fixers'] and self.v.prices.get('WallFixer',10**9) <= policy['gold_left']:
+-            for wall in sorted(repairs, key=lambda w: (w['health']/max_health(w), w['id']))[:policy['stock_fixers']-stock]:
+-                candidates.append((65, wall, 'WallFixer'))
++            for wall in sorted(repairs, key=lambda w: (w['cell'] not in self.wall_slots[:6], w['health']/max_health(w), w['id']))[:policy['stock_fixers']-stock]:
++                candidates.append((32 if wall['cell'] in self.wall_slots[:6] else 65, wall, 'WallFixer'))
+             if not repairs and policy['global_batteries'] >= 2:
+                 fronts = sorted((w for w in self.walls if w['cell'] in self.wall_slots[:6]),
+                                 key=lambda w: (-self.state.get('wall_damage',{}).get(w['cell'],0),w['id']))
+@@ -2933,9 +2987,10 @@
+         protect_chain=bool(target and target.get('roleType')=='rocket' and level_of(target)==1
+                            and old_order.get('item')=='WeaponUpgradeVoucher1' and bag['WeaponUpgradeVoucher1']
+                            and not next_owned and next_price is not None and next_price>self.v.gold)
++        carrying_capital = any(bag[n] for n in UPGRADES if n.startswith(('Weapon','Station')))
+         if (not protect_chain and self.work_turns > 0 and 0 < goods < 3 and
+                 self.v.near(char,self.world.zones['weaponShop']) and
+-                self.procure(actor)):
++                self.procure(actor, capital_only=carrying_capital)):
+             self.note(actor,'batch_supply_before_return')
+             return True
+         old = self.state.setdefault('capital_targets', {}).get(actor) or self.jobs.get(actor, {})
+@@ -2953,6 +3008,8 @@
+                     continue
+                 if required is not None and level_of(target) != required:
+                     continue
++                if name.startswith('WallUpgrade') and target['cell'] not in self.wall_slots[:6]:
++                    continue  # a destroyed target must not redirect its voucher to a flank
+                 if name == 'WallFixer' and any(bag[n] and target.get('roleType') in k and level_of(target)==lv for n,(k,lv) in UPGRADES.items()):
+                     continue
+                 if name == 'WallFixer' and (max_health(target) is None or target['health'] >= (0.80 if self.work_turns > 0 else 0.55)*max_health(target)):
+@@ -3010,7 +3067,26 @@
+                 return True
+         return False
+ 
+-    def procure(self, actor, emergency_only=False):
++    def outstanding_weapon_cash(self):
++        """Look through a carried level-1 voucher to its still-unfunded next level.
++
++        This is a savings guard for HEALTHY-wall work, not authorization to buy
++        an upgrade before the platform observes its prerequisite level.
++        """
++        needed = Counter()
++        for weapon in self.weapons:
++            for level in range(level_of(weapon) or 3, 3):
++                needed[f'WeaponUpgradeVoucher{level}'] += 1
++        owned = Counter()
++        for char in self.characters.values():
++            owned.update(inventory(char) or Counter())
++        for command in self.v.commands.values():
++            if command.get('action') == 'buy':
++                owned[command['name']] += command['num']
++        return sum(max(0, count-owned[name])*self.v.prices.get(name,10**9)
++                   for name,count in needed.items())
++
++    def procure(self, actor, emergency_only=False, capital_only=False):
+         """One shared cash reservation ledger for every courier in this turn."""
+         char = self.characters[actor]
+         bag = inventory(char)
+@@ -3020,7 +3096,8 @@
+         if not nonnegative_int(capacity) or sum(bag.values()) >= capacity:
+             return False
+         candidates = self.uncovered_capital()
+-        candidates = [row for row in candidates if row[1]['id'] not in self.claimed]
++        candidates = [row for row in candidates if row[1]['id'] not in self.claimed
++                      and not (capital_only and row[2].startswith('Wall'))]
+         if not candidates:
+             return False
+         priority, target, name = candidates[0]
+@@ -3029,10 +3106,42 @@
+             return False
+         funds = max(0,self.v.gold-max(0,3-self.v.weapon_count)*25-self.capital_reserved)
+         self.state['capital_goal'] = dict(target=target['id'],item=name,price=price,funds=funds,priority=priority)
++        near = self.v.near(char,self.world.zones['weaponShop'])
+         if price is None or price > funds:
+             self.note(actor,'capital_saving:'+name)
+-            return False
+-        near = self.v.near(char,self.world.zones['weaponShop'])
++            # Funded gun orders and other couriers' reservations remain untouched.
++            # When the primary purchase is FAR from funded, an otherwise-idle
++            # pioneer (or someone already at the shop) can deliver one capped
++            # front intervention. It costs real gold; it is not "free" maintenance.
++            fallback = []
++            if (not emergency_only and not capital_only and priority != 0 and
++                    self.phase and self.phase.day >= 3 and self.wall_budget()['core_battery_established']
++                    and (near or char['roleType'] == 'pioneer') and price is not None):
++                for row in candidates:
++                    pri, wall, item = row
++                    cost = self.v.prices.get(item)
++                    if (not item.startswith('Wall') or pri >= 90 or wall['cell'] not in self.wall_slots[:6]
++                            or cost is None or cost > funds or cost > self.wall_budget()['gold_left']):
++                        continue
++                    if wall['health'] >= 0.65 * max_health(wall):
++                        continue  # healthy-wall floors must never delay saving for a gun
++                    if price - funds < max(40, 2 * cost):
++                        continue  # do not reset an almost-funded weapon milestone
++                    fallback.append(row)
++            if not fallback:
++                return False
++            priority, target, name = fallback[0]
++            price = self.v.prices[name]
++            self.events.append(dict(event='bounded_frontline_fallback', actor=actor,
++                                    preserved_primary=dict(self.state['capital_goal']),
++                                    wall=target['id'], item=name, cost=price))
++        if name.startswith('Wall') and not self.wall_budget()['complete_battery']:
++            gap = self.outstanding_weapon_cash()
++            if (gap > 0 and (funds >= gap and funds-price < gap or
++                    funds < gap and gap-funds < max(40,2*price)) or
++                    target['health'] >= 0.65*max_health(target) and funds-price < gap):
++                self.note(actor,'frontline_waits_for_funded_weapon_chain')
++                return False
+         if priority == 90 and not near:
+             return False  # healthy-wall reserve does not justify a dedicated trip
+         if not self.fits(actor,[(self.world.zones['weaponShop'],1),({target['cell']},1)]):
+@@ -3048,6 +3157,8 @@
+             else:
+                 self.capital_reserved += price
+                 self.capital_reservations[actor] = dict(target=target['id'],item=name,gold=price)
++                if name.startswith('Wall'):
++                    self.maintenance_reserved += price
+             order = dict(kind='service',target=target['id'],item=name,stage='procure')
+             self.jobs[actor] = order
+             self.state.setdefault('capital_targets',{})[actor] = dict(order)
+@@ -3113,7 +3224,7 @@
+         Keep the reservation separate from job.kind: a temporary service trip
+         must not silently turn building materials into saleable income.
+         """
+-        missing = max(0, self.wall_target - self.v.wall_count)
++        missing = self.wall_missing_count()
+         cost = self.rules.wall_stone_cost
+         if not missing or not nonnegative_int(cost) or cost == 0:
+             self.wall_reservations.pop(actor, None)
+@@ -3155,7 +3266,7 @@
+         else:
+             sent = self.move(actor, self.world.zones['vendor'], 'persistent_sale_trip')
+         if sent:
+-            if old.get('kind') == 'wall' and self.v.wall_count < self.wall_target:
++            if old.get('kind') == 'wall' and self.wall_missing_count() > 0:
+                 # Liquidating copper/iron frees quarry space without deleting the batch.
+                 old['cleanup'] = 'sell'
+             else:
+@@ -3168,7 +3279,7 @@
+             return self.sell(actor, force=True)
+         if self.sell(actor):
+             return True
+-        wall_job = self.jobs.get(actor, {}).get('kind') == 'wall' and self.v.wall_count < self.wall_target
++        wall_job = self.jobs.get(actor, {}).get('kind') == 'wall' and self.wall_missing_count() > 0
+         if wall_job and self.reserved_wall_stone(actor) and not self.night_cleared:
+             # Keep a carried batch intact while its construction is deferred.
+             self.note(actor, 'wall_batch_waiting')
+@@ -3217,8 +3328,23 @@
+         return self.move(actor, {mine}, 'mine_income_travel')
+ 
+ 
++    def repair_preserves_fire(self, actor, route, ready=None):
++        """Use a carried item in place only, without reducing ready-gun coverage.
++
++        No travelling repair during a live wave: an assumed future return route
++        is not a guarantee that a controller will actually return before cooldown.
++        """
++        if not route or len(route) != 1:
++            return False
++        available = [a for a in self.characters if a not in self.v.busy]
++        others = [a for a in available if a != actor]
++        if ready is None:
++            ready = [w for w in self.weapons if w['cell'] not in self.v.modified
++                     and w.get('cooldown', 0) == 0 and self.defense.attack_plan(w)[2] > 0]
++        return len(self.matching(ready, others)) >= len(self.matching(ready, available))
++
+     def repair_critical_front(self):
+-        """Use carried repairs; allow a short, safe step from a nearby battery."""
++        """Use adjacent carried repairs during a cooldown or with a spare gunner."""
+         choices=[]
+         available=[a for a in self.characters if a not in self.v.busy]
+         ready=[w for w in self.weapons if w.get('cooldown',0)==0 and self.defense.attack_plan(w)[2]>0]
+@@ -3226,26 +3352,25 @@
+             if wall['cell'] not in self.wall_slots or wall['cell'] in self.v.modified:continue
+             threat=self.defense.exposure(wall['cell'])
+             if threat<=0 or wall['health']>max(250,3*threat):continue
+-            name=f'WallUpgradeVoucher{level_of(wall)}' if level_of(wall)<3 else None
++            name=f'WallUpgradeVoucher{level_of(wall)}' if level_of(wall)<3 and wall['cell'] in self.wall_slots[:6] else None
+             for actor in available:
+                 char=self.characters[actor];bag=inventory(char) or Counter()
++                exposure=self.defense.exposure(char['cell'])
++                if bag['Medicine'] and (char['health'] < 0.65*max_health(char)
++                        or exposure and char['health'] <= 2*exposure):
++                    continue  # keep the controller alive; medicine() runs next
+                 item=name if name and bag[name] else 'WallFixer' if bag['WallFixer'] else None
+                 if item is None:continue
+                 route=self.route(actor,{wall['cell']})
+-                if not route or len(route)>4:continue
+-                if len(route)>1:
+-                    if wall['health']<=threat*(len(route)-1):continue
+-                    if char['health']<=2*self.defense.exposure(route[1]):continue
++                if not route or len(route)!=1:continue
++                if not self.repair_preserves_fire(actor, route, ready):continue
+                 retained=len(self.matching(ready,[a for a in available if a!=actor]))
+                 choices.append((len(route),-retained,wall['health']/max_health(wall),actor,wall['id'],item,route))
+         if not choices:return False
+         _,_,_,actor,target,item,route=min(choices,key=lambda x:x[:5])
+         wall=self.world.roles[target]
+-        if len(route)==1:
+-            cmd=dict(action='use',name=item,targetPos=[dict(x=wall['cell'][0],y=wall['cell'][1])])
+-            reason='frontline_emergency_repair'
+-        else:
+-            cmd=dict(action='move',targetPos=[dict(x=route[1][0],y=route[1][1])]);reason='frontline_short_repair_trip'
++        cmd=dict(action='use',name=item,targetPos=[dict(x=wall['cell'][0],y=wall['cell'][1])])
++        reason='frontline_emergency_repair'
+         if self.send(actor,cmd,reason):
+             self.claimed.add(target)
+             return True
+@@ -3365,7 +3490,7 @@
+             # One dedicated batch builder; the other worker maintains a cash-producing pipeline.
+             available = [a for a in workers if a not in self.v.busy and (not self.return_due(a))]
+             builder = None
+-            if self.phase.is_day and available and self.v.wall_count < self.wall_target:
++            if self.phase.is_day and available and self.wall_missing_count() > 0:
+                 builder = min(available, key=lambda a: (self.jobs.get(a, {}).get('kind') != 'wall', -(inventory(self.characters[a]) or Counter())['stone'], a))
+             for actor in available:
+                 if self.procure(actor, emergency_only=True):
+@@ -3386,7 +3511,7 @@
+ 
+     def report(self):
+         metrics = dict(round=self.delta.round_no, gold=self.delta.gold, station_hp=[b['health'] for b in self.defense.stations], actors_alive=len(self.characters), weapons_alive=len(self.weapons), weapon_levels=sorted((level_of(w) or 0 for w in self.weapons), reverse=True), walls=len(self.walls), wall_count=len(self.walls), wall_levels=[level_of(w) for w in self.walls], wall_hp=[w['health'] for w in self.walls], wall_total_hp=sum((w['health'] for w in self.walls)), wall_max_hp_total=sum((max_health(w) or 0 for w in self.walls)), actors_hp={a: c['health'] for a, c in self.characters.items()}, controllers_available=len(self.matching()), actual_fire_commands=sum((c['action'] == 'attack' for c in self.v.commands.values())))
+-        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT_WORK' if self.night_cleared else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, capital_goal=self.state.get('capital_goal'), work_turns=self.work_turns, night_cleared=self.night_cleared, wall_budget=self.wall_budget(), capital_reservations=self.capital_reservations, wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3, wall_shape='front_C14', wall_plan=list(self.wall_slots)), maintenance_spent=self.state.get('maintenance_spent',0), delivery_orders=self.state.get('delivery_orders',{}), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
++        return dict(round=self.delta.round_no, scope='survival_v3', policy_revision=self.revision, strategy_mode='survival', mode='DAY' if self.phase and self.phase.is_day else 'NIGHT_WORK' if self.night_cleared else 'NIGHT', metrics=metrics, jobs={a: dict(j) for a, j in self.jobs.items()}, capital_goal=self.state.get('capital_goal'), work_turns=self.work_turns, night_cleared=self.night_cleared, wall_budget=self.wall_budget(), capital_reservations=self.capital_reservations, wall_reservations=dict(self.wall_reservations), decisions=dict(self.decisions), controllers={a: list(s) for a, s in self.return_slots.items()}, events=list(self.events), defense_target=dict(wall_target=self.wall_target, weapon_target=3, weapon_ceiling=3, wall_shape='front_C14', wall_plan=list(self.wall_slots)), objective='base_survival_before_score', base_observations=self.state.get('base_observations',{}), front_readiness=[dict(id=w['id'],cell=w['cell'],level=level_of(w),health=w['health'],target_floor=self.front_floor(w)) for w in self.walls if w['cell'] in self.wall_slots[:6]], maintenance_spent=self.state.get('maintenance_spent',0), delivery_orders=self.state.get('delivery_orders',{}), observed_gold=self.delta.gold, unspent_after_commands=self.v.gold, last_confirmed_spend=self.state.get('last_spend'), last_observed_asset_change=self.state.get('last_asset_change'))
+ 
+ 
+ # ===========================================================================
+@@ -3678,7 +3803,7 @@
+     """Serve the SDK's JSON POST / contract without a third-party framework."""
+ 
+     protocol_version = "HTTP/1.1"
+-    server_version = "AgentRace/3.2.2"
++    server_version = "AgentRace/3.6"
+     sys_version = ""
+     timeout = 20
+ 

@@ -1,0 +1,32 @@
+{
+  "run": 105,
+  "failures": [],
+  "errors": [],
+  "replaced_policy_tests": [
+    {
+      "test": "tests_v34.test_frontline.FrontlineTests.test_adjacent_emergency_repair_uses_owned_item",
+      "reason": "V3.6 requires preserving current ready-gun coverage; replaced by ready/cooldown cases."
+    },
+    {
+      "test": "tests_v34.test_frontline.FrontlineTests.test_hot_wall_upgrade_does_not_wait_for_all_guns_level_three",
+      "reason": "Replaced: capped walls after two global rockets; capital clearwave tests enforce the new ordering."
+    },
+    {
+      "test": "tests_v34.test_frontline.FrontlineTests.test_preemptive_stock_two_fixers_bound",
+      "reason": "Replaced: one pre-completion fixer, two only for a complete level-three battery."
+    },
+    {
+      "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_daily_cash_cap_respected",
+      "reason": "Day4+ cap60 plus cap40 per incomplete-battery phase; tested explicitly."
+    },
+    {
+      "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_wall_level_caps_depend_on_guns_and_day",
+      "reason": "Flanks remain level1; front readiness gated by established two-gun core."
+    },
+    {
+      "test": "tests_v35.test_capital_clearwave.CapitalClearwaveTests.test_weapon_goal_beats_even_critical_wall_purchase",
+      "reason": "Funded weapons still first; bounded unfunded-gap rescue added and tested."
+    }
+  ],
+  "passed": true
+}
